@@ -4,11 +4,15 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
+    public static event Action OnConnectedServer;
     public static event Action OnJoinedRoomEvent;
+    public static event Action OnCreatingRoom;
+    public static event Action OnRoomLeft;
     public static event Action<string> onPlayerJoined;
     public static event Action onPlayerLeft;
 
@@ -16,6 +20,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private byte maxPlayersPerRoom = 2;
     private string gameVersion = "1";
 
+
+    #region ACTIONS
     public void Connect()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -26,10 +32,31 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void ConnectToRandomRoom()
+    {
+        PhotonNetwork.JoinRandomRoom();
+    }
+
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel("GameRoom");
+    }
+
+    public void TryLeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+    public List<string> GetPlayers()
+    {
+        return PhotonNetwork.PlayerList.Where(player => !player.IsLocal).Select(player => player.NickName).ToList();
+    }
+    #endregion
+    #region CALLBACKS
+
     public override void OnConnectedToMaster()
     {
         Debug.Log($"PUN: Connected to master server on region {PhotonNetwork.CloudRegion}!");
-        PhotonNetwork.JoinRandomRoom();
+        OnConnectedServer?.Invoke();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -41,12 +68,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("PUN: No Random Room to join. Creating room...");
         PhotonNetwork.CreateRoom(null, new RoomOptions{ MaxPlayers = maxPlayersPerRoom });
+        OnCreatingRoom?.Invoke();
     }
 
     public override void OnJoinedRoom()
     {
         Debug.Log("Connected to room succesfully!");
         OnJoinedRoomEvent?.Invoke();
+    }
+
+    public override void OnLeftRoom()
+    {
+        OnRoomLeft?.Invoke();
     }
 
 
@@ -62,9 +95,5 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log($"Player Left Room {otherPlayer.NickName}");
         onPlayerLeft?.Invoke();
     }
-
-    public void StartGame()
-    {
-        PhotonNetwork.LoadLevel("GameRoom");
-    }
+    #endregion
 }

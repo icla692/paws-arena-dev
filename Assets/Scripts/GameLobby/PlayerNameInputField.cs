@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,25 +14,23 @@ public class PlayerNameInputField : MonoBehaviour
     private void Start()
     {
         string defaultName = string.Empty;
-        InputField inputField = GetComponent<InputField>();
+        TMP_InputField inputField = GetComponent<TMP_InputField>();
         if(inputField != null)
         {
             if (PlayerPrefs.HasKey(playerNamePrefKey))
             {
-                defaultName = PlayerPrefs.GetString(playerNamePrefKey);
-                inputField.text = defaultName;
-                OnPlayerNameUpdated?.Invoke(defaultName);
+                inputField.text = defaultName = PlayerPrefs.GetString(playerNamePrefKey); ;
             }
         }
 
+        OnPlayerNameUpdated?.Invoke(defaultName);
         PhotonNetwork.NickName = defaultName;
     }
 
     public void SetPlayerName(string value)
     {
-        OnPlayerNameUpdated?.Invoke(value);
-
         PhotonNetwork.NickName = value;
         PlayerPrefs.SetString(playerNamePrefKey, value);
+        OnPlayerNameUpdated?.Invoke(value);
     }
 }

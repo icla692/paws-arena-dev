@@ -7,51 +7,24 @@ using Photon.Pun;
 
 public class LobbyUIManager : MonoBehaviour
 {
-    public PlayerNameInputField nicknameInput;
-    public GameObject connectButton;
-    public GameObject startGameButton;
-    public GameObject log;
+    public GameObject connectingToServerScreen;
+    public GameObject topBar;
+    public GameObject characterSelectionScreen;
+    public GameObject gameMatchingScreen;
 
-    private void OnEnable()
+    public void OpenCharacterSelectionScreen()
     {
-        connectButton.SetActive(false);
-        log.SetActive(false);
+        connectingToServerScreen.SetActive(false);
+        gameMatchingScreen.SetActive(false);
 
-        nicknameInput.OnPlayerNameUpdated += NicknameUpdated;
-        PhotonManager.OnJoinedRoomEvent += OnJoinedRoom;
-        PhotonManager.onPlayerJoined += PlayerJoined;
-        PhotonManager.onPlayerLeft += PlayerLeft;
+        topBar.SetActive(true);
+        characterSelectionScreen.SetActive(true);
     }
 
-    private void OnDisable()
+    public void OpenGameMatchingScreen()
     {
-        nicknameInput.OnPlayerNameUpdated -= NicknameUpdated;
-        PhotonManager.OnJoinedRoomEvent -= OnJoinedRoom;
-        PhotonManager.onPlayerJoined -= PlayerJoined;
-        PhotonManager.onPlayerLeft -= PlayerLeft;
-    }
-
-    private void NicknameUpdated(string nickname)
-    {
-        connectButton.SetActive(!string.IsNullOrEmpty(nickname));
-    }
-
-    private void OnJoinedRoom()
-    {
-        connectButton.SetActive(false);
-        nicknameInput.gameObject.SetActive(false);
-        log.SetActive(true);
-    }
-
-    private void PlayerJoined(string nickname)
-    {
-        log.GetComponent<TextMeshProUGUI>().text = $"Your opponent is here!\n {nickname}";
-        startGameButton.SetActive(true);
-    }
-
-    private void PlayerLeft()
-    {
-        log.GetComponent<TextMeshProUGUI>().text = $"Player is out :( . Waiting for someone else...";
-        startGameButton.SetActive(false);
+        topBar.SetActive(false);
+        characterSelectionScreen.SetActive(false);
+        gameMatchingScreen.SetActive(true);
     }
 }
