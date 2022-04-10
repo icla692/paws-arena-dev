@@ -1,8 +1,8 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -37,18 +37,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
-    public void StartGame()
-    {
-        PhotonNetwork.LoadLevel("GameRoom");
-    }
-
     public void TryLeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
     }
-    public List<string> GetPlayers()
+    public List<Player> GetOtherPlayers()
     {
-        return PhotonNetwork.PlayerList.Where(player => !player.IsLocal).Select(player => player.NickName).ToList();
+        return PhotonNetwork.PlayerList.Where(player => !player.IsLocal).ToList();
+    }
+
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel("GameScene");
     }
     #endregion
     #region CALLBACKS
@@ -94,6 +94,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         base.OnPlayerLeftRoom(otherPlayer);
         Debug.Log($"Player Left Room {otherPlayer.NickName}");
         onPlayerLeft?.Invoke();
+    }
+
+    public void AddPlayerCustomProperty(string key, string value)
+    {
+        Hashtable hashtable = new Hashtable();
+        hashtable[key] = value;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
     }
     #endregion
 }

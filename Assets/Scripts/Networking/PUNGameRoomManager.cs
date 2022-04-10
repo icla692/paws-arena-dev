@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,8 @@ public class PUNGameRoomManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0), Quaternion.identity);
+        int seat = Int32.Parse(PhotonNetwork.LocalPlayer.CustomProperties["seat"].ToString());
+        PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(seat == 0 ? 14 : 40, 20), Quaternion.identity);
     }
 
     public override void OnLeftRoom()
