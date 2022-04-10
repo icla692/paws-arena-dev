@@ -19,6 +19,15 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [Range(0, .3f), SerializeField, Tooltip("How much to smooth out the movement")] 
         private float movementSmoothing = .05f;
 
+        [Header("Indicator configurations")]
+        [Space]
+
+        [SerializeField]
+        private float indicatorSpeed;
+
+        [SerializeField]
+        private float bulletSpeed;
+
         public bool GetAirControl()
         {
             return airControl;
@@ -37,6 +46,18 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         public float GetMovementSmoothing()
         {
             return movementSmoothing;
+        }
+
+        //indicator
+
+        public float GetIndicatorSpeed()
+        {
+            return indicatorSpeed;
+        }
+
+        public float GetBulletSpeed()
+        {
+            return bulletSpeed;
         }
     }
 }

@@ -15,5 +15,6 @@ MonoBehaviour:
   airControl: 0
   playerSpeed: 20
   playerJumpForce: 4
-  crouchSpeed: 0.36
   movementSmoothing: 0.05
+  indicatorSpeed: 50
+  bulletSpeed: 100

@@ -1,7 +1,7 @@
 using Anura.ConfigurationModule.Managers;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementController : MonoBehaviour
 {
 	[SerializeField] private LayerMask whatIsGround;
 	[SerializeField] private Transform groundCheck;
