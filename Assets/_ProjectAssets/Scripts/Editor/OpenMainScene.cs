@@ -23,7 +23,7 @@ public class OpenMainScene: MonoBehaviour
         SessionState.SetString("lastScene", lastScene);
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
         shouldPlay = true;
-        EditorSceneManager.OpenScene("Assets/Scenes/Lobby.unity");
+        EditorSceneManager.OpenScene("Assets/_ProjectAssets/Scenes/Lobby/Lobby.unity");
     }
 
     private static void OnSceneOpened(Scene scene, OpenSceneMode mode)

@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
-	[SerializeField] private LayerMask whatIsGround;
-	[SerializeField] private Transform groundCheck;
-	[SerializeField] private Transform ceilingCheck;
 	[SerializeField] private Collider2D ceilingCollider;
 
 	private Rigidbody2D rigidbody2D;
