@@ -1916,7 +1916,7 @@ MonoBehaviour:
   photonManager: {fileID: 99993738}
   lobbyUIManager: {fileID: 1311700191}
   opponentName: {fileID: 1112646952}
-  startGameButton: {fileID: 0}
+  startGameButton: {fileID: 476477134}
 --- !u!1 &650514730
 GameObject:
   m_ObjectHideFlags: 0
