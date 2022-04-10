@@ -1,4 +1,5 @@
 using Anura.ConfigurationModule.Managers;
+using Anura.Extensions;
 using UnityEngine;
 
 public class PlayerMotionBehaviour : MonoBehaviour
@@ -8,11 +9,22 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     private float currentDirection;
 
+    private Transform thisT;
+
     private PlayerMovementController characterController;
 
     private void Awake()
     {
         characterController = GetComponent<PlayerMovementController>();
+        thisT = transform;
+    }
+
+    private void Update()
+    {
+        if (!thisT.eulerAngles.z.IsBetween(-90,90))
+        {
+            thisT.eulerAngles = thisT.eulerAngles.WithZ(Mathf.Clamp(thisT.eulerAngles.z, -90, 90));
+        }
     }
 
     private void FixedUpdate()
