@@ -13,7 +13,7 @@ namespace Anura.UI.Managers
         [SerializeField] private Canvas rootCanvas;
         [SerializeField] private BaseScreen currentBaseScreen;
 
-        protected override void MonoAwake()
+        protected override void Awake()
         {
             Initialization();
         }

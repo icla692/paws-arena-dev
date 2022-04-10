@@ -21,10 +21,9 @@ namespace Anura.Templates.MonoSingleton
 
         private static T instance;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             Singleton();
-            MonoAwake();
         }
 
         private void Singleton()
@@ -63,14 +62,6 @@ namespace Anura.Templates.MonoSingleton
             var instanceGameObject = new GameObject(typeof(T) + " - MonoSingleton", typeof(T));
             instanceGameObject.transform.parent = newParent.transform;
             return instanceGameObject.GetComponent<T>();
-        }
-
-        /// <summary>
-        /// The method is call in Awake();
-        /// </summary>
-        protected virtual void MonoAwake()
-        {
-
         }
 
         protected virtual void OnValidate()

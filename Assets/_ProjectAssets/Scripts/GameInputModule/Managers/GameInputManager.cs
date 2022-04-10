@@ -5,8 +5,10 @@ public class GameInputManager : MonoSingleton<GameInputManager>
     private GameInputActions gameInput;
     private PlayerActionMap playerActionMap;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         gameInput = new GameInputActions();
         SetActiveGameInput(true);
         playerActionMap = new PlayerActionMap(gameInput.Player);
@@ -23,6 +25,7 @@ public class GameInputManager : MonoSingleton<GameInputManager>
             gameInput.Disable();
         }
     }
+
     public PlayerActionMap GetPlayerActionMap()
     {
         return playerActionMap;
