@@ -25,7 +25,9 @@ public class GameMatchingScreen : MonoBehaviour
     public LobbyUIManager lobbyUIManager;
 
     [Header("Internals")]
+    public GameObject startButton;
     public List<SeatGameobject> seats;
+    public Countdown countdown;
 
     private void OnEnable()
     {
@@ -44,6 +46,8 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void Init()
     {
+        startButton.SetActive(PhotonNetwork.LocalPlayer.IsMasterClient);
+
         foreach(SeatGameobject seat in seats)
         {
             FreeSeat(seat);
@@ -111,5 +115,11 @@ public class GameMatchingScreen : MonoBehaviour
     private void OnRoomLeft()
     {
         lobbyUIManager.OpenCharacterSelectionScreen();
+    }
+
+    public void StartGame()
+    {
+        startButton.SetActive(false);
+        countdown.StartCountDown(() => { photonManager.StartGame(); });
     }
 }
