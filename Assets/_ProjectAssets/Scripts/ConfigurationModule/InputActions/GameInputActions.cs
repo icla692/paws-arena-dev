@@ -154,7 +154,7 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
+                    ""name"": ""positive"",
                     ""id"": ""707f7725-5adf-41b3-bf84-1b005405aebb"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
@@ -165,7 +165,7 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
+                    ""name"": ""negative"",
                     ""id"": ""5d792e8e-8200-42b7-8f75-63c1a4e178fd"",
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
@@ -187,7 +187,7 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
+                    ""name"": ""positive"",
                     ""id"": ""d049ebc3-5004-4e10-b9a5-9596a60949b3"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
@@ -198,7 +198,7 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
+                    ""name"": ""negative"",
                     ""id"": ""211046f7-0986-479c-84a2-788e9a77aa3c"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",

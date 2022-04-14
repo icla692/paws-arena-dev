@@ -5,7 +5,8 @@ public class PlayerComponent : MonoBehaviour
 {
     private void Start()
     {
-        if (!GetComponent<PhotonView>().IsMine) return;
+        var photonView = GetComponent<PhotonView>();
+        if (photonView != null && !photonView.IsMine) return;
 
         var playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
         

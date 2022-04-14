@@ -1,5 +1,4 @@
 using Anura.ConfigurationModule.Managers;
-using Anura.Extensions;
 using UnityEngine;
 
 public class PlayerMotionBehaviour : MonoBehaviour
@@ -21,9 +20,15 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (!thisT.eulerAngles.z.IsBetween(-90,90))
+        if (!thisT.eulerAngles.z.IsBetween(-30, 30))
         {
-            thisT.eulerAngles = thisT.eulerAngles.WithZ(Mathf.Clamp(thisT.eulerAngles.z, -90, 90));
+            var euler = thisT.eulerAngles;
+            if (euler.z > 180) 
+                euler.z = euler.z - 360;
+
+            euler.z = Mathf.Clamp(euler.z, -30, 30);
+
+            thisT.eulerAngles = euler;
         }
     }
 
