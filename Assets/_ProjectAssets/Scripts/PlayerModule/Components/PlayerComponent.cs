@@ -1,9 +1,12 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerComponent : MonoBehaviour
 {
     private void Start()
     {
+        if (!GetComponent<PhotonView>().IsMine) return;
+
         var playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
         
         var playerMotionBehaviour = GetComponent<PlayerMotionBehaviour>();

@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1cf68fe0cc7ce419d609dc53572c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  circleSize: 16
+  circleSize: 64
   outlineSize: 0
   primaryLayer: {fileID: 839985178}
   secondaryLayer: {fileID: 1324263549}
