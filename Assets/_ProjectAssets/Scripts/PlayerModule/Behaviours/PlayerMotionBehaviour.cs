@@ -1,65 +1,108 @@
 using Anura.ConfigurationModule.Managers;
+using System;
 using UnityEngine;
 
 public class PlayerMotionBehaviour : MonoBehaviour
 {
-    private bool hasMovement;
-    private bool hasJump;
+    [SerializeField] private Collider2D ceilingCollider;
 
-    private float currentDirection;
+    private PlayerState playerState;
 
-    private Transform thisT;
+    private Transform _transform;
+    private Rigidbody2D _rigidbody2D;
 
-    private PlayerMovementController characterController;
+    private Vector3 velocity = Vector3.zero;
 
     private void Awake()
     {
-        characterController = GetComponent<PlayerMovementController>();
-        thisT = transform;
+        _transform = transform;
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    public void RegisterPlayerState(PlayerState state)
     {
-        if (!thisT.eulerAngles.z.IsBetween(-30, 30))
-        {
-            var euler = thisT.eulerAngles;
-            if (euler.z > 180) 
-                euler.z = euler.z - 360;
-
-            euler.z = Mathf.Clamp(euler.z, -30, 30);
-
-            thisT.eulerAngles = euler;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (!hasMovement && !hasJump)
-            return;
-
-        characterController.Move(currentDirection * Time.deltaTime * GetSpeed(), hasJump);
+        playerState = state;
     }
 
     public void RegisterMovementCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        playerActions.Movement.started += _ => hasMovement = true;
+        //playerActions.Movement.started += _ => hasMovement = true;
         playerActions.Movement.performed += value => SetMovementDirection(value.ReadValue<float>());
-        playerActions.Movement.canceled += _ => { hasMovement = false; SetMovementDirection(0); };
+        playerActions.Movement.canceled += _ => { SetMovementDirection(0); };
     }
 
     public void RegisterJumpCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        playerActions.Jump.started += _ => hasJump = true;
-        playerActions.Jump.canceled += _ => hasJump = false;
+        playerActions.Jump.started += _ => playerState.SetHasJump(true);
+        playerActions.Jump.canceled += _ => playerState.SetHasJump(false);
+    }
+
+    private void Update()
+    {
+        TryApplyRotationCorrection();
+    }
+
+    private void FixedUpdate()
+    {
+        if (playerState == null) return;
+        if (playerState.movementDirection == 0 && !playerState.hasJump)
+            return;
+
+        Move(playerState.movementDirection * Time.deltaTime * GetSpeed(), playerState.hasJump);
+    }
+
+    public void Move(float move, bool jump)
+    {
+        if (CheckIfIsGrounded() || GetAirControl())
+        {
+            var targetVelocity = new Vector2(move * 10f, _rigidbody2D.velocity.y);
+            _rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, targetVelocity, ref velocity, GetMovementSmoothing());
+        }
+
+        if (CheckIfIsGrounded() && jump)
+        {
+            _rigidbody2D.AddForce(Vector2.up * GetJumpForce(), ForceMode2D.Impulse);
+        }
     }
 
     private void SetMovementDirection(float value)
     {
-        currentDirection = value;
+        playerState.SetMovementDirection(value);
     }
 
     private float GetSpeed()
     {
         return ConfigurationManager.Instance.Config.GetPlayerSpeed();
+    }
+
+    private bool CheckIfIsGrounded()
+    {
+        return Physics2D.IsTouchingLayers(ceilingCollider);
+    }
+    private bool GetAirControl()
+    {
+        return ConfigurationManager.Instance.Config.GetAirControl();
+    }
+    private float GetMovementSmoothing()
+    {
+        return ConfigurationManager.Instance.Config.GetMovementSmoothing();
+    }
+    private float GetJumpForce()
+    {
+        return ConfigurationManager.Instance.Config.GetPlayerJumpForce();
+    }
+
+    private void TryApplyRotationCorrection()
+    {
+        if (!_transform.eulerAngles.z.IsBetween(-30, 30))
+        {
+            var euler = _transform.eulerAngles;
+            if (euler.z > 180)
+                euler.z = euler.z - 360;
+
+            euler.z = Mathf.Clamp(euler.z, -30, 30);
+
+            _transform.eulerAngles = euler;
+        }
     }
 }
