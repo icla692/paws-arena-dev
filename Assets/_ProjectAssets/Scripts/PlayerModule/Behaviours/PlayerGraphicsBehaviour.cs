@@ -23,6 +23,16 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         this.playerState.onJumpStateChanged += OnJumpStateChanged;
     }
 
+    public void PreJumpAnimEnded()
+    {
+        this.playerState.SetQueueJumpImpulse(true);
+    }
+
+    public void JumpIsInAir()
+    {
+        this.playerState.SetIsInAir(true);
+    }
+
     private void OnJumpStateChanged(bool jumpState)
     {
         _animator.SetBool("isJumping", jumpState);

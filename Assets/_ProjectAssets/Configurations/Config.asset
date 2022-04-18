@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   airControl: 0
   playerSpeed: 20
-  playerJumpForce: 4
+  playerJumpForce: 7
   movementSmoothing: 0.05
   indicatorSpeed: 50
   bulletSpeed: 100

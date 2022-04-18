@@ -34,7 +34,6 @@ public class PlayerMotionBehaviour : MonoBehaviour
     public void RegisterJumpCallbacks(GameInputActions.PlayerActions playerActions)
     {
         playerActions.Jump.started += _ => playerState.SetHasJump(true);
-        playerActions.Jump.canceled += _ => playerState.SetHasJump(false);
     }
 
     private void Update()
@@ -48,7 +47,12 @@ public class PlayerMotionBehaviour : MonoBehaviour
         if (playerState.movementDirection == 0 && !playerState.hasJump)
             return;
 
-        Move(playerState.movementDirection * Time.deltaTime * GetSpeed(), playerState.hasJump);
+        if(playerState.isInAir && CheckIfIsGrounded())
+        {
+            playerState.SetHasJump(false);
+            playerState.SetIsInAir(false);
+        }
+        Move(playerState.movementDirection * Time.deltaTime * GetSpeed(), playerState.hasJumpImpulseQueued);
     }
 
     public void Move(float move, bool jump)
@@ -62,6 +66,7 @@ public class PlayerMotionBehaviour : MonoBehaviour
         if (CheckIfIsGrounded() && jump)
         {
             _rigidbody2D.AddForce(Vector2.up * GetJumpForce(), ForceMode2D.Impulse);
+            playerState.SetQueueJumpImpulse(false);
         }
     }
 
