@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class PlayerComponent : MonoBehaviour
@@ -8,6 +9,9 @@ public class PlayerComponent : MonoBehaviour
 
     [HideInInspector]
     public PlayerState state;
+
+    private GameInputActions.PlayerActions playerActions;
+
     private void Start()
     {
         var photonView = GetComponent<PhotonView>();
@@ -15,7 +19,7 @@ public class PlayerComponent : MonoBehaviour
 
         state = new PlayerState();
 
-        var playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
+        playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
         
         var playerMotionBehaviour = GetComponent<PlayerMotionBehaviour>();
         playerMotionBehaviour.RegisterMovementCallbacks(playerActions);
@@ -31,4 +35,25 @@ public class PlayerComponent : MonoBehaviour
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
     }
 
+    private void OnEnable()
+    {
+        RoomStateManager.OnStateUpdated += OnStateUpdated;
+    }
+
+    private void OnDisable()
+    {
+        RoomStateManager.OnStateUpdated -= OnStateUpdated;
+    }
+
+    private void OnStateUpdated(GameSceneStates state)
+    {
+        //if(state != GameSceneStates.PLAYER_1 && state != GameSceneStates.PLAYER_2)
+        //{
+        //    playerActions.Disable();
+        //}
+        //else
+        //{
+        //    playerActions.Enable();
+        //}
+    }
 }

@@ -26,7 +26,6 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     public void RegisterMovementCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        //playerActions.Movement.started += _ => hasMovement = true;
         playerActions.Movement.performed += value => SetMovementDirection(value.ReadValue<float>());
         playerActions.Movement.canceled += _ => { SetMovementDirection(0); };
     }
