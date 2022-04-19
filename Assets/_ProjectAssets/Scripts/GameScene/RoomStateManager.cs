@@ -38,10 +38,10 @@ public class RoomStateManager : MonoBehaviour
         OnStateUpdated?.Invoke(state);
     }
 
-    private void OnPlayerConnectedToScene(int obj)
+    private void OnPlayerConnectedToScene(int numberOfPlayersInScene)
     {
-        Debug.Log($"Players in scene: {obj} / {PhotonNetwork.CurrentRoom.PlayerCount}");
-        if(obj == PhotonNetwork.CurrentRoom.PlayerCount)
+        Debug.Log($"Players in scene: {numberOfPlayersInScene} / {PhotonNetwork.CurrentRoom.PlayerCount}");
+        if(numberOfPlayersInScene == PhotonNetwork.CurrentRoom.PlayerCount)
         {
             SetState(GameSceneStates.STARTING_GAME);
         }
