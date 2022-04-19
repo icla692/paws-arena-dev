@@ -11,10 +11,11 @@ public class PlayerComponent : MonoBehaviour
     public PlayerState state;
 
     private GameInputActions.PlayerActions playerActions;
+    private PhotonView photonView;
 
     private void Start()
     {
-        var photonView = GetComponent<PhotonView>();
+        photonView = GetComponent<PhotonView>();
         if (photonView != null && !photonView.IsMine) return;
 
         state = new PlayerState();
@@ -33,27 +34,7 @@ public class PlayerComponent : MonoBehaviour
         
         var playerThrowBehaviour = GetComponent<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
-    }
 
-    private void OnEnable()
-    {
-        RoomStateManager.OnStateUpdated += OnStateUpdated;
-    }
-
-    private void OnDisable()
-    {
-        RoomStateManager.OnStateUpdated -= OnStateUpdated;
-    }
-
-    private void OnStateUpdated(GameSceneStates state)
-    {
-        //if(state != GameSceneStates.PLAYER_1 && state != GameSceneStates.PLAYER_2)
-        //{
-        //    playerActions.Disable();
-        //}
-        //else
-        //{
-        //    playerActions.Enable();
-        //}
+        playerActions.Disable();
     }
 }

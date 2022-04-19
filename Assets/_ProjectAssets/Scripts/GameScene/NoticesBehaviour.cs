@@ -27,6 +27,15 @@ public class NoticesBehaviour : MonoBehaviour
         }else if(state == GameSceneStates.STARTING_GAME)
         {
             SetStatus("Let's go!");
+        }else if(state == GameSceneStates.PLAYER_1)
+        {
+            SetStatus("PLAYER 1");
+        }else if(state == GameSceneStates.PLAYER_2)
+        {
+            SetStatus("PLAYER 2");
+        }else if (state == GameSceneStates.PROJECTILE_LAUNCHED)
+        {
+            SetStatus("Boom!");
         }
     }
 

@@ -9,6 +9,7 @@ public class PlayerState
     public event Action<float> onMovementDirectionChanged;
     public event Action<bool> onJumpStateChanged;
     public event Action<bool> onJumpImpulseQueuedChanged;
+
     public bool isFacingRight { get; private set; } = true;
     public float movementDirection { get; private set; } = 0;
 

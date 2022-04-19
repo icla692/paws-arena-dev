@@ -7,5 +7,6 @@ public enum GameSceneStates
     WAITING_FOR_ALL_PLAYERS_TO_JOIN,
     STARTING_GAME,
     PLAYER_1,
-    PLAYER_2
+    PLAYER_2,
+    PROJECTILE_LAUNCHED
 }
