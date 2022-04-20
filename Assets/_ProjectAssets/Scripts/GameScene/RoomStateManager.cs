@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class RoomStateManager : MonoSingleton<RoomStateManager>
 {
-    public static event Action<GameSceneStates> OnStateUpdated;
+    public static event Action<IRoomState> OnStateUpdated;
 
     public PUNGameRoomManager photonManager;
     public GameObject playerPrefab;
@@ -15,8 +15,12 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [HideInInspector]
     public GameSceneMasterInfo sceneInfo = new GameSceneMasterInfo();
 
-    private int lastPlayerRound = -1;
-    private PhotonView photonView;
+    [HideInInspector]
+    public int lastPlayerRound = -1;
+    [HideInInspector]
+    public PhotonView photonView;
+
+    private IRoomState currentState;
 
     void Start()
     {
@@ -26,108 +30,47 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     private void Init()
     {
-        SetState(GameSceneStates.WAITING_FOR_ALL_PLAYERS_TO_JOIN);
+        SetState(new WaitingForAllPlayersToJoinState()); ;
         photonView.RPC("OnPlayerSceneLoaded", RpcTarget.All);
     }
 
-    public void SetState(GameSceneStates state)
+    public void SetState(IRoomState state)
     {
-        //Exit old states
-        int wasMyRound = IsMyRound(this.sceneInfo.state);
-        if (wasMyRound > 0)
+        if(currentState != null)
         {
-            HandleMyRoundOver();
+            currentState.OnExit();
         }
 
-        // Handle States
-        int isMyRound = IsMyRound(state);
-        if (state == GameSceneStates.STARTING_GAME)
-        {
-            StartCoroutine(HandleStartingSceneCoroutine());
-        }else if(state == GameSceneStates.PLAYER_1)
-        {
-            lastPlayerRound = 0;
-        }else if(state == GameSceneStates.PLAYER_2)
-        {
-            lastPlayerRound = 1;
-        }
-        else if (state == GameSceneStates.PROJECTILE_LAUNCHED)
-        {
-            StartCoroutine(HandleProjectileLaunched());
-        }
-
-        if (isMyRound > 0)
-        {
-            HandleMyRound();
-        }
-
-        this.sceneInfo.state = state;
+        currentState = state;
+        currentState.Init(this);
 
         OnStateUpdated?.Invoke(state);
     }
 
-    /// <summary>
-    /// <para>1 = My Round</para>
-    /// <para>-1 = Opponent Round</para>
-    /// <para>0 = No player's round</para>
-    /// </summary>
-    /// <param name="state">State to check</param>
-    /// <returns></returns>
-    private int IsMyRound(GameSceneStates state)
+
+    public void SetFirstPlayerTurn()
     {
-        int mySeat = photonManager.GetMySeat();
-        if ((state == GameSceneStates.PLAYER_1 && mySeat == 0) || (state == GameSceneStates.PLAYER_2 && mySeat == 1))
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            return 1;
-        }else if((state == GameSceneStates.PLAYER_2 && mySeat == 0) || (state == GameSceneStates.PLAYER_1 && mySeat == 1))
-        {
-            return -1;
+            SetState(new MyTurnState());
         }
         else
         {
-            return 0;
+            SetState(new OtherPlayersTurnState());
         }
     }
 
-    private IEnumerator HandleStartingSceneCoroutine()
-    {
-        yield return new WaitForSeconds(1.5f);
-        int seat = photonManager.GetMySeat();
-        PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(seat == 0 ? 14 : 40, 20), Quaternion.identity);
-
-        yield return new WaitForSeconds(3f);
-        SetState(GameSceneStates.PLAYER_1);
-    }
-
-    private void HandleMyRound()
-    {
-        var playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
-        playerActions.Enable();
-    }
-
-    private void HandleMyRoundOver()
-    {
-        var playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
-        playerActions.Disable();
-    }
-
-    private IEnumerator HandleProjectileLaunched()
-    {
-        yield return new WaitForSeconds(3f);
-
-        photonView.RPC("StartNextRound", RpcTarget.All);
-    }
 
     [PunRPC]
     private void StartNextRound()
     {
         if (lastPlayerRound == 0)
         {
-            SetState(GameSceneStates.PLAYER_2);
+            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new OtherPlayersTurnState() : new MyTurnState());
         }
         else
         {
-            SetState(GameSceneStates.PLAYER_1);
+            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new MyTurnState() : new OtherPlayersTurnState());
         }
     }
 
@@ -149,6 +92,6 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [PunRPC]
     private void OnAllPlayersJoinedScene()
     {
-        SetState(GameSceneStates.STARTING_GAME);
+        SetState(new StartingGameState());
     }
 }

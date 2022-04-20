@@ -1023,6 +1023,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonManager: {fileID: 1656311510}
   playerPrefab: {fileID: 755019818390496622, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
+  lastPlayerRound: -1
+  photonView: {fileID: 0}
 --- !u!114 &1417513453
 MonoBehaviour:
   m_ObjectHideFlags: 0

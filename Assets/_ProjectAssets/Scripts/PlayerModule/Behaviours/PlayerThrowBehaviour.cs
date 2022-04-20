@@ -15,7 +15,7 @@ public class PlayerThrowBehaviour : MonoBehaviour
     {
         var obj = Instantiate(bullet, launchPoint.position, Quaternion.identity);
         obj.GetComponent<Rigidbody2D>().AddForce(launchPoint.up* GetBulletSpeed(), ForceMode2D.Impulse);
-        RoomStateManager.Instance.SetState(GameSceneStates.PROJECTILE_LAUNCHED);
+        RoomStateManager.Instance.SetState(new ProjectileLaunchedState());
     }
 
     private float GetBulletSpeed()

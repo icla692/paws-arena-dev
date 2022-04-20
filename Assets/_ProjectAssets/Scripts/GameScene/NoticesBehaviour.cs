@@ -19,23 +19,23 @@ public class NoticesBehaviour : MonoBehaviour
         RoomStateManager.OnStateUpdated -= OnStateUpdated;
     }
 
-    private void OnStateUpdated(GameSceneStates state)
+    private void OnStateUpdated(IRoomState state)
     {
-        if (state == GameSceneStates.WAITING_FOR_ALL_PLAYERS_TO_JOIN)
+        if (state is WaitingForAllPlayersToJoinState)
         {
             SetStatus("Waiting for players to join...");
-        }else if(state == GameSceneStates.STARTING_GAME)
+        }else if(state is StartingGameState)
         {
             SetStatus("Let's go!");
-        }else if(state == GameSceneStates.PLAYER_1)
+        }else if(state is MyTurnState)
         {
-            SetStatus("PLAYER 1");
-        }else if(state == GameSceneStates.PLAYER_2)
+            SetStatus("Your Turn");
+        }else if(state is OtherPlayersTurnState)
         {
-            SetStatus("PLAYER 2");
-        }else if (state == GameSceneStates.PROJECTILE_LAUNCHED)
+            SetStatus("Other's Turn");
+        }else if (state is ProjectileLaunchedState)
         {
-            SetStatus("Boom!");
+            SetStatus("Attack Launched!");
         }
     }
 
