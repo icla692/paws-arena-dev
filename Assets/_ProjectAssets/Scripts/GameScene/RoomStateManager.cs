@@ -13,7 +13,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public GameObject playerPrefab;
 
     [HideInInspector]
-    public GameSceneStates state;
+    public GameSceneMasterInfo sceneInfo = new GameSceneMasterInfo();
 
     private int lastPlayerRound = -1;
     private PhotonView photonView;
@@ -21,23 +21,19 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     void Start()
     {
         photonView = GetComponent<PhotonView>();
-        photonManager.OnPlayerConnectedToScene += OnPlayerConnectedToScene;
         Init();
     }
 
     private void Init()
     {
         SetState(GameSceneStates.WAITING_FOR_ALL_PLAYERS_TO_JOIN);
-
-        int usersInScene = photonManager.GetUsersInScene();
-        usersInScene++;
-        photonManager.SetUsersInScene(usersInScene);
+        photonView.RPC("OnPlayerSceneLoaded", RpcTarget.All);
     }
 
     public void SetState(GameSceneStates state)
     {
         //Exit old states
-        int wasMyRound = IsMyRound(this.state);
+        int wasMyRound = IsMyRound(this.sceneInfo.state);
         if (wasMyRound > 0)
         {
             HandleMyRoundOver();
@@ -65,18 +61,9 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
             HandleMyRound();
         }
 
-        this.state = state;
+        this.sceneInfo.state = state;
 
         OnStateUpdated?.Invoke(state);
-    }
-
-    private void OnPlayerConnectedToScene(int numberOfPlayersInScene)
-    {
-        Debug.Log($"Players in scene: {numberOfPlayersInScene} / {PhotonNetwork.CurrentRoom.PlayerCount}");
-        if (numberOfPlayersInScene == PhotonNetwork.CurrentRoom.PlayerCount)
-        {
-            SetState(GameSceneStates.STARTING_GAME);
-        }
     }
 
     /// <summary>
@@ -142,5 +129,26 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         {
             SetState(GameSceneStates.PLAYER_1);
         }
+    }
+
+    [PunRPC]
+    private void OnPlayerSceneLoaded()
+    {
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            sceneInfo.usersInScene++;
+
+            Debug.Log($"Players in scene: {sceneInfo.usersInScene} / {PhotonNetwork.CurrentRoom.PlayerCount}");
+            if (sceneInfo.usersInScene == PhotonNetwork.CurrentRoom.PlayerCount)
+            {
+                photonView.RPC("OnAllPlayersJoinedScene", RpcTarget.All);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void OnAllPlayersJoinedScene()
+    {
+        SetState(GameSceneStates.STARTING_GAME);
     }
 }

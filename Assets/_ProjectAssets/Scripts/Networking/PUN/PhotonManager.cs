@@ -10,15 +10,14 @@ using UnityEngine;
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public static event Action OnConnectedServer;
-    public static event Action OnJoinedRoomEvent;
     public static event Action OnCreatingRoom;
     public static event Action OnRoomLeft;
-    public static event Action<string> onPlayerJoined;
-    public static event Action onPlayerLeft;
 
     [SerializeField]
     private byte maxPlayersPerRoom = 2;
     private string gameVersion = "1";
+
+    private bool isRoomCreated = false;
 
 
     #region ACTIONS
@@ -41,15 +40,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
     }
-    public List<Player> GetOtherPlayers()
-    {
-        return PhotonNetwork.PlayerList.Where(player => !player.IsLocal).ToList();
-    }
-
-    public void StartGame()
-    {
-        PhotonNetwork.LoadLevel("GameScene");
-    }
     #endregion
     #region CALLBACKS
 
@@ -67,40 +57,24 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("PUN: No Random Room to join. Creating room...");
+        isRoomCreated = true;
         PhotonNetwork.CreateRoom(null, new RoomOptions{ MaxPlayers = maxPlayersPerRoom });
         OnCreatingRoom?.Invoke();
+
     }
 
     public override void OnJoinedRoom()
     {
         Debug.Log("Connected to room succesfully!");
-        OnJoinedRoomEvent?.Invoke();
+        if (isRoomCreated)
+        {
+            PhotonNetwork.LoadLevel("GameRoom");
+        }
     }
 
     public override void OnLeftRoom()
     {
         OnRoomLeft?.Invoke();
-    }
-
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Debug.Log($"Player Joined room {newPlayer.NickName}");
-        onPlayerJoined?.Invoke(newPlayer.NickName);
-    }
-
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        base.OnPlayerLeftRoom(otherPlayer);
-        Debug.Log($"Player Left Room {otherPlayer.NickName}");
-        onPlayerLeft?.Invoke();
-    }
-
-    public void AddPlayerCustomProperty(string key, string value)
-    {
-        Hashtable hashtable = new Hashtable();
-        hashtable[key] = value;
-        PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
     }
     #endregion
 }

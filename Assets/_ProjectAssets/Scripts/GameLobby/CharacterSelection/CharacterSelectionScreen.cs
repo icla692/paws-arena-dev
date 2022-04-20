@@ -22,14 +22,12 @@ public class CharacterSelectionScreen : MonoBehaviour
 
         nicknameInput.OnPlayerNameUpdated += OnNicknameUpdated;
         PhotonManager.OnCreatingRoom += OnCreatingRoom;
-        PhotonManager.OnJoinedRoomEvent += OnRoomJoined;
     }
 
     private void OnDisable()
     {
         nicknameInput.OnPlayerNameUpdated -= OnNicknameUpdated;
         PhotonManager.OnCreatingRoom -= OnCreatingRoom;
-        PhotonManager.OnJoinedRoomEvent -= OnRoomJoined;
     }
 
     private void Init()
@@ -55,10 +53,5 @@ public class CharacterSelectionScreen : MonoBehaviour
     private void OnCreatingRoom()
     {
         joinRoomLog.GetComponent<TextMeshProUGUI>().text = "No open match. Making a new one...";
-    }
-
-    private void OnRoomJoined()
-    {
-        lobbyUIManager.OpenGameMatchingScreen();
     }
 }

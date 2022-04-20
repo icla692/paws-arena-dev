@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class SeatGameobject
@@ -21,8 +22,7 @@ public class SeatGameobject
 public class GameMatchingScreen : MonoBehaviour
 {
     [Header("Managers")]
-    public PhotonManager photonManager;
-    public LobbyUIManager lobbyUIManager;
+    public PUNRoomUtils punRoomUtils;
 
     [Header("Internals")]
     public GameObject startButton;
@@ -32,16 +32,14 @@ public class GameMatchingScreen : MonoBehaviour
     private void OnEnable()
     {
         Init();
-        PhotonManager.onPlayerJoined += OnPlayerJoined;
-        PhotonManager.onPlayerLeft += OnPlayerLeft;
-        PhotonManager.OnRoomLeft += OnRoomLeft;
+        PUNRoomUtils.onPlayerJoined += OnPlayerJoined;
+        PUNRoomUtils.onPlayerLeft += OnPlayerLeft;
     }
 
     private void OnDisable()
     {
-        PhotonManager.onPlayerJoined -= OnPlayerJoined;
-        PhotonManager.onPlayerLeft -= OnPlayerLeft;
-        PhotonManager.OnRoomLeft -= OnRoomLeft;
+        PUNRoomUtils.onPlayerJoined -= OnPlayerJoined;
+        PUNRoomUtils.onPlayerLeft -= OnPlayerLeft;
     }
 
     private void Init()
@@ -55,19 +53,19 @@ public class GameMatchingScreen : MonoBehaviour
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            photonManager.AddPlayerCustomProperty("seat", "0");
+            punRoomUtils.AddPlayerCustomProperty("seat", "0");
             OccupySeat(seats[0], PhotonNetwork.LocalPlayer.NickName);
         }
         else
         {
-            List<Player> players = photonManager.GetOtherPlayers();
+            List<Player> players = punRoomUtils.GetOtherPlayers();
             if (players.Count == 1)
             {
                 int otherPlayerSeat = Int32.Parse(players[0].CustomProperties["seat"].ToString());
                 OccupySeat(seats[otherPlayerSeat], players[0].NickName);
 
                 int mySeat = (otherPlayerSeat + 1) % 2;
-                photonManager.AddPlayerCustomProperty("seat", "" + mySeat);
+                punRoomUtils.AddPlayerCustomProperty("seat", "" + mySeat);
                 OccupySeat(seats[mySeat], PhotonNetwork.LocalPlayer.NickName);
             }
             else
@@ -109,17 +107,14 @@ public class GameMatchingScreen : MonoBehaviour
 
     public void TryExitRoom()
     {
-        photonManager.TryLeaveRoom();
-    }
-
-    private void OnRoomLeft()
-    {
-        lobbyUIManager.OpenCharacterSelectionScreen();
+        punRoomUtils.TryLeaveRoom();
     }
 
     public void StartGame()
     {
         startButton.SetActive(false);
-        countdown.StartCountDown(() => { photonManager.StartGame(); });
+        countdown.StartCountDown(() => {
+            PhotonNetwork.LoadLevel("GameScene");
+        });
     }
 }

@@ -1,54 +1,31 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PUNGameRoomManager : MonoBehaviourPunCallbacks
 {
-    public event Action<int> OnPlayerConnectedToScene;
     private const string roomKey_usersInScene = "usersInScene";
     private const string playerKey_seat= "seat";
 
     public int GetMySeat()
     {
-        return Int32.Parse(PhotonNetwork.LocalPlayer.CustomProperties[playerKey_seat].ToString());
-    }
-
-    public int GetUsersInScene()
-    {
-        var hashtable = PhotonNetwork.CurrentRoom.CustomProperties;
-        if (hashtable.TryGetValue(roomKey_usersInScene, out object userCountObject))
+        if (!PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey(playerKey_seat))
         {
-            return (int)userCountObject;
+            return 0;
         }
 
-        return 0;
+        bool tryParse = Int32.TryParse(PhotonNetwork.LocalPlayer.CustomProperties[playerKey_seat].ToString(), out int result);
+        
+        return result;
     }
 
-    public void SetUsersInScene(int count)
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
-        var hashtable = PhotonNetwork.CurrentRoom.CustomProperties;
-        hashtable[roomKey_usersInScene] = count;
-        PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
-    }
-
-    public override void OnLeftRoom()
-    {
-        SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
-    }
-
-    public void LeaveRoom()
-    {
-        PhotonNetwork.LeaveRoom();
-    }
-
-    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
-    {
-        if (propertiesThatChanged.TryGetValue(roomKey_usersInScene, out object userCountObject))
-        {
-            OnPlayerConnectedToScene?.Invoke((int)userCountObject);
-        }
+        //if (propertiesThatChanged.TryGetValue(roomKey_usersInScene, out object userCountObject))
+        //{
+        //}
     }
 }

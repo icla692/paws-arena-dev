@@ -20,11 +20,4 @@ public class LobbyUIManager : MonoBehaviour
         topBar.SetActive(true);
         characterSelectionScreen.SetActive(true);
     }
-
-    public void OpenGameMatchingScreen()
-    {
-        topBar.SetActive(false);
-        characterSelectionScreen.SetActive(false);
-        gameMatchingScreen.SetActive(true);
-    }
 }
