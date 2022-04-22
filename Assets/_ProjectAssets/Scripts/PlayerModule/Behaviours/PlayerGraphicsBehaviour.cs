@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using UnityEngine;
 public class PlayerGraphicsBehaviour : MonoBehaviour
 {
     private Animator _animator;
+    private PhotonView _photonView;
     private PlayerState playerState;
 
     private bool isFacingRight = true;
@@ -14,6 +16,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
+        _photonView = GetComponent<PhotonView>();
     }
 
     public void RegisterPlayerState(PlayerState playerState)
@@ -25,12 +28,18 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
     public void PreJumpAnimEnded()
     {
-        this.playerState.SetQueueJumpImpulse(true);
+        if (_photonView.IsMine)
+        {
+            this.playerState.SetQueueJumpImpulse(true);
+        }
     }
 
     public void JumpIsInAir()
     {
-        this.playerState.SetIsInAir(true);
+        if (_photonView.IsMine)
+        {
+            this.playerState.SetIsInAir(true);
+        }
     }
 
     private void OnJumpStateChanged(bool jumpState)
