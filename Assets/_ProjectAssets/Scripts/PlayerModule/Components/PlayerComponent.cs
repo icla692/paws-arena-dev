@@ -28,10 +28,10 @@ public class PlayerComponent : MonoBehaviour
 
         playerGraphicsBehaviour.RegisterPlayerState(state);
 
-        var playerIndicatorBehaviour = GetComponent<PlayerIndicatorBehaviour>();
+        var playerIndicatorBehaviour = GetComponentInChildren<PlayerIndicatorBehaviour>();
         playerIndicatorBehaviour.RegisterDirectionCallbacks(playerActions);
         
-        var playerThrowBehaviour = GetComponent<PlayerThrowBehaviour>();
+        var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
     }
 

@@ -22,11 +22,10 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [Header("Indicator configurations")]
         [Space]
 
-        [SerializeField]
-        private float indicatorSpeed;
-
-        [SerializeField]
-        private float bulletSpeed;
+        [SerializeField] private float indicatorSpeed;
+        [SerializeField] private Vector2 bulletSpeed;
+        [SerializeField, Min(0.3f)] private Vector2 pressTimer;
+        [SerializeField] private float bufferMaxTimer;
 
         public bool GetAirControl()
         {
@@ -55,9 +54,28 @@ namespace Anura.ConfigurationModule.ScriptableObjects
             return indicatorSpeed;
         }
 
-        public float GetBulletSpeed()
+        public float GetBulletSpeed(float seconds)
         {
-            return bulletSpeed;
+            return seconds * GetSpeedPerSecond();
+        }
+
+        public Vector2 GetPressTimer()
+        {
+            return pressTimer;
+        }
+
+        public float GetBufferMaxTimer()
+        {
+            return bufferMaxTimer;
+        }
+
+        public float GetValidIndicatorTime()
+        {
+            return GetPressTimer().y + GetBufferMaxTimer();
+        }
+        private float GetSpeedPerSecond()
+        {
+            return bulletSpeed.y / GetPressTimer().y;
         }
     }
 }
