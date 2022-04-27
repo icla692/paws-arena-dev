@@ -19,4 +19,4 @@ MonoBehaviour:
   indicatorSpeed: 50
   bulletSpeed: {x: 1, y: 20}
   pressTimer: {x: 0.3, y: 2.5}
-  bufferMaxTimer: 0.5
+  bufferMaxTimer: 2
