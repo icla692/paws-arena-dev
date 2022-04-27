@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3810740569203461733}
   - component: {fileID: 3810740569203461734}
   - component: {fileID: 3810740569203461735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ChunkTemplateCollisionsLogical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
