@@ -1,6 +1,7 @@
 using Anura.ConfigurationModule.Managers;
 using Anura.ConfigurationModule.ScriptableObjects;
 using Anura.Extensions;
+using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -64,7 +65,7 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
     private void Launch()
     {
-        var obj = Instantiate(bullet, launchPoint.position, Quaternion.identity);
+        var obj = PhotonNetwork.Instantiate(bullet.name, launchPoint.position, Quaternion.identity);
         obj.GetComponent<Rigidbody2D>().AddForce(launchPoint.up* GetBulletSpeed(), ForceMode2D.Impulse);
         RoomStateManager.Instance.SetState(new ProjectileLaunchedState());
     }

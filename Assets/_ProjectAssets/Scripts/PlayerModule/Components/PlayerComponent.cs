@@ -16,12 +16,21 @@ public class PlayerComponent : MonoBehaviour
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
-        if (photonView != null && !photonView.IsMine) return;
 
+        if (photonView != null && !photonView.IsMine) {
+            SetupOtherPlayer();
+            return;
+        }
+
+        SetupMyPlayer();
+    }
+
+    private void SetupMyPlayer()
+    {
         state = new PlayerState();
 
         playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
-        
+
         var playerMotionBehaviour = GetComponent<PlayerMotionBehaviour>();
         playerMotionBehaviour.RegisterMovementCallbacks(playerActions);
         playerMotionBehaviour.RegisterJumpCallbacks(playerActions);
@@ -31,10 +40,15 @@ public class PlayerComponent : MonoBehaviour
 
         var playerIndicatorBehaviour = GetComponentInChildren<PlayerIndicatorBehaviour>();
         playerIndicatorBehaviour.RegisterDirectionCallbacks(playerActions);
-        
+
         var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
 
         playerActions.Disable();
+    }
+
+    private void SetupOtherPlayer()
+    {
+        GetComponent<Rigidbody2D>().isKinematic = true;
     }
 }

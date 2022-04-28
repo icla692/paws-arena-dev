@@ -113,8 +113,18 @@ public class GameMatchingScreen : MonoBehaviour
     public void StartGame()
     {
         startButton.SetActive(false);
+        GetComponent<PhotonView>().RPC("StartCountdown", RpcTarget.All);
+    }
+
+
+    [PunRPC]
+    public void StartCountdown()
+    {
         countdown.StartCountDown(() => {
-            PhotonNetwork.LoadLevel("GameScene");
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel("GameScene");
+            }
         });
     }
 }

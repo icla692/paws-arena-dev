@@ -64,6 +64,18 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [PunRPC]
     private void StartNextRound()
     {
+        //Single Player mode
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            if(sceneInfo.usersInScene == 1)
+            {
+                SetState(new MyTurnState());
+                return;
+            }
+        }
+
+
+        // 1v1 mode
         if (lastPlayerRound == 0)
         {
             SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new OtherPlayersTurnState() : new MyTurnState());
