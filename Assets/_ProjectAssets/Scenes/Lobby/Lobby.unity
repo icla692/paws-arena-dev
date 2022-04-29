@@ -3290,8 +3290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d791f2059bc3674fb9aa6d4ceb19353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photonManager: {fileID: 99993738}
-  lobbyUIManager: {fileID: 1311700191}
+  punRoomUtils: {fileID: 0}
   startButton: {fileID: 476477134}
   seats:
   - freeSeatParent: {fileID: 2037150370}
@@ -5362,6 +5361,7 @@ GameObject:
   - component: {fileID: 1301708325}
   - component: {fileID: 1301708326}
   - component: {fileID: 1301708327}
+  - component: {fileID: 1301708328}
   m_Layer: 5
   m_Name: ConnectingToServer
   m_TagString: Untagged
@@ -5415,6 +5415,19 @@ MonoBehaviour:
   lobbyUIManager: {fileID: 1311700191}
   connectButton: {fileID: 1269027145}
   logText: {fileID: 76758535}
+--- !u!114 &1301708328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301708324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f905a616f4bd0a4438fc6b945b165b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URL: https://v3zkd-syaaa-aaaah-qcm5a-cai.raw.ic0.app/?type=thumbnail&tokenid=j4efc-wikor-uwiaa-aaaaa-b4ath-iaqca-aaabd-a
 --- !u!1 &1308080094
 GameObject:
   m_ObjectHideFlags: 0
