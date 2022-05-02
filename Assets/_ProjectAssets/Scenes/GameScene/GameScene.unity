@@ -775,6 +775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: b3cd1c3a7c91b3d479f1d2d0785356ca, type: 2}
   visualContainer: {fileID: 11400000, guid: a4505c8285a671348bd8a149e5188937, type: 2}
+  shapes: {fileID: 11400000, guid: 81082feba1188dc41ac9fa13714c93d2, type: 2}
 --- !u!1 &973175762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,8 +1497,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b1a5fa82ddfec46ae66b8fef80b88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCircleSize: 16
-  defaultOutlineSize: 0
   primaryLayer: {fileID: 839985178}
   secondaryLayer: {fileID: 1324263549}
 --- !u!1 &1702718785

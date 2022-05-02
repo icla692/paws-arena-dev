@@ -41,11 +41,11 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
     public void RegisterThrowCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        playerActions.Throw.started += _ => Throw_started();
+        playerActions.Throw.started += _ => ThrowStarted();
         playerActions.Throw.canceled += _ => ThrowCompleted();
     }
 
-    private void Throw_started()
+    private void ThrowStarted()
     {
         timeElapsed = 0;
         isStarted = true;
@@ -64,8 +64,10 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
     private void Launch()
     {
-        var obj = Instantiate(bullet, launchPoint.position, Quaternion.identity);
-        obj.GetComponent<Rigidbody2D>().AddForce(launchPoint.up* GetBulletSpeed(), ForceMode2D.Impulse);
+        //Debug.Log(transform.rotation.eulerAngles);
+        
+        var obj = Instantiate(bullet, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
+        obj.GetComponent<Rigidbody2D>().AddForce(launchPoint.up * GetBulletSpeed(), ForceMode2D.Impulse);
         RoomStateManager.Instance.SetState(new ProjectileLaunchedState());
     }
 

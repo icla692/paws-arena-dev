@@ -26,6 +26,7 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [SerializeField] private Vector2 bulletSpeed;
         [SerializeField, Min(0.3f)] private Vector2 pressTimer;
         [SerializeField] private float bufferMaxTimer;
+        [SerializeField] private float factorRotationRocket;
 
         public bool GetAirControl()
         {
@@ -73,6 +74,12 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         {
             return GetPressTimer().y + GetBufferMaxTimer();
         }
+
+        public float GetFactorRotationIndicator()
+        {
+            return factorRotationRocket;
+        }
+
         private float GetSpeedPerSecond()
         {
             return bulletSpeed.y / GetPressTimer().y;

@@ -1,0 +1,79 @@
+using Anura.Globals;
+using DTerrain;
+using NaughtyAttributes;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Anura.Models
+{
+    [CreateAssetMenu(fileName = "Shape", menuName = "Configurations/Shape", order = 3)]
+    public class ShapeConfig : ScriptableObject
+    {
+        [InfoBox("Don't duplicate the file. When we duplicate a file, the id will also be duplicated. \nUse the Configurations->Shape", EInfoBoxType.Normal)]
+
+        [ReadOnly]
+        public string ID;
+
+        [Dropdown("Shapes")]
+        public string shapeType;
+
+        [ShowIf("IsCircle")]
+        public int circleSize;
+
+        [ShowIf("IsRect")]
+        public int width;
+        [ShowIf("IsRect")]
+        public int height;
+
+        public GameObject visualFX;
+
+        public Shape shape;
+
+
+        private List<string> Shapes => Constants.Shapes;
+        private bool IsCircle => shapeType == Shapes[0];
+        private bool IsRect => shapeType == Shapes[1];
+
+        private void Awake()
+        {
+            switch (shapeType)
+            {
+                case "Circle":
+                    shape = Shape.GenerateShapeCircle(circleSize);
+                    break;
+
+                case "Rect":
+                    shape = Shape.GenerateShapeRect(width, height);
+                    break;
+
+                default:
+                    Debug.Log("Doesn't exists");
+                    break;
+            }
+        }
+
+        public int GetSize()
+        {
+            switch (shapeType)
+            {
+                case "Circle":
+                    return circleSize;
+
+                case "Rect":
+                    return height + width / 2;
+
+                default:
+                    Debug.Log("Doesn't exists");
+                    return height + width + circleSize / 3;
+            }
+        }
+
+        private void OnValidate()
+        {
+            if(ID.Equals(string.Empty))
+                ID = Guid.NewGuid().ToString();
+        }
+
+    }
+}
