@@ -5,6 +5,12 @@ namespace Anura.ConfigurationModule.ScriptableObjects
     [CreateAssetMenu(fileName = "Config", menuName = "Configurations/Config", order = 1)]
     public class Config : ScriptableObject
     {
+        [Header("Game Configuration")]
+        [Space]
+
+        [SerializeField]
+        private int turnDurationInSeconds = 30;
+
         [Header("Player configurations")]
         [Space]
 
@@ -27,6 +33,10 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [SerializeField, Min(0.3f)] private Vector2 pressTimer;
         [SerializeField] private float bufferMaxTimer;
 
+        public int GetTurnDurationInSeconds()
+        {
+            return turnDurationInSeconds;
+        }
         public bool GetAirControl()
         {
             return airControl;
