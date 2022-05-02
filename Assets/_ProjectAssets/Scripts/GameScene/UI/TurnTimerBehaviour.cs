@@ -9,11 +9,14 @@ public class TurnTimerBehaviour : MonoBehaviour
     public RoomStateManager roomStateManager;
     public TMPro.TextMeshProUGUI text;
 
-    private int turnTime;
-    private bool hasRoundFinishedFromOtherReasons = false;
+    private int moveTurnTime;
+    private int shootTurnTime;
+    private float startTime;
+
     private void OnEnable()
     {
-        turnTime = ConfigurationManager.Instance.Config.GetTurnDurationInSeconds();
+        moveTurnTime = ConfigurationManager.Instance.Config.GetMoveTurnDurationInSeconds();
+        shootTurnTime = ConfigurationManager.Instance.Config.GetShootTurnDurationInSeconds();
         RoomStateManager.OnStateUpdated += OnStateUpdated;
     }
 
@@ -22,34 +25,50 @@ public class TurnTimerBehaviour : MonoBehaviour
         RoomStateManager.OnStateUpdated -= OnStateUpdated;
     }
 
-    private void OnStateUpdated(IRoomState state)
+    private void Update()
     {
-        //It might act weird if we jump from MyTurnState directly to OtherPlayersState
-        if(state is MyTurnState || state is OtherPlayersTurnState)
+        if (startTime <= 0) return;
+
+        IRoomState state = RoomStateManager.Instance.currentState;
+
+        if (state is MyTurnMovementState)
         {
-            hasRoundFinishedFromOtherReasons = false;
-            StartCoroutine(TurnCountdown());
+            UpdateTimer(moveTurnTime, () => { roomStateManager.SetState(new MyTurnShootingState()); });
         }
-        else
+        else if(state is OtherPlayersMoveTurnState)
         {
-            hasRoundFinishedFromOtherReasons = true;
+            UpdateTimer(moveTurnTime, () => { roomStateManager.SetState(new OtherPlayersShootingState()); });
+        }
+        else if(state is MyTurnShootingState || state is OtherPlayersShootingState)
+        {
+            UpdateTimer(shootTurnTime, () => { roomStateManager.SetState(new ProjectileLaunchedState()); });
         }
     }
 
-    private IEnumerator TurnCountdown()
+    private void OnStateUpdated(IRoomState state)
     {
-        var startTime = Time.time;
-        float passedTime = Time.time - startTime;
-        while (passedTime < turnTime && !hasRoundFinishedFromOtherReasons)
+        if(state is MyTurnMovementState || state is OtherPlayersMoveTurnState || state is MyTurnShootingState)
         {
-            yield return new WaitForSeconds(0.25f);
-            SetTimerText(turnTime - passedTime);
-            passedTime = Time.time - startTime;
+            startTime = Time.time;
         }
-
-        if (!hasRoundFinishedFromOtherReasons)
+        else
         {
-            roomStateManager.SetState(new ProjectileLaunchedState());
+            startTime = -1;
+        }
+    }
+
+    private void UpdateTimer(int totalTime, Action onFinished)
+    {
+        float passedTime = Time.time - startTime;
+        if (passedTime >= totalTime)
+        {
+            startTime = -1;
+            SetTimerText(0);
+            onFinished?.Invoke();
+        }
+        else
+        {
+            SetTimerText(moveTurnTime - passedTime);
         }
     }
 

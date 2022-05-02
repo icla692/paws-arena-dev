@@ -20,7 +20,8 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [HideInInspector]
     public PhotonView photonView;
 
-    private IRoomState currentState;
+    [HideInInspector]
+    public IRoomState currentState;
 
     void Start()
     {
@@ -52,11 +53,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     {
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            SetState(new MyTurnState());
+            SetState(new MyTurnMovementState());
         }
         else
         {
-            SetState(new OtherPlayersTurnState());
+            SetState(new OtherPlayersMoveTurnState());
         }
     }
 
@@ -69,7 +70,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         {
             if(sceneInfo.usersInScene == 1)
             {
-                SetState(new MyTurnState());
+                SetState(new MyTurnMovementState());
                 return;
             }
         }
@@ -78,11 +79,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         // 1v1 mode
         if (lastPlayerRound == 0)
         {
-            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new OtherPlayersTurnState() : new MyTurnState());
+            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new OtherPlayersMoveTurnState() : new MyTurnMovementState());
         }
         else
         {
-            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new MyTurnState() : new OtherPlayersTurnState());
+            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new MyTurnMovementState() : new OtherPlayersMoveTurnState());
         }
     }
 

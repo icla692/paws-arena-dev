@@ -9,7 +9,9 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [Space]
 
         [SerializeField]
-        private int turnDurationInSeconds = 30;
+        private int moveTurnDurationInSeconds = 15;
+        [SerializeField]
+        private int shootTurnDurationInSeconds = 15;
 
         [Header("Player configurations")]
         [Space]
@@ -32,10 +34,15 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [SerializeField] private Vector2 bulletSpeed;
         [SerializeField, Min(0.3f)] private Vector2 pressTimer;
         [SerializeField] private float bufferMaxTimer;
+        [SerializeField] private float factorRotationRocket;
 
-        public int GetTurnDurationInSeconds()
+        public int GetMoveTurnDurationInSeconds()
         {
-            return turnDurationInSeconds;
+            return moveTurnDurationInSeconds;
+        }
+        public int GetShootTurnDurationInSeconds()
+        {
+            return shootTurnDurationInSeconds;
         }
         public bool GetAirControl()
         {
@@ -83,6 +90,12 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         {
             return GetPressTimer().y + GetBufferMaxTimer();
         }
+
+        public float GetFactorRotationIndicator()
+        {
+            return factorRotationRocket;
+        }
+
         private float GetSpeedPerSecond()
         {
             return bulletSpeed.y / GetPressTimer().y;

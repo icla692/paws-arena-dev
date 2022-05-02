@@ -23,19 +23,28 @@ public class NoticesBehaviour : MonoBehaviour
     {
         if (state is WaitingForAllPlayersToJoinState)
         {
-            SetStatus("Waiting for players to join...");
+            SetStatus("Waiting for players to join");
         }else if(state is StartingGameState)
         {
-            SetStatus("Let's go!");
-        }else if(state is MyTurnState)
+            SetStatus("Let's go");
+        }else if(state is MyTurnMovementState)
         {
-            SetStatus("Your Turn");
-        }else if(state is OtherPlayersTurnState)
+            SetStatus("Your Turn to Move");
+        }else if(state is MyTurnShootingState)
         {
-            SetStatus("Other's Turn");
-        }else if (state is ProjectileLaunchedState)
+            SetStatus("Your Turn to Shoot");
+        }
+        else if(state is OtherPlayersMoveTurnState)
         {
-            SetStatus("Attack Launched!");
+            SetStatus("Other's Turn to Move");
+        }
+        else if (state is OtherPlayersShootingState)
+        {
+            SetStatus("Other's Turn to Shoot");
+        }
+        else if (state is ProjectileLaunchedState)
+        {
+            SetStatus("Attack Launched");
         }
     }
 

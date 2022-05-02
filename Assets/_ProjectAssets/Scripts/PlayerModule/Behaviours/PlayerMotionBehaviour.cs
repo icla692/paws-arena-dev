@@ -6,6 +6,8 @@ public class PlayerMotionBehaviour : MonoBehaviour
 {
     [SerializeField] private Collider2D ceilingCollider;
 
+    private bool isPaused = false;
+
     private PlayerState playerState;
 
     private Transform _transform;
@@ -32,7 +34,11 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     public void RegisterJumpCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        playerActions.Jump.started += _ => playerState.SetHasJump(true);
+        playerActions.Jump.started += _ =>
+        {
+            if (isPaused) return;
+            playerState.SetHasJump(true);
+        };
     }
 
     private void Update()
@@ -42,7 +48,7 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerState == null) return;
+        if (playerState == null || isPaused) return;
         if (playerState.movementDirection == 0 && !playerState.hasJump)
             return;
 
@@ -71,6 +77,7 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     private void SetMovementDirection(float value)
     {
+        if (isPaused) return;
         playerState.SetMovementDirection(value);
     }
 
@@ -94,6 +101,18 @@ public class PlayerMotionBehaviour : MonoBehaviour
     private float GetJumpForce()
     {
         return ConfigurationManager.Instance.Config.GetPlayerJumpForce();
+    }
+
+    public void SetIsPaused(bool val)
+    {
+        isPaused = val;
+        if (isPaused)
+        {
+            if (playerState.movementDirection != 0)
+            {
+                playerState.SetMovementDirection(0);
+            }
+        }
     }
 
     private void TryApplyRotationCorrection()

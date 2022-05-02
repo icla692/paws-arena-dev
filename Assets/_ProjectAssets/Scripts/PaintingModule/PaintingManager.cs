@@ -1,22 +1,26 @@
+using Anura.ConfigurationModule.Managers;
+using Anura.Models;
 using Anura.Templates.MonoSingleton;
 using DTerrain;
 using UnityEngine;
 
 public class PaintingManager : MonoSingleton<PaintingManager>
 {
-    [SerializeField] private int defaultCircleSize = 16;
-    [SerializeField] private int defaultOutlineSize = 4;
 
     [SerializeField] private BasicPaintableLayer primaryLayer;
     [SerializeField] private BasicPaintableLayer secondaryLayer;
 
-    private Shape destroyCircle;
-    private Shape outlineCircle;
+    private ShapeConfig currentShape;
 
-    private void Start()
+    public void RandomShape()
     {
-        destroyCircle = Shape.GenerateShapeCircle(defaultCircleSize);
-        outlineCircle = Shape.GenerateShapeCircle(defaultOutlineSize);
+        currentShape = ConfigurationManager.Instance.Shapes.GetRandomShape();
+        Debug.Log(currentShape.name);
+    }
+
+    public ShapeConfig GetCurrentShape()
+    {
+        return currentShape;
     }
 
     public void Destroy(Vector3 hitPoint)
@@ -24,8 +28,8 @@ public class PaintingManager : MonoSingleton<PaintingManager>
         primaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.clear,
-            Position = new Vector2Int((int)(hitPoint.x * primaryLayer.PPU) - defaultCircleSize, (int)(hitPoint.y * primaryLayer.PPU) - defaultCircleSize),
-            Shape = destroyCircle,
+            Position = new Vector2Int((int)(hitPoint.x * primaryLayer.PPU) - currentShape.GetSize(), (int)(hitPoint.y * primaryLayer.PPU) - currentShape.GetSize()),
+            Shape = currentShape.shape,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.DESTROY
         });
@@ -33,8 +37,8 @@ public class PaintingManager : MonoSingleton<PaintingManager>
         secondaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.clear,
-            Position = new Vector2Int((int)(hitPoint.x * secondaryLayer.PPU) - defaultCircleSize, (int)(hitPoint.y * secondaryLayer.PPU) - defaultCircleSize),
-            Shape = destroyCircle,
+            Position = new Vector2Int((int)(hitPoint.x * secondaryLayer.PPU) - currentShape.GetSize(), (int)(hitPoint.y * secondaryLayer.PPU) - currentShape.GetSize()),
+            Shape = currentShape.shape,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.NONE
         });
@@ -46,8 +50,8 @@ public class PaintingManager : MonoSingleton<PaintingManager>
         primaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.black,
-            Position = new Vector2Int((int)(hitPoint.x * primaryLayer.PPU) - defaultCircleSize, (int)(hitPoint.y * primaryLayer.PPU) - defaultCircleSize),
-            Shape = destroyCircle,
+            Position = new Vector2Int((int)(hitPoint.x * primaryLayer.PPU) - currentShape.GetSize(), (int)(hitPoint.y * primaryLayer.PPU) - currentShape.GetSize()),
+            Shape = currentShape.shape,
             PaintingMode = PaintingMode.NONE,
             DestructionMode = DestructionMode.BUILD
         });
@@ -55,8 +59,8 @@ public class PaintingManager : MonoSingleton<PaintingManager>
         secondaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.black,
-            Position = new Vector2Int((int)(hitPoint.x * secondaryLayer.PPU) - defaultCircleSize, (int)(hitPoint.y * secondaryLayer.PPU) - defaultCircleSize),
-            Shape = destroyCircle,
+            Position = new Vector2Int((int)(hitPoint.x * secondaryLayer.PPU) - currentShape.GetSize(), (int)(hitPoint.y * secondaryLayer.PPU) - currentShape.GetSize()),
+            Shape = currentShape.shape,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.BUILD
         });
