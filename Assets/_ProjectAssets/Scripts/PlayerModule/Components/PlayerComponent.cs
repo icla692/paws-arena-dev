@@ -58,6 +58,7 @@ public class PlayerComponent : MonoBehaviour
 
     private void SetupMyPlayer()
     {
+        PlayerManager.Instance.RegisterMyPlayer(this);
         state = new PlayerState();
 
         playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();

@@ -10,11 +10,15 @@ namespace Anura.ConfigurationModule.ScriptableObjects
 
         [SerializeField]
         private int moveTurnDurationInSeconds = 15;
+
         [SerializeField]
         private int shootTurnDurationInSeconds = 15;
 
         [Header("Player configurations")]
         [Space]
+
+        [SerializeField]
+        private int playerTotalHealth = 100;
 
         [SerializeField, Tooltip("Whether or not a player can steer while jumping")]
         private bool airControl = false;
@@ -44,6 +48,13 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         {
             return shootTurnDurationInSeconds;
         }
+
+        public int GetPlayerTotalHealth()
+        {
+            return playerTotalHealth;
+        }
+
+
         public bool GetAirControl()
         {
             return airControl;
@@ -63,6 +74,7 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         {
             return movementSmoothing;
         }
+
 
         //indicator
 

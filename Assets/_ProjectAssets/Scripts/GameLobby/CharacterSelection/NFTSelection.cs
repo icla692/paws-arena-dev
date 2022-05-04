@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class NFTSelection : MonoBehaviour
 {
     public Transform nftGridParent;
+    public TMPro.TextMeshProUGUI furType;
 
     private async void OnEnable()
     {
@@ -30,8 +31,9 @@ public class NFTSelection : MonoBehaviour
         int idx = 0;
         foreach (NFT nft in nfts)
         {
-            RawImage picture = nftGridParent.GetChild(idx).GetComponent<RawImage>();
+            RawImage picture = nftGridParent.GetChild(idx).GetChild(0).GetComponent<RawImage>();
             picture.texture = nft.imageTex;
+            furType.text = nft.furType;
             idx++;
         }
     }

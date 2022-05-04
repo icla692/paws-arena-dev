@@ -11,6 +11,8 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     public PUNGameRoomManager photonManager;
     public GameObject playerPrefab;
+    public GameObject playerUIPrefab;
+    public Transform playerUIParent;
 
     [HideInInspector]
     public GameSceneMasterInfo sceneInfo = new GameSceneMasterInfo();

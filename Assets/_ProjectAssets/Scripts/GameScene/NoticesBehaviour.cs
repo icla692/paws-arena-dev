@@ -29,18 +29,18 @@ public class NoticesBehaviour : MonoBehaviour
             SetStatus("Let's go");
         }else if(state is MyTurnMovementState)
         {
-            SetStatus("Your Turn to Move");
+            SetStatus("");
         }else if(state is MyTurnShootingState)
         {
-            SetStatus("Your Turn to Shoot");
+            SetStatus("");
         }
         else if(state is OtherPlayersMoveTurnState)
         {
-            SetStatus("Other's Turn to Move");
+            SetStatus("");
         }
         else if (state is OtherPlayersShootingState)
         {
-            SetStatus("Other's Turn to Shoot");
+            SetStatus("");
         }
         else if (state is ProjectileLaunchedState)
         {

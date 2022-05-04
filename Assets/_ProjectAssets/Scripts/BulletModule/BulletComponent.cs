@@ -1,15 +1,18 @@
 using Anura.ConfigurationModule.Managers;
+using Photon.Pun;
 using UnityEngine;
 
 public class BulletComponent : MonoBehaviour
 {
     private bool isTouched = false;
     private Rigidbody2D rb;
+    private PhotonView photonView;
     private Transform thisT;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        photonView = GetComponent<PhotonView>();
         thisT = transform;
     }
 
@@ -30,7 +33,11 @@ public class BulletComponent : MonoBehaviour
 
         PaintingManager.Instance.RandomShape();
         PaintingManager.Instance.Destroy(hitPose);
-        VFXManager.Instance.InstantiateExplosion(hitPose);
+
+        if (photonView.IsMine)
+        {
+            VFXManager.Instance.PUN_InstantiateExplosion(hitPose);
+        }
 
         Destroy(gameObject);
     }

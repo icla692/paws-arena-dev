@@ -8,7 +8,7 @@ public class GameState
     public static List<NFT> nfts { get; private set; }
 
     static GameState(){
-        nfts = new List<NFT>();    
+        nfts = new List<NFT>();
     }
 
 }

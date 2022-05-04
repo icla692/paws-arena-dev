@@ -1,4 +1,5 @@
 using Anura.ConfigurationModule.Managers;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,15 +7,20 @@ using UnityEngine;
 
 public class TurnTimerBehaviour : MonoBehaviour
 {
-    public RoomStateManager roomStateManager;
-    public TMPro.TextMeshProUGUI text;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI text;
 
+    private RoomStateManager roomStateManager;
+    private PhotonView photonView;
     private int moveTurnTime;
     private int shootTurnTime;
     private float startTime;
 
     private void OnEnable()
     {
+        roomStateManager= RoomStateManager.Instance;
+        photonView = GetComponent<PhotonView>();
+
         moveTurnTime = ConfigurationManager.Instance.Config.GetMoveTurnDurationInSeconds();
         shootTurnTime = ConfigurationManager.Instance.Config.GetShootTurnDurationInSeconds();
         RoomStateManager.OnStateUpdated += OnStateUpdated;
@@ -31,29 +37,51 @@ public class TurnTimerBehaviour : MonoBehaviour
 
         IRoomState state = RoomStateManager.Instance.currentState;
 
-        if (state is MyTurnMovementState)
+        if (photonView.IsMine)
         {
-            UpdateTimer(moveTurnTime, () => { roomStateManager.SetState(new MyTurnShootingState()); });
+            if (state is MyTurnMovementState)
+            {
+                UpdateTimer(moveTurnTime, () => { roomStateManager.SetState(new MyTurnShootingState()); });
+            }else if(state is MyTurnShootingState)
+            {
+                UpdateTimer(shootTurnTime, () => { roomStateManager.SetState(new ProjectileLaunchedState()); });
+            }
         }
-        else if(state is OtherPlayersMoveTurnState)
+        else
         {
-            UpdateTimer(moveTurnTime, () => { roomStateManager.SetState(new OtherPlayersShootingState()); });
-        }
-        else if(state is MyTurnShootingState || state is OtherPlayersShootingState)
-        {
-            UpdateTimer(shootTurnTime, () => { roomStateManager.SetState(new ProjectileLaunchedState()); });
+            if (state is OtherPlayersMoveTurnState)
+            {
+                UpdateTimer(moveTurnTime, () => { roomStateManager.SetState(new OtherPlayersShootingState()); });
+            }
+            else if (state is OtherPlayersShootingState)
+            {
+                UpdateTimer(shootTurnTime, () => { roomStateManager.SetState(new ProjectileLaunchedState()); });
+            }
         }
     }
 
     private void OnStateUpdated(IRoomState state)
     {
-        if(state is MyTurnMovementState || state is OtherPlayersMoveTurnState || state is MyTurnShootingState)
+        if (photonView.IsMine)
         {
-            startTime = Time.time;
-        }
-        else
+            if (state is MyTurnMovementState || state is MyTurnShootingState)
+            {
+                startTime = Time.time;
+            }
+            else
+            {
+                startTime = -1;
+            }
+        }else
         {
-            startTime = -1;
+            if (state is OtherPlayersMoveTurnState || state is OtherPlayersShootingState)
+            {
+                startTime = Time.time;
+            }
+            else
+            {
+                startTime = -1;
+            }
         }
     }
 

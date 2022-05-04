@@ -7,32 +7,92 @@ using System.Xml;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using static Unity.VectorGraphics.SVGParser;
 
-public class NFTImageLoader : MonoBehaviour
+public class NFTImageLoader
 {
-    public string URL;
-
-    private async void Start()
+    public static async UniTask<XmlDocument> LoadSVGXML(string URL)
     {
         XmlDocument doc = new XmlDocument();
         string xmlString = await LoadXMLFromURL(URL);
         doc.LoadXml(xmlString);
 
+        return doc;
+    }
+    public static Texture2D LoadNFT(XmlDocument doc)
+    {
         var nsMan = new XmlNamespaceManager(doc.NameTable);
         nsMan.AddNamespace("ns", "http://www.w3.org/2000/svg");
-        var images = doc.ChildNodes[1].SelectNodes("//ns:g", nsMan);
-        for(int i=0; i < images.Count; i++){
-            var id = images[i].Attributes["id"];
-            if (id != null)
+
+        var images = doc.ChildNodes[1].SelectNodes("//ns:image", nsMan);
+
+        Texture2D finalTex = new Texture2D(1000, 1000);
+
+        for (int i = 0; i < images.Count; i++)
+        {
+            int offsetX = 0, offsetY = 0;
+
+            XmlNode xNode = images[i].Attributes["x"];
+            if (xNode != null)
             {
-                Debug.Log("ID: " + id.Value);
+                int.TryParse(images[i].Attributes["x"].Value, out offsetX);
+            }
+
+            XmlNode yNode = images[i].Attributes["y"];
+            if (yNode != null)
+            {
+                int.TryParse(images[i].Attributes["y"].Value, out offsetY);
+            }
+
+            Texture2D tex = ImageFromBase64(images[i].Attributes["href"].Value.Split(",")[1]);
+
+            for(int x=0; x<tex.width; x++)
+            {
+                for(int y=0; y<tex.height; y++)
+                {
+                    Color col = tex.GetPixel(x, y);
+                    if(col.a > 0)
+                    {
+                        finalTex.SetPixel(offsetX + x, (1000 - tex.height) - offsetY +  y, col);
+                    }
+                }
+            }
+
+            finalTex.Apply();
+        }
+
+
+        return finalTex;
+    }
+
+    private static Texture2D ImageFromBase64(string base64String)
+    {
+        Texture2D tex = new Texture2D(2, 2);
+        byte[] base64 = Convert.FromBase64String(base64String);
+        tex.LoadImage(base64);
+        return tex;
+    }
+
+    public static string GetFurType(XmlDocument doc)
+    {
+        var nsMan = new XmlNamespaceManager(doc.NameTable);
+        nsMan.AddNamespace("ns", "http://www.w3.org/2000/svg");
+
+        var images = doc.ChildNodes[1].SelectNodes("//ns:g", nsMan);
+        for (int i = 0; i < images.Count; i++)
+        {
+            var id = images[i].Attributes["id"];
+            if (id != null && id.Value.Contains("kittycolor"))
+            {
+                return id.Value;
             }
         }
 
+        return "Unkown Fur";
     }
 
-    private async UniTask<string> LoadXMLFromURL(string URL)
+    private static async UniTask<string> LoadXMLFromURL(string URL)
     {
         UnityWebRequest www = new UnityWebRequest(URL, "GET");
         www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -54,21 +114,6 @@ public class NFTImageLoader : MonoBehaviour
 
         return rawText;
     }
-
-    //Current SVG reader from unity doesn't read well base64 encoded png inside SVG
-    //private void CreateSVG(string xmlTest)
-    //{
-    //    using (var reader = new StringReader(xmlTest)) {
-    //        SceneInfo svg = SVGParser.ImportSVG(reader);
-    //        VectorUtils.TessellationOptions tessellationOptions = new VectorUtils.TessellationOptions();
-    //        var geoms = VectorUtils.TessellateScene(svg.Scene, tessellationOptions);
-
-    //        var sprite = VectorUtils.BuildSprite(geoms, 10.0f, VectorUtils.Alignment.Center, Vector2.zero, 128, true);
-    //        sprite.name = "My SVG";
-    //        var spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-    //        spriteRenderer.sprite = sprite;
-    //    }
-    //}
 
 
 }
