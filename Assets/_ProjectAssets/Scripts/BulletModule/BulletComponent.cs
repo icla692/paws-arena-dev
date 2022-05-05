@@ -29,10 +29,8 @@ public class BulletComponent : MonoBehaviour
             return;
         
         isTouched = true;
-        var hitPose = collision.contacts[0].point;
 
-        PaintingManager.Instance.RandomShape();
-        PaintingManager.Instance.Destroy(hitPose);
+        var hitPose = collision.contacts[0].point;
 
         if (photonView.IsMine)
         {

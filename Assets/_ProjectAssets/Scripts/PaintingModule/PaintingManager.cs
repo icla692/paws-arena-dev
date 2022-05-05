@@ -12,10 +12,13 @@ public class PaintingManager : MonoSingleton<PaintingManager>
 
     private ShapeConfig currentShape;
 
+    private void Start()
+    {
+        RandomShape();
+    }
     public void RandomShape()
     {
         currentShape = ConfigurationManager.Instance.Shapes.GetRandomShape();
-        Debug.Log(currentShape.name);
     }
 
     public ShapeConfig GetCurrentShape()

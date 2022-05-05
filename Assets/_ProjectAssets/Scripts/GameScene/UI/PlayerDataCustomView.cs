@@ -1,4 +1,5 @@
 using Anura.ConfigurationModule.Managers;
+using Cysharp.Threading.Tasks;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -22,6 +23,7 @@ public class PlayerDataCustomView : MonoBehaviour
     void Start()
     {
         photonview = GetComponent<PhotonView>();
+
         healthUIBehaviour.Init();
         if (photonview.IsMine)
         {
@@ -36,8 +38,8 @@ public class PlayerDataCustomView : MonoBehaviour
     public void Init()
     {
         photonview = GetComponent<PhotonView>();
-        transform.parent = GameObject.Find(parentPath).transform;
         RectTransform rt = GetComponent<RectTransform>();
+        rt.SetParent(GameObject.Find(parentPath).transform);
         int myseat = PUNGameRoomManager.Instance.GetMySeat();
 
         myPlayer = (myseat == 0 && photonview.IsMine || myseat == 1 && !photonview.IsMine) ? 0 : 1;
@@ -60,5 +62,9 @@ public class PlayerDataCustomView : MonoBehaviour
     public void SetHealth(int val)
     {
         healthUIBehaviour.OnHealthUpdated(val);
+        if (!photonview.IsMine)
+        {
+            PlayerManager.Instance.otherPlayerHealth = val;
+        }
     }
 }

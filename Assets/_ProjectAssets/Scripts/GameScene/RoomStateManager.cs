@@ -1,8 +1,6 @@
 using Anura.Templates.MonoSingleton;
 using Photon.Pun;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomStateManager : MonoSingleton<RoomStateManager>
@@ -36,6 +34,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         SetState(new WaitingForAllPlayersToJoinState()); ;
         photonView.RPC("OnPlayerSceneLoaded", RpcTarget.All);
     }
+
 
     public void SetState(IRoomState state)
     {
@@ -108,5 +107,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     private void OnAllPlayersJoinedScene()
     {
         SetState(new StartingGameState());
+    }
+
+    [PunRPC]
+    private void StartResolveGame(GameResolveState state)
+    {
+        SetState(new ResolvingGameState(state));
     }
 }

@@ -12,16 +12,30 @@ public class HealthUIBehaviour : MonoBehaviour
 
     private float healthBarTotalWidth = -1;
     private int totalhealth;
+    private int currentHealth;
 
+    private bool isInit = false;
+
+    private void Start()
+    {
+        currentHealth = totalhealth;
+    }
     public void OnHealthUpdated(int val)
     {
-        healthText.text = "" + val;
-        healthBar.sizeDelta = new Vector2(healthBarTotalWidth * (val * 1.0f / totalhealth), healthBar.sizeDelta.y);
+        currentHealth = val;
+
+        if (!isInit) return;
+
+        healthText.text = "" + currentHealth;
+        healthBar.sizeDelta = new Vector2(healthBarTotalWidth * (currentHealth * 1.0f / totalhealth), healthBar.sizeDelta.y);
     }
 
     public void Init()
     {
+        isInit = true;
         healthBarTotalWidth = healthBar.sizeDelta.x;
         totalhealth = ConfigurationManager.Instance.Config.GetPlayerTotalHealth();
+
+        OnHealthUpdated(currentHealth);
     }
 }

@@ -45,6 +45,19 @@ public class NoticesBehaviour : MonoBehaviour
         else if (state is ProjectileLaunchedState)
         {
             SetStatus("Attack Launched");
+        }else if(state is ResolvingGameState)
+        {
+            ResolvingGameState crtState = (ResolvingGameState)state;
+            if(crtState.state == GameResolveState.PLAYER_1_WIN)
+            {
+                SetStatus("Player 1 won!!");
+            }else if(crtState.state == GameResolveState.PLAYER_2_WIN)
+            {
+                SetStatus("Player 2 won!!");
+            }else if(crtState.state == GameResolveState.DRAW)
+            {
+                SetStatus("It's a draw!");
+            }
         }
     }
 

@@ -24,6 +24,8 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         this.playerState = playerState;
         this.playerState.onMovementDirectionChanged += OnMovementDirectionChanged;
         this.playerState.onJumpStateChanged += OnJumpStateChanged;
+
+        PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
     }
 
     public void PreJumpAnimEnded()
@@ -71,9 +73,11 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         transform.localScale = theScale;
     }
 
-    [ContextMenu("Kill Kitty")]
-    public void KillKitty()
+    private void OnHealthUpdated(int health)
     {
-        _animator.SetBool("isDead", true);
+        if (health <= 0)
+        {
+            _animator.SetBool("isDead", true);
+        }
     }
 }

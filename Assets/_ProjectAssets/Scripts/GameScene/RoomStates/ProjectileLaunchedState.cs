@@ -17,6 +17,17 @@ public class ProjectileLaunchedState : IRoomState
     {
         yield return new WaitForSeconds(3f);
 
-        context.photonView.RPC("StartNextRound", RpcTarget.All);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            GameResolveState resolveState = PlayerManager.Instance.GetWinnerByHealth();
+            if (resolveState != GameResolveState.NO_WIN)
+            {
+                context.photonView.RPC("StartResolveGame", RpcTarget.All, resolveState);
+            }
+            else
+            {
+                context.photonView.RPC("StartNextRound", RpcTarget.All);
+            }
+        }
     }
 }

@@ -12,7 +12,8 @@ namespace Anura.ConfigurationModule.ScriptableObjects
 
         public ShapeConfig GetRandomShape()
         {
-            return shapes[Random.Range(0, shapes.Count)];
+            //return shapes[Random.Range(0, shapes.Count)];
+            return shapes[4];
         }
     }
 }
