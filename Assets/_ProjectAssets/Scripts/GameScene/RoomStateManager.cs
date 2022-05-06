@@ -29,6 +29,17 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         Init();
     }
 
+    private void OnEnable()
+    {
+        PUNRoomUtils.onPlayerLeft += OnPlayerLeft;
+    }
+
+
+    private void OnDisable()
+    {
+        PUNRoomUtils.onPlayerLeft -= OnPlayerLeft;
+    }
+
     private void Init()
     {
         SetState(new WaitingForAllPlayersToJoinState()); ;
@@ -60,6 +71,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         {
             SetState(new OtherPlayersMoveTurnState());
         }
+    }
+
+    private void OnPlayerLeft()
+    {
+        SetState(new ResolvingGameState(PhotonNetwork.LocalPlayer.IsMasterClient ? GameResolveState.PLAYER_1_WIN : GameResolveState.PLAYER_2_WIN));
     }
 
 
