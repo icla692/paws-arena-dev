@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletComponent : MonoBehaviour
 {
+    public AudioClip shotSfx;
+
     private bool isTouched = false;
     private Rigidbody2D rb;
     private PhotonView photonView;
@@ -14,6 +16,8 @@ public class BulletComponent : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         photonView = GetComponent<PhotonView>();
         thisT = transform;
+
+        SFXManager.Instance.PlayOneShot(shotSfx, 0.5f);
     }
 
     private void Update()

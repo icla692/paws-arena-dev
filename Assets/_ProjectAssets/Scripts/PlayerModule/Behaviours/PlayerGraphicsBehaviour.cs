@@ -7,6 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerGraphicsBehaviour : MonoBehaviour
 {
+    [SerializeField]
+    private AudioClip jumpStartSound;
+    [SerializeField]
+    private AudioClip jumpEndSound;
+
     private Animator _animator;
     private PhotonView _photonView;
     private PlayerState playerState;
@@ -21,6 +26,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
     public void RegisterPlayerState(PlayerState playerState)
     {
+
         this.playerState = playerState;
         this.playerState.onMovementDirectionChanged += OnMovementDirectionChanged;
         this.playerState.onJumpStateChanged += OnJumpStateChanged;
@@ -28,11 +34,13 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
     }
 
+
     public void PreJumpAnimEnded()
     {
         if (_photonView.IsMine)
         {
             this.playerState.SetQueueJumpImpulse(true);
+            SFXManager.Instance.PlayOneShot(jumpStartSound);
         }
     }
 
@@ -47,6 +55,11 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     private void OnJumpStateChanged(bool jumpState)
     {
         _animator.SetBool("isJumping", jumpState);
+
+        if (!jumpState)
+        {
+            SFXManager.Instance.PlayOneShot(jumpEndSound);
+        }
     }
 
     private void OnMovementDirectionChanged(float dir)
@@ -79,5 +92,10 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         {
             _animator.SetBool("isDead", true);
         }
+    }
+
+    public void SetShootingPhase(bool val)
+    {
+        _animator.SetBool("isAiming", val);
     }
 }

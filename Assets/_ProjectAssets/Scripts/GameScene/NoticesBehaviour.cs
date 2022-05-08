@@ -35,7 +35,8 @@ public class NoticesBehaviour : MonoBehaviour
         }else if(state is MyTurnMovementState)
         {
             SetStatus("");
-        }else if(state is MyTurnShootingState)
+        }
+        else if(state is MyTurnShootingState)
         {
             SetStatus("");
         }

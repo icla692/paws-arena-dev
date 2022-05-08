@@ -11,6 +11,8 @@ public class PlayerThrowBehaviour : MonoBehaviour
     [SerializeField] private GameObject bullet;
 
     [SerializeField] private LineRenderer lineIndicatorSpeed;
+    [SerializeField] private ParticleSystem particles;
+    [SerializeField] private AudioClip chargingSfx;
 
     private Config config => ConfigurationManager.Instance.Config;
 
@@ -51,11 +53,16 @@ public class PlayerThrowBehaviour : MonoBehaviour
         timeElapsed = 0;
         isStarted = true;
 
+        particles.Play();
+        SFXManager.Instance.PlayOneShot(chargingSfx);
     }
     private void ThrowCompleted()
     {
         isStarted = false;
         lineIndicatorSpeed.SetPosition(1, Vector3.zero);
+
+        particles.Stop();
+        SFXManager.Instance.StopOneShot();
 
         if (config.GetValidIndicatorTime() < timeElapsed || config.GetPressTimer().x > timeElapsed)
             return;

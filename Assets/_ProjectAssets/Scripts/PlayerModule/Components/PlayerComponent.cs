@@ -95,6 +95,15 @@ public class PlayerComponent : MonoBehaviour
             playerActions.Disable();
         }
 
+        if(roomState is MyTurnShootingState)
+        {
+            playerGraphicsBehaviour.SetShootingPhase(true);
+        }
+        else
+        {
+            playerGraphicsBehaviour.SetShootingPhase(false);
+        }
+
 
         weaponWrapper.SetActive(roomState is MyTurnShootingState);
         playerMotionBehaviour.SetIsPaused(roomState is MyTurnShootingState);

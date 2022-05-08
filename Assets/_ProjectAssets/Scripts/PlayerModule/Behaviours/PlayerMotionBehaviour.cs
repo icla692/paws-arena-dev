@@ -98,6 +98,7 @@ public class PlayerMotionBehaviour : MonoBehaviour
     {
         return ConfigurationManager.Instance.Config.GetMovementSmoothing();
     }
+
     private float GetJumpForce()
     {
         return ConfigurationManager.Instance.Config.GetPlayerJumpForce();
