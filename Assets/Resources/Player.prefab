@@ -596,7 +596,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755019818828855169}
-  m_LocalRotation: {x: -0, y: -0, z: 0.3420201, w: 0.9396927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.015537216, y: -0.015294379, z: 0}
   m_LocalScale: {x: 0.12138425, y: 0.12138425, z: 0.12138425}
   m_ConstrainProportionsScale: 0
@@ -608,7 +608,7 @@ Transform:
   - {fileID: 8544357574872750673}
   m_Father: {fileID: 713622243602097521}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 40}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7054175045540231323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,6 +934,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: isDead
+  - Type: 4
+    SynchronizeType: 0
+    Name: isAiming
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

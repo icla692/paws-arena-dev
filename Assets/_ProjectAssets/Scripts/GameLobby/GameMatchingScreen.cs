@@ -112,6 +112,10 @@ public class GameMatchingScreen : MonoBehaviour
 
     public void StartGame()
     {
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible =false;
+        }
         startButton.SetActive(false);
         GetComponent<PhotonView>().RPC("StartCountdown", RpcTarget.All);
     }

@@ -21,6 +21,24 @@ public class PlayerThrowBehaviour : MonoBehaviour
     private float timeElapsed;
     private Vector3 valueToLerp;
 
+    private void OnEnable()
+    {
+        RoomStateManager.OnStateUpdated += OnStateUpdated;
+    }
+
+    private void OnDisable()
+    {
+        RoomStateManager.OnStateUpdated -= OnStateUpdated;
+    }
+
+    private void OnStateUpdated(IRoomState state)
+    {
+        if(state is ProjectileLaunchedState && isStarted)
+        {
+            ThrowCompleted();
+        }
+    }
+
     private void Update()
     {
         if (!isStarted)

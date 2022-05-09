@@ -72,6 +72,9 @@ public class PlayerMotionBehaviour : MonoBehaviour
         {
             _rigidbody2D.AddForce(Vector2.up * GetJumpForce(), ForceMode2D.Impulse);
             playerState.SetQueueJumpImpulse(false);
+        }else if(jump) //Jumped in-air. Wasted.
+        {
+            playerState.SetQueueJumpImpulse(false);
         }
     }
 

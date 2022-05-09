@@ -76,6 +76,7 @@ public class PlayerComponent : MonoBehaviour
         var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
 
+        weaponWrapper.SetActive(false);
         playerActions.Disable();
     }
 

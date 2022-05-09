@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3916bdf1dd76659459c8b39607dd49c6, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  moveTurnDurationInSeconds: 5
+  moveTurnDurationInSeconds: 10
   shootTurnDurationInSeconds: 10
   playerTotalHealth: 100
-  airControl: 0
+  airControl: 1
   playerSpeed: 10
   playerJumpForce: 7
   movementSmoothing: 0.05

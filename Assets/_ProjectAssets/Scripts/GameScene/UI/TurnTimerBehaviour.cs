@@ -96,7 +96,7 @@ public class TurnTimerBehaviour : MonoBehaviour
         }
         else
         {
-            SetTimerText(moveTurnTime - passedTime);
+            SetTimerText(totalTime - passedTime);
         }
     }
 

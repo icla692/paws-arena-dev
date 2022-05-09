@@ -62,6 +62,15 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScreenPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""705f3fd2-a5cc-439b-a73e-ce35da8c8282"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -218,6 +227,28 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a4f1ac5-62ff-467b-bb66-bc7cf049f667"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52bcb133-ab61-40d6-824f-4fb6eba800b1"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScreenPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -242,6 +273,7 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Indicator = m_Player.FindAction("Indicator", throwIfNotFound: true);
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
+        m_Player_ScreenPosition = m_Player.FindAction("ScreenPosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -305,6 +337,7 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Indicator;
     private readonly InputAction m_Player_Throw;
+    private readonly InputAction m_Player_ScreenPosition;
     public struct PlayerActions
     {
         private @GameInputActions m_Wrapper;
@@ -313,6 +346,7 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Indicator => m_Wrapper.m_Player_Indicator;
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
+        public InputAction @ScreenPosition => m_Wrapper.m_Player_ScreenPosition;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -334,6 +368,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                 @Throw.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
                 @Throw.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
                 @Throw.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
+                @ScreenPosition.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenPosition;
+                @ScreenPosition.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenPosition;
+                @ScreenPosition.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenPosition;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -350,6 +387,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                 @Throw.started += instance.OnThrow;
                 @Throw.performed += instance.OnThrow;
                 @Throw.canceled += instance.OnThrow;
+                @ScreenPosition.started += instance.OnScreenPosition;
+                @ScreenPosition.performed += instance.OnScreenPosition;
+                @ScreenPosition.canceled += instance.OnScreenPosition;
             }
         }
     }
@@ -369,5 +409,6 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnIndicator(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
+        void OnScreenPosition(InputAction.CallbackContext context);
     }
 }
