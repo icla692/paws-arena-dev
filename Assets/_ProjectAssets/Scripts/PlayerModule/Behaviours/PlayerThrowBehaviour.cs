@@ -20,14 +20,17 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
     private float timeElapsed;
     private Vector3 valueToLerp;
+    private bool isEnabled = false;
 
     private void OnEnable()
     {
+        isEnabled = true;
         RoomStateManager.OnStateUpdated += OnStateUpdated;
     }
 
     private void OnDisable()
     {
+        isEnabled = false;
         RoomStateManager.OnStateUpdated -= OnStateUpdated;
     }
 
@@ -68,6 +71,8 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
     private void ThrowStarted()
     {
+        if (!isEnabled) return; 
+
         timeElapsed = 0;
         isStarted = true;
 
@@ -76,6 +81,8 @@ public class PlayerThrowBehaviour : MonoBehaviour
     }
     private void ThrowCompleted()
     {
+        if (!isEnabled) return;
+
         isStarted = false;
         lineIndicatorSpeed.SetPosition(1, Vector3.zero);
 
