@@ -16,6 +16,12 @@ public class PlayerComponent : MonoBehaviour
     private PlayerMotionBehaviour playerMotionBehaviour;
     private PhotonView photonView;
 
+
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+        playerMotionBehaviour = GetComponent<PlayerMotionBehaviour>();
+    }
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -30,8 +36,6 @@ public class PlayerComponent : MonoBehaviour
 
     private void OnEnable()
     {
-        photonView = GetComponent<PhotonView>();
-
         if (photonView != null && photonView.IsMine)
         {
             RoomStateManager.OnStateUpdated += OnStateUpdatedForMyPlayer;
@@ -63,7 +67,6 @@ public class PlayerComponent : MonoBehaviour
 
         playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
 
-        playerMotionBehaviour = GetComponent<PlayerMotionBehaviour>();
         playerMotionBehaviour.RegisterMovementCallbacks(playerActions);
         playerMotionBehaviour.RegisterJumpCallbacks(playerActions);
         playerMotionBehaviour.RegisterPlayerState(state);
@@ -75,9 +78,6 @@ public class PlayerComponent : MonoBehaviour
 
         var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
-
-        weaponWrapper.SetActive(false);
-        playerActions.Disable();
     }
 
     private void SetupOtherPlayer()
@@ -87,7 +87,7 @@ public class PlayerComponent : MonoBehaviour
 
     private void OnStateUpdatedForMyPlayer(IRoomState roomState)
     {
-        if(roomState is MyTurnMovementState || roomState is MyTurnShootingState)
+        if(roomState is MyTurnState)
         {
             playerActions.Enable();
         }
@@ -95,23 +95,10 @@ public class PlayerComponent : MonoBehaviour
         {
             playerActions.Disable();
         }
-
-        if(roomState is MyTurnShootingState)
-        {
-            playerGraphicsBehaviour.SetShootingPhase(true);
-        }
-        else
-        {
-            playerGraphicsBehaviour.SetShootingPhase(false);
-        }
-
-
-        weaponWrapper.SetActive(roomState is MyTurnShootingState);
-        playerMotionBehaviour.SetIsPaused(roomState is MyTurnShootingState);
     }
 
     private void OnStateUpdatedForOtherPlayer(IRoomState roomState)
     {
-        weaponWrapper.SetActive(roomState is OtherPlayersShootingState);
+        //weaponWrapper.SetActive(roomState is OtherPlayersShootingState);
     }
 }

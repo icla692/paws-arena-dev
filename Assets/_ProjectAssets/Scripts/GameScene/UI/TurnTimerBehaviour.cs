@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnTimerBehaviour : MonoBehaviour
 {
@@ -12,17 +13,15 @@ public class TurnTimerBehaviour : MonoBehaviour
 
     private RoomStateManager roomStateManager;
     private PhotonView photonView;
-    private int moveTurnTime;
-    private int shootTurnTime;
+    private int turnTime;
     private float startTime;
 
     private void OnEnable()
     {
-        roomStateManager= RoomStateManager.Instance;
+        roomStateManager = RoomStateManager.Instance;
         photonView = GetComponent<PhotonView>();
 
-        moveTurnTime = ConfigurationManager.Instance.Config.GetMoveTurnDurationInSeconds();
-        shootTurnTime = ConfigurationManager.Instance.Config.GetShootTurnDurationInSeconds();
+        turnTime = ConfigurationManager.Instance.Config.GetTurnDurationInSeconds();
         RoomStateManager.OnStateUpdated += OnStateUpdated;
     }
 
@@ -37,51 +36,27 @@ public class TurnTimerBehaviour : MonoBehaviour
 
         IRoomState state = RoomStateManager.Instance.currentState;
 
-        if (photonView.IsMine)
+        if (state is MyTurnState || state is OtherPlayerTurnState)
         {
-            if (state is MyTurnMovementState)
-            {
-                UpdateTimer(moveTurnTime, () => { roomStateManager.SetState(new MyTurnShootingState()); });
-            }else if(state is MyTurnShootingState)
-            {
-                UpdateTimer(shootTurnTime, () => { roomStateManager.SetState(new ProjectileLaunchedState()); });
-            }
-        }
-        else
-        {
-            if (state is OtherPlayersMoveTurnState)
-            {
-                UpdateTimer(moveTurnTime, () => { roomStateManager.SetState(new OtherPlayersShootingState()); });
-            }
-            else if (state is OtherPlayersShootingState)
-            {
-                UpdateTimer(shootTurnTime, () => { roomStateManager.SetState(new ProjectileLaunchedState()); });
-            }
+            UpdateTimer(turnTime, () => { roomStateManager.SetState(new ProjectileLaunchedState()); });
         }
     }
 
     private void OnStateUpdated(IRoomState state)
     {
-        if (photonView.IsMine)
+        if (state is MyTurnState)
         {
-            if (state is MyTurnMovementState || state is MyTurnShootingState)
-            {
-                startTime = Time.time;
-            }
-            else
-            {
-                startTime = -1;
-            }
+            GetComponent<Image>().color = RoomStateManager.Instance.GetMyColor();
+            startTime = Time.time;
+        }else if(state is OtherPlayerTurnState)
+        {
+            GetComponent<Image>().color = RoomStateManager.Instance.GetOtherColor();
+            startTime = Time.time;
         }else
         {
-            if (state is OtherPlayersMoveTurnState || state is OtherPlayersShootingState)
-            {
-                startTime = Time.time;
-            }
-            else
-            {
-                startTime = -1;
-            }
+            GetComponent<Image>().color = Color.gray;
+            SetTimerText("-");
+            startTime = -1;
         }
     }
 
@@ -91,7 +66,7 @@ public class TurnTimerBehaviour : MonoBehaviour
         if (passedTime >= totalTime)
         {
             startTime = -1;
-            SetTimerText(0);
+            SetTimerText("-");
             onFinished?.Invoke();
         }
         else
@@ -100,6 +75,10 @@ public class TurnTimerBehaviour : MonoBehaviour
         }
     }
 
+    private void SetTimerText(string val)
+    {
+        text.text = val;
+    }
     private void SetTimerText(float time)
     {
         text.text = "" + (int)Math.Floor(time);

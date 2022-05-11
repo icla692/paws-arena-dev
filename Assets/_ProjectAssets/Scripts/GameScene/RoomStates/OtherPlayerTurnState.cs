@@ -1,6 +1,6 @@
 using Photon.Pun;
 
-public class OtherPlayersMoveTurnState : IRoomState
+public class OtherPlayerTurnState : IRoomState
 {
     public void Init(RoomStateManager context)
     {

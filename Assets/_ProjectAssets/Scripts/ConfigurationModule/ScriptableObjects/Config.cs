@@ -5,14 +5,16 @@ namespace Anura.ConfigurationModule.ScriptableObjects
     [CreateAssetMenu(fileName = "Config", menuName = "Configurations/Config", order = 1)]
     public class Config : ScriptableObject
     {
-        [Header("Game Configuration")]
+        [Header("Match Configuration")]
         [Space]
 
         [SerializeField]
-        private int moveTurnDurationInSeconds = 15;
+        private int turnDurationInSeconds = 30;
 
         [SerializeField]
-        private int shootTurnDurationInSeconds = 15;
+        private Color team1Color = Color.red;
+        [SerializeField]
+        private Color team2Color = Color.blue;
 
         [Header("Player configurations")]
         [Space]
@@ -40,13 +42,19 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [SerializeField] private float bufferMaxTimer;
         [SerializeField] private float factorRotationRocket;
 
-        public int GetMoveTurnDurationInSeconds()
+        public Color GetFirstTeamColor()
         {
-            return moveTurnDurationInSeconds;
+            return team1Color;
         }
-        public int GetShootTurnDurationInSeconds()
+
+        public Color GetSecondTeamColor()
         {
-            return shootTurnDurationInSeconds;
+            return team2Color;
+        }
+
+        public int GetTurnDurationInSeconds()
+        {
+            return turnDurationInSeconds;
         }
 
         public int GetPlayerTotalHealth()

@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Anura.Templates.MonoSingleton;
 using Photon.Pun;
 using System;
@@ -14,7 +15,6 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     [HideInInspector]
     public GameSceneMasterInfo sceneInfo = new GameSceneMasterInfo();
-
     [HideInInspector]
     public int lastPlayerRound = -1;
     [HideInInspector]
@@ -65,17 +65,27 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     {
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            SetState(new MyTurnMovementState());
+            SetState(new MyTurnState());
         }
         else
         {
-            SetState(new OtherPlayersMoveTurnState());
+            SetState(new OtherPlayerTurnState());
         }
     }
 
     private void OnPlayerLeft()
     {
         SetState(new ResolvingGameState(PhotonNetwork.LocalPlayer.IsMasterClient ? GameResolveState.PLAYER_1_WIN : GameResolveState.PLAYER_2_WIN));
+    }
+
+    public Color GetMyColor()
+    {
+        return PhotonNetwork.LocalPlayer.IsMasterClient ? ConfigurationManager.Instance.Config.GetFirstTeamColor() : ConfigurationManager.Instance.Config.GetSecondTeamColor();
+    }
+
+    public Color GetOtherColor()
+    {
+        return PhotonNetwork.LocalPlayer.IsMasterClient ? ConfigurationManager.Instance.Config.GetSecondTeamColor() : ConfigurationManager.Instance.Config.GetFirstTeamColor();
     }
 
 
@@ -87,7 +97,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         {
             if(sceneInfo.usersInScene == 1)
             {
-                SetState(new MyTurnMovementState());
+                SetState(new MyTurnState());
                 return;
             }
         }
@@ -96,11 +106,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         // 1v1 mode
         if (lastPlayerRound == 0)
         {
-            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new OtherPlayersMoveTurnState() : new MyTurnMovementState());
+            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new OtherPlayerTurnState() : new MyTurnState());
         }
         else
         {
-            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new MyTurnMovementState() : new OtherPlayersMoveTurnState());
+            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new MyTurnState() : new OtherPlayerTurnState());
         }
     }
 

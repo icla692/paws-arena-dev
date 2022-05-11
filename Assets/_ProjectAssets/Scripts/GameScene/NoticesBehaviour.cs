@@ -32,19 +32,11 @@ public class NoticesBehaviour : MonoBehaviour
         }else if(state is StartingGameState)
         {
             SetStatus("Let's go");
-        }else if(state is MyTurnMovementState)
+        }else if(state is MyTurnState)
         {
             SetStatus("");
         }
-        else if(state is MyTurnShootingState)
-        {
-            SetStatus("");
-        }
-        else if(state is OtherPlayersMoveTurnState)
-        {
-            SetStatus("");
-        }
-        else if (state is OtherPlayersShootingState)
+        else if(state is OtherPlayerTurnState)
         {
             SetStatus("");
         }
