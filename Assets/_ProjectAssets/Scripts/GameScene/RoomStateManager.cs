@@ -15,10 +15,13 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     [HideInInspector]
     public GameSceneMasterInfo sceneInfo = new GameSceneMasterInfo();
+
+    [HideInInspector]
+    public PhotonView photonView;
     [HideInInspector]
     public int lastPlayerRound = -1;
     [HideInInspector]
-    public PhotonView photonView;
+    public int roundNumber = 0;
 
     [HideInInspector]
     public IRoomState currentState;
@@ -49,7 +52,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     public void SetState(IRoomState state)
     {
-        if(currentState != null)
+        if (currentState != null)
         {
             currentState.OnExit();
         }
@@ -60,9 +63,9 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         OnStateUpdated?.Invoke(state);
     }
 
-
     public void SetFirstPlayerTurn()
     {
+        roundNumber++;
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             SetState(new MyTurnState());
@@ -89,28 +92,59 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     }
 
 
-    [PunRPC]
-    private void StartNextRound()
+    public void TryStartNextRound()
     {
-        //Single Player mode
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            if(sceneInfo.usersInScene == 1)
+            GameResolveState resolveState = PlayerManager.Instance.GetWinnerByDeath();
+            if (resolveState != GameResolveState.NO_WIN)
             {
-                SetState(new MyTurnState());
-                return;
+                photonView.RPC("StartResolveGame", RpcTarget.All, resolveState);
+            }
+            else
+            {
+                int nextRound = roundNumber+1;
+                if (nextRound > ConfigurationManager.Instance.Config.GetMaxNumberOfRounds())
+                {
+                    resolveState = PlayerManager.Instance.GetWinnerByHealth();
+                    photonView.RPC("StartResolveGame", RpcTarget.All, resolveState);
+                    return;
+                }
+
+                if (sceneInfo.usersInScene == 1)
+                {
+                    photonView.RPC("StartNextRound", RpcTarget.All, 0, nextRound);
+                }
+                else
+                {
+                    photonView.RPC("StartNextRound", RpcTarget.All, (lastPlayerRound + 1) % 2, nextRound);
+                }
             }
         }
+    }
 
+    public void SetProjectileLaunchedState()
+    {
+        photonView.RPC("StartProjectileLaunchedState", RpcTarget.All);
+    }
 
-        // 1v1 mode
-        if (lastPlayerRound == 0)
+    [PunRPC]
+    private void StartProjectileLaunchedState()
+    {
+        SetState(new ProjectileLaunchedState());
+    }
+
+    [PunRPC]
+    private void StartNextRound(int playerNumber, int roundNumber)
+    {
+        this.roundNumber = roundNumber;
+        if (playerNumber == 0)
         {
-            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new OtherPlayerTurnState() : new MyTurnState());
+            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new MyTurnState() : new OtherPlayerTurnState());
         }
         else
         {
-            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new MyTurnState() : new OtherPlayerTurnState());
+            SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new OtherPlayerTurnState() : new MyTurnState());
         }
     }
 

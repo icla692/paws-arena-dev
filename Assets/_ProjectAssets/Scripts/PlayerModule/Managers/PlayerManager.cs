@@ -27,7 +27,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         SetMyPlayerHealth(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
     }
 
-    public GameResolveState GetWinnerByHealth()
+    public GameResolveState GetWinnerByDeath()
     {
         if (myPlayerHealth > 0 && otherPlayerHealth > 0)
         {
@@ -42,6 +42,19 @@ public class PlayerManager : MonoSingleton<PlayerManager>
             return GameResolveState.PLAYER_1_WIN;
         }
         else return GameResolveState.PLAYER_2_WIN;
+    }
+
+    public GameResolveState GetWinnerByHealth()
+    {
+        if (myPlayerHealth > otherPlayerHealth)
+        {
+            return GameResolveState.PLAYER_1_WIN;
+        }
+        else if (myPlayerHealth < otherPlayerHealth)
+        {
+            return GameResolveState.PLAYER_2_WIN;
+        }
+        else return GameResolveState.DRAW;
     }
 
     private void SetMyPlayerHealth(int value)

@@ -44,6 +44,7 @@ public class PlayerComponent : MonoBehaviour
         {
             RoomStateManager.OnStateUpdated += OnStateUpdatedForOtherPlayer;
         }
+
     }
 
     private void OnDisable()
@@ -58,12 +59,23 @@ public class PlayerComponent : MonoBehaviour
         {
             RoomStateManager.OnStateUpdated -= OnStateUpdatedForOtherPlayer;
         }
+
+    }
+
+    private void OnDestroy()
+    {
+        if (state != null)
+        {
+            state.onWeaponOutChanged -= OnWeaponOutChanged;
+            PlayerActionsBar.WeaponStateUpdated -= ChangeWeaponState;
+        }
     }
 
     private void SetupMyPlayer()
     {
         PlayerManager.Instance.RegisterMyPlayer(this);
         state = new PlayerState();
+        state.onWeaponOutChanged += OnWeaponOutChanged;
 
         playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
 
@@ -78,6 +90,8 @@ public class PlayerComponent : MonoBehaviour
 
         var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
+
+        PlayerActionsBar.WeaponStateUpdated += ChangeWeaponState;
     }
 
     private void SetupOtherPlayer()
@@ -87,7 +101,8 @@ public class PlayerComponent : MonoBehaviour
 
     private void OnStateUpdatedForMyPlayer(IRoomState roomState)
     {
-        if(roomState is MyTurnState)
+        state.SetHasWeaponOut(false);
+        if (roomState is MyTurnState)
         {
             playerActions.Enable();
         }
@@ -100,5 +115,21 @@ public class PlayerComponent : MonoBehaviour
     private void OnStateUpdatedForOtherPlayer(IRoomState roomState)
     {
         //weaponWrapper.SetActive(roomState is OtherPlayersShootingState);
+    }
+
+    private void ChangeWeaponState(bool val)
+    {
+        state.SetHasWeaponOut(val);
+    }
+
+    private void OnWeaponOutChanged(bool val)
+    {
+        photonView.RPC("NetworkedChangeWeaponState", RpcTarget.All, val);
+    }
+
+    [PunRPC]
+    private void NetworkedChangeWeaponState(bool val)
+    {
+        weaponWrapper.SetActive(val);
     }
 }

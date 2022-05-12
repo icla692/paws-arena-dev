@@ -1,5 +1,6 @@
 using Anura.ConfigurationModule.Managers;
 using Anura.Extensions;
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerIndicatorBehaviour : MonoBehaviour
@@ -10,16 +11,20 @@ public class PlayerIndicatorBehaviour : MonoBehaviour
 
     //private float currentDirection;
     private Vector2 lastMouseDirection;
+    private PhotonView photonView;
+
+    private void Start()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
 
     private void Update()
     {
-        Vector2 indicatorScreenPos = Camera.main.WorldToScreenPoint(transform.position);
-       indicator.rotation = Quaternion.Euler(new Vector3(0, 0, Vector2.SignedAngle(new Vector2(1, 0), lastMouseDirection - indicatorScreenPos)));
-
-        //if (!hasRotate)
-        //    return;
-
-        //indicator.Rotate(Vector3.zero.WithZ(currentDirection * GetIndicatorSpeed()) * Time.deltaTime);
+        if (photonView.IsMine)
+        {
+            Vector2 indicatorScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+            indicator.rotation = Quaternion.Euler(new Vector3(0, 0, Vector2.SignedAngle(new Vector2(1, 0), lastMouseDirection - indicatorScreenPos)));
+        }
     }
 
     public void RegisterDirectionCallbacks(GameInputActions.PlayerActions playerActions)

@@ -9,6 +9,7 @@ public class PlayerState
     public event Action<float> onMovementDirectionChanged;
     public event Action<bool> onJumpStateChanged;
     public event Action<bool> onJumpImpulseQueuedChanged;
+    public event Action<bool> onWeaponOutChanged;
 
     public bool isFacingRight { get; private set; } = true;
     public float movementDirection { get; private set; } = 0;
@@ -18,6 +19,8 @@ public class PlayerState
     public bool hasJump{ get; private set; } = false;
     public bool hasJumpImpulseQueued { get; private set; } = false;
     public bool isInAir { get; private set; } = false;
+
+    public bool hasWeaponOut { get; private set; } = false;
 
     public void SetIsFacingRight(bool isFacingRight)
     {
@@ -44,5 +47,11 @@ public class PlayerState
     public void SetIsInAir(bool val)
     {
         this.isInAir = val;
+    }
+
+    public void SetHasWeaponOut(bool val)
+    {
+        hasWeaponOut = val;
+        onWeaponOutChanged?.Invoke(val);
     }
 }

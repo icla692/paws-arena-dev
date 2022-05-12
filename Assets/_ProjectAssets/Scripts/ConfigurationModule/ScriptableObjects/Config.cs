@@ -9,6 +9,8 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [Space]
 
         [SerializeField]
+        private int maxNumberOfRounds = 15;
+        [SerializeField]
         private int turnDurationInSeconds = 30;
 
         [SerializeField]
@@ -41,6 +43,12 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [SerializeField, Min(0.3f)] private Vector2 pressTimer;
         [SerializeField] private float bufferMaxTimer;
         [SerializeField] private float factorRotationRocket;
+
+
+        public int GetMaxNumberOfRounds()
+        {
+            return maxNumberOfRounds;
+        }
 
         public Color GetFirstTeamColor()
         {
@@ -91,9 +99,9 @@ namespace Anura.ConfigurationModule.ScriptableObjects
             return indicatorSpeed;
         }
 
-        public float GetBulletSpeed(float seconds)
+        public float GetBulletSpeed(float multiplier)
         {
-            return seconds * GetSpeedPerSecond();
+            return multiplier * GetSpeedPerSecond();
         }
 
         public Vector2 GetPressTimer()

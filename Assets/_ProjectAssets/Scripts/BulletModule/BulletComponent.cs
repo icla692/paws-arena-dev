@@ -36,7 +36,8 @@ public class BulletComponent : MonoBehaviour
 
         var hitPose = collision.contacts[0].point;
 
-        if (photonView.IsMine)
+        //If it blows very fast, on other player Start doesn't even has time to play
+        if (photonView!=null && photonView.IsMine)
         {
             VFXManager.Instance.PUN_InstantiateExplosion(hitPose);
         }

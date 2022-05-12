@@ -18,8 +18,6 @@ public class VFXByVelocity : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(rb.velocity);
-
         var particleEmission = particles.emission;
         particleEmission.rateOverTime = Mathf.Clamp((rb.velocity.magnitude / maxSpeed), 0, 1) * maxEmission;
     }
