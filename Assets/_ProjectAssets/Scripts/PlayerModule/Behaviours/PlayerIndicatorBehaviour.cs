@@ -1,48 +1,68 @@
 using Anura.ConfigurationModule.Managers;
+using Anura.ConfigurationModule.ScriptableObjects;
 using Anura.Extensions;
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class PlayerIndicatorBehaviour : MonoBehaviour
 {
     [SerializeField] private Transform indicator;
+    [SerializeField] private IndicatorInputCircleBehaviour indicatorCircle;
+    [SerializeField] private LineRenderer lineDirectionIndicator;
+    [SerializeField] private LineRenderer lineIndicatorSpeed;
+    [HideInInspector] public float currentPower;
 
-    //private bool hasRotate;
-
-    //private float currentDirection;
-    private Vector2 lastMouseDirection;
     private PhotonView photonView;
+    private Config config => ConfigurationManager.Instance.Config;
+    private Vector2 lastMousePosition;
+    private float maxRadius;
+
+    private bool isHoldingSelect = false;
 
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
+        maxRadius = config.GetCircleShootRadius();
+
+        lineDirectionIndicator.SetPosition(1, new Vector3(maxRadius, 0, 1));
+        SetPowerLineLength(1.0f);
     }
 
     private void Update()
     {
-        if (photonView.IsMine)
+        if (isHoldingSelect)
         {
-            Vector2 indicatorScreenPos = Camera.main.WorldToScreenPoint(transform.position);
-            indicator.rotation = Quaternion.Euler(new Vector3(0, 0, Vector2.SignedAngle(new Vector2(1, 0), lastMouseDirection - indicatorScreenPos)));
+            indicatorCircle.CheckPointerClick(lastMousePosition);
         }
+    }
+
+    private void SetPowerLineLength(float power)
+    {
+        lineIndicatorSpeed.SetPosition(1, new Vector3(power * maxRadius, 0, 1));
+        currentPower = power;
+    }
+
+    private void OnEnable()
+    {
+        indicatorCircle.onIndicatorPlaced += OnIndicatorPlaced;
+    }
+
+    private void OnDisable()
+    {
+        indicatorCircle.onIndicatorPlaced -= OnIndicatorPlaced;
     }
 
     public void RegisterDirectionCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        //playerActions.Indicator.started += _ => hasRotate = true;
-        //playerActions.Indicator.performed += value => SetIndicatorDirection(value.ReadValue<float>());
-        //playerActions.Indicator.canceled += _ => { hasRotate = false; SetIndicatorDirection(0); };
-
-        playerActions.ScreenPosition.performed += value => lastMouseDirection = value.ReadValue<Vector2>();
+        playerActions.ScreenPosition.performed += value => lastMousePosition = value.ReadValue<Vector2>();
+        playerActions.Select.started += _ => isHoldingSelect = true;
+        playerActions.Select.canceled += _ => isHoldingSelect = false;
     }
 
-    //public void SetIndicatorDirection(float direction)
-    //{
-    //    currentDirection = direction;
-    //}
-
-    //private float GetIndicatorSpeed()
-    //{
-    //    return ConfigurationManager.Instance.Config.GetIndicatorSpeed();
-    //}
+    private void OnIndicatorPlaced(float angle, float power)
+    {
+        indicator.rotation = Quaternion.Euler(Vector3.zero.WithZ(angle));
+        SetPowerLineLength(power);
+    }
 }

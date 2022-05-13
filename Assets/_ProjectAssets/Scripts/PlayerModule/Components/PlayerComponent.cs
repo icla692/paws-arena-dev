@@ -92,6 +92,9 @@ public class PlayerComponent : MonoBehaviour
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
 
         PlayerActionsBar.WeaponStateUpdated += ChangeWeaponState;
+
+        ChangeWeaponState(false);
+        playerActions.Disable();
     }
 
     private void SetupOtherPlayer()

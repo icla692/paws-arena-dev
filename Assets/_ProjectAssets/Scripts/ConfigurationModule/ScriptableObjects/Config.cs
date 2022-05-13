@@ -40,9 +40,8 @@ namespace Anura.ConfigurationModule.ScriptableObjects
 
         [SerializeField] private float indicatorSpeed;
         [SerializeField] private Vector2 bulletSpeed;
-        [SerializeField, Min(0.3f)] private Vector2 pressTimer;
-        [SerializeField] private float bufferMaxTimer;
         [SerializeField] private float factorRotationRocket;
+        [Range(2f, 12f), SerializeField] private float circleShootRadius = 5.5f;
 
 
         public int GetMaxNumberOfRounds()
@@ -101,32 +100,16 @@ namespace Anura.ConfigurationModule.ScriptableObjects
 
         public float GetBulletSpeed(float multiplier)
         {
-            return multiplier * GetSpeedPerSecond();
-        }
-
-        public Vector2 GetPressTimer()
-        {
-            return pressTimer;
-        }
-
-        public float GetBufferMaxTimer()
-        {
-            return bufferMaxTimer;
-        }
-
-        public float GetValidIndicatorTime()
-        {
-            return GetPressTimer().y + GetBufferMaxTimer();
+            return multiplier * bulletSpeed.y;
         }
 
         public float GetFactorRotationIndicator()
         {
             return factorRotationRocket;
         }
-
-        private float GetSpeedPerSecond()
+        public float GetCircleShootRadius()
         {
-            return bulletSpeed.y / GetPressTimer().y;
+            return circleShootRadius;
         }
     }
 }

@@ -21,7 +21,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [HideInInspector]
     public int lastPlayerRound = -1;
     [HideInInspector]
-    public int roundNumber = 0;
+    public int roundNumber = 1;
 
     [HideInInspector]
     public IRoomState currentState;
@@ -103,7 +103,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
             }
             else
             {
-                int nextRound = roundNumber+1;
+                int nextRound = roundNumber;
+                if(lastPlayerRound == 1)
+                {
+                    nextRound += 1;
+                }
                 if (nextRound > ConfigurationManager.Instance.Config.GetMaxNumberOfRounds())
                 {
                     resolveState = PlayerManager.Instance.GetWinnerByHealth();

@@ -46,6 +46,15 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Approve"",
+                    ""type"": ""Button"",
+                    ""id"": ""0c52e6f5-7b0b-4b3b-97e5-0da5a30132b2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Indicator"",
                     ""type"": ""Button"",
                     ""id"": ""cadd2cbc-d333-47ee-ad1d-103ea922ddde"",
@@ -55,7 +64,7 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Throw"",
+                    ""name"": ""Select"",
                     ""type"": ""Button"",
                     ""id"": ""311c2286-aea7-4353-9b6b-ea586eacd3ef"",
                     ""expectedControlType"": ""Button"",
@@ -219,23 +228,12 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b9f0fa32-8c70-4a66-b12c-195d910ee950"",
-                    ""path"": ""<Keyboard>/enter"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Throw"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""6a4f1ac5-62ff-467b-bb66-bc7cf049f667"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Throw"",
+                    ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -247,6 +245,17 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ScreenPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d03cf36-9e8c-4229-9260-91c0854b13a1"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Approve"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -271,8 +280,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Approve = m_Player.FindAction("Approve", throwIfNotFound: true);
         m_Player_Indicator = m_Player.FindAction("Indicator", throwIfNotFound: true);
-        m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
+        m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
         m_Player_ScreenPosition = m_Player.FindAction("ScreenPosition", throwIfNotFound: true);
     }
 
@@ -335,8 +345,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Approve;
     private readonly InputAction m_Player_Indicator;
-    private readonly InputAction m_Player_Throw;
+    private readonly InputAction m_Player_Select;
     private readonly InputAction m_Player_ScreenPosition;
     public struct PlayerActions
     {
@@ -344,8 +355,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         public PlayerActions(@GameInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Approve => m_Wrapper.m_Player_Approve;
         public InputAction @Indicator => m_Wrapper.m_Player_Indicator;
-        public InputAction @Throw => m_Wrapper.m_Player_Throw;
+        public InputAction @Select => m_Wrapper.m_Player_Select;
         public InputAction @ScreenPosition => m_Wrapper.m_Player_ScreenPosition;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -362,12 +374,15 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Approve.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnApprove;
+                @Approve.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnApprove;
+                @Approve.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnApprove;
                 @Indicator.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnIndicator;
                 @Indicator.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnIndicator;
                 @Indicator.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnIndicator;
-                @Throw.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
-                @Throw.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
-                @Throw.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
+                @Select.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelect;
                 @ScreenPosition.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenPosition;
                 @ScreenPosition.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenPosition;
                 @ScreenPosition.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScreenPosition;
@@ -381,12 +396,15 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Approve.started += instance.OnApprove;
+                @Approve.performed += instance.OnApprove;
+                @Approve.canceled += instance.OnApprove;
                 @Indicator.started += instance.OnIndicator;
                 @Indicator.performed += instance.OnIndicator;
                 @Indicator.canceled += instance.OnIndicator;
-                @Throw.started += instance.OnThrow;
-                @Throw.performed += instance.OnThrow;
-                @Throw.canceled += instance.OnThrow;
+                @Select.started += instance.OnSelect;
+                @Select.performed += instance.OnSelect;
+                @Select.canceled += instance.OnSelect;
                 @ScreenPosition.started += instance.OnScreenPosition;
                 @ScreenPosition.performed += instance.OnScreenPosition;
                 @ScreenPosition.canceled += instance.OnScreenPosition;
@@ -407,8 +425,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnApprove(InputAction.CallbackContext context);
         void OnIndicator(InputAction.CallbackContext context);
-        void OnThrow(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
         void OnScreenPosition(InputAction.CallbackContext context);
     }
 }

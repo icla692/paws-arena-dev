@@ -7,13 +7,12 @@ using UnityEngine;
 
 public class PlayerThrowBehaviour : MonoBehaviour
 {
+    [SerializeField] private PlayerIndicatorBehaviour indicator;
     [SerializeField] private Transform launchPoint;
     [SerializeField] private GameObject bullet;
-    [SerializeField] private LineRenderer lineIndicatorSpeed;
 
     private Config config => ConfigurationManager.Instance.Config;
 
-    private float forceMultiplier;
     private PhotonView photonView;
     private bool isEnabled = false;
 
@@ -38,12 +37,12 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
     public void RegisterThrowCallbacks(GameInputActions.PlayerActions playerActions)
     {
+        playerActions.Approve.performed += _ => Launch();
     }
 
     private void Launch()
     {
         if (!isEnabled) return;
-        forceMultiplier = 1.0f;
         var obj = PhotonNetwork.Instantiate(bullet.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
         obj.GetComponent<Rigidbody2D>().AddForce(launchPoint.up* GetBulletSpeed(), ForceMode2D.Impulse);
         RoomStateManager.Instance.SetProjectileLaunchedState();
@@ -51,6 +50,6 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
     private float GetBulletSpeed()
     {
-        return config.GetBulletSpeed(forceMultiplier);
+        return config.GetBulletSpeed(indicator.currentPower);
     }
 }

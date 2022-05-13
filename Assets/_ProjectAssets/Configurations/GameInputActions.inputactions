@@ -24,6 +24,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Approve",
+                    "type": "Button",
+                    "id": "0c52e6f5-7b0b-4b3b-97e5-0da5a30132b2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Indicator",
                     "type": "Button",
                     "id": "cadd2cbc-d333-47ee-ad1d-103ea922ddde",
@@ -33,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Throw",
+                    "name": "Select",
                     "type": "Button",
                     "id": "311c2286-aea7-4353-9b6b-ea586eacd3ef",
                     "expectedControlType": "Button",
@@ -197,23 +206,12 @@
                 },
                 {
                     "name": "",
-                    "id": "b9f0fa32-8c70-4a66-b12c-195d910ee950",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Throw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "6a4f1ac5-62ff-467b-bb66-bc7cf049f667",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Throw",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -225,6 +223,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ScreenPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d03cf36-9e8c-4229-9260-91c0854b13a1",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Approve",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
