@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class HealthUIBehaviour : MonoBehaviour
 {
-    public TMPro.TextMeshProUGUI healthText;
     public RectTransform healthBar;
 
     private float healthBarTotalWidth = -1;
@@ -26,8 +25,12 @@ public class HealthUIBehaviour : MonoBehaviour
 
         if (!isInit) return;
 
-        healthText.text = "" + currentHealth;
-        healthBar.sizeDelta = new Vector2(healthBarTotalWidth * (currentHealth * 1.0f / totalhealth), healthBar.sizeDelta.y);
+        Debug.Log("New HP: " + currentHealth);
+        float startingX = healthBar.sizeDelta.x;
+        LeanTween.value(startingX, healthBarTotalWidth * (currentHealth * 1.0f / totalhealth), 1f).setEaseInOutCirc().setOnUpdate(val =>
+        {
+            healthBar.sizeDelta = new Vector2(val, healthBar.sizeDelta.y);
+        });
     }
 
     public void Init()

@@ -120,16 +120,21 @@ public class PlayerComponent : MonoBehaviour
         //weaponWrapper.SetActive(roomState is OtherPlayersShootingState);
     }
 
+    //Set State
     private void ChangeWeaponState(bool val)
     {
         state.SetHasWeaponOut(val);
     }
 
+
+    //Listen to state and propagate to all clients
     private void OnWeaponOutChanged(bool val)
     {
+        playerMotionBehaviour.SetIsPaused(val);
         photonView.RPC("NetworkedChangeWeaponState", RpcTarget.All, val);
     }
 
+    //Actual logic
     [PunRPC]
     private void NetworkedChangeWeaponState(bool val)
     {

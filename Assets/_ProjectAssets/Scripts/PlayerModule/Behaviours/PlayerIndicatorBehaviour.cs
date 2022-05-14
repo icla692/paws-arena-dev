@@ -37,12 +37,6 @@ public class PlayerIndicatorBehaviour : MonoBehaviour
         }
     }
 
-    private void SetPowerLineLength(float power)
-    {
-        lineIndicatorSpeed.SetPosition(1, new Vector3(power * maxRadius, 0, 1));
-        currentPower = power;
-    }
-
     private void OnEnable()
     {
         indicatorCircle.onIndicatorPlaced += OnIndicatorPlaced;
@@ -63,6 +57,13 @@ public class PlayerIndicatorBehaviour : MonoBehaviour
     private void OnIndicatorPlaced(float angle, float power)
     {
         indicator.rotation = Quaternion.Euler(Vector3.zero.WithZ(angle));
-        SetPowerLineLength(power);
+        photonView.RPC("SetPowerLineLength", RpcTarget.All, power);
+    }
+
+    [PunRPC]
+    private void SetPowerLineLength(float power)
+    {
+        lineIndicatorSpeed.SetPosition(1, new Vector3(power * maxRadius, 0, 1));
+        currentPower = power;
     }
 }

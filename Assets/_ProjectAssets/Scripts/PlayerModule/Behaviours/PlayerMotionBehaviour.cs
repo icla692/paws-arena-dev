@@ -6,13 +6,14 @@ public class PlayerMotionBehaviour : MonoBehaviour
 {
     [SerializeField] private Collider2D ceilingCollider;
 
+    public bool isPaused = false;
     private PlayerState playerState;
 
     private Transform _transform;
     private Rigidbody2D _rigidbody2D;
 
     private Vector3 velocity = Vector3.zero;
-    private bool isMoving = false;
+
 
     private void Awake()
     {
@@ -27,14 +28,22 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     public void RegisterMovementCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        playerActions.Movement.performed += value => SetMovementDirection(value.ReadValue<float>());
-        playerActions.Movement.canceled += _ => { SetMovementDirection(0); };
+        playerActions.Movement.performed += value => {
+            if (isPaused) return;
+            SetMovementDirection(value.ReadValue<float>());
+        };
+
+        playerActions.Movement.canceled += _ => {
+            if (isPaused) return;
+            SetMovementDirection(0); 
+        };
     }
 
     public void RegisterJumpCallbacks(GameInputActions.PlayerActions playerActions)
     {
         playerActions.Jump.started += _ =>
         {
+            if (isPaused) return;
             playerState.SetHasJump(true);
         };
     }
@@ -115,6 +124,15 @@ public class PlayerMotionBehaviour : MonoBehaviour
             euler.z = Mathf.Clamp(euler.z, -30, 30);
 
             _transform.eulerAngles = euler;
+        }
+    }
+
+    public void SetIsPaused(bool val)
+    {
+        isPaused = val;
+        if (isPaused)
+        {
+            playerState.SetMovementDirection(0);
         }
     }
 }

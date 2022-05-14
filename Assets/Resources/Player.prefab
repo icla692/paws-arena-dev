@@ -212,7 +212,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 40
+  m_SortingOrder: 25
   m_Sprite: {fileID: 21300000, guid: 7824ce7fe4fb88b4aa75e60a7e86828a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -464,6 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ceilingCollider: {fileID: 755019818390496614}
+  isPaused: 0
 --- !u!50 &755019818390496616
 Rigidbody2D:
   serializedVersion: 4
@@ -867,7 +868,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 25
   m_Sprite: {fileID: 21300000, guid: e5d913ae37556154f82385e5cf8cfd96, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
