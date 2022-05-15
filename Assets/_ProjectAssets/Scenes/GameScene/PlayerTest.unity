@@ -225,8 +225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1cf68fe0cc7ce419d609dc53572c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  circleSize: 150
+  ellipseSize: {x: 64, y: 32}
   outlineSize: 0
+  pixelSize: 8
   primaryLayer: {fileID: 839985178}
   secondaryLayer: {fileID: 1324263549}
 --- !u!1 &519420028
@@ -796,8 +797,9 @@ MonoBehaviour:
   playerPrefab: {fileID: 0}
   playerUIPrefab: {fileID: 0}
   playerUIParent: {fileID: 0}
-  lastPlayerRound: -1
   photonView: {fileID: 0}
+  lastPlayerRound: -1
+  roundNumber: 1
 --- !u!1 &1597200586
 GameObject:
   m_ObjectHideFlags: 0

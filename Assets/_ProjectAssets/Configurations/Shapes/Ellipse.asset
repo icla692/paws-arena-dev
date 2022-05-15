@@ -9,8 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e92bc1363e40dc74c97fb23aae5896ff, type: 3}
-  m_Name: ShapeList
+  m_Script: {fileID: 11500000, guid: eff4155d05a69764c9de196fec5e905e, type: 3}
+  m_Name: Ellipse
   m_EditorClassIdentifier: 
-  shapes:
-  - {fileID: 11400000, guid: 6c4768422f0228e40a1553472aff856c, type: 2}
+  ID: 277012fe-d22b-4cf6-b54b-00f8985ecb61
+  shapeType: Ellipse
+  circleSize: 0
+  width: 0
+  height: 0
+  radiusX: 64
+  radiusY: 32
+  pixelSize: 8
+  visualFX: {fileID: 0}

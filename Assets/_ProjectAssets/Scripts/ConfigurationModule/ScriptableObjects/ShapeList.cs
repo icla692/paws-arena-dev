@@ -1,4 +1,5 @@
 using Anura.Models;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,9 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [SerializeField] 
         private List<ShapeConfig> shapes;
 
-        public ShapeConfig GetRandomShape()
+        internal ShapeConfig GetShape(int idx)
         {
-            //return shapes[Random.Range(0, shapes.Count)];
-            return shapes[4];
+            return shapes[idx];
         }
     }
 }

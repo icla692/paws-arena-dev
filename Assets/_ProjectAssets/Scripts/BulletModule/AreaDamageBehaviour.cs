@@ -14,7 +14,7 @@ public class AreaDamageBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
-        PaintingManager.Instance.RandomShape();
+        PaintingManager.Instance.GetShape(0);
         PaintingManager.Instance.Destroy(transform.position);
 
         GameScenePostprocessingManager.Instance.EnableExplosionLayer(0.4f);

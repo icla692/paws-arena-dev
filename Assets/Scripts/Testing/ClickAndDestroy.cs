@@ -12,9 +12,11 @@ using System;
 public class ClickAndDestroy : MonoBehaviour
 {
     [SerializeField]
-    protected int circleSize = 16;
+    protected Vector2Int ellipseSize = new Vector2Int(16, 16);
     [SerializeField]
-    protected int outlineSize = 4;
+    protected int outlineSize = 0;
+    [SerializeField]
+    protected int pixelSize = 8;
 
     protected Shape destroyCircle;
     protected Shape outlineCircle;
@@ -26,8 +28,9 @@ public class ClickAndDestroy : MonoBehaviour
 
     private void Start()
     {
-        destroyCircle = Shape.GenerateShapeCircle(circleSize);
-        outlineCircle = Shape.GenerateShapeCircle(circleSize + outlineSize);
+        //destroyCircle = Shape.GenerateShapeCircle(circleSize);
+        destroyCircle = Shape.GeneratePixelatedEllipse(ellipseSize, pixelSize);
+        //outlineCircle = Shape.GenerateShapeCircle(circleSize + outlineSize);
     }
 
     private void Update()
@@ -51,7 +54,7 @@ public class ClickAndDestroy : MonoBehaviour
         primaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.clear,
-            Position = new Vector2Int((int)(p.x * primaryLayer.PPU) - circleSize, (int)(p.y * primaryLayer.PPU - circleSize)),
+            Position = new Vector2Int((int)(p.x * primaryLayer.PPU) - ellipseSize.x, (int)(p.y * primaryLayer.PPU - ellipseSize.y)),
             Shape = destroyCircle,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.DESTROY
@@ -59,8 +62,8 @@ public class ClickAndDestroy : MonoBehaviour
 
         secondaryLayer?.Paint(new PaintingParameters()
         {
-            Color = new Color(0,0,0,0.75f),
-            Position = new Vector2Int((int)(p.x * secondaryLayer.PPU) - circleSize - outlineSize, (int)(p.y * secondaryLayer.PPU - circleSize - outlineSize)),
+            Color = new Color(0, 0, 0, 0.75f),
+            Position = new Vector2Int((int)(p.x * secondaryLayer.PPU) - ellipseSize.x - outlineSize, (int)(p.y * secondaryLayer.PPU - ellipseSize.y - outlineSize)),
             Shape = outlineCircle,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.NONE
@@ -73,7 +76,7 @@ public class ClickAndDestroy : MonoBehaviour
         primaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.black,
-            Position = new Vector2Int((int)(p.x * primaryLayer.PPU) - circleSize, (int)(p.y * primaryLayer.PPU - circleSize)),
+            Position = new Vector2Int((int)(p.x * primaryLayer.PPU) - ellipseSize.x, (int)(p.y * primaryLayer.PPU - ellipseSize.y)),
             Shape = destroyCircle,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.BUILD

@@ -74,6 +74,56 @@ namespace DTerrain
             return s;
         }
 
+        public static Shape GeneratePixelatedEllipse(Vector2Int r, int pixelSize=8)
+        {
+            int centerX = r.x;
+            int centerY = r.y;
+
+            Shape s = new Shape(2 * centerX, 2 * centerY);
+            for (int i = 0; i <= 2 * centerX; i+=pixelSize)
+            {
+                bool down = false;
+                int min = 0;
+                int max = 0;
+
+                for (int j = 0; j <= 2 * centerY; j+= pixelSize)
+                {
+                    if (CheckPointInsideEllipse(i, j, r.x, r.y, centerX, centerY))
+                    {
+                        if (down == false)
+                        {
+                            down = true;
+                            min = j;
+                        }
+                    }
+                    else
+                    {
+                        if (down)
+                        {
+                            max = j;
+                            break;
+                        }
+                    }
+                }
+
+                if (down && min != max)
+                {
+                    for (int k = 0; k < pixelSize; k++)
+                    {
+                        Range range = new Range(min, max);
+                        s.Ranges.Add(range);
+                    }
+                }
+            }
+
+            return s;
+        }
+
+        private static bool CheckPointInsideEllipse(int x, int y, int rx, int ry, int h, int k)
+        {
+            return ((x - h) * (x - h) * 1.0f / rx / rx + (y - k) * (y - k) * 1.0f / ry / ry <= 1);
+        }
+
         public static Shape GenerateShapeRect(int w, int h)
         {
             Shape s = new Shape(w, h);

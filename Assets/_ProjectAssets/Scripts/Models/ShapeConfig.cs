@@ -26,6 +26,13 @@ namespace Anura.Models
         [ShowIf("IsRect")]
         public int height;
 
+        [ShowIf("IsEllipse")]
+        public int radiusX;
+        [ShowIf("IsEllipse")]
+        public int radiusY;
+        [ShowIf("IsEllipse")]
+        public int pixelSize;
+
         public GameObject visualFX;
 
         public Shape shape;
@@ -34,6 +41,7 @@ namespace Anura.Models
         private List<string> Shapes => Constants.Shapes;
         private bool IsCircle => shapeType == Shapes[0];
         private bool IsRect => shapeType == Shapes[1];
+        private bool IsEllipse => shapeType == Shapes[2];
 
         private void Awake()
         {
@@ -45,6 +53,10 @@ namespace Anura.Models
 
                 case "Rect":
                     shape = Shape.GenerateShapeRect(width, height);
+                    break;
+
+                case "Ellipse":
+                    shape = Shape.GeneratePixelatedEllipse(new Vector2Int(radiusX, radiusY), pixelSize);
                     break;
 
                 default:
@@ -60,12 +72,15 @@ namespace Anura.Models
                 case "Circle":
                     return circleSize;
 
+                case "Ellipse":
+                    return radiusX;
+
                 case "Rect":
-                    return height + width / 2;
+                    return (height + width) / 2;
 
                 default:
                     Debug.Log("Doesn't exists");
-                    return height + width + circleSize / 3;
+                    return (height + width + circleSize) / 3;
             }
         }
 

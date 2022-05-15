@@ -2,6 +2,7 @@ using Anura.ConfigurationModule.Managers;
 using Anura.Models;
 using Anura.Templates.MonoSingleton;
 using DTerrain;
+using System;
 using UnityEngine;
 
 public class PaintingManager : MonoSingleton<PaintingManager>
@@ -14,11 +15,12 @@ public class PaintingManager : MonoSingleton<PaintingManager>
 
     private void Start()
     {
-        RandomShape();
+        GetShape(0);
     }
-    public void RandomShape()
+
+    internal void GetShape(int idx)
     {
-        currentShape = ConfigurationManager.Instance.Shapes.GetRandomShape();
+        currentShape = ConfigurationManager.Instance.Shapes.GetShape(idx);
     }
 
     public ShapeConfig GetCurrentShape()

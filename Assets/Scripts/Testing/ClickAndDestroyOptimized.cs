@@ -13,7 +13,7 @@ public class ClickAndDestroyOptimized : ClickAndDestroy
         primaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.clear,
-            Position = new Vector2Int((int)(p.x * primaryLayer.PPU) - circleSize, (int)(p.y * primaryLayer.PPU) - circleSize),
+            Position = new Vector2Int((int)(p.x * primaryLayer.PPU) - ellipseSize.x, (int)(p.y * primaryLayer.PPU) - ellipseSize.y),
             Shape = destroyCircle,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.DESTROY
@@ -22,7 +22,7 @@ public class ClickAndDestroyOptimized : ClickAndDestroy
         secondaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.clear,
-            Position = new Vector2Int((int)(p.x * secondaryLayer.PPU) - circleSize, (int)(p.y * secondaryLayer.PPU) - circleSize),
+            Position = new Vector2Int((int)(p.x * secondaryLayer.PPU) - ellipseSize.x, (int)(p.y * secondaryLayer.PPU) - ellipseSize.y),
             Shape = destroyCircle,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.NONE
@@ -36,7 +36,7 @@ public class ClickAndDestroyOptimized : ClickAndDestroy
         primaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.black,
-            Position = new Vector2Int((int)(p.x * primaryLayer.PPU) - circleSize, (int)(p.y * primaryLayer.PPU) - circleSize),
+            Position = new Vector2Int((int)(p.x * primaryLayer.PPU) - ellipseSize.x, (int)(p.y * primaryLayer.PPU) - ellipseSize.y),
             Shape = destroyCircle,
             PaintingMode = PaintingMode.NONE,
             DestructionMode = DestructionMode.BUILD
@@ -45,7 +45,7 @@ public class ClickAndDestroyOptimized : ClickAndDestroy
         secondaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.black,
-            Position = new Vector2Int((int)(p.x * secondaryLayer.PPU) - circleSize, (int)(p.y * secondaryLayer.PPU) - circleSize),
+            Position = new Vector2Int((int)(p.x * secondaryLayer.PPU) - ellipseSize.x, (int)(p.y * secondaryLayer.PPU) - ellipseSize.y),
             Shape = destroyCircle,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.BUILD

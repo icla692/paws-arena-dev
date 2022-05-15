@@ -7,7 +7,7 @@ namespace Anura.Globals
     {
         public static Color accentColor;
 
-        public static readonly List<string> Shapes = new List<string>() { "Circle", "Rect" };
+        public static readonly List<string> Shapes = new List<string>() { "Circle", "Rect", "Ellipse" };
 
         static Constants()
         {
