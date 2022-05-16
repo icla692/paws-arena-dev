@@ -30,10 +30,12 @@ public class PaintingManager : MonoSingleton<PaintingManager>
 
     public void Destroy(Vector3 hitPoint)
     {
+        Debug.Log($"Destroying at {hitPoint.x} {hitPoint.y} {hitPoint.z}");
+        hitPoint -= primaryLayer.transform.position;
         primaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.clear,
-            Position = new Vector2Int((int)(hitPoint.x * primaryLayer.PPU) - currentShape.GetSize(), (int)(hitPoint.y * primaryLayer.PPU) - currentShape.GetSize()),
+            Position = new Vector2Int((int)(hitPoint.x * primaryLayer.PPU) - currentShape.GetSizeX(), (int)(hitPoint.y * primaryLayer.PPU) - currentShape.GetSizeY()),
             Shape = currentShape.shape,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.DESTROY
@@ -42,7 +44,7 @@ public class PaintingManager : MonoSingleton<PaintingManager>
         secondaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.clear,
-            Position = new Vector2Int((int)(hitPoint.x * secondaryLayer.PPU) - currentShape.GetSize(), (int)(hitPoint.y * secondaryLayer.PPU) - currentShape.GetSize()),
+            Position = new Vector2Int((int)(hitPoint.x * secondaryLayer.PPU) - currentShape.GetSizeX(), (int)(hitPoint.y * secondaryLayer.PPU) - currentShape.GetSizeY()),
             Shape = currentShape.shape,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.NONE
@@ -55,7 +57,7 @@ public class PaintingManager : MonoSingleton<PaintingManager>
         primaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.black,
-            Position = new Vector2Int((int)(hitPoint.x * primaryLayer.PPU) - currentShape.GetSize(), (int)(hitPoint.y * primaryLayer.PPU) - currentShape.GetSize()),
+            Position = new Vector2Int((int)(hitPoint.x * primaryLayer.PPU) - currentShape.GetSizeX(), (int)(hitPoint.y * primaryLayer.PPU) - currentShape.GetSizeY()),
             Shape = currentShape.shape,
             PaintingMode = PaintingMode.NONE,
             DestructionMode = DestructionMode.BUILD
@@ -64,7 +66,7 @@ public class PaintingManager : MonoSingleton<PaintingManager>
         secondaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.black,
-            Position = new Vector2Int((int)(hitPoint.x * secondaryLayer.PPU) - currentShape.GetSize(), (int)(hitPoint.y * secondaryLayer.PPU) - currentShape.GetSize()),
+            Position = new Vector2Int((int)(hitPoint.x * secondaryLayer.PPU) - currentShape.GetSizeX(), (int)(hitPoint.y * secondaryLayer.PPU) - currentShape.GetSizeY()),
             Shape = currentShape.shape,
             PaintingMode = PaintingMode.REPLACE_COLOR,
             DestructionMode = DestructionMode.BUILD

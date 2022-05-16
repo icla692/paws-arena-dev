@@ -39,6 +39,7 @@ namespace Anura.Models
 
 
         private List<string> Shapes => Constants.Shapes;
+
         private bool IsCircle => shapeType == Shapes[0];
         private bool IsRect => shapeType == Shapes[1];
         private bool IsEllipse => shapeType == Shapes[2];
@@ -81,6 +82,46 @@ namespace Anura.Models
                 default:
                     Debug.Log("Doesn't exists");
                     return (height + width + circleSize) / 3;
+            }
+        }
+
+
+
+        public int GetSizeX()
+        {
+            switch (shapeType)
+            {
+                case "Circle":
+                    return circleSize;
+
+                case "Ellipse":
+                    return radiusX;
+
+                case "Rect":
+                    return width;
+
+                default:
+                    Debug.Log("Doesn't exists");
+                    return (width + circleSize + radiusX) / 3;
+            }
+        }
+
+        public int GetSizeY()
+        {
+            switch (shapeType)
+            {
+                case "Circle":
+                    return circleSize;
+
+                case "Ellipse":
+                    return radiusY;
+
+                case "Rect":
+                    return height;
+
+                default:
+                    Debug.Log("Doesn't exists");
+                    return (height + circleSize + radiusY) / 3;
             }
         }
 
