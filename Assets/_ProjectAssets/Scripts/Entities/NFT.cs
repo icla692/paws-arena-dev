@@ -14,7 +14,13 @@ public class NFT
     public async UniTask GrabImage()
     {
         XmlDocument doc = await NFTImageLoader.LoadSVGXML(imageUrl);
-        imageTex = NFTImageLoader.LoadNFT(doc);
-        furType = NFTImageLoader.GetFurType(doc);
+        if (imageTex == null)
+        {
+            imageTex = NFTImageLoader.LoadNFT(doc);
+        }
+        if (furType == null)
+        {
+            furType = NFTImageLoader.GetFurType(doc);
+        }
     }
 }

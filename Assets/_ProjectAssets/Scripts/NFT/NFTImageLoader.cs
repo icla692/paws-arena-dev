@@ -31,6 +31,13 @@ public class NFTImageLoader
 
         for (int i = 0; i < images.Count; i++)
         {
+            var id = images[i].Attributes["id"];
+            if (id.Value.Contains("bg"))
+            {
+                continue;
+            }
+
+            //Positioning
             int offsetX = 0, offsetY = 0;
 
             XmlNode xNode = images[i].Attributes["x"];
@@ -45,6 +52,8 @@ public class NFTImageLoader
                 int.TryParse(images[i].Attributes["y"].Value, out offsetY);
             }
 
+
+            //Generate Tex
             Texture2D tex = ImageFromBase64(images[i].Attributes["href"].Value.Split(",")[1]);
 
             for(int x=0; x<tex.width; x++)

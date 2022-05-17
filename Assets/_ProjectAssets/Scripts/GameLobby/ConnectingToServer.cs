@@ -29,7 +29,7 @@ public class ConnectingToServer : MonoBehaviour
 
     private void OnConnectedToServer()
     {
-        lobbyUIManager.OpenCharacterSelectionScreen();
+        lobbyUIManager.OpenNFTSelectionScreen();
     }
 
     private IEnumerator ConnectionCoroutine()

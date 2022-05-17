@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CharacterSelectionScreen : MonoBehaviour
+public class LobbyPhotonConnection : MonoBehaviour
 {
     [Header("Managers")]
     public PhotonManager photonManager;
     public LobbyUIManager lobbyUIManager;
 
     [Header("Internals")]
-    public PlayerNameInputField nicknameInput;
     public GameObject startButton;
     public GameObject joinRoomLog;
 
@@ -20,13 +19,11 @@ public class CharacterSelectionScreen : MonoBehaviour
     {
         Init();
 
-        nicknameInput.OnPlayerNameUpdated += OnNicknameUpdated;
         PhotonManager.OnCreatingRoom += OnCreatingRoom;
     }
 
     private void OnDisable()
     {
-        nicknameInput.OnPlayerNameUpdated -= OnNicknameUpdated;
         PhotonManager.OnCreatingRoom -= OnCreatingRoom;
     }
 
@@ -37,10 +34,6 @@ public class CharacterSelectionScreen : MonoBehaviour
         joinRoomLog.SetActive(false);
     }
 
-    private void OnNicknameUpdated(string val)
-    {
-        startButton.SetActive(!string.IsNullOrEmpty(val));
-    }
 
     public void TryJoinRoom()
     {

@@ -11,9 +11,6 @@ using UnityEngine.SceneManagement;
 public class SeatGameobject
 {
     [SerializeField]
-    public GameObject freeSeatParent;
-
-    [SerializeField]
     public GameObject occupiedSeatParent;
 
     [SerializeField]
@@ -26,6 +23,7 @@ public class GameMatchingScreen : MonoBehaviour
 
     [Header("Internals")]
     public GameObject startButton;
+    public GameObject notices;
     public List<SeatGameobject> seats;
     public Countdown countdown;
 
@@ -45,6 +43,7 @@ public class GameMatchingScreen : MonoBehaviour
     private void Init()
     {
         startButton.SetActive(PhotonNetwork.LocalPlayer.IsMasterClient);
+        notices.SetActive(false);
 
         foreach(SeatGameobject seat in seats)
         {
@@ -67,6 +66,8 @@ public class GameMatchingScreen : MonoBehaviour
                 int mySeat = (otherPlayerSeat + 1) % 2;
                 punRoomUtils.AddPlayerCustomProperty("seat", "" + mySeat);
                 OccupySeat(seats[mySeat], PhotonNetwork.LocalPlayer.NickName);
+
+                notices.SetActive(true);
             }
             else
             {
@@ -78,7 +79,6 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void OccupySeat(SeatGameobject seat, string nickName)
     {
-        seat.freeSeatParent.SetActive(false);
         seat.occupiedSeatParent.SetActive(true);
         seat.occupierNickname.text = nickName;
 
@@ -86,15 +86,18 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void FreeSeat(SeatGameobject seat)
     {
-        seat.freeSeatParent.SetActive(true);
         seat.occupiedSeatParent.SetActive(false);
-        seat.occupierNickname.text = "000000";
+        seat.occupierNickname.text = "-";
     }
 
     private void OnPlayerJoined(string opponentNickname)
     {
         int mySeat = Int32.Parse(PhotonNetwork.LocalPlayer.CustomProperties["seat"].ToString());
         int otherSeat = (mySeat + 1) % 2;
+        if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        {
+            notices.SetActive(true);
+        }
         OccupySeat(seats[otherSeat], opponentNickname);
     }
 
@@ -102,6 +105,7 @@ public class GameMatchingScreen : MonoBehaviour
     {
         int mySeat = Int32.Parse(PhotonNetwork.LocalPlayer.CustomProperties["seat"].ToString());
         int otherSeat = (mySeat + 1) % 2;
+        notices.SetActive(false);
         FreeSeat(seats[otherSeat]);
     }
 
