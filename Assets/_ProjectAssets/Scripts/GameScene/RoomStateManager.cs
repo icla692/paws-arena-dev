@@ -9,9 +9,13 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public static event Action<IRoomState> OnStateUpdated;
 
     public PUNGameRoomManager photonManager;
+    [Header("Player")]
     public GameObject playerPrefab;
     public GameObject playerUIPrefab;
+
     public Transform playerUIParent;
+    [Header("Others")]
+    public TrajectoryBehaviour trajectory;
 
     [HideInInspector]
     public GameSceneMasterInfo sceneInfo = new GameSceneMasterInfo();
@@ -76,6 +80,12 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         }
     }
 
+    public bool WasMyRound()
+    {
+        return (lastPlayerRound == 0 && PhotonNetwork.LocalPlayer.IsMasterClient) ||
+            (lastPlayerRound == 1 && !PhotonNetwork.LocalPlayer.IsMasterClient);
+    }
+
     private void OnPlayerLeft()
     {
         SetState(new ResolvingGameState(PhotonNetwork.LocalPlayer.IsMasterClient ? GameResolveState.PLAYER_1_WIN : GameResolveState.PLAYER_2_WIN));
@@ -132,6 +142,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         photonView.RPC("StartProjectileLaunchedState", RpcTarget.All);
     }
 
+    public void Retreat()
+    {
+        photonView.RPC("Retreat", RpcTarget.All, PhotonNetwork.LocalPlayer.IsMasterClient ? 0 : 1);
+    }
+
     [PunRPC]
     private void StartProjectileLaunchedState()
     {
@@ -177,5 +192,12 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     private void StartResolveGame(GameResolveState state)
     {
         SetState(new ResolvingGameState(state));
+    }
+
+    [PunRPC]
+    private void Retreat(int playerIdx)
+    {
+        GameResolveState resolveState = PlayerManager.Instance.GetWinnerByLoserIndex(playerIdx);
+        photonView.RPC("StartResolveGame", RpcTarget.All, resolveState);
     }
 }

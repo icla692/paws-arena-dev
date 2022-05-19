@@ -1,9 +1,11 @@
 using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class BulletComponent : MonoBehaviour
 {
+    public static event Action<bool, Vector2> onBulletMoved;
     public AudioClip shotSfx;
 
     private bool isTouched = false;
@@ -25,6 +27,7 @@ public class BulletComponent : MonoBehaviour
         thisT.right = Vector2.Lerp(thisT.right,
                                        rb.velocity.normalized * ConfigurationManager.Instance.Config.GetFactorRotationIndicator(),
                                        Time.deltaTime);
+        onBulletMoved?.Invoke(photonView.IsMine, transform.position);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

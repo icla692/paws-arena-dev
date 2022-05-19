@@ -61,6 +61,7 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
         if(playerState.isInAir && CheckIfIsGrounded())
         {
+            Debug.Log("GROUNDED!");
             playerState.SetHasJump(false);
             playerState.SetIsInAir(false);
         }

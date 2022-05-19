@@ -15,8 +15,17 @@ public class ProjectileLaunchedState : IRoomState
     }
     private IEnumerator HandleProjectileLaunched(RoomStateManager context)
     {
+        if (context.WasMyRound())
+        {
+            context.trajectory.StartRecording();
+        }
         yield return new WaitForSeconds(3f);
 
+
+        if (context.WasMyRound())
+        {
+            context.trajectory.StopRecording();
+        }
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             context.TryStartNextRound();

@@ -1,12 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NextPrevList : MonoBehaviour
 {
-    public List<GameObject> list;
     public int currentIdx = 0;
 
     public GameObject nextButton;
@@ -19,7 +16,7 @@ public class NextPrevList : MonoBehaviour
 
     public void Next()
     {
-        if (currentIdx + 1 >= list.Count) return;
+        if (currentIdx + 1 >= GetNumberOfElements()) return;
         SetCurrentIdx(currentIdx + 1);
     }
 
@@ -29,16 +26,16 @@ public class NextPrevList : MonoBehaviour
         SetCurrentIdx(currentIdx - 1);
     }
 
-    private void SetCurrentIdx(int newIdx)
+    protected virtual int GetNumberOfElements()
+    {
+        return 0;
+    }
+
+    protected virtual void SetCurrentIdx(int newIdx)
     {
         currentIdx = newIdx;
 
-        for (int i = 0; i < list.Count; i++)
-        {
-            list[i].SetActive(i == currentIdx);
-        }
-
         prevButton.SetActive(currentIdx != 0);
-        nextButton.SetActive(currentIdx < (list.Count - 1));
+        nextButton.SetActive(currentIdx < (GetNumberOfElements() - 1));
     }
 }

@@ -21,6 +21,9 @@ public class LobbyUIManager : MonoBehaviour
     public GameObject connectingToRoom;
     public LobbyPhotonConnection lobbyPhotonConnection;
 
+    [Header("Settings")]
+    public GameObject settings;
+
     public void OpenNFTSelectionScreen()
     {
         connectingToServerScreen.SetActive(false);
@@ -40,12 +43,28 @@ public class LobbyUIManager : MonoBehaviour
         gameMenuSprites.SetActive(true);
     }
 
-    public void TryConnectToRoom()
+    private void CloseGameMenu()
     {
         gameMenuPanel.SetActive(false);
         gameMenuSprites.SetActive(false);
+    }
 
+    public void TryConnectToRoom()
+    {
+        CloseGameMenu();
         connectingToRoom.SetActive(true);
         lobbyPhotonConnection.TryJoinRoom();
+    }
+
+    public void OpenSettings()
+    {
+        CloseGameMenu();
+        settings.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        OpenGameMenu();
+        settings.SetActive(false);
     }
 }

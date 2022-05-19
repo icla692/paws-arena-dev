@@ -9,17 +9,11 @@ using Photon.Pun;
 public class PlayerManager : MonoSingleton<PlayerManager>
 {
     public event Action<int> onHealthUpdated;
-    [SerializeField] private PlayerComponent player;
 
     private PlayerComponent myPlayer;
     private int myPlayerHealth;
     [HideInInspector]
     public int otherPlayerHealth = int.MaxValue;
-
-    public PlayerComponent GetPlayer()
-    {
-        return player;
-    }
 
     public void RegisterMyPlayer(PlayerComponent playerComponent)
     {
@@ -55,6 +49,15 @@ public class PlayerManager : MonoSingleton<PlayerManager>
             return GameResolveState.PLAYER_2_WIN;
         }
         else return GameResolveState.DRAW;
+    }
+
+    public GameResolveState GetWinnerByLoserIndex(int idx)
+    {
+        if (idx == 0)
+        {
+            return GameResolveState.PLAYER_2_WIN;
+        }
+        else return GameResolveState.PLAYER_1_WIN;
     }
 
     private void SetMyPlayerHealth(int value)

@@ -63,7 +63,7 @@ public class PlayerIndicatorBehaviour : MonoBehaviour
     [PunRPC]
     private void SetPowerLineLength(float power)
     {
-        lineIndicatorSpeed.SetPosition(1, new Vector3(power * maxRadius, 0, 1));
+        lineIndicatorSpeed.SetPosition(1, new Vector3(0.2f + power * maxRadius, 0, 1));
         currentPower = power;
     }
 }
