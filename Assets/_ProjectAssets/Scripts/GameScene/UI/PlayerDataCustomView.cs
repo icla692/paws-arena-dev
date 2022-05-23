@@ -17,13 +17,12 @@ public class PlayerDataCustomView : MonoBehaviour
     [SerializeField]
     private string parentPath;
 
+    [SerializeField]
     private PhotonView photonview;
     private int myPlayer;
 
     void Start()
     {
-        photonview = GetComponent<PhotonView>();
-
         healthUIBehaviour.Init();
         if (photonview.IsMine)
         {
@@ -37,7 +36,6 @@ public class PlayerDataCustomView : MonoBehaviour
 
     public void Init()
     {
-        photonview = GetComponent<PhotonView>();
         RectTransform rt = GetComponent<RectTransform>();
         rt.SetParent(GameObject.Find(parentPath).transform);
         int myseat = PUNGameRoomManager.Instance.GetMySeat();

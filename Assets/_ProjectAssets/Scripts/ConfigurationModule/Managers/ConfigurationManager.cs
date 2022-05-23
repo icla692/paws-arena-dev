@@ -10,11 +10,14 @@ namespace Anura.ConfigurationModule.Managers
         [SerializeField, Expandable] private Config config;
         [SerializeField, Expandable] private VFXConfig visualContainer;
         [SerializeField, Expandable] private ShapeList shapes;
+        [SerializeField, Expandable] private CratesConfig crates;
 
         public Config Config => config;
 
         public VFXConfig VFXConfig => visualContainer;
 
         public ShapeList Shapes => shapes;
+
+        public CratesConfig Crates => crates;
     }
 }

@@ -544,6 +544,7 @@ MonoBehaviour:
   nicknameText: {fileID: 7446211193085888656}
   healthUIBehaviour: {fileID: 5194015934922677460}
   parentPath: Canvas/TopBar
+  photonview: {fileID: 1069203532253886557}
 --- !u!114 &5194015934922677460
 MonoBehaviour:
   m_ObjectHideFlags: 0

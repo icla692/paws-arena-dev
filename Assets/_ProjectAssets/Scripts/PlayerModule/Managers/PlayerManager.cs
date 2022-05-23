@@ -63,8 +63,16 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     private void SetMyPlayerHealth(int value)
     {
         value = Math.Max(0, value);
+        value = Math.Min(100, value);
+
         myPlayerHealth = value;
         onHealthUpdated?.Invoke(myPlayerHealth);
+    }
+
+    public void Heal(int healValue)
+    {
+        Debug.Log($"Healing: {healValue}. New HP: {myPlayerHealth + healValue}");
+        SetMyPlayerHealth(myPlayerHealth + healValue);
     }
 
     public void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce)

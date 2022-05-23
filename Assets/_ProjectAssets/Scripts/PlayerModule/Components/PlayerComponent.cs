@@ -134,6 +134,11 @@ public class PlayerComponent : MonoBehaviour
         photonView.RPC("NetworkedChangeWeaponState", RpcTarget.All, val);
     }
 
+    public bool IsMine()
+    {
+        return photonView.IsMine;
+    }
+
     //Actual logic
     [PunRPC]
     private void NetworkedChangeWeaponState(bool val)
