@@ -91,16 +91,6 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         SetState(new ResolvingGameState(PhotonNetwork.LocalPlayer.IsMasterClient ? GameResolveState.PLAYER_1_WIN : GameResolveState.PLAYER_2_WIN));
     }
 
-    public Color GetMyColor()
-    {
-        return PhotonNetwork.LocalPlayer.IsMasterClient ? ConfigurationManager.Instance.Config.GetFirstTeamColor() : ConfigurationManager.Instance.Config.GetSecondTeamColor();
-    }
-
-    public Color GetOtherColor()
-    {
-        return PhotonNetwork.LocalPlayer.IsMasterClient ? ConfigurationManager.Instance.Config.GetSecondTeamColor() : ConfigurationManager.Instance.Config.GetFirstTeamColor();
-    }
-
 
     public void TryStartNextRound()
     {

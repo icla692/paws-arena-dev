@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
+    public static event Action OnStartedConnection;
     public static event Action OnConnectedServer;
     public static event Action OnCreatingRoom;
     public static event Action OnRoomLeft;
@@ -24,10 +25,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void Connect()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+        OnStartedConnection?.Invoke();
         if (!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = gameVersion;
+        }
+        else
+        {
+            OnConnectedServer?.Invoke();
         }
     }
 

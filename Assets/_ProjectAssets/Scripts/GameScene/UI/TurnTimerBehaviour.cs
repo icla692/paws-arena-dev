@@ -46,15 +46,12 @@ public class TurnTimerBehaviour : MonoBehaviour
     {
         if (state is MyTurnState)
         {
-            GetComponent<Image>().color = RoomStateManager.Instance.GetMyColor();
             startTime = Time.time;
         }else if(state is OtherPlayerTurnState)
         {
-            GetComponent<Image>().color = RoomStateManager.Instance.GetOtherColor();
             startTime = Time.time;
         }else
         {
-            GetComponent<Image>().color = Color.gray;
             SetTimerText("-");
             startTime = -1;
         }

@@ -6,33 +6,18 @@ using UnityEngine;
 public class ConnectingToServer : MonoBehaviour
 {
     [Header("Managers")]
-    public PhotonManager photonManager;
     public LobbyUIManager lobbyUIManager;
 
     [Header("Internals")]
     public GameObject connectButton;
     public GameObject logText;
-    private void OnEnable()
-    {
-        PhotonManager.OnConnectedServer += OnConnectedToServer;
-    }
-    private void OnDisable()
-    {
 
-        PhotonManager.OnConnectedServer -= OnConnectedToServer;
+    public void ConnectToWallet()
+    {
+        StartCoroutine(WalletConnectionCoroutine());
     }
 
-    public void TryEnterGame()
-    {
-        StartCoroutine(ConnectionCoroutine());
-    }
-
-    private void OnConnectedToServer()
-    {
-        lobbyUIManager.OpenNFTSelectionScreen();
-    }
-
-    private IEnumerator ConnectionCoroutine()
+    private IEnumerator WalletConnectionCoroutine()
     {
         connectButton.SetActive(false);
         logText.SetActive(true);
@@ -46,9 +31,6 @@ public class ConnectingToServer : MonoBehaviour
         yield return new WaitForSeconds(1f);
         text.text = "Pretending we get info from server...";
 
-        yield return new WaitForSeconds(1f);
-        text.text = "Connecting to game master server...";
-
-        photonManager.Connect();
+        lobbyUIManager.OpenNFTSelectionScreen();
     }
 }

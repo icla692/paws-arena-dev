@@ -24,20 +24,41 @@ public class LobbyUIManager : MonoBehaviour
     [Header("Settings")]
     public GameObject settings;
 
+    [Header("Others")]
+    public GameObject loadingScreen;
+
+
+    private void OnEnable()
+    {
+        PhotonManager.OnStartedConnection += OpenLoadingScreen;
+        PhotonManager.OnConnectedServer += OpenGameMenu;
+    }
+
+    private void OnDisable()
+    {
+        PhotonManager.OnStartedConnection -= OpenLoadingScreen;
+        PhotonManager.OnConnectedServer -= OpenGameMenu;
+    }
     public void OpenNFTSelectionScreen()
     {
         connectingToServerScreen.SetActive(false);
-        nftSelectionScreen.SetActive(true);
-
         gameMenuPanel.SetActive(false);
         gameMenuSprites.SetActive(false);
-
         connectingToRoom.SetActive(false);
+
+        nftSelectionScreen.SetActive(true);
+    }
+
+    private void OpenLoadingScreen()
+    {
+        nftSelectionScreen.SetActive(false);
+        loadingScreen.SetActive(true);
     }
 
     public void OpenGameMenu()
     {
-        nftSelectionScreen.SetActive(false);
+        loadingScreen.SetActive(false);
+        connectingToServerScreen.SetActive(false);
 
         gameMenuPanel.SetActive(true);
         gameMenuSprites.SetActive(true);

@@ -13,11 +13,6 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [SerializeField]
         private int turnDurationInSeconds = 30;
 
-        [SerializeField]
-        private Color team1Color = Color.red;
-        [SerializeField]
-        private Color team2Color = Color.blue;
-
         [Header("Player configurations")]
         [Space]
 
@@ -47,16 +42,6 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         public int GetMaxNumberOfRounds()
         {
             return maxNumberOfRounds;
-        }
-
-        public Color GetFirstTeamColor()
-        {
-            return team1Color;
-        }
-
-        public Color GetSecondTeamColor()
-        {
-            return team2Color;
         }
 
         public int GetTurnDurationInSeconds()
