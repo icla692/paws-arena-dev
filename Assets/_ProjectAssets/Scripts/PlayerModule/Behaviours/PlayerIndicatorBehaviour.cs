@@ -50,7 +50,7 @@ public class PlayerIndicatorBehaviour : MonoBehaviour
     public void RegisterDirectionCallbacks(GameInputActions.PlayerActions playerActions)
     {
         playerActions.ScreenPosition.performed += value => lastMousePosition = value.ReadValue<Vector2>();
-        playerActions.Select.started += _ => isHoldingSelect = true;
+        playerActions.Select.started += _ => isHoldingSelect = indicatorCircle.IsSelected(lastMousePosition);
         playerActions.Select.canceled += _ => isHoldingSelect = false;
     }
 

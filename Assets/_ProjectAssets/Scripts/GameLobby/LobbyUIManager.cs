@@ -77,6 +77,13 @@ public class LobbyUIManager : MonoBehaviour
         lobbyPhotonConnection.TryJoinRoom();
     }
 
+    public void TryConnectToTrainingRoom()
+    {
+        CloseGameMenu();
+        connectingToRoom.SetActive(true);
+        lobbyPhotonConnection.TryJoinSinglePlayerRoom();
+    }
+
     public void OpenSettings()
     {
         CloseGameMenu();

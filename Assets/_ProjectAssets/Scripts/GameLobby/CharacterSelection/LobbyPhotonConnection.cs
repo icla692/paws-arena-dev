@@ -43,6 +43,14 @@ public class LobbyPhotonConnection : MonoBehaviour
         photonManager.ConnectToRandomRoom();
     }
 
+    public void TryJoinSinglePlayerRoom()
+    {
+        startButton.SetActive(false);
+        joinRoomLog.SetActive(true);
+
+        photonManager.CreateSinglePlayerRoom();
+    }
+
     private void OnCreatingRoom()
     {
         joinRoomLog.GetComponent<TextMeshProUGUI>().text = "No open match. Making a new one...";

@@ -4,9 +4,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthUIBehaviour : MonoBehaviour
 {
+    public Transform healthBarParent;
     public RectTransform healthBar;
 
     private float healthBarTotalWidth = -1;
@@ -40,5 +42,10 @@ public class HealthUIBehaviour : MonoBehaviour
         totalhealth = ConfigurationManager.Instance.Config.GetPlayerTotalHealth();
 
         OnHealthUpdated(currentHealth);
+    }
+
+    public void SetOrientationRight()
+    {
+        healthBarParent.GetComponent<HorizontalLayoutGroup>().reverseArrangement = true;
     }
 }

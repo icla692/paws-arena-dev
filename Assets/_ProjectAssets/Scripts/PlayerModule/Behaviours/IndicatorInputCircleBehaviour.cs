@@ -24,13 +24,17 @@ public class IndicatorInputCircleBehaviour : MonoBehaviour, IPointerUpHandler
 
     public void CheckPointerClick(Vector2 pointerPos)
     {
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(pointerPos);
+        Vector2 myPos = transform.position;
+        float angle = Vector2.SignedAngle(new Vector2(1, 0), mouseWorldPos - myPos);
+        float power = (mouseWorldPos - myPos).magnitude / radius;
+        power = Math.Clamp(power, 0, 1);
+        onIndicatorPlaced?.Invoke(angle, power);
+    }
+
+    public bool IsSelected(Vector2 pointerPos)
+    {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pointerPos), Vector2.zero);
-        if(hit.collider != null && hit.collider.gameObject == gameObject)
-        {
-            Vector2 pos = transform.position;
-            float angle = Vector2.SignedAngle(new Vector2(1, 0), hit.point - pos);
-            float power = (hit.point - pos).magnitude / radius;
-            onIndicatorPlaced?.Invoke(angle, power);
-        }
+        return (hit.collider != null && hit.collider.gameObject == gameObject);
     }
 }

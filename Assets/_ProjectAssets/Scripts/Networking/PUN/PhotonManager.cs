@@ -19,6 +19,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private string gameVersion = "1";
 
     private bool isRoomCreated = false;
+    private bool isSinglePlayer = false;
 
 
     #region ACTIONS
@@ -39,6 +40,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void ConnectToRandomRoom()
     {
+        isSinglePlayer = false;
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -66,7 +68,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         isRoomCreated = true;
         PhotonNetwork.CreateRoom(null, new RoomOptions{ MaxPlayers = maxPlayersPerRoom });
         OnCreatingRoom?.Invoke();
+    }
 
+    public void CreateSinglePlayerRoom()
+    {
+        isRoomCreated = true;
+        isSinglePlayer = true;
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 1 });
+        OnCreatingRoom?.Invoke();
     }
 
     public override void OnJoinedRoom()
@@ -74,7 +83,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log("Connected to room succesfully!");
         if (isRoomCreated)
         {
-            PhotonNetwork.LoadLevel("GameRoom");
+            if (!isSinglePlayer)
+            {
+                PhotonNetwork.LoadLevel("GameRoom");
+            }
+            else
+            {
+                PhotonNetwork.LoadLevel("SinglePlayerGameRoom");
+            }
         }
     }
 

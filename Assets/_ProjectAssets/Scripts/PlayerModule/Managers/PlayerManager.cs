@@ -10,6 +10,11 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 {
     public event Action<int> onHealthUpdated;
 
+    [SerializeField]
+    private GameObject player1SpawnSquare;
+    [SerializeField]
+    private GameObject player2SpawnSquare;
+
     private PlayerComponent myPlayer;
     private int myPlayerHealth;
     [HideInInspector]
@@ -95,5 +100,24 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     private void PushPlayer(float force, Vector2 direction)
     {
         myPlayer.GetComponent<Rigidbody2D>().AddForce(direction.normalized * force, ForceMode2D.Impulse);
+    }
+
+    public Vector2 GetPlayer1SpawnPos()
+    {
+        return GetRandomPosInSquare(player1SpawnSquare);
+    }
+
+    public Vector2 GetPlayer2SpawnPos()
+    {
+        return GetRandomPosInSquare(player2SpawnSquare);
+    }
+
+    private Vector2 GetRandomPosInSquare(GameObject square)
+    {
+        Vector2 minRange = square.transform.position - square.transform.lossyScale / 2.0f;
+        Vector2 maxRange = square.transform.position + square.transform.lossyScale / 2.0f;
+        float xPos = UnityEngine.Random.Range(minRange.x, maxRange.x);
+        float yPos = UnityEngine.Random.Range(minRange.y, maxRange.y);
+        return new Vector2(xPos, yPos);
     }
 }

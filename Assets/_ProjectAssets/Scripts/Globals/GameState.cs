@@ -10,8 +10,11 @@ public class GameState
     public static List<NFT> nfts { get; private set; }
     public static NFT selectedNFT { get; private set; }
 
+    public static GameSettings gameSettings;
+
     static GameState(){
         nfts = new List<NFT>();
+        gameSettings = GameSettings.Default();
     }
 
 

@@ -18,7 +18,8 @@ public class StartingGameState : IRoomState
     {
         yield return new WaitForSeconds(1.5f);
         int seat = context.photonManager.GetMySeat();
-        PhotonNetwork.Instantiate(context.playerPrefab.name, new Vector3(seat == 0 ? 14 : 40, 20), Quaternion.identity);
+        Vector2 spawnPos = seat == 0 ? PlayerManager.Instance.GetPlayer1SpawnPos() : PlayerManager.Instance.GetPlayer2SpawnPos();
+        PhotonNetwork.Instantiate(context.playerPrefab.name, spawnPos, Quaternion.identity);
         PhotonNetwork.Instantiate(context.playerUIPrefab.name, Vector3.zero, Quaternion.identity);
 
         yield return new WaitForSeconds(3f);

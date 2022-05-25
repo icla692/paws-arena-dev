@@ -42,10 +42,10 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void Init()
     {
-        startButton.SetActive(PhotonNetwork.LocalPlayer.IsMasterClient);
+        startButton.SetActive(false);
         notices.SetActive(false);
 
-        foreach(SeatGameobject seat in seats)
+        foreach (SeatGameobject seat in seats)
         {
             FreeSeat(seat);
         }
@@ -54,6 +54,8 @@ public class GameMatchingScreen : MonoBehaviour
         {
             punRoomUtils.AddPlayerCustomProperty("seat", "0");
             OccupySeat(seats[0], PhotonNetwork.LocalPlayer.NickName);
+
+            startButton.SetActive(PhotonNetwork.CurrentRoom.MaxPlayers == PhotonNetwork.CurrentRoom.PlayerCount);
         }
         else
         {
@@ -94,9 +96,14 @@ public class GameMatchingScreen : MonoBehaviour
     {
         int mySeat = Int32.Parse(PhotonNetwork.LocalPlayer.CustomProperties["seat"].ToString());
         int otherSeat = (mySeat + 1) % 2;
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
             notices.SetActive(true);
+            startButton.SetActive(true);
+        }
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            startButton.SetActive(PhotonNetwork.CurrentRoom.MaxPlayers == PhotonNetwork.CurrentRoom.PlayerCount);
         }
         OccupySeat(seats[otherSeat], opponentNickname);
     }
@@ -118,7 +125,7 @@ public class GameMatchingScreen : MonoBehaviour
     {
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible =false;
+            PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = false;
         }
         startButton.SetActive(false);
         GetComponent<PhotonView>().RPC("StartCountdown", RpcTarget.All);
@@ -128,7 +135,8 @@ public class GameMatchingScreen : MonoBehaviour
     [PunRPC]
     public void StartCountdown()
     {
-        countdown.StartCountDown(() => {
+        countdown.StartCountDown(() =>
+        {
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
             {
                 PhotonNetwork.LoadLevel("GameScene");
