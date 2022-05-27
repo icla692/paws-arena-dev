@@ -12,8 +12,6 @@ public class GameSettings
     public bool hasMusic;
     [SerializeField]
     public bool hasSoundFX;
-    [SerializeField]
-    public int[] currentResolution;
 
     public static GameSettings Default()
     {
@@ -25,12 +23,10 @@ public class GameSettings
         {
             hasMusic = true,
             hasSoundFX = true,
-            currentResolution = new int[] { 1920, 1080 }
         };
     }
     public void Apply()
     {
         PlayerPrefs.SetString(key, JsonUtility.ToJson(this));
-        Screen.SetResolution((int)currentResolution[0], (int)currentResolution[1], false);
     }
 }

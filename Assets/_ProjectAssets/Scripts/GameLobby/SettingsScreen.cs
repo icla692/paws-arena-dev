@@ -8,7 +8,6 @@ public class SettingsScreen : MonoBehaviour
     public LobbyUIManager uiManager;
     public CustomToggle hasMusicToggle;
     public CustomToggle hasSoundFxToggle;
-    public NextPrevStringList settingsList;
 
     private void OnEnable()
     {
@@ -19,9 +18,6 @@ public class SettingsScreen : MonoBehaviour
     {
         GameState.gameSettings.hasMusic = hasMusicToggle.isOn;
         GameState.gameSettings.hasSoundFX = hasSoundFxToggle.isOn;
-        var newRes = settingsList.GetValue();
-        var values = newRes.Split('x');
-        GameState.gameSettings.currentResolution = new int[] { int.Parse(values[0]), int.Parse(values[1]) };
         GameState.gameSettings.Apply();
 
         uiManager.CloseSettings();
@@ -30,7 +26,5 @@ public class SettingsScreen : MonoBehaviour
     {
         hasMusicToggle.SetValue(gameSettings.hasMusic);
         hasSoundFxToggle.SetValue(gameSettings.hasSoundFX);
-
-        settingsList.SetValue($"{gameSettings.currentResolution[0]}x{gameSettings.currentResolution[1]}");
     }
 }
