@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3952415485044529055}
   - component: {fileID: 3952415485044529049}
   - component: {fileID: 7688945331889344597}
+  - component: {fileID: 745023348284539716}
   m_Layer: 0
   m_Name: Chat
   m_TagString: Untagged
@@ -45,6 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dc9f8a9e5861834fbab461f40e94241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openChat: {fileID: 0}
+  sendButton: {fileID: 0}
+  chatBackground: {fileID: 0}
+  xChatButton: {fileID: 0}
+  inputField: {fileID: 0}
+  chatLine: {fileID: 0}
+  chatPanel: {fileID: 0}
+  content: {fileID: 0}
 --- !u!114 &7688945331889344597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,3 +76,15 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &745023348284539716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952415485044529048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101160419269c234b88f378d5c6f4474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -10,4 +10,11 @@ public class TestModules : MonoBehaviour
         GameInputManager.Instance.GetPlayerActionMap()
             .SetActivePlayerActionMap(true);
     }
+
+    [Button("Disable Player Map", EButtonEnableMode.Playmode)]
+    private void DisablePlayerMap()
+    {
+        GameInputManager.Instance.GetPlayerActionMap()
+            .SetActivePlayerActionMap(false);
+    }
 }

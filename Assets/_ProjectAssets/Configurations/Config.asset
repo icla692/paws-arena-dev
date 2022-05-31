@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxNumberOfRounds: 15
   turnDurationInSeconds: 30
-  team1Color: {r: 0.6037736, g: 0.019935932, b: 0.019935932, a: 1}
-  team2Color: {r: 0.029859383, g: 0.029859383, b: 0.5754717, a: 1}
   playerTotalHealth: 100
   airControl: 1
   playerSpeed: 10
@@ -25,3 +23,5 @@ MonoBehaviour:
   bulletSpeed: {x: 1, y: 20}
   factorRotationRocket: 4
   circleShootRadius: 5.5
+  numberOfLines: 10
+  defaultHeightForRefreshingChat: 330

@@ -39,6 +39,12 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [Range(2f, 12f), SerializeField] private float circleShootRadius = 5.5f;
 
 
+        [Header("Chat configurations")]
+        [Space]
+
+        [SerializeField] private int numberOfLines;
+        [SerializeField] private float defaultHeightForRefreshingChat;
+
         public int GetMaxNumberOfRounds()
         {
             return maxNumberOfRounds;
@@ -95,6 +101,18 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         public float GetCircleShootRadius()
         {
             return circleShootRadius;
+        }
+
+        //chat
+
+        public int GetNumberOfLines()
+        {
+            return numberOfLines;
+        }
+
+        public float GetHeightRefreshingChat()
+        {
+            return defaultHeightForRefreshingChat;
         }
     }
 }
