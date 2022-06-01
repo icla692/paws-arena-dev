@@ -43,7 +43,10 @@ public class ChatManager : MonoSingleton<ChatManager>
     private void SetChatPanelBehaviour(bool isActive)
     {
         chatPanel.SetActive(isActive);
-        GameInputManager.Instance.GetPlayerActionMap().SetActivePlayerActionMap(!isActive);
+
+        bool shouldBeAbleToMove = !isActive && RoomStateManager.Instance.currentState is MyTurnState;
+        Debug.Log("Should be able to move " + shouldBeAbleToMove);
+        GameInputManager.Instance.GetPlayerActionMap().SetActivePlayerActionMap(shouldBeAbleToMove);
     }
 
     private void InitializeContent(int numberOfLines)
