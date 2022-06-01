@@ -16,9 +16,9 @@ namespace Anura.Templates.ObjectPool.BaseScripts
             return element;
         }
 
-        public virtual void AddObjectToPool(T component)
+        public virtual void AddObjectToPool(T component, bool isActive = false)
         {
-            EnqueueComponent(component);
+            EnqueueComponent(component, isActive);
         }
 
         protected abstract T GetComponent();
@@ -31,9 +31,9 @@ namespace Anura.Templates.ObjectPool.BaseScripts
             EnqueueComponent(Instantiate(GetComponent()));
         }
 
-        private void EnqueueComponent(T component)
+        private void EnqueueComponent(T component, bool isActive = false)
         {
-            component.gameObject.SetActive(false);
+            component.gameObject.SetActive(isActive);
             if (!pool.Contains(component))
             {
                 pool.Enqueue(component);

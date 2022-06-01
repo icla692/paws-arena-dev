@@ -1,8 +1,6 @@
 using Anura.Templates.MonoSingleton;
 using UnityEngine;
-using NaughtyAttributes;
 using System;
-using Anura.ConfigurationModule.ScriptableObjects;
 using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
 
