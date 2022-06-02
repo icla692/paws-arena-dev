@@ -32,6 +32,7 @@ public class ChatBehaviour : MonoBehaviour
 
         InitializeChat(ConfigurationManager.Instance.Config);
         RegisterSendMessage(GameInputManager.Instance.GetChatActionMap());
+        RegisterCloseChat(GameInputManager.Instance.GetChatActionMap());
     }
 
     public void DisplayMessage(string message, bool isLocal)
@@ -57,6 +58,14 @@ public class ChatBehaviour : MonoBehaviour
         }
 
         content.sizeDelta = content.sizeDelta.WithY(config.GetNumberOfLines() * config.GetChatLineHeight());
+    }
+
+    private void RegisterCloseChat(ChatActionMap chatActionMap)
+    {
+        chatActionMap.GetChatActions().Close.started += _ =>
+        {
+            ChatManager.Instance.SetActiveChat(false);
+        };
     }
 
     private void RegisterSendMessage(ChatActionMap chatActionMap)
