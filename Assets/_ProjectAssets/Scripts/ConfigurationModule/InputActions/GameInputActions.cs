@@ -260,6 +260,34 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Chat"",
+            ""id"": ""9ef59c16-d0be-49ae-8034-2a413ae97f2e"",
+            ""actions"": [
+                {
+                    ""name"": ""Send"",
+                    ""type"": ""Button"",
+                    ""id"": ""eca5e213-4ba9-4e58-8975-ac9037983470"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""bb8f489b-67c6-4f46-80f3-756e95f82f7f"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Send"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -284,6 +312,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         m_Player_Indicator = m_Player.FindAction("Indicator", throwIfNotFound: true);
         m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
         m_Player_ScreenPosition = m_Player.FindAction("ScreenPosition", throwIfNotFound: true);
+        // Chat
+        m_Chat = asset.FindActionMap("Chat", throwIfNotFound: true);
+        m_Chat_Send = m_Chat.FindAction("Send", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -412,6 +443,39 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Chat
+    private readonly InputActionMap m_Chat;
+    private IChatActions m_ChatActionsCallbackInterface;
+    private readonly InputAction m_Chat_Send;
+    public struct ChatActions
+    {
+        private @GameInputActions m_Wrapper;
+        public ChatActions(@GameInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Send => m_Wrapper.m_Chat_Send;
+        public InputActionMap Get() { return m_Wrapper.m_Chat; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ChatActions set) { return set.Get(); }
+        public void SetCallbacks(IChatActions instance)
+        {
+            if (m_Wrapper.m_ChatActionsCallbackInterface != null)
+            {
+                @Send.started -= m_Wrapper.m_ChatActionsCallbackInterface.OnSend;
+                @Send.performed -= m_Wrapper.m_ChatActionsCallbackInterface.OnSend;
+                @Send.canceled -= m_Wrapper.m_ChatActionsCallbackInterface.OnSend;
+            }
+            m_Wrapper.m_ChatActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Send.started += instance.OnSend;
+                @Send.performed += instance.OnSend;
+                @Send.canceled += instance.OnSend;
+            }
+        }
+    }
+    public ChatActions @Chat => new ChatActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -429,5 +493,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         void OnIndicator(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnScreenPosition(InputAction.CallbackContext context);
+    }
+    public interface IChatActions
+    {
+        void OnSend(InputAction.CallbackContext context);
     }
 }

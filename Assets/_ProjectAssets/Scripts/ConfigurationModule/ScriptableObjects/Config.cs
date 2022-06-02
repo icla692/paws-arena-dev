@@ -43,7 +43,8 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [Space]
 
         [SerializeField] private int numberOfLines;
-        [SerializeField] private float defaultHeightForRefreshingChat;
+        [SerializeField] private float chatLineHeight;
+        [SerializeField] private float offsetHeightRefreshChat;
 
         public int GetMaxNumberOfRounds()
         {
@@ -110,9 +111,14 @@ namespace Anura.ConfigurationModule.ScriptableObjects
             return numberOfLines;
         }
 
+        public float GetChatLineHeight()
+        {
+            return chatLineHeight;
+        }
+
         public float GetHeightRefreshingChat()
         {
-            return defaultHeightForRefreshingChat;
+            return (GetNumberOfLines() * GetChatLineHeight()) - offsetHeightRefreshChat;
         }
     }
 }
