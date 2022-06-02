@@ -46,14 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dc9f8a9e5861834fbab461f40e94241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chatBehaviour: {fileID: 0}
+  notificationChatBehaviour: {fileID: 0}
   openChat: {fileID: 0}
-  sendButton: {fileID: 0}
-  chatBackground: {fileID: 0}
-  xChatButton: {fileID: 0}
-  inputField: {fileID: 0}
-  chatLine: {fileID: 0}
-  chatPanel: {fileID: 0}
-  content: {fileID: 0}
 --- !u!114 &7688945331889344597
 MonoBehaviour:
   m_ObjectHideFlags: 0

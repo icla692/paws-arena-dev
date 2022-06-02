@@ -4,6 +4,7 @@ public class GameInputManager : MonoSingleton<GameInputManager>
 {
     private GameInputActions gameInput;
     private PlayerActionMap playerActionMap;
+    private ChatActionMap chatActionMap;
 
     protected override void Awake()
     {
@@ -12,6 +13,7 @@ public class GameInputManager : MonoSingleton<GameInputManager>
         gameInput = new GameInputActions();
         SetActiveGameInput(true);
         playerActionMap = new PlayerActionMap(gameInput.Player);
+        chatActionMap = new ChatActionMap(gameInput.Chat);
     }
 
     public void SetActiveGameInput(bool value)
@@ -30,4 +32,9 @@ public class GameInputManager : MonoSingleton<GameInputManager>
     {
         return playerActionMap;
     }
+
+    public ChatActionMap GetChatActionMap()
+    {
+       return chatActionMap;
+    }    
 }

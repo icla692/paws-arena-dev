@@ -238,6 +238,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Chat",
+            "id": "9ef59c16-d0be-49ae-8034-2a413ae97f2e",
+            "actions": [
+                {
+                    "name": "Send",
+                    "type": "Button",
+                    "id": "eca5e213-4ba9-4e58-8975-ac9037983470",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bb8f489b-67c6-4f46-80f3-756e95f82f7f",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Send",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
