@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class SurrenderButton : MonoBehaviour
 {
+    [SerializeField]
+    private ConfirmationModal modal;
     public void OnClick()
     {
-        ModalsManager.Instance.ShowModal("Are you sure you want to surrender?", () =>
+        modal.ShowModal("Are you sure you want to surrender?", () =>
         {
             RoomStateManager.Instance.Retreat();
         });

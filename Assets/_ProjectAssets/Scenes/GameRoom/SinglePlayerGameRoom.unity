@@ -745,7 +745,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &476477135
 RectTransform:
   m_ObjectHideFlags: 0
@@ -954,7 +954,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   punRoomUtils: {fileID: 99993738}
-  startButton: {fileID: 476477134}
   notices: {fileID: 1892852136}
   seats:
   - occupiedSeatParent: {fileID: 988130697}

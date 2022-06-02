@@ -1,11 +1,10 @@
-using Anura.Templates.MonoSingleton;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ModalsManager : MonoSingleton<ModalsManager>
+public class ConfirmationModal : MonoBehaviour
 {
     [SerializeField]
     private GameObject modalWrapper;
@@ -15,7 +14,6 @@ public class ModalsManager : MonoSingleton<ModalsManager>
     private Button cancelButton;
     [SerializeField]
     private TMPro.TextMeshProUGUI descriptionText;
-
 
     private void Start()
     {
@@ -37,6 +35,4 @@ public class ModalsManager : MonoSingleton<ModalsManager>
 
         descriptionText.text = description;
     }
-
-
 }
