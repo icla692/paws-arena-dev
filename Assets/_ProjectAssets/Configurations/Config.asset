@@ -26,3 +26,4 @@ MonoBehaviour:
   numberOfLines: 30
   chatLineHeight: 45
   offsetHeightRefreshChat: 120
+  betValue: 100

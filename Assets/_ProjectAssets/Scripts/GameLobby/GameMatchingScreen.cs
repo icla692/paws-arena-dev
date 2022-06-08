@@ -26,6 +26,9 @@ public class GameMatchingScreen : MonoBehaviour
     public List<SeatGameobject> seats;
     public Countdown countdown;
 
+    [Header("Externals")]
+    public BetsController betsController;
+
     private void OnEnable()
     {
         Init();
@@ -137,12 +140,16 @@ public class GameMatchingScreen : MonoBehaviour
     [PunRPC]
     public void StartCountdown()
     {
-        countdown.StartCountDown(() =>
+        betsController.ShowPrizes();
+        betsController.onBetsRoutineFinished += () =>
         {
-            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            countdown.StartCountDown(() =>
             {
-                PhotonNetwork.LoadLevel("GameScene");
-            }
-        });
+                if (PhotonNetwork.LocalPlayer.IsMasterClient)
+                {
+                    PhotonNetwork.LoadLevel("GameScene");
+                }
+            });
+        };
     }
 }
