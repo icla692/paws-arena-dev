@@ -133,23 +133,35 @@ public class GameMatchingScreen : MonoBehaviour
         {
             PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = false;
         }
-        GetComponent<PhotonView>().RPC("StartCountdown", RpcTarget.All);
+        GetComponent<PhotonView>().RPC("StartGameRoutine", RpcTarget.All);
     }
 
 
     [PunRPC]
-    public void StartCountdown()
+    public void StartGameRoutine()
     {
-        betsController.ShowPrizes();
-        betsController.onBetsRoutineFinished += () =>
+        if (betsController != null)
         {
-            countdown.StartCountDown(() =>
+            betsController.ShowPrizes();
+            betsController.onBetsRoutineFinished += () =>
             {
-                if (PhotonNetwork.LocalPlayer.IsMasterClient)
-                {
-                    PhotonNetwork.LoadLevel("GameScene");
-                }
-            });
-        };
+                StartCountdown();
+            };
+        }
+        else
+        {
+            StartCountdown();
+        }
+    }
+
+    private void StartCountdown()
+    {
+        countdown.StartCountDown(() =>
+        {
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel("GameScene");
+            }
+        });
     }
 }

@@ -44,14 +44,6 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         }
     }
 
-    public void JumpIsInAir()
-    {
-        if (_photonView.IsMine)
-        {
-            this.playerState.SetIsInAir(true);
-        }
-    }
-
     private void OnJumpStateChanged(bool jumpState)
     {
         _animator.SetBool("isJumping", jumpState);

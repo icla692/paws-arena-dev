@@ -44,6 +44,7 @@ public class PlayerMotionBehaviour : MonoBehaviour
         playerActions.Jump.started += _ =>
         {
             if (isPaused) return;
+            if(playerState.hasJump || playerState.hasJumpImpulseQueued) return;
             playerState.SetHasJump(true);
         };
     }
@@ -59,11 +60,10 @@ public class PlayerMotionBehaviour : MonoBehaviour
         if (playerState.movementDirection == 0 && !playerState.hasJump)
             return;
 
-        if(playerState.isInAir && CheckIfIsGrounded())
+        if(playerState.hasJump && CheckIfIsGrounded())
         {
             Debug.Log("GROUNDED!");
             playerState.SetHasJump(false);
-            playerState.SetIsInAir(false);
         }
         Move(playerState.movementDirection * Time.deltaTime * GetSpeed(), playerState.hasJumpImpulseQueued);
     }

@@ -11,6 +11,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public PUNGameRoomManager photonManager;
     [Header("Player")]
     public GameObject playerPrefab;
+
     public GameObject playerUIPrefab;
 
     public Transform playerUIParent;
@@ -135,6 +136,14 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public void Retreat()
     {
         photonView.RPC("Retreat", RpcTarget.All, PhotonNetwork.LocalPlayer.IsMasterClient ? 0 : 1);
+    }
+
+    public void LoadAfterGameScene(GameResolveState state)
+    {
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("AfterGame");
+        }
     }
 
     [PunRPC]

@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_ProjectAssets/Scenes/GameRoom/SinglePlayerGameRoom.unity
     guid: ecce4d2c53ad9444d8f408b1b814a6a4
+  - enabled: 1
+    path: Assets/_ProjectAssets/Scenes/AfterGame/AfterGame.unity
+    guid: d48f0a4b94bb49f48b380d4fdfb0f5fe
   m_configObjects: {}

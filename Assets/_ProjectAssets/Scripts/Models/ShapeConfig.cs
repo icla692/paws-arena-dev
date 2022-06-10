@@ -44,7 +44,7 @@ namespace Anura.Models
         private bool IsRect => shapeType == Shapes[1];
         private bool IsEllipse => shapeType == Shapes[2];
 
-        private void Awake()
+        public void Init()
         {
             switch (shapeType)
             {

@@ -8,8 +8,6 @@ public class NoticesBehaviour : MonoBehaviour
     public GameObject wrapper;
     public TMPro.TextMeshProUGUI label;
 
-    public GameObject endGameNotice;
-
     private void OnEnable()
     {
         wrapper.SetActive(false);
@@ -23,8 +21,6 @@ public class NoticesBehaviour : MonoBehaviour
 
     private void OnStateUpdated(IRoomState state)
     {
-
-        endGameNotice.SetActive(false);
 
         if (state is WaitingForAllPlayersToJoinState)
         {
@@ -45,18 +41,7 @@ public class NoticesBehaviour : MonoBehaviour
             SetStatus("Attack Launched");
         }else if(state is ResolvingGameState)
         {
-            ResolvingGameState crtState = (ResolvingGameState)state;
-            endGameNotice.SetActive(true);
-            if(crtState.state == GameResolveState.PLAYER_1_WIN)
-            {
-                SetStatus("Player 1 won!!");
-            }else if(crtState.state == GameResolveState.PLAYER_2_WIN)
-            {
-                SetStatus("Player 2 won!!");
-            }else if(crtState.state == GameResolveState.DRAW)
-            {
-                SetStatus("It's a draw!");
-            }
+            SetStatus("Match decided!");
         }
     }
 

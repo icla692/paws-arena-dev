@@ -13,6 +13,12 @@ namespace Anura.ConfigurationModule.Managers
         [SerializeField, Expandable] private ShapeList shapes;
         [SerializeField, Expandable] private CratesConfig crates;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            shapes.Init();
+        }
+
         public Config Config => config;
 
         public VFXConfig VFXConfig => visualContainer;

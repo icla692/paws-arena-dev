@@ -18,7 +18,6 @@ public class PlayerState
     //But jumps after 0.5s when impulse queued by animation clip
     public bool hasJump{ get; private set; } = false;
     public bool hasJumpImpulseQueued { get; private set; } = false;
-    public bool isInAir { get; private set; } = false;
 
     public bool hasWeaponOut { get; private set; } = false;
 
@@ -43,10 +42,6 @@ public class PlayerState
     {
         hasJumpImpulseQueued = val;
         onJumpImpulseQueuedChanged?.Invoke(hasJumpImpulseQueued);
-    }
-    public void SetIsInAir(bool val)
-    {
-        this.isInAir = val;
     }
 
     public void SetHasWeaponOut(bool val)

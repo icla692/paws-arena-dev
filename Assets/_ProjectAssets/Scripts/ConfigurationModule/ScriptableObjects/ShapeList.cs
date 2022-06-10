@@ -11,6 +11,14 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [SerializeField] 
         private List<ShapeConfig> shapes;
 
+        public void Init()
+        {
+            foreach(ShapeConfig shape in shapes)
+            {
+                shape.Init();
+            }
+        }
+
         internal ShapeConfig GetShape(int idx)
         {
             return shapes[idx];
