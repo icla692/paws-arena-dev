@@ -7389,7 +7389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wrapper: {fileID: 2062671657}
   label: {fileID: 2062671659}
-  endGameNotice: {fileID: 0}
+  sfx: {fileID: 8300000, guid: b1c8d52f590e00b46b60a2dd4e0d22b9, type: 3}
 --- !u!1 &1721096354
 GameObject:
   m_ObjectHideFlags: 0

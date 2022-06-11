@@ -10,17 +10,17 @@ public class AfterGameMainTitle : MonoBehaviour
     public GameObject drawTitle;
     void Start()
     {
-        if ((GameState.gameResolveState == GameResolveState.PLAYER_1_WIN && PhotonNetwork.LocalPlayer.IsMasterClient) ||
-            (GameState.gameResolveState == GameResolveState.PLAYER_2_WIN && !PhotonNetwork.LocalPlayer.IsMasterClient))
+        int checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
+
+        if (checkIfIWon > 0)
         {
             winTitle.SetActive(true);
         }
-        else if ((GameState.gameResolveState == GameResolveState.PLAYER_1_WIN && !PhotonNetwork.LocalPlayer.IsMasterClient) ||
-            (GameState.gameResolveState == GameResolveState.PLAYER_2_WIN && PhotonNetwork.LocalPlayer.IsMasterClient))
+        else if (checkIfIWon < 0)
         {
             loseTitle.SetActive(true);
         }
-        else if (GameState.gameResolveState == GameResolveState.DRAW)
+        else
         {
             drawTitle.SetActive(true);
         }

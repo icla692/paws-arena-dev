@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Countdown : MonoBehaviour
 {
+    public AudioClip sfx;
+
     private TextMeshProUGUI _text;
 
     public void StartCountDown(Action callback)
@@ -19,6 +21,7 @@ public class Countdown : MonoBehaviour
         while(seconds > 0)
         {
             _text.text = "" + seconds;
+            SFXManager.Instance.PlayOneShot(sfx);
             yield return new WaitForSeconds(1f);
             seconds--;
         }

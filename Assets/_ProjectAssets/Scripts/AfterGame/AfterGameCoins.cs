@@ -9,17 +9,17 @@ public class AfterGameCoins : MonoBehaviour
 
     void Start()
     {
-        if ((GameState.gameResolveState == GameResolveState.PLAYER_1_WIN && PhotonNetwork.LocalPlayer.IsMasterClient) ||
-            (GameState.gameResolveState == GameResolveState.PLAYER_2_WIN && !PhotonNetwork.LocalPlayer.IsMasterClient))
+        int checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
+
+        if (checkIfIWon > 0)
         {
             totalCoinsValue.color = Color.green;
         }
-        else if ((GameState.gameResolveState == GameResolveState.PLAYER_1_WIN && !PhotonNetwork.LocalPlayer.IsMasterClient) ||
-            (GameState.gameResolveState == GameResolveState.PLAYER_2_WIN && PhotonNetwork.LocalPlayer.IsMasterClient))
+        else if (checkIfIWon < 0)
         {
             totalCoinsValue.color = Color.red;
         }
-        else if(GameState.gameResolveState == GameResolveState.DRAW)
+        else
         {
             totalCoinsValue.color = Color.yellow;
         }

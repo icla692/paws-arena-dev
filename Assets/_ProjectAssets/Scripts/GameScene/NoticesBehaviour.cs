@@ -7,6 +7,7 @@ public class NoticesBehaviour : MonoBehaviour
 {
     public GameObject wrapper;
     public TMPro.TextMeshProUGUI label;
+    public AudioClip sfx;
 
     private void OnEnable()
     {
@@ -47,6 +48,7 @@ public class NoticesBehaviour : MonoBehaviour
 
     private void SetStatus(string value)
     {
+        SFXManager.Instance.PlayOneShot(sfx);
         wrapper.SetActive(true);
         label.text = value;
     }

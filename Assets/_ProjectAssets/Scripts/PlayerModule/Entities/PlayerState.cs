@@ -9,6 +9,7 @@ public class PlayerState
     public event Action<float> onMovementDirectionChanged;
     public event Action<bool> onJumpStateChanged;
     public event Action<bool> onJumpImpulseQueuedChanged;
+    public event Action<bool> onMidJumpChanged;
     public event Action<bool> onWeaponOutChanged;
 
     public bool isFacingRight { get; private set; } = true;
@@ -18,8 +19,10 @@ public class PlayerState
     //But jumps after 0.5s when impulse queued by animation clip
     public bool hasJump{ get; private set; } = false;
     public bool hasJumpImpulseQueued { get; private set; } = false;
+    public bool isMidJump { get; private set; } = false;
 
     public bool hasWeaponOut { get; private set; } = false;
+
 
     public void SetIsFacingRight(bool isFacingRight)
     {
@@ -42,6 +45,12 @@ public class PlayerState
     {
         hasJumpImpulseQueued = val;
         onJumpImpulseQueuedChanged?.Invoke(hasJumpImpulseQueued);
+    }
+
+    public void SetIsMidJump(bool val)
+    {
+        isMidJump = val;
+        onMidJumpChanged.Invoke(val);
     }
 
     public void SetHasWeaponOut(bool val)

@@ -16,7 +16,7 @@ MonoBehaviour:
   turnDurationInSeconds: 30
   playerTotalHealth: 100
   airControl: 1
-  playerSpeed: 10
+  playerSpeed: 20
   playerJumpForce: 10
   movementSmoothing: 0.05
   indicatorSpeed: 50
