@@ -33,8 +33,6 @@ namespace Anura.Models
         [ShowIf("IsEllipse")]
         public int pixelSize;
 
-        public GameObject visualFX;
-
         public Shape shape;
 
 

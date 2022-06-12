@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class AreaDamageBehaviour : MonoBehaviour
 {
-    public AudioClip explosionSfx;
-
-    public float area = 5.0f;
-    public int maxDamage = 20;
-    public bool doesDamageByDistance = false;
-    public bool hasPushForce = false;
-    public float pushForce = 10f;
+    [SerializeField]
+    private AudioClip explosionSfx;
+    [SerializeField]
+    private float area = 5.0f;
+    [SerializeField]
+    private int maxDamage = 20;
+    [SerializeField]
+    private bool doesDamageByDistance = false;
+    [SerializeField]
+    private bool hasPushForce = false;
+    [SerializeField]
+    private float pushForce = 10f;
 
     private void OnEnable()
     {

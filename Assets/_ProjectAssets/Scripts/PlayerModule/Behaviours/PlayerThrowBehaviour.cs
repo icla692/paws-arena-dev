@@ -3,18 +3,23 @@ using Anura.ConfigurationModule.ScriptableObjects;
 using Anura.Extensions;
 using Photon.Pun;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerThrowBehaviour : MonoBehaviour
 {
+    public static event Action onLaunchPreparing;
+    [SerializeField] private PlayerComponent playerComponent;
+
     [SerializeField] private PlayerIndicatorBehaviour indicator;
     [SerializeField] private Transform launchPoint;
-    [SerializeField] private GameObject bullet;
 
     private Config config => ConfigurationManager.Instance.Config;
 
     private PhotonView photonView;
     private bool isEnabled = false;
+
+    private List<GameObject> projectiles;
 
     private void OnEnable()
     {
@@ -22,7 +27,7 @@ public class PlayerThrowBehaviour : MonoBehaviour
         isEnabled = true;
         if (photonView.IsMine)
         {
-            PlayerActionsBar.OnShoot += Launch;
+            PlayerActionsBar.OnShoot += PrepareLaunch;
         }
     }
 
@@ -31,22 +36,51 @@ public class PlayerThrowBehaviour : MonoBehaviour
         isEnabled = false;
         if (photonView.IsMine)
         {
-            PlayerActionsBar.OnShoot -= Launch;
+            PlayerActionsBar.OnShoot -= PrepareLaunch;
         }
     }
 
     public void RegisterThrowCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        playerActions.Approve.performed += _ => Launch();
+        playerActions.Approve.performed += _ => PrepareLaunch();
     }
 
-    private void Launch()
+    private void PrepareLaunch()
     {
         if (!isEnabled) return;
-        var obj = PhotonNetwork.Instantiate(bullet.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
-        obj.GetComponent<Rigidbody2D>().AddForce(launchPoint.up* GetBulletSpeed(), ForceMode2D.Impulse);
+        isEnabled = false;
+
+        int weaponIdx = playerComponent.state.weaponIdx;
+        var weapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
+
+        projectiles = new List<GameObject>();
+
+        for (int i = 0; i < weapon.numberOfProjectiles; i++) {
+            var obj = PhotonNetwork.Instantiate("Bullets/" + weapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
+            projectiles.Add(obj);
+            if(i != weapon.numberOfProjectiles / 2)
+            {
+                obj.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;
+            }
+        }
+        onLaunchPreparing?.Invoke();
+    }
+
+    public void Launch()
+    {
+
+        float deviation = 10;
+        for (int i = 0; i < projectiles.Count; i++)
+        {
+            float angle = deviation * (i - projectiles.Count / 2);
+            Vector3 direction = Quaternion.Euler(0, 0, angle) * launchPoint.up;
+
+            projectiles[i].GetComponent<BulletComponent>().Launch(direction, GetBulletSpeed());
+        }
         RoomStateManager.Instance.SetProjectileLaunchedState();
     }
+
+
 
     private float GetBulletSpeed()
     {

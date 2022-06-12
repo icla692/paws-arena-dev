@@ -6,11 +6,10 @@ using UnityEngine;
 public class PlayerActionsBar : MonoBehaviour
 {
     public static event Action OnShoot;
-    public static event Action<bool> WeaponStateUpdated;
+    public static event Action<int> WeaponIndexUpdated;
 
     public GameObject playerActionsWrapper;
-    public GameObject weaponInBar;
-    public GameObject weaponOutBar;
+    public GameObject weaponsBar;
 
     private void OnEnable()
     {
@@ -27,8 +26,7 @@ public class PlayerActionsBar : MonoBehaviour
         if (state is MyTurnState)
         {
             playerActionsWrapper.SetActive(true);
-            weaponInBar.SetActive(true);
-            weaponOutBar.SetActive(false);
+            weaponsBar.SetActive(true);
         }
         else
         {
@@ -41,17 +39,8 @@ public class PlayerActionsBar : MonoBehaviour
         OnShoot?.Invoke();
     }
 
-    public void WeaponOut()
+    public void WeaponOut(int value)
     {
-        weaponOutBar.SetActive(true);
-        weaponInBar.SetActive(false);
-        WeaponStateUpdated?.Invoke(true);
-    }
-
-    public void WeaponIn()
-    {
-        weaponInBar.SetActive(true);
-        weaponOutBar.SetActive(false);
-        WeaponStateUpdated?.Invoke(false);
+        WeaponIndexUpdated?.Invoke(value);
     }
 }

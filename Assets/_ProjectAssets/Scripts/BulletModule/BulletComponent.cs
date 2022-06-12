@@ -7,6 +7,10 @@ public class BulletComponent : MonoBehaviour
 {
     public static event Action<bool, Vector2> onBulletMoved;
     public AudioClip shotSfx;
+    public GameObject explosionPrefab;
+
+    [HideInInspector]
+    public bool hasEnabledPositionTracking = true;
 
     private bool isTouched = false;
     private Rigidbody2D rb;
@@ -19,7 +23,14 @@ public class BulletComponent : MonoBehaviour
         photonView = GetComponent<PhotonView>();
         thisT = transform;
 
+        rb.isKinematic = true;
+    }
+
+    public void Launch(Vector3 direction, float speed)
+    {
         SFXManager.Instance.PlayOneShot(shotSfx, 0.5f);
+        rb.isKinematic = false;
+        rb.AddForce(direction * speed, ForceMode2D.Impulse);
     }
 
     private void Update()
@@ -27,7 +38,11 @@ public class BulletComponent : MonoBehaviour
         thisT.right = Vector2.Lerp(thisT.right,
                                        rb.velocity.normalized * ConfigurationManager.Instance.Config.GetFactorRotationIndicator(),
                                        Time.deltaTime);
-        onBulletMoved?.Invoke(photonView.IsMine, transform.position);
+
+        if (hasEnabledPositionTracking)
+        {
+            onBulletMoved?.Invoke(photonView.IsMine, transform.position);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -42,7 +57,7 @@ public class BulletComponent : MonoBehaviour
         //If it blows very fast, on other player Start doesn't even has time to play
         if (photonView!=null && photonView.IsMine)
         {
-            VFXManager.Instance.PUN_InstantiateExplosion(hitPose);
+            VFXManager.Instance.PUN_InstantiateExplosion(hitPose, explosionPrefab);
         }
 
         Destroy(gameObject);

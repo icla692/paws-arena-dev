@@ -19,7 +19,7 @@ public class ProjectileLaunchedState : IRoomState
         {
             context.trajectory.StartRecording();
         }
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
 
 
         if (context.WasMyRound())
