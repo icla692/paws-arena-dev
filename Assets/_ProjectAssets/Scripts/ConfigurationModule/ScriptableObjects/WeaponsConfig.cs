@@ -13,6 +13,8 @@ public class WeaponEntity
     public GameObject bulletPrefab;
     [SerializeField]
     public int numberOfProjectiles = 1;
+    [SerializeField]
+    public float waitBeforeTurnEnd = 4f;
 }
 
 [CreateAssetMenu(fileName = "WeaponsConfig", menuName = "Configurations/Weapons Config", order = 4)]

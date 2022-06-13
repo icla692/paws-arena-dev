@@ -16,9 +16,12 @@ MonoBehaviour:
   - launcher: {fileID: 9074758971582012280, guid: d36b44f962ca90543b707fb247a911dc, type: 3}
     bulletPrefab: {fileID: 4174453076262886263, guid: 7512ed148be88794a8d115915ddc0da6, type: 3}
     numberOfProjectiles: 1
+    waitBeforeTurnEnd: 4
   - launcher: {fileID: 5477031773624607558, guid: 254262e8eb03fe1459924b75ffd00e67, type: 3}
     bulletPrefab: {fileID: 4174453076262886263, guid: 7512ed148be88794a8d115915ddc0da6, type: 3}
     numberOfProjectiles: 1
+    waitBeforeTurnEnd: 4
   - launcher: {fileID: 5477031773624607558, guid: 254262e8eb03fe1459924b75ffd00e67, type: 3}
     bulletPrefab: {fileID: 4174453076262886263, guid: bf45d24987bd4be4dbe639f84ddbc680, type: 3}
     numberOfProjectiles: 3
+    waitBeforeTurnEnd: 6
