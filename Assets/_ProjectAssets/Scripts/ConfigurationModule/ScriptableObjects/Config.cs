@@ -46,6 +46,11 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [SerializeField] private float chatLineHeight;
         [SerializeField] private float offsetHeightRefreshChat;
 
+        [Header("Game Economy")]
+        [Space]
+
+        [SerializeField] private int betValue=25;
+
         public int GetMaxNumberOfRounds()
         {
             return maxNumberOfRounds;
@@ -119,6 +124,13 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         public float GetHeightRefreshingChat()
         {
             return (GetNumberOfLines() * GetChatLineHeight()) - offsetHeightRefreshChat;
+        }
+
+        //Economy
+
+        public int GetBetValue()
+        {
+            return betValue;
         }
     }
 }

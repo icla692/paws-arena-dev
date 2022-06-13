@@ -28,12 +28,12 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     {
 
         this.playerState = playerState;
-        this.playerState.onMovementDirectionChanged += OnMovementDirectionChanged;
         this.playerState.onJumpStateChanged += OnJumpStateChanged;
+        this.playerState.onMovementDirectionChanged += OnMovementDirectionChanged;
+        this.playerState.onMidJumpChanged += OnMidJumpStateChanged;
 
         PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
     }
-
 
     public void PreJumpAnimEnded()
     {
@@ -44,30 +44,46 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         }
     }
 
-    public void JumpIsInAir()
+    public void SetIsMidJump()
     {
         if (_photonView.IsMine)
         {
-            this.playerState.SetIsInAir(true);
+            this.playerState.SetIsMidJump(true);
         }
     }
 
-    private void OnJumpStateChanged(bool jumpState)
+    public void AfterJump()
     {
-        _animator.SetBool("isJumping", jumpState);
-
-        if (!jumpState)
+        if (_photonView.IsMine)
         {
+            this.playerState.SetHasJump(false);
+        }
+    }
+
+    private void OnJumpStateChanged(bool val)
+    {
+        if (val)
+        {
+            _animator.SetBool("isJumping", true);
+        }
+    }
+
+    private void OnMidJumpStateChanged(bool midJumpState)
+    {
+        if (!midJumpState)
+        {
+            _animator.SetBool("isJumping", false);
             SFXManager.Instance.PlayOneShot(jumpEndSound);
         }
     }
 
     private void OnMovementDirectionChanged(float dir)
     {
-        if(dir > 0 && !isFacingRight)
+        if (dir > 0 && !isFacingRight)
         {
             Flip();
-        }else if(dir < 0 && isFacingRight)
+        }
+        else if (dir < 0 && isFacingRight)
         {
             Flip();
         }

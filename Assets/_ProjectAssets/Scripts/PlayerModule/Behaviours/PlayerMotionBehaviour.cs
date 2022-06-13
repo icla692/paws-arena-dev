@@ -15,6 +15,9 @@ public class PlayerMotionBehaviour : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
 
+    private float lastJumpTime = 0;
+
+
     private void Awake()
     {
         _transform = transform;
@@ -44,6 +47,10 @@ public class PlayerMotionBehaviour : MonoBehaviour
         playerActions.Jump.started += _ =>
         {
             if (isPaused) return;
+            //Throttle
+            if (playerState.hasJump || (Time.time - lastJumpTime < 1f)) return;
+
+            lastJumpTime = Time.time;
             playerState.SetHasJump(true);
         };
     }
@@ -59,16 +66,15 @@ public class PlayerMotionBehaviour : MonoBehaviour
         if (playerState.movementDirection == 0 && !playerState.hasJump)
             return;
 
-        if(playerState.isInAir && CheckIfIsGrounded())
+        if(playerState.isMidJump && CheckIfIsGrounded())
         {
-            Debug.Log("GROUNDED!");
-            playerState.SetHasJump(false);
-            playerState.SetIsInAir(false);
+            playerState.SetIsMidJump(false);
         }
+
         Move(playerState.movementDirection * Time.deltaTime * GetSpeed(), playerState.hasJumpImpulseQueued);
     }
 
-    public void Move(float move, bool jump)
+    public void Move(float move, bool jumpQueued)
     {
         if (CheckIfIsGrounded() || GetAirControl())
         {
@@ -76,11 +82,11 @@ public class PlayerMotionBehaviour : MonoBehaviour
             _rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, targetVelocity, ref velocity, GetMovementSmoothing());
         }
 
-        if (CheckIfIsGrounded() && jump)
+        if (CheckIfIsGrounded() && jumpQueued)
         {
             _rigidbody2D.AddForce(Vector2.up * GetJumpForce(), ForceMode2D.Impulse);
             playerState.SetQueueJumpImpulse(false);
-        }else if(jump) //Jumped in-air. Wasted.
+        }else if(jumpQueued) //Jumped in-air. Wasted.
         {
             playerState.SetQueueJumpImpulse(false);
         }
@@ -100,6 +106,12 @@ public class PlayerMotionBehaviour : MonoBehaviour
     {
         return Physics2D.IsTouchingLayers(ceilingCollider);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Debug.Log($"{collision.contacts[0].relativeVelocity.x} {collision.contacts[0].relativeVelocity.y}");
+    }
+
     private bool GetAirControl()
     {
         return ConfigurationManager.Instance.Config.GetAirControl();

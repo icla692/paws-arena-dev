@@ -9,7 +9,8 @@ public class PlayerState
     public event Action<float> onMovementDirectionChanged;
     public event Action<bool> onJumpStateChanged;
     public event Action<bool> onJumpImpulseQueuedChanged;
-    public event Action<bool> onWeaponOutChanged;
+    public event Action<bool> onMidJumpChanged;
+    public event Action<int> onWeaponIdxChanged;
 
     public bool isFacingRight { get; private set; } = true;
     public float movementDirection { get; private set; } = 0;
@@ -18,9 +19,10 @@ public class PlayerState
     //But jumps after 0.5s when impulse queued by animation clip
     public bool hasJump{ get; private set; } = false;
     public bool hasJumpImpulseQueued { get; private set; } = false;
-    public bool isInAir { get; private set; } = false;
+    public bool isMidJump { get; private set; } = false;
 
-    public bool hasWeaponOut { get; private set; } = false;
+    public int weaponIdx { get; private set; } = -1;
+
 
     public void SetIsFacingRight(bool isFacingRight)
     {
@@ -44,14 +46,16 @@ public class PlayerState
         hasJumpImpulseQueued = val;
         onJumpImpulseQueuedChanged?.Invoke(hasJumpImpulseQueued);
     }
-    public void SetIsInAir(bool val)
+
+    public void SetIsMidJump(bool val)
     {
-        this.isInAir = val;
+        isMidJump = val;
+        onMidJumpChanged.Invoke(val);
     }
 
-    public void SetHasWeaponOut(bool val)
+    public void SetHasWeaponOut(int weaponIdx)
     {
-        hasWeaponOut = val;
-        onWeaponOutChanged?.Invoke(val);
+        this.weaponIdx = weaponIdx;
+        onWeaponIdxChanged?.Invoke(weaponIdx);
     }
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0b8c4f25334844eaa7382595cc22bc, type: 3}
+  m_Name: WeaponsConfig
+  m_EditorClassIdentifier: 
+  weapons:
+  - launcher: {fileID: 9074758971582012280, guid: d36b44f962ca90543b707fb247a911dc, type: 3}
+    bulletPrefab: {fileID: 4174453076262886263, guid: 7512ed148be88794a8d115915ddc0da6, type: 3}
+    numberOfProjectiles: 1
+  - launcher: {fileID: 5477031773624607558, guid: 254262e8eb03fe1459924b75ffd00e67, type: 3}
+    bulletPrefab: {fileID: 4174453076262886263, guid: 7512ed148be88794a8d115915ddc0da6, type: 3}
+    numberOfProjectiles: 1
+  - launcher: {fileID: 5477031773624607558, guid: 254262e8eb03fe1459924b75ffd00e67, type: 3}
+    bulletPrefab: {fileID: 4174453076262886263, guid: bf45d24987bd4be4dbe639f84ddbc680, type: 3}
+    numberOfProjectiles: 3

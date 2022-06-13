@@ -26,6 +26,9 @@ public class GameMatchingScreen : MonoBehaviour
     public List<SeatGameobject> seats;
     public Countdown countdown;
 
+    [Header("Externals")]
+    public BetsController betsController;
+
     private void OnEnable()
     {
         Init();
@@ -130,12 +133,28 @@ public class GameMatchingScreen : MonoBehaviour
         {
             PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = false;
         }
-        GetComponent<PhotonView>().RPC("StartCountdown", RpcTarget.All);
+        GetComponent<PhotonView>().RPC("StartGameRoutine", RpcTarget.All);
     }
 
 
     [PunRPC]
-    public void StartCountdown()
+    public void StartGameRoutine()
+    {
+        if (betsController != null)
+        {
+            betsController.ShowPrizes();
+            betsController.onBetsRoutineFinished += () =>
+            {
+                StartCountdown();
+            };
+        }
+        else
+        {
+            StartCountdown();
+        }
+    }
+
+    private void StartCountdown()
     {
         countdown.StartCountDown(() =>
         {

@@ -66,8 +66,8 @@ public class PlayerComponent : MonoBehaviour
     {
         if (state != null)
         {
-            state.onWeaponOutChanged -= OnWeaponOutChanged;
-            PlayerActionsBar.WeaponStateUpdated -= ChangeWeaponState;
+            state.onWeaponIdxChanged -= OnWeaponOutChanged;
+            PlayerActionsBar.WeaponIndexUpdated -= ChangeWeaponState;
         }
     }
 
@@ -75,7 +75,7 @@ public class PlayerComponent : MonoBehaviour
     {
         PlayerManager.Instance.RegisterMyPlayer(this);
         state = new PlayerState();
-        state.onWeaponOutChanged += OnWeaponOutChanged;
+        state.onWeaponIdxChanged += OnWeaponOutChanged;
 
         playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
 
@@ -91,9 +91,9 @@ public class PlayerComponent : MonoBehaviour
         var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
 
-        PlayerActionsBar.WeaponStateUpdated += ChangeWeaponState;
+        PlayerActionsBar.WeaponIndexUpdated += ChangeWeaponState;
 
-        ChangeWeaponState(false);
+        ChangeWeaponState(-1);
         playerActions.Disable();
     }
 
@@ -104,7 +104,7 @@ public class PlayerComponent : MonoBehaviour
 
     private void OnStateUpdatedForMyPlayer(IRoomState roomState)
     {
-        state.SetHasWeaponOut(false);
+        state.SetHasWeaponOut(-1);
         if (roomState is MyTurnState)
         {
             Debug.LogWarning("Check if the chat pannel is open");
@@ -125,16 +125,21 @@ public class PlayerComponent : MonoBehaviour
     }
 
     //Set State
-    private void ChangeWeaponState(bool val)
+    private void ChangeWeaponState(int idx)
     {
-        state.SetHasWeaponOut(val);
+        if(state.weaponIdx == idx)
+        {
+            idx = -1;
+        }
+
+        state.SetHasWeaponOut(idx);
     }
 
 
     //Listen to state and propagate to all clients
-    private void OnWeaponOutChanged(bool val)
+    private void OnWeaponOutChanged(int val)
     {
-        playerMotionBehaviour.SetIsPaused(val);
+        playerMotionBehaviour.SetIsPaused(val >= 0);
         photonView.RPC("NetworkedChangeWeaponState", RpcTarget.All, val);
     }
 
@@ -145,8 +150,9 @@ public class PlayerComponent : MonoBehaviour
 
     //Actual logic
     [PunRPC]
-    private void NetworkedChangeWeaponState(bool val)
+    private void NetworkedChangeWeaponState(int val)
     {
-        weaponWrapper.SetActive(val);
+        weaponWrapper.SetActive(val >= 0);
+        weaponWrapper.GetComponent<WeaponBehaviour>().Init();
     }
 }

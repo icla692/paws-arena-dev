@@ -10,7 +10,6 @@ public class ClickAndDestroyOptimized : ClickAndDestroy
         Vector3 cameraClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition) - primaryLayer.transform.position;
 
-        Debug.Log($"Clicking at {cameraClick.x} {cameraClick.y} {cameraClick.z}");
         primaryLayer?.Paint(new PaintingParameters()
         {
             Color = Color.clear,
