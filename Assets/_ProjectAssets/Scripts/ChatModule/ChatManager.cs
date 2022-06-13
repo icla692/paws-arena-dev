@@ -1,79 +1,74 @@
 using Anura.ConfigurationModule.Managers;
-using Anura.Extensions;
 using Anura.Templates.MonoSingleton;
 using Photon.Pun;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(ChatLinePool))]
 public class ChatManager : MonoSingleton<ChatManager>
 {
+    [SerializeField] private ChatBehaviour chatBehaviour;
+    [SerializeField] private NotificationChatBehaviour notificationChatBehaviour;
     [SerializeField] private Button openChat;
-    [SerializeField] private Button sendButton;
-    [SerializeField] private Button chatBackground;
-    [SerializeField] private Button xChatButton;
 
-    [SerializeField] private TMP_InputField inputField;
-    [SerializeField] private ChatLine chatLine;
-
-    [SerializeField] private GameObject chatPanel;
-    [SerializeField] private RectTransform content;
-
+    private PhotonView chatPhotonView;
     private ChatLinePool chatLinePool;
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        openChat.onClick.AddListener(() => SetChatPanelBehaviour(!GetChatPanelStatus()));
-        chatBackground.onClick.AddListener(() => SetChatPanelBehaviour(!GetChatPanelStatus()));
-        xChatButton.onClick.AddListener(() => SetChatPanelBehaviour(!GetChatPanelStatus()));
-        sendButton.onClick.AddListener(() => SendMessage());
-
+        openChat.onClick.AddListener(() => SetActiveChat(true));
         chatLinePool = GetComponent<ChatLinePool>();
+        chatPhotonView = GetComponent<PhotonView>();
         
-        InitializeContent(ConfigurationManager.Instance.Config.GetNumberOfLines());
     }
 
     public bool GetChatPanelStatus()
     {
-        return chatPanel.activeSelf;
+        return chatBehaviour.gameObject.activeSelf;
+    }
+
+    public ChatLinePool GetChatLinePool()
+    {
+        return chatLinePool;
+    }
+
+    public PhotonView GetChatPhotonView()
+    {
+        return chatPhotonView;
+    }
+
+    public void SetActiveNotification(bool value)
+    {
+        notificationChatBehaviour.gameObject.SetActive(value);
+    }
+
+    public void SetActiveChat(bool value)
+    {
+        SetChatPanelBehaviour(value);
+        GameInputManager.Instance.GetChatActionMap().SetActiveChatActionMap(value);
     }
 
     private void SetChatPanelBehaviour(bool isActive)
     {
-        chatPanel.SetActive(isActive);
-        GameInputManager.Instance.GetPlayerActionMap().SetActivePlayerActionMap(!isActive);
-    }
+        chatBehaviour.gameObject.SetActive(isActive);
 
-    private void InitializeContent(int numberOfLines)
-    {
-        for (int i = 0; i < numberOfLines; i++)
-        {
-            var line = Instantiate(chatLine, content.transform);
-            chatLinePool.AddObjectToPool(line);
-        }
-    }
-
-    private void SendMessage()
-    {
-        if (inputField.text.IsEmptyOrWhiteSpace())
-            return;
-
-        GetComponent<PhotonView>().RPC("ChatMessage", RpcTarget.All, inputField.text);
+        bool shouldBeAbleToMove = !isActive && RoomStateManager.Instance.currentState is MyTurnState;
+        Debug.Log("Should be able to move " + shouldBeAbleToMove);
+        GameInputManager.Instance.GetPlayerActionMap().SetActivePlayerActionMap(shouldBeAbleToMove);
     }
 
     [PunRPC]
     void ChatMessage(string message, PhotonMessageInfo info)
     {
-        var line = chatLinePool.GetObjectFromPool();
-        chatLinePool.AddObjectToPool(line);
-        line.SetText(message, info.Sender.IsLocal);
-        if(info.Sender.IsLocal)
+        if (info.Sender.IsLocal)
         {
-            inputField.text = string.Empty;
+           chatBehaviour.CleanInputField();
+        }
+        else if(!GetChatPanelStatus())
+        {
+            SetActiveNotification(true);
         }
 
-        content.anchoredPosition = content.anchoredPosition.WithY(ConfigurationManager.Instance.Config.GetHeightRefreshingChat());
+        chatBehaviour.DisplayMessage(message, info.Sender.IsLocal);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class TopBarBehaviour : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI nickname;
-    public PlayerNameInputField nicknameInput;
+    public PlayerNicknameButton nicknameInput;
 
     private void OnEnable()
     {

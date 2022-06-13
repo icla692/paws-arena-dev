@@ -22,7 +22,6 @@ public class GameMatchingScreen : MonoBehaviour
     public PUNRoomUtils punRoomUtils;
 
     [Header("Internals")]
-    public GameObject startButton;
     public GameObject notices;
     public List<SeatGameobject> seats;
     public Countdown countdown;
@@ -42,7 +41,6 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void Init()
     {
-        startButton.SetActive(false);
         notices.SetActive(false);
 
         foreach (SeatGameobject seat in seats)
@@ -54,8 +52,10 @@ public class GameMatchingScreen : MonoBehaviour
         {
             punRoomUtils.AddPlayerCustomProperty("seat", "0");
             OccupySeat(seats[0], PhotonNetwork.LocalPlayer.NickName);
-
-            startButton.SetActive(PhotonNetwork.CurrentRoom.MaxPlayers == PhotonNetwork.CurrentRoom.PlayerCount);
+            if (PhotonNetwork.CurrentRoom.MaxPlayers == PhotonNetwork.CurrentRoom.PlayerCount)
+            {
+                StartGame();
+            }
         }
         else
         {
@@ -99,11 +99,14 @@ public class GameMatchingScreen : MonoBehaviour
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
             notices.SetActive(true);
-            startButton.SetActive(true);
-        }
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            startButton.SetActive(PhotonNetwork.CurrentRoom.MaxPlayers == PhotonNetwork.CurrentRoom.PlayerCount);
+
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                if (PhotonNetwork.CurrentRoom.MaxPlayers == PhotonNetwork.CurrentRoom.PlayerCount)
+                {
+                    StartGame();
+                }
+            }
         }
         OccupySeat(seats[otherSeat], opponentNickname);
     }
@@ -127,7 +130,6 @@ public class GameMatchingScreen : MonoBehaviour
         {
             PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = false;
         }
-        startButton.SetActive(false);
         GetComponent<PhotonView>().RPC("StartCountdown", RpcTarget.All);
     }
 

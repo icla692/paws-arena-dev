@@ -23,5 +23,6 @@ MonoBehaviour:
   bulletSpeed: {x: 1, y: 20}
   factorRotationRocket: 4
   circleShootRadius: 5.5
-  numberOfLines: 10
-  defaultHeightForRefreshingChat: 330
+  numberOfLines: 30
+  chatLineHeight: 45
+  offsetHeightRefreshChat: 120
