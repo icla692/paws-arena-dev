@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dddb50a8ca42614db7136d646c382d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfx: {fileID: 0}
   throwBehaviour: {fileID: 0}
 --- !u!95 &3966427939167539152
 Animator:

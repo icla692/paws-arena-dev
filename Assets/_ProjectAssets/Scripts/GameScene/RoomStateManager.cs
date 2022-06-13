@@ -128,9 +128,9 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         }
     }
 
-    public void SetProjectileLaunchedState()
+    public void SetProjectileLaunchedState(float waitBeforeEndTurn)
     {
-        photonView.RPC("StartProjectileLaunchedState", RpcTarget.All);
+        photonView.RPC("StartProjectileLaunchedState", RpcTarget.All, waitBeforeEndTurn);
     }
 
     public void Retreat()
@@ -147,9 +147,9 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     }
 
     [PunRPC]
-    private void StartProjectileLaunchedState()
+    private void StartProjectileLaunchedState(float waitBeforeEndTurn)
     {
-        SetState(new ProjectileLaunchedState());
+        SetState(new ProjectileLaunchedState(waitBeforeEndTurn));
     }
 
     [PunRPC]

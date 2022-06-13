@@ -68,6 +68,8 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
     public void Launch()
     {
+        int weaponIdx = playerComponent.state.weaponIdx;
+        var weapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
 
         float deviation = 10;
         for (int i = 0; i < projectiles.Count; i++)
@@ -77,7 +79,7 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
             projectiles[i].GetComponent<BulletComponent>().Launch(direction, GetBulletSpeed());
         }
-        RoomStateManager.Instance.SetProjectileLaunchedState();
+        RoomStateManager.Instance.SetProjectileLaunchedState(weapon.waitBeforeTurnEnd);
     }
 
 

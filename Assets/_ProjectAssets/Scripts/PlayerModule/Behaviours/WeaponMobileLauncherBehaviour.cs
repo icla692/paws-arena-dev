@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponMobileLauncherBehaviour : MonoBehaviour
 {
     private Animator _animator;
+    public AudioClip sfx;
 
     [HideInInspector]
     public PlayerThrowBehaviour throwBehaviour;
@@ -24,6 +25,10 @@ public class WeaponMobileLauncherBehaviour : MonoBehaviour
     private void PrepareLaunch()
     {
         _animator.SetTrigger("Shoot");
+        if (sfx != null)
+        {
+            SFXManager.Instance.PlayOneShot(sfx);
+        }
     }
     
     public void Launch()
