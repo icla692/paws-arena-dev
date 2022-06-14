@@ -153,6 +153,6 @@ public class PlayerComponent : MonoBehaviour
     private void NetworkedChangeWeaponState(int val)
     {
         weaponWrapper.SetActive(val >= 0);
-        weaponWrapper.GetComponent<WeaponBehaviour>().Init();
+        weaponWrapper.GetComponent<WeaponBehaviour>().Init(val);
     }
 }

@@ -60,6 +60,6 @@ public class BulletComponent : MonoBehaviour
             VFXManager.Instance.PUN_InstantiateExplosion(hitPose, explosionPrefab);
         }
 
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 }

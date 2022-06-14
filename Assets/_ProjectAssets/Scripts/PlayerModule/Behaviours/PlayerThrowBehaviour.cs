@@ -63,11 +63,21 @@ public class PlayerThrowBehaviour : MonoBehaviour
                 obj.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;
             }
         }
+
+        //So that animation etc plays on all clients
+        photonView.RPC("OnLaunchPreparing", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void OnLaunchPreparing()
+    {
         onLaunchPreparing?.Invoke();
     }
 
     public void Launch()
     {
+        if (!photonView.IsMine) return;
+
         int weaponIdx = playerComponent.state.weaponIdx;
         var weapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
 

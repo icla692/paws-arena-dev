@@ -57,6 +57,7 @@ MonoBehaviour:
   - DestroyCrate
   - ChatMessage
   - StartGameRoutine
+  - OnLaunchPreparing
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

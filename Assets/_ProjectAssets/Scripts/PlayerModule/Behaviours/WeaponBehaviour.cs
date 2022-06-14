@@ -14,9 +14,8 @@ public class WeaponBehaviour : MonoBehaviour
 
     private GameObject lastWeapon = null;
 
-    public void Init()
+    public void Init(int weaponIdx)
     {
-        int weaponIdx = playerComponent.state.weaponIdx;
         if (weaponIdx < 0)
         {
             Debug.LogWarning("No weapon selected but weapon enabled");
@@ -29,7 +28,7 @@ public class WeaponBehaviour : MonoBehaviour
         }
 
         var weapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
-        lastWeapon = PhotonNetwork.Instantiate("Weapons/" + weapon.launcher.name, Vector3.zero, Quaternion.identity);
+        lastWeapon = Instantiate(weapon.launcher);
         lastWeapon.transform.parent = mobileParent;
         lastWeapon.transform.localPosition = Vector3.zero;
         lastWeapon.transform.localRotation = Quaternion.identity;
