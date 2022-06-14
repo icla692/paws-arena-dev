@@ -273,6 +273,15 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""6556e4b6-d7c1-4378-bfa4-0f76b3475b06"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -284,6 +293,17 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Send"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""415a9621-5e35-4d7d-ae81-ea3010eea5d8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Close"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -315,6 +335,7 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         // Chat
         m_Chat = asset.FindActionMap("Chat", throwIfNotFound: true);
         m_Chat_Send = m_Chat.FindAction("Send", throwIfNotFound: true);
+        m_Chat_Close = m_Chat.FindAction("Close", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -448,11 +469,13 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Chat;
     private IChatActions m_ChatActionsCallbackInterface;
     private readonly InputAction m_Chat_Send;
+    private readonly InputAction m_Chat_Close;
     public struct ChatActions
     {
         private @GameInputActions m_Wrapper;
         public ChatActions(@GameInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Send => m_Wrapper.m_Chat_Send;
+        public InputAction @Close => m_Wrapper.m_Chat_Close;
         public InputActionMap Get() { return m_Wrapper.m_Chat; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -465,6 +488,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                 @Send.started -= m_Wrapper.m_ChatActionsCallbackInterface.OnSend;
                 @Send.performed -= m_Wrapper.m_ChatActionsCallbackInterface.OnSend;
                 @Send.canceled -= m_Wrapper.m_ChatActionsCallbackInterface.OnSend;
+                @Close.started -= m_Wrapper.m_ChatActionsCallbackInterface.OnClose;
+                @Close.performed -= m_Wrapper.m_ChatActionsCallbackInterface.OnClose;
+                @Close.canceled -= m_Wrapper.m_ChatActionsCallbackInterface.OnClose;
             }
             m_Wrapper.m_ChatActionsCallbackInterface = instance;
             if (instance != null)
@@ -472,6 +498,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                 @Send.started += instance.OnSend;
                 @Send.performed += instance.OnSend;
                 @Send.canceled += instance.OnSend;
+                @Close.started += instance.OnClose;
+                @Close.performed += instance.OnClose;
+                @Close.canceled += instance.OnClose;
             }
         }
     }
@@ -497,5 +526,6 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
     public interface IChatActions
     {
         void OnSend(InputAction.CallbackContext context);
+        void OnClose(InputAction.CallbackContext context);
     }
 }
