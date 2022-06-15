@@ -675,9 +675,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 520005547}
+  - component: {fileID: 520005548}
   - component: {fileID: 520005550}
   - component: {fileID: 520005549}
-  - component: {fileID: 520005548}
   m_Layer: 0
   m_Name: SFXManager
   m_TagString: Untagged
@@ -820,9 +820,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 58587639613ec1a429545c401c858020, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0

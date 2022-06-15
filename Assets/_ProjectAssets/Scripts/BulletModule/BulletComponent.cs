@@ -13,8 +13,8 @@ public class BulletComponent : MonoBehaviour
     public bool hasEnabledPositionTracking = true;
 
     private bool isTouched = false;
-    private Rigidbody2D rb;
-    private PhotonView photonView;
+    protected Rigidbody2D rb;
+    protected PhotonView photonView;
     private Transform thisT;
 
     private void Start()
@@ -54,8 +54,13 @@ public class BulletComponent : MonoBehaviour
 
         var hitPose = collision.contacts[0].point;
 
+        HandleCollision(hitPose);
+    }
+
+    protected virtual void HandleCollision(Vector2 hitPose)
+    {
         //If it blows very fast, on other player Start doesn't even has time to play
-        if (photonView!=null && photonView.IsMine)
+        if (photonView != null && photonView.IsMine)
         {
             VFXManager.Instance.PUN_InstantiateExplosion(hitPose, explosionPrefab);
         }

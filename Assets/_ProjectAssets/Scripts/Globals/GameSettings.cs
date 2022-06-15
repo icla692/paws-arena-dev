@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class GameSettings
 {
+    public static event Action onGameSettingsApplied;
     private const string key = "gamesettings";
 
     [SerializeField]
@@ -28,5 +29,6 @@ public class GameSettings
     public void Apply()
     {
         PlayerPrefs.SetString(key, JsonUtility.ToJson(this));
+        onGameSettingsApplied?.Invoke();
     }
 }

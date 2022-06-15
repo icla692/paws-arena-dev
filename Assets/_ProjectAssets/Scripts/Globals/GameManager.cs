@@ -6,6 +6,5 @@ public class GameManager : MonoBehaviour
 {
     void Start()
     {
-        GameState.gameSettings.Apply();   
     }
 }

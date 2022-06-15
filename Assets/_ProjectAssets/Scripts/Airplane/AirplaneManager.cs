@@ -1,14 +1,16 @@
+using Anura.Templates.MonoSingleton;
 using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AirplaneManager : MonoBehaviour
+public class AirplaneManager : MonoSingleton<AirplaneManager>
 {
     [Header("Internals")]
     public GameObject airplaneParent;
     public Animator airplaneAnimator;
+    public AudioSource audioSource;
 
     [Header("Params")]
     public float travelTime = 2f;
@@ -17,10 +19,9 @@ public class AirplaneManager : MonoBehaviour
     public Transform endPos;
     public GameObject bombPrefab;
     public Transform bombStartPos;
-
-    [Header("TEST")]
     public Transform targetToHit;
-    
+    public AudioClip flySound;
+
     private float _speed;
     private Vector3 _direction;
     private bool routineActive = false;
@@ -33,36 +34,36 @@ public class AirplaneManager : MonoBehaviour
         airplaneParent.transform.position += _direction.normalized * _speed * Time.deltaTime;
 
 
-        Debug.Log(Math.Abs(bombStartPos.transform.position.x - targetToHit.transform.position.x));
         if (shouldDropBomb && Math.Abs(bombStartPos.transform.position.x - targetToHit.transform.position.x) <= distanceToTargetThreshold)
         {
-            StartDropBombAnimation();
+            DropBomb();
             shouldDropBomb = false;
         }
 
-        if(Vector3.Distance(airplaneParent.transform.position, endPos.transform.position) <= 5)
+        if (Vector3.Distance(airplaneParent.transform.position, endPos.transform.position) <= 5)
         {
             EndRoutine();
         }
     }
 
-    private void StartRoutine()
+    public void StartRoutine(Vector2 position, bool isMine)
     {
-        routineActive = shouldDropBomb = true;
+        targetToHit.transform.position = position;
+
+        shouldDropBomb = isMine;
+        routineActive = true;
+
         airplaneParent.transform.position = startPos.transform.position;
         _speed = Vector3.Distance(startPos.transform.position, endPos.transform.position) / travelTime;
         _direction = endPos.transform.position - startPos.transform.position;
-        Debug.Log($"{_direction.x} {_direction.y} {_direction.z}");
+
+        airplaneAnimator.SetTrigger("start");
+        audioSource.PlayOneShot(flySound);
     }
 
     private void EndRoutine()
     {
         routineActive = false;
-    }
-
-    private void StartDropBombAnimation()
-    {
-        airplaneAnimator.SetTrigger("Drop");
     }
 
     public void DropBomb()
@@ -72,14 +73,26 @@ public class AirplaneManager : MonoBehaviour
     private IEnumerator DropBombCoroutine()
     {
         var go = PhotonNetwork.Instantiate("Bullets/" + bombPrefab.name, bombStartPos.transform.position, Quaternion.identity);
+        go.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;
         yield return new WaitForEndOfFrame();
         go.GetComponent<BulletComponent>().Launch(Vector3.zero, 0);
 
+        yield return new WaitForSeconds(0.15f);
+        go = PhotonNetwork.Instantiate("Bullets/" + bombPrefab.name, bombStartPos.transform.position, Quaternion.identity);
+        go.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;
+        yield return new WaitForEndOfFrame();
+        go.GetComponent<BulletComponent>().Launch(Vector3.zero, 0);
+
+        yield return new WaitForSeconds(0.15f);
+        go = PhotonNetwork.Instantiate("Bullets/" + bombPrefab.name, bombStartPos.transform.position, Quaternion.identity);
+        go.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;
+        yield return new WaitForEndOfFrame();
+        go.GetComponent<BulletComponent>().Launch(Vector3.zero, 0);
     }
 
     [ContextMenu("Test Routine")]
     public void TestRoutine()
     {
-        StartRoutine();
+        StartRoutine(targetToHit.transform.position, true);
     }
 }
