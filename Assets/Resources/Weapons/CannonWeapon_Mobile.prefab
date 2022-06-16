@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 25
-  m_Sprite: {fileID: 21300000, guid: e5d913ae37556154f82385e5cf8cfd96, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca23eaedadbb6774eb00e08059482ceb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 354595377403180081}
   - component: {fileID: 3966427939167539152}
   m_Layer: 8
-  m_Name: SimpleWeapon_Mobile
+  m_Name: CannonWeapon_Mobile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,7 @@ Animator:
   m_GameObject: {fileID: 9074758971582012280}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0d4cf12957ec7e94297767ff7b025676, type: 2}
+  m_Controller: {fileID: 9100000, guid: ae254178c2442494f83cf6bd6f872d8b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

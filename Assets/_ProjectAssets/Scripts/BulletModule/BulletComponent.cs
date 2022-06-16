@@ -1,6 +1,7 @@
 using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class BulletComponent : MonoBehaviour
@@ -8,6 +9,8 @@ public class BulletComponent : MonoBehaviour
     public static event Action<bool, Vector2> onBulletMoved;
     public AudioClip shotSfx;
     public GameObject explosionPrefab;
+
+    [SerializeField] private float delayExplosion;
 
     [HideInInspector]
     public bool hasEnabledPositionTracking = true;
@@ -45,13 +48,14 @@ public class BulletComponent : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private IEnumerator DelayExplosion(float seconds, Collision2D collision)
     {
-        if (isTouched)
-            return;
-        
-        isTouched = true;
+        yield return new WaitForSeconds(seconds);
+        Explosion(collision);
+    }
 
+    private void Explosion(Collision2D collision)
+    {
         var hitPose = collision.contacts[0].point;
 
         HandleCollision(hitPose);
@@ -66,5 +70,18 @@ public class BulletComponent : MonoBehaviour
         }
 
         PhotonNetwork.Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isTouched)
+            return;
+        
+        isTouched = true;
+
+        if (delayExplosion != 0)
+            StartCoroutine(DelayExplosion(delayExplosion, collision));
+        else
+            Explosion(collision);
     }
 }
