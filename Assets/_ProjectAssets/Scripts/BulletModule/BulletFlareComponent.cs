@@ -12,7 +12,6 @@ public class BulletFlareComponent : BulletComponent
     {
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
-        bulletGraphics.SetActive(false);
 
         photonView.RPC("CallAirplane", RpcTarget.All, hitPose);
     }
@@ -25,6 +24,7 @@ public class BulletFlareComponent : BulletComponent
 
     private IEnumerator CallAirplaneCoroutine(Vector2 hitPose)
     {
+        bulletGraphics.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         AirplaneManager.Instance.StartRoutine(hitPose, photonView.IsMine);
 

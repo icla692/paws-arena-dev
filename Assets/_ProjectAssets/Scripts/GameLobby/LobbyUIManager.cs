@@ -7,6 +7,9 @@ using Photon.Pun;
 
 public class LobbyUIManager : MonoBehaviour
 {
+    [Header("Password")]
+    public GameObject passwordScreen;
+
     [Header("Connecting")]
     public GameObject connectingToServerScreen;
 
@@ -39,8 +42,10 @@ public class LobbyUIManager : MonoBehaviour
         PhotonManager.OnStartedConnection -= OpenLoadingScreen;
         PhotonManager.OnConnectedServer -= OpenGameMenu;
     }
+
     public void OpenNFTSelectionScreen()
     {
+        passwordScreen.SetActive(false);
         connectingToServerScreen.SetActive(false);
         gameMenuPanel.SetActive(false);
         gameMenuSprites.SetActive(false);

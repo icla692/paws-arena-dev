@@ -6,8 +6,12 @@ using UnityEngine;
 
 public class CrateHealthBehaviour : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip healSFX;
+
     [HideInInspector]
     public int healValue = 0;
+
     private PhotonView photonView;
 
     private void Start()
@@ -33,6 +37,7 @@ public class CrateHealthBehaviour : MonoBehaviour
     [PunRPC]
     public void DestroyCrate()
     {
+        audioSource.PlayOneShot(healSFX);
         PhotonNetwork.Destroy(gameObject);
     }
 }

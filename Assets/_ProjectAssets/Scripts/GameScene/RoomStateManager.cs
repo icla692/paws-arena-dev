@@ -105,7 +105,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
             else
             {
                 int nextRound = roundNumber;
-                if(lastPlayerRound == 1)
+                if(lastPlayerRound == (sceneInfo.usersInScene - 1))
                 {
                     nextRound += 1;
                 }

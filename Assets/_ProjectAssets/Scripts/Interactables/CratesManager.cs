@@ -8,32 +8,43 @@ using UnityEngine;
 public class CratesManager : MonoBehaviour
 {
     [SerializeField]
-    private float intervalInSeconds = 30f;
-    [SerializeField]
     private Vector2 minPos;
     [SerializeField]
     private Vector2 maxPos;
 
     private CratesConfig cratesConfig;
-    private float lastTime;
 
     // Start is called before the first frame update
     void Start()
     {
         cratesConfig = ConfigurationManager.Instance.Crates;
-        lastTime = Time.time;    
+
+        RoomStateManager.OnStateUpdated += OnStateUpdated;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
+    {
+        RoomStateManager.OnStateUpdated -= OnStateUpdated;
+    }
+
+    private void OnStateUpdated(IRoomState state)
     {
         if (!PhotonNetwork.LocalPlayer.IsMasterClient) return;
-        if(Time.time - lastTime >= intervalInSeconds)
-        {
-            lastTime = Time.time;
 
-            SpawnCrate(cratesConfig.GetCrate());
-        }
+        int roundNumber = RoomStateManager.Instance.roundNumber;
+        if (roundNumber == 6)
+        {
+            if (state is MyTurnState)
+            {
+                SpawnCrate(cratesConfig.GetCrate());
+            }
+        }else if(roundNumber == 12)
+        {
+            if(state is OtherPlayerTurnState)
+            {
+                SpawnCrate(cratesConfig.GetCrate());
+            }
+        }                
     }
 
     private void SpawnCrate(CrateConfig crateConfig)
