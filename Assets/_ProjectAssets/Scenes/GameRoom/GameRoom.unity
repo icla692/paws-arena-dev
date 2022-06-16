@@ -675,9 +675,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 520005547}
+  - component: {fileID: 520005548}
   - component: {fileID: 520005550}
   - component: {fileID: 520005549}
-  - component: {fileID: 520005548}
   m_Layer: 0
   m_Name: SFXManager
   m_TagString: Untagged
@@ -820,9 +820,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 58587639613ec1a429545c401c858020, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1263,10 +1263,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: b3cd1c3a7c91b3d479f1d2d0785356ca, type: 2}
-  visualContainer: {fileID: 11400000, guid: a4505c8285a671348bd8a149e5188937, type: 2}
   sfx: {fileID: 11400000, guid: b86bc2041a907c54ea19a5e9673f69e0, type: 2}
   shapes: {fileID: 11400000, guid: 81082feba1188dc41ac9fa13714c93d2, type: 2}
   crates: {fileID: 11400000, guid: d48be5ae6987a0042b7eb35a219f617b, type: 2}
+  weapons: {fileID: 0}
 --- !u!1 &816662566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2822,8 +2822,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 20.3, y: 0}
+  m_SizeDelta: {x: 70, y: 60}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1811324859
 MonoBehaviour:
@@ -3544,8 +3544,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -61.870026, y: 0}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchoredPosition: {x: -48.6, y: 0}
+  m_SizeDelta: {x: 50, y: 40}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &2105709785
 MonoBehaviour:

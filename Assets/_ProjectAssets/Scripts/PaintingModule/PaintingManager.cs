@@ -30,7 +30,6 @@ public class PaintingManager : MonoSingleton<PaintingManager>
 
     public void Destroy(Vector3 hitPoint)
     {
-        Debug.Log($"Destroying at {hitPoint.x} {hitPoint.y} {hitPoint.z}");
         hitPoint -= primaryLayer.transform.position;
         primaryLayer?.Paint(new PaintingParameters()
         {

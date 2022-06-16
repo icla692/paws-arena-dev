@@ -29,3 +29,7 @@ MonoBehaviour:
     bulletPrefab: {fileID: 4174453076262886263, guid: bf45d24987bd4be4dbe639f84ddbc680, type: 3}
     numberOfProjectiles: 3
     waitBeforeTurnEnd: 6
+  - launcher: {fileID: 5477031773624607558, guid: a71723c62e139f84d897eb6dcbf1538b, type: 3}
+    bulletPrefab: {fileID: 4174453076262886263, guid: 22db018f416a4a641bd7f383b29881c7, type: 3}
+    numberOfProjectiles: 1
+    waitBeforeTurnEnd: 9

@@ -9,27 +9,51 @@ public class SFXManager : MonoSingleton<SFXManager>
     public AudioSource musicSource;
     public AudioSource oneShotAudioSource;
 
-    public void Start()
+    private float initialMusicSourceVolume;
+    private float initialOneShotSourceVolume;
+    public IEnumerator Start()
     {
+        yield return new WaitForEndOfFrame();
+        if (oneShotAudioSource != null)
+        {
+            initialOneShotSourceVolume = oneShotAudioSource.volume;
+        }
+
+        if(musicSource != null)
+        {
+            initialMusicSourceVolume = musicSource.volume;
+        }
+
         ApplySettings();
+    }
+
+    private void OnEnable()
+    {
+        GameSettings.onGameSettingsApplied += ApplySettings;
+    }
+
+    private void OnDisable()
+    {
+        GameSettings.onGameSettingsApplied -= ApplySettings;
     }
 
     private void ApplySettings()
     {
-        if (!GameState.gameSettings.hasMusic)
+        if(musicSource != null)
         {
-            musicSource.volume = 0;
+            musicSource.volume = GameState.gameSettings.hasMusic ? initialMusicSourceVolume : 0;
         }
-        if (!GameState.gameSettings.hasSoundFX)
+
+        if(oneShotAudioSource != null)
         {
-            oneShotAudioSource.volume = 0;
+            oneShotAudioSource.volume = GameState.gameSettings.hasSoundFX ? initialOneShotSourceVolume : 0;
         }
     }
 
     public void PlayOneShot(AudioClip clip, float volume = 1)
     {
         StopOneShot();
-        oneShotAudioSource.volume = volume;
+        oneShotAudioSource.volume = oneShotAudioSource.volume > 0 ? volume : 0;
         oneShotAudioSource.PlayOneShot(clip);
     }
 
