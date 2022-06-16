@@ -1,6 +1,7 @@
 using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class BulletComponent : MonoBehaviour
@@ -8,6 +9,8 @@ public class BulletComponent : MonoBehaviour
     public static event Action<bool, Vector2> onBulletMoved;
     public AudioClip shotSfx;
     public GameObject explosionPrefab;
+
+    [SerializeField] private float delayExplosion;
 
     [HideInInspector]
     public bool hasEnabledPositionTracking = true;
@@ -45,6 +48,25 @@ public class BulletComponent : MonoBehaviour
         }
     }
 
+    private IEnumerator DelayExplosion(float seconds, Collision2D collision)
+    {
+        yield return new WaitForSeconds(seconds);
+        Explosion(collision);
+    }
+
+    private void Explosion(Collision2D collision)
+    {
+        var hitPose = collision.contacts[0].point;
+
+        //If it blows very fast, on other player Start doesn't even has time to play
+        if (photonView != null && photonView.IsMine)
+        {
+            VFXManager.Instance.PUN_InstantiateExplosion(hitPose, explosionPrefab);
+        }
+
+        Destroy(gameObject);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isTouched)
@@ -52,14 +74,9 @@ public class BulletComponent : MonoBehaviour
         
         isTouched = true;
 
-        var hitPose = collision.contacts[0].point;
-
-        //If it blows very fast, on other player Start doesn't even has time to play
-        if (photonView!=null && photonView.IsMine)
-        {
-            VFXManager.Instance.PUN_InstantiateExplosion(hitPose, explosionPrefab);
-        }
-
-        Destroy(gameObject);
+        if (delayExplosion != 0)
+            StartCoroutine(DelayExplosion(delayExplosion, collision));
+        else
+            Explosion(collision);
     }
 }
