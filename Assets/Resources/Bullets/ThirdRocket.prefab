@@ -128,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotSfx: {fileID: 8300000, guid: 5a1881f3ca4dfc84093dddb74605faaa, type: 3}
   explosionPrefab: {fileID: 6659103733848000421, guid: 39a6431bc77ab7249bc1a56c8e59874a, type: 3}
+  delayExplosion: 0
   hasEnabledPositionTracking: 1
 --- !u!1 &8145637975098712303
 GameObject:

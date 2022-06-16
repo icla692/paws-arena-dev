@@ -64,6 +64,7 @@ public class LobbyUIManager : MonoBehaviour
     {
         loadingScreen.SetActive(false);
         connectingToServerScreen.SetActive(false);
+        passwordScreen.SetActive(false);
 
         gameMenuPanel.SetActive(true);
         gameMenuSprites.SetActive(true);
