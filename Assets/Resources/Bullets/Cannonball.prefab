@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4174453076262886256}
   - component: {fileID: 1292104971409337636}
   - component: {fileID: 3965192278958473203}
-  - component: {fileID: 6749861321316753981}
+  - component: {fileID: 3753513466273888964}
   m_Layer: 7
   m_Name: Cannonball
   m_TagString: Untagged
@@ -47,7 +47,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 4174453076262886263}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: cae94b9e7226b2b46bee335bc58fe225, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &6749861321316753981
+--- !u!114 &3753513466273888964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,13 +123,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4174453076262886263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae658792156a04343968457797c56538, type: 3}
+  m_Script: {fileID: 11500000, guid: e245dc908c043c441ba9204f4fec633b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shotSfx: {fileID: 8300000, guid: 5a1881f3ca4dfc84093dddb74605faaa, type: 3}
   explosionPrefab: {fileID: 6659103733848000421, guid: 39a6431bc77ab7249bc1a56c8e59874a, type: 3}
-  delayExplosion: 3
   hasEnabledPositionTracking: 1
+  delayExplosion: 3
 --- !u!1 &8145637975098712303
 GameObject:
   m_ObjectHideFlags: 0

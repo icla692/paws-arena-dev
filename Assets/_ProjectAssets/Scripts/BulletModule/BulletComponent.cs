@@ -10,8 +10,6 @@ public class BulletComponent : MonoBehaviour
     public AudioClip shotSfx;
     public GameObject explosionPrefab;
 
-    [SerializeField] private float delayExplosion;
-
     [HideInInspector]
     public bool hasEnabledPositionTracking = true;
 
@@ -48,19 +46,6 @@ public class BulletComponent : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayExplosion(float seconds, Collision2D collision)
-    {
-        yield return new WaitForSeconds(seconds);
-        Explosion(collision);
-    }
-
-    private void Explosion(Collision2D collision)
-    {
-        var hitPose = collision.contacts[0].point;
-
-        HandleCollision(hitPose);
-    }
-
     protected virtual void HandleCollision(Vector2 hitPose)
     {
         //If it blows very fast, on other player Start doesn't even has time to play
@@ -79,9 +64,8 @@ public class BulletComponent : MonoBehaviour
         
         isTouched = true;
 
-        if (delayExplosion != 0)
-            StartCoroutine(DelayExplosion(delayExplosion, collision));
-        else
-            Explosion(collision);
+        var hitPose = collision.contacts[0].point;
+
+        HandleCollision(hitPose);
     }
 }
