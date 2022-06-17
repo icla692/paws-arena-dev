@@ -73,7 +73,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &1292104971409337636
 MonoBehaviour:
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e245dc908c043c441ba9204f4fec633b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotSfx: {fileID: 8300000, guid: 5a1881f3ca4dfc84093dddb74605faaa, type: 3}
+  shotSfx: {fileID: 8300000, guid: 18aeecc405822414d945cd2272c48e81, type: 3}
   explosionPrefab: {fileID: 6659103733848000421, guid: 39a6431bc77ab7249bc1a56c8e59874a, type: 3}
   hasEnabledPositionTracking: 1
   delayExplosion: 3
