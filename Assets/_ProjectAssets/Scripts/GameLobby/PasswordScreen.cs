@@ -13,7 +13,7 @@ public class PasswordScreen : MonoBehaviour
 
     public void OnSubmit()
     {
-        if(passwordInput.text.ToUpper() == "XYJHDD")
+        if(passwordInput.text.ToUpper() == "PAWS")
         {
             StartCoroutine(WalletConnectionCoroutine());
         }
