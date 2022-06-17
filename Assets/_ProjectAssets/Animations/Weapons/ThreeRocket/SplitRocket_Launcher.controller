@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ThreeRocket
+  m_Name: SplitRocket_Launcher
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Shoot
@@ -113,10 +113,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 413766279148593656}
-    m_Position: {x: 50, y: 210, z: 0}
+    m_Position: {x: 20, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6827123050777468410}
-    m_Position: {x: -20, y: 340, z: 0}
+    m_Position: {x: 0, y: 370, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -148,7 +148,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a0b1bfc343a15264b8f3799a657cb574, type: 2}
+  m_Motion: {fileID: 7400000, guid: fc429fddf3347c44ab8bd7ea625aafed, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

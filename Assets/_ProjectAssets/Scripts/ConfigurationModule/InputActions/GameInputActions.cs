@@ -308,6 +308,34 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Weapons"",
+            ""id"": ""11a82a8f-bcb9-491a-a93f-b49904ab62e6"",
+            ""actions"": [
+                {
+                    ""name"": ""MainAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""08f6a096-2c4f-4e3d-9691-f24064071b19"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""538901f1-224c-493e-b883-b666a95f79b3"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MainAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -336,6 +364,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         m_Chat = asset.FindActionMap("Chat", throwIfNotFound: true);
         m_Chat_Send = m_Chat.FindAction("Send", throwIfNotFound: true);
         m_Chat_Close = m_Chat.FindAction("Close", throwIfNotFound: true);
+        // Weapons
+        m_Weapons = asset.FindActionMap("Weapons", throwIfNotFound: true);
+        m_Weapons_MainAction = m_Weapons.FindAction("MainAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -505,6 +536,39 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
         }
     }
     public ChatActions @Chat => new ChatActions(this);
+
+    // Weapons
+    private readonly InputActionMap m_Weapons;
+    private IWeaponsActions m_WeaponsActionsCallbackInterface;
+    private readonly InputAction m_Weapons_MainAction;
+    public struct WeaponsActions
+    {
+        private @GameInputActions m_Wrapper;
+        public WeaponsActions(@GameInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MainAction => m_Wrapper.m_Weapons_MainAction;
+        public InputActionMap Get() { return m_Wrapper.m_Weapons; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WeaponsActions set) { return set.Get(); }
+        public void SetCallbacks(IWeaponsActions instance)
+        {
+            if (m_Wrapper.m_WeaponsActionsCallbackInterface != null)
+            {
+                @MainAction.started -= m_Wrapper.m_WeaponsActionsCallbackInterface.OnMainAction;
+                @MainAction.performed -= m_Wrapper.m_WeaponsActionsCallbackInterface.OnMainAction;
+                @MainAction.canceled -= m_Wrapper.m_WeaponsActionsCallbackInterface.OnMainAction;
+            }
+            m_Wrapper.m_WeaponsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MainAction.started += instance.OnMainAction;
+                @MainAction.performed += instance.OnMainAction;
+                @MainAction.canceled += instance.OnMainAction;
+            }
+        }
+    }
+    public WeaponsActions @Weapons => new WeaponsActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -527,5 +591,9 @@ public partial class @GameInputActions : IInputActionCollection2, IDisposable
     {
         void OnSend(InputAction.CallbackContext context);
         void OnClose(InputAction.CallbackContext context);
+    }
+    public interface IWeaponsActions
+    {
+        void OnMainAction(InputAction.CallbackContext context);
     }
 }

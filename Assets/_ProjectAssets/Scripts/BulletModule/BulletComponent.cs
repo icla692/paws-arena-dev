@@ -13,6 +13,8 @@ public class BulletComponent : MonoBehaviour
     [HideInInspector]
     public bool hasEnabledPositionTracking = true;
 
+    public float speedModifier = 1;
+
     private bool isTouched = false;
     protected Rigidbody2D rb;
     protected PhotonView photonView;
@@ -25,13 +27,26 @@ public class BulletComponent : MonoBehaviour
         thisT = transform;
 
         rb.isKinematic = true;
+
+        HandleStart();
     }
 
+    protected virtual void HandleStart()
+    {
+
+    }
+    public void Launch()
+    {
+        rb.isKinematic = false;
+    }
     public void Launch(Vector3 direction, float speed)
     {
-        SFXManager.Instance.PlayOneShot(shotSfx, 0.5f);
+        if (shotSfx)
+        {
+            SFXManager.Instance.PlayOneShot(shotSfx, 0.5f);
+        }
         rb.isKinematic = false;
-        rb.AddForce(direction * speed, ForceMode2D.Impulse);
+        rb.AddForce(direction * speed * speedModifier, ForceMode2D.Impulse);
     }
 
     private void Update()
