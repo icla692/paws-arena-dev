@@ -25,7 +25,7 @@ public class NFTImageLoader
         var nsMan = new XmlNamespaceManager(doc.NameTable);
         nsMan.AddNamespace("ns", "http://www.w3.org/2000/svg");
 
-        var images = doc.ChildNodes[1].SelectNodes("//ns:image", nsMan);
+        var images = doc.ChildNodes[0].SelectNodes("//ns:image", nsMan);
 
         Texture2D finalTex = new Texture2D(1000, 1000);
 
@@ -88,7 +88,7 @@ public class NFTImageLoader
         var nsMan = new XmlNamespaceManager(doc.NameTable);
         nsMan.AddNamespace("ns", "http://www.w3.org/2000/svg");
 
-        var images = doc.ChildNodes[1].SelectNodes("//ns:g", nsMan);
+        var images = doc.ChildNodes[0].SelectNodes("//ns:g", nsMan);
         for (int i = 0; i < images.Count; i++)
         {
             var id = images[i].Attributes["id"];

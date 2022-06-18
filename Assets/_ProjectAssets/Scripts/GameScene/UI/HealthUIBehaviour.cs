@@ -10,6 +10,7 @@ public class HealthUIBehaviour : MonoBehaviour
 {
     public Transform healthBarParent;
     public RectTransform healthBar;
+    public RectTransform healthBarFilling;
 
     private float healthBarTotalWidth = -1;
     private int totalhealth;
@@ -47,5 +48,7 @@ public class HealthUIBehaviour : MonoBehaviour
     public void SetOrientationRight()
     {
         healthBarParent.GetComponent<HorizontalLayoutGroup>().reverseArrangement = true;
+        healthBar.anchorMin = healthBar.anchorMax = healthBar.pivot = new Vector2(1, 0.5f);
+        healthBarFilling.anchorMin = healthBarFilling.anchorMax = healthBarFilling.pivot = new Vector2(1, 0.5f);
     }
 }

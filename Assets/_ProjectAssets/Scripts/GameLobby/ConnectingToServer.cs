@@ -25,7 +25,7 @@ public class ConnectingToServer : MonoBehaviour
         text.text = "Pretending we connect to ICP Wallet...";
 
         //Mock data. To be removed
-        GameState.nfts.Add(new NFT() { imageUrl = "https://v3zkd-syaaa-aaaah-qcm5a-cai.raw.ic0.app/?&tokenid=j4efc-wikor-uwiaa-aaaaa-b4ath-iaqca-aaabd-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?tokenid=xgzpf-bikor-uwiaa-aaaaa-cqace-eaqca-aacgt-q" });
         GameState.walletId = "asd";
 
         yield return new WaitForSeconds(1f);
