@@ -11,7 +11,7 @@ public class BuildPostProcessors
     [PostProcessBuildAttribute(1)]
     public static void OnPostprocessBuild(BuildTarget target, string path)
     {
-        if(target == BuildTarget.WebGL)
+        if (target == BuildTarget.WebGL)
         {
             string template = AssetDatabase.GetAssetPath(Resources.Load<TextAsset>("index-template"));
             File.Copy(template, path + Path.DirectorySeparatorChar + "index.html", true);

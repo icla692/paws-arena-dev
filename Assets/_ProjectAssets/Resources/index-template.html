@@ -96,10 +96,14 @@
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
         canvas.style.width = "100%";
-        canvas.style.aspectRatio = "1.777";
+        // canvas.style.aspectRatio = "1.777";
 
-        container.style.width = "95%";
-        container.style.maxWidth = "1920px"
+        container.style.width = "80%";
+        container.style.maxWidth = "1500px";
+        container.style.maxHeight = "90vh";
+        container.style.aspectRatio = "1.77";
+        
+        document.getElementById("unity-webgl-logo").style.display = "none";
       }
 
       loadingBar.style.display = "block";
