@@ -107,11 +107,7 @@ public class PlayerComponent : MonoBehaviour
         state.SetHasWeaponOut(-1);
         if (roomState is MyTurnState)
         {
-            Debug.LogWarning("Check if the chat pannel is open");
-            if (!ChatManager.Instance.GetChatPanelStatus())
-            {
-                playerActions.Enable(); 
-            }
+           playerActions.Enable(); 
         }
         else
         {
