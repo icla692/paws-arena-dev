@@ -540,6 +540,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+--- !u!1 &229228633 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9122209185718362659, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+  m_PrefabInstance: {fileID: 229228632}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &372785929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,9 +1018,9 @@ MonoBehaviour:
   punRoomUtils: {fileID: 99993738}
   notices: {fileID: 1892852136}
   seats:
-  - occupiedSeatParent: {fileID: 0}
+  - occupiedSeatParent: {fileID: 229228633}
     occupierNickname: {fileID: 2039981638}
-  - occupiedSeatParent: {fileID: 0}
+  - occupiedSeatParent: {fileID: 229228633}
     occupierNickname: {fileID: 865860924}
   countdown: {fileID: 82973068}
   betsController: {fileID: 0}
