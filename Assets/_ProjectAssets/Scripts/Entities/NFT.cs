@@ -11,9 +11,11 @@ public class NFT
     public string furType;
     public Texture2D imageTex;
 
+    private XmlDocument doc;
+
     public async UniTask GrabImage()
     {
-        XmlDocument doc = await NFTImageLoader.LoadSVGXML(imageUrl);
+        doc = await NFTImageLoader.LoadSVGXML(imageUrl);
         if (imageTex == null)
         {
             imageTex = NFTImageLoader.LoadNFT(doc);
@@ -22,5 +24,9 @@ public class NFT
         {
             furType = NFTImageLoader.GetFurType(doc);
         }
+    }
+
+    public void GetItems()
+    {
     }
 }
