@@ -969,9 +969,9 @@ MonoBehaviour:
   punRoomUtils: {fileID: 99993738}
   notices: {fileID: 1892852136}
   seats:
-  - occupiedSeatParent: {fileID: 0}
+  - occupiedSeatParent: {fileID: 1985106516}
     occupierNickname: {fileID: 2039981638}
-  - occupiedSeatParent: {fileID: 0}
+  - occupiedSeatParent: {fileID: 1356969322}
     occupierNickname: {fileID: 1810682891}
   countdown: {fileID: 82973068}
   betsController: {fileID: 1224159238}
@@ -2055,6 +2055,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+--- !u!1 &1356969322 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9122209185718362659, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+  m_PrefabInstance: {fileID: 1356969321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1466782754
 GameObject:
   m_ObjectHideFlags: 0
@@ -2917,6 +2922,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+--- !u!1 &1985106516 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9122209185718362659, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+  m_PrefabInstance: {fileID: 1985106515}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1993754015
 GameObject:
   m_ObjectHideFlags: 0

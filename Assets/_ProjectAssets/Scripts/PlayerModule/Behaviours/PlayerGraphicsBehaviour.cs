@@ -4,15 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class PlayerGraphicsBehaviour : MonoBehaviour
 {
     [SerializeField]
     private AudioClip jumpStartSound;
     [SerializeField]
     private AudioClip jumpEndSound;
+    [SerializeField]
+    private Animator animator;
 
-    private Animator _animator;
     private PhotonView _photonView;
     private PlayerState playerState;
 
@@ -20,7 +20,6 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
     void Start()
     {
-        _animator = GetComponent<Animator>();
         _photonView = GetComponent<PhotonView>();
     }
 
@@ -64,7 +63,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     {
         if (val)
         {
-            _animator.SetBool("isJumping", true);
+            animator.SetBool("isJumping", true);
         }
     }
 
@@ -72,7 +71,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     {
         if (!midJumpState)
         {
-            _animator.SetBool("isJumping", false);
+            animator.SetBool("isJumping", false);
             SFXManager.Instance.PlayOneShot(jumpEndSound);
         }
     }
@@ -88,7 +87,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
             Flip();
         }
 
-        _animator.SetBool("isMoving", dir != 0);
+        animator.SetBool("isMoving", dir != 0);
     }
 
     private void Flip()
@@ -106,12 +105,12 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     {
         if (health <= 0)
         {
-            _animator.SetBool("isDead", true);
+            animator.SetBool("isDead", true);
         }
     }
 
     public void SetShootingPhase(bool val)
     {
-        _animator.SetBool("isAiming", val);
+        animator.SetBool("isAiming", val);
     }
 }
