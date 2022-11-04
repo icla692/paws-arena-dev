@@ -134,8 +134,26 @@ public class PlayerCustomization : MonoBehaviour
             groundBackTransform.gameObject.SetActive(false);
             groundTransform.gameObject.SetActive(false);
         }
+
+        SetCat(GameState.selectedNFT);
     }
 
+    public void SetCat(NFT nft)
+    {
+        foreach(string id in nft.ids)
+        {
+            SetKittyColor(id);
+            SetEyes(id);
+            SetBack(id);
+            SetBody(id);
+            SetHat(id);
+            SetEyewear(id);
+            SetMouth(id);
+            SetGroundFront(id);
+            SetGroundBack(id);
+            SetGround(id);
+        }
+    }
     public void SetKittyColor(string colorId)
     {
         SetColor(colorId, kittyColorMapping, colorMultiplyElements);

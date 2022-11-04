@@ -101,6 +101,25 @@ public class NFTImageLoader
         return "Unkown Fur";
     }
 
+    public static List<string> GetIds(XmlDocument doc)
+    {
+        var nsMan = new XmlNamespaceManager(doc.NameTable);
+        nsMan.AddNamespace("ns", "http://www.w3.org/2000/svg");
+        var list = new List<string>();
+        var images = doc.ChildNodes[0].SelectNodes("//ns:g", nsMan);
+        for (int i = 0; i < images.Count; i++)
+        {
+            var id = images[i].Attributes["id"];
+            if (id != null)
+            {
+                list.Add(id.Value);
+            }
+        }
+
+        return list;
+
+    }
+
     private static async UniTask<string> LoadXMLFromURL(string URL)
     {
         UnityWebRequest www = new UnityWebRequest(URL, "GET");

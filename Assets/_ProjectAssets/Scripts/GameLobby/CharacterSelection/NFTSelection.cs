@@ -22,6 +22,11 @@ public class NFTSelection : MonoBehaviour
 
     private async void OnEnable()
     {
+        await InitPage();
+    }
+
+    public async UniTask InitPage()
+    {
         nrOfPages = GetNrOfPages();
         await PopulateGrid(crtPage);
     }

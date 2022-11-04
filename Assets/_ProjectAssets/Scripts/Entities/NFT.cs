@@ -9,6 +9,7 @@ public class NFT
 {
     public string imageUrl;
     public string furType;
+    public List<string> ids;
     public Texture2D imageTex;
 
     private XmlDocument doc;
@@ -23,6 +24,10 @@ public class NFT
         if (furType == null)
         {
             furType = NFTImageLoader.GetFurType(doc);
+        }
+        if(ids == null)
+        {
+            ids = NFTImageLoader.GetIds(doc);
         }
     }
 
