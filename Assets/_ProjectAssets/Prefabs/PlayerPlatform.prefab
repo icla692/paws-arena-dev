@@ -99,7 +99,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9122209185718362652
 Transform:
   m_ObjectHideFlags: 0
@@ -171,18 +171,6 @@ PrefabInstance:
     - target: {fileID: 1652268006294160501, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: m_Name
       value: CatWrapper
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[2].b
-      value: 0.7924528
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[2].g
-      value: 0.7924528
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[2].r
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}

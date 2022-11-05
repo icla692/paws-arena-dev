@@ -460,7 +460,7 @@ MonoBehaviour:
     values:
     - {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
     - {r: 0, g: 0.6037736, b: 0.09944513, a: 1}
-    - {r: 0, g: 0.5019608, b: 0.5019608, a: 1}
+    - {r: 0, g: 0.7924528, b: 0.7924528, a: 1}
     - {r: 1, g: 0.7977391, b: 0.10849059, a: 1}
     - {r: 0.9433962, g: 0.29814878, b: 0.29814878, a: 1}
     - {r: 0.8340418, g: 0.044544328, b: 0.8584906, a: 1}
@@ -581,18 +581,18 @@ MonoBehaviour:
   - hat7
   - hat25
   - hat15
-  - hats30
-  - hats3
-  - hats4
-  - hats5
-  - hats6
-  - hats35
-  - hats36
-  - hats18?
-  - hats12
-  - hats26
-  - hats8
-  - hats23
+  - hat30
+  - hat3
+  - hat4
+  - hat5
+  - hat6
+  - hat35
+  - hat36
+  - hat18
+  - hat12
+  - hat26
+  - hat8
+  - hat23
   hatsNoEarsKeysMapping:
   - hats10
   - hats22
