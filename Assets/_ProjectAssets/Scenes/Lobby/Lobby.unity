@@ -12877,6 +12877,10 @@ PrefabInstance:
       value: back25
       objectReference: {fileID: 0}
     - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+      propertyPath: groundFrontSprites.Array.size
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
       propertyPath: mouthKeysMapping.Array.data[10]
       value: mouth12
       objectReference: {fileID: 0}
@@ -12884,6 +12888,18 @@ PrefabInstance:
       propertyPath: mouthKeysMapping.Array.data[11]
       value: mouth11
       objectReference: {fileID: 0}
+    - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+      propertyPath: groundFrontSprites.Array.data[9]
+      value: 
+      objectReference: {fileID: 353837667, guid: 65124d07f452a1b46861fbedcdcde455, type: 3}
+    - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+      propertyPath: groundFrontKeysMapping.Array.size
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+      propertyPath: groundFrontSprites.Array.data[26]
+      value: 
+      objectReference: {fileID: -436175730, guid: a9d68f3fb5c2bb64498bebf492eacb3e, type: 3}
     - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
       propertyPath: hatsNoEarsKeysMapping.Array.data[0]
       value: hat10
@@ -12925,6 +12941,10 @@ PrefabInstance:
       value: hat22
       objectReference: {fileID: 0}
     - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+      propertyPath: groundFrontKeysMapping.Array.data[9]
+      value: groundfront16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
       propertyPath: hatsBetweenEarsMapping.Array.data[0]
       value: hat2
       objectReference: {fileID: 0}
@@ -12959,6 +12979,10 @@ PrefabInstance:
     - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
       propertyPath: hatsNoEarsKeysMapping.Array.data[13]
       value: hat13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
+      propertyPath: groundFrontKeysMapping.Array.data[26]
+      value: groundfront19
       objectReference: {fileID: 0}
     - target: {fileID: 1652268005445013935, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
       propertyPath: kittyColorMapping.values.Array.data[0].b
