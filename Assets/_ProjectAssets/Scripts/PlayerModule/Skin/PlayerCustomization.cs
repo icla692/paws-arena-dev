@@ -82,6 +82,14 @@ public class PlayerCustomization : MonoBehaviour
     [SerializeField]
     private List<Sprite> eyewearSprites;
 
+    [SerializeField]
+    private SpriteRenderer closeableEyewearSpriteRenderer;
+
+    [SerializeField]
+    private List<string> closeableEyewearKeysMapping;
+    [SerializeField]
+    private List<Sprite> closeableEyewearSprites;
+
     [Header("Mouth")]
     [SerializeField]
     private SpriteRenderer mouthSpriteRenderer;
@@ -214,6 +222,7 @@ public class PlayerCustomization : MonoBehaviour
     public void SetEyewear(string eyewearId)
     {
         SetSingleSpriteElement(eyewearId, eyewearKeysMapping, eyewearSprites, eyewearSpriteRenderer);
+        SetSingleSpriteElement(eyewearId, closeableEyewearKeysMapping, closeableEyewearSprites, closeableEyewearSpriteRenderer);
     }
 
     public void SetMouth(string mouthId)

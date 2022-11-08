@@ -74,6 +74,11 @@ namespace DTerrain
             return s;
         }
 
+        public static Shape GenerateEllipse(Vector2Int r)
+        {
+            return GeneratePixelatedEllipse(r, 1);
+        }
+
         public static Shape GeneratePixelatedEllipse(Vector2Int r, int pixelSize=8)
         {
             int centerX = r.x;

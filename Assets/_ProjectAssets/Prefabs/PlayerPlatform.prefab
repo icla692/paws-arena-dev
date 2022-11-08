@@ -1,121 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2214560184283244143
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4202836946404440230}
-  m_Layer: 0
-  m_Name: eyewear_closeable
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4202836946404440230
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2214560184283244143}
-  m_LocalRotation: {x: -0.0000000018626451, y: 2.910383e-11, z: 1.0322765e-10, w: 1}
-  m_LocalPosition: {x: -0.5200001, y: -0.48000023, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8190764029506760998}
-  m_Father: {fileID: 3002715106058494389}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2611070973194463105
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8190764029506760998}
-  - component: {fileID: 5057208074727821912}
-  m_Layer: 0
-  m_Name: eyewear_01_0
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8190764029506760998
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2611070973194463105}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.56, y: 1.1, z: -0.38}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4202836946404440230}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5057208074727821912
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2611070973194463105}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 63
-  m_Sprite: {fileID: -1436513588, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 5.12, y: 5.12}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &9122209185395961859
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,170 +173,214 @@ PrefabInstance:
       value: CatWrapper
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: backKeysMapping.Array.data[1]
-      value: back26
+      propertyPath: eyewearSprites.Array.size
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: backKeysMapping.Array.data[2]
-      value: back25
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: groundFrontSprites.Array.size
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: mouthKeysMapping.Array.data[10]
-      value: mouth12
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: mouthKeysMapping.Array.data[11]
-      value: mouth11
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: groundFrontSprites.Array.data[9]
+      propertyPath: eyewearSprites.Array.data[3]
       value: 
-      objectReference: {fileID: 353837667, guid: 65124d07f452a1b46861fbedcdcde455, type: 3}
+      objectReference: {fileID: 1972757250, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: groundFrontKeysMapping.Array.size
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: groundFrontSprites.Array.data[26]
+      propertyPath: eyewearSprites.Array.data[4]
       value: 
-      objectReference: {fileID: -436175730, guid: a9d68f3fb5c2bb64498bebf492eacb3e, type: 3}
+      objectReference: {fileID: 1654199558, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[0]
-      value: hat10
+      propertyPath: eyewearSprites.Array.data[5]
+      value: 
+      objectReference: {fileID: -729405910, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[6]
+      value: 
+      objectReference: {fileID: 96464612, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[7]
+      value: 
+      objectReference: {fileID: -1327239450, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[8]
+      value: 
+      objectReference: {fileID: 688620902, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[9]
+      value: 
+      objectReference: {fileID: 253980219, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearKeysMapping.Array.size
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[1]
-      value: hat33
+      propertyPath: eyewearSprites.Array.data[10]
+      value: 
+      objectReference: {fileID: 1451470954, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[11]
+      value: 
+      objectReference: {fileID: -642531339, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[12]
+      value: 
+      objectReference: {fileID: 2061806528, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[13]
+      value: 
+      objectReference: {fileID: 2031021082, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[14]
+      value: 
+      objectReference: {fileID: -1938332067, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[15]
+      value: 
+      objectReference: {fileID: 1044764658, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[16]
+      value: 
+      objectReference: {fileID: -639412727, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[17]
+      value: 
+      objectReference: {fileID: -640684955, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[18]
+      value: 
+      objectReference: {fileID: -480745194, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[19]
+      value: 
+      objectReference: {fileID: 1874525996, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[20]
+      value: 
+      objectReference: {fileID: -958296059, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[21]
+      value: 
+      objectReference: {fileID: -1436513588, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearSprites.Array.data[22]
+      value: 
+      objectReference: {fileID: -1711218657, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: closeableEyewearSpriteRenderer
+      value: 
+      objectReference: {fileID: 3339524541469448521}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: eyewearKeysMapping.Array.data[3]
+      value: eyewear11
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[2]
-      value: hat27
+      propertyPath: eyewearKeysMapping.Array.data[4]
+      value: eyewear5
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[3]
-      value: hat32
+      propertyPath: eyewearKeysMapping.Array.data[5]
+      value: eyewear19
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[4]
-      value: hat31
+      propertyPath: eyewearKeysMapping.Array.data[6]
+      value: eyewear21
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[5]
-      value: hat11
+      propertyPath: eyewearKeysMapping.Array.data[7]
+      value: eyewear10
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[6]
-      value: hat9
+      propertyPath: eyewearKeysMapping.Array.data[8]
+      value: eyewear6
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[7]
-      value: --
+      propertyPath: eyewearKeysMapping.Array.data[9]
+      value: eyewear23
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[8]
-      value: hat28
+      propertyPath: eyewearKeysMapping.Array.data[10]
+      value: eyewear20
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[9]
-      value: hat22
+      propertyPath: eyewearKeysMapping.Array.data[11]
+      value: eyewear9
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: groundFrontKeysMapping.Array.data[9]
-      value: groundfront16
+      propertyPath: eyewearKeysMapping.Array.data[12]
+      value: eyewear7
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsBetweenEarsMapping.Array.data[0]
-      value: hat2
+      propertyPath: eyewearKeysMapping.Array.data[13]
+      value: eyewear22
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsBetweenEarsMapping.Array.data[1]
-      value: hat1
+      propertyPath: eyewearKeysMapping.Array.data[14]
+      value: eyewear13
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsBetweenEarsMapping.Array.data[2]
-      value: hat35
+      propertyPath: eyewearKeysMapping.Array.data[15]
+      value: eyewear1
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsBetweenEarsMapping.Array.data[3]
-      value: hat34
+      propertyPath: eyewearKeysMapping.Array.data[16]
+      value: eyewear3
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsBetweenEarsMapping.Array.data[4]
-      value: hat29
+      propertyPath: eyewearKeysMapping.Array.data[17]
+      value: eyewear2
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[10]
-      value: hat16
+      propertyPath: eyewearKeysMapping.Array.data[18]
+      value: eyewear17
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[11]
-      value: hat14
+      propertyPath: eyewearKeysMapping.Array.data[19]
+      value: eyewear16
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[12]
-      value: hat17
+      propertyPath: eyewearKeysMapping.Array.data[20]
+      value: eyewear14
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: hatsNoEarsKeysMapping.Array.data[13]
-      value: hat13
+      propertyPath: eyewearKeysMapping.Array.data[21]
+      value: eyewear15
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: groundFrontKeysMapping.Array.data[26]
-      value: groundfront19
+      propertyPath: eyewearKeysMapping.Array.data[22]
+      value: eyewear18
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[0].b
-      value: 0.7529412
+      propertyPath: closeableEyewearSprites.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[0].g
-      value: 0.7529412
+      propertyPath: closeableEyewearSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: -958296059, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: closeableEyewearSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: -1436513588, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: closeableEyewearSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: -1711218657, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: closeableEyewearKeysMapping.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[0].r
-      value: 0.7529412
+      propertyPath: closeableEyewearKeysMapping.Array.data[0]
+      value: eyewear14
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[1].b
-      value: 0.12941177
+      propertyPath: closeableEyewearKeysMapping.Array.data[1]
+      value: eyewear18
       objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[1].g
-      value: 0.7921569
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[5].b
-      value: 0.9019608
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[5].g
-      value: 0.40392157
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[5].r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[6].b
-      value: 0.85882354
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[6].g
-      value: 0.043137256
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: kittyColorMapping.values.Array.data[6].r
-      value: 0.8352941
+      propertyPath: closeableEyewearKeysMapping.Array.data[2]
+      value: eyewear15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
---- !u!4 &3002715106058494389 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4746047892103309988, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+--- !u!212 &3339524541469448521 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5057208074727821912, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
   m_PrefabInstance: {fileID: 7527362240045894417}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &9122209185582796645 stripped
