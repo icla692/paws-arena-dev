@@ -12,6 +12,8 @@ public class HealthUIBehaviour : MonoBehaviour
     public RectTransform healthBar;
     public RectTransform healthBarFilling;
 
+    public TMPro.TextMeshProUGUI nickname;
+
     private float healthBarTotalWidth = -1;
     private int totalhealth;
     private int currentHealth;
@@ -47,8 +49,12 @@ public class HealthUIBehaviour : MonoBehaviour
 
     public void SetOrientationRight()
     {
-        healthBarParent.GetComponent<HorizontalLayoutGroup>().reverseArrangement = true;
-        healthBar.anchorMin = healthBar.anchorMax = healthBar.pivot = new Vector2(1, 0.5f);
-        healthBarFilling.anchorMin = healthBarFilling.anchorMax = healthBarFilling.pivot = new Vector2(1, 0.5f);
+        var parentAnchor = healthBarParent.GetComponent<RectTransform>();
+        parentAnchor.anchorMin = parentAnchor.anchorMax = parentAnchor.pivot = new Vector2(1, 1);
+        parentAnchor.transform.localScale = new Vector3(-1, 1, 1);
+        parentAnchor.anchoredPosition = new Vector2(-471, -58);
+
+        nickname.GetComponent<RectTransform>().anchoredPosition = new Vector2(81, -10);
+
     }
 }
