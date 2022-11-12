@@ -62,6 +62,8 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
             currentState.OnExit();
         }
 
+        Debug.Log("Setting state " + state);
+
         currentState = state;
         currentState.Init(this);
 
@@ -89,6 +91,10 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     private void OnPlayerLeft()
     {
+        if(currentState is ResolvingGameState)
+        {
+            return;
+        }
         SetState(new ResolvingGameState(PhotonNetwork.LocalPlayer.IsMasterClient ? GameResolveState.PLAYER_1_WIN : GameResolveState.PLAYER_2_WIN));
     }
 
@@ -133,9 +139,9 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         photonView.RPC("StartProjectileLaunchedState", RpcTarget.All, waitBeforeEndTurn);
     }
 
-    public void Retreat()
+    public void SendRetreatRPC()
     {
-        photonView.RPC("Retreat", RpcTarget.All, PhotonNetwork.LocalPlayer.IsMasterClient ? 0 : 1);
+        photonView.RPC("Retreat", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.IsMasterClient ? 0 : 1);
     }
 
     public void LoadAfterGameScene(GameResolveState state)
@@ -190,6 +196,10 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [PunRPC]
     private void StartResolveGame(GameResolveState state)
     {
+        if (currentState is ResolvingGameState)
+        {
+            return;
+        }
         SetState(new ResolvingGameState(state));
     }
 

@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerGraphicsBehaviour : MonoBehaviour
@@ -12,6 +13,8 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     private AudioClip jumpEndSound;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private PlayerCustomization playerCustomization;
 
     private PhotonView _photonView;
     private PlayerState playerState;
@@ -21,6 +24,18 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     void Start()
     {
         _photonView = GetComponent<PhotonView>();
+        if (_photonView.IsMine)
+        {
+            _photonView.RPC("SetCatNFT", RpcTarget.All, GameState.selectedNFT.ids.ToArray());
+        }
+    }
+
+    [PunRPC]
+    public void SetCatNFT(string[] ids)
+    {
+        Debug.Log(ids.Length);
+        Debug.Log(ids[0]);
+        playerCustomization.SetCat(ids.ToList());
     }
 
     public void RegisterPlayerState(PlayerState playerState)
