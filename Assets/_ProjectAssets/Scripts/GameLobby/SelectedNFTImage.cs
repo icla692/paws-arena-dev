@@ -22,7 +22,10 @@ public class SelectedNFTImage : MonoBehaviour
 
     private void UpdateSelectedNFT(NFT nft)
     {
-        image.texture = nft.imageTex;
+        if (image != null)
+        {
+            image.texture = nft.imageTex;
+        }
         enterArenaBut.SetActive(true);
     }
 }

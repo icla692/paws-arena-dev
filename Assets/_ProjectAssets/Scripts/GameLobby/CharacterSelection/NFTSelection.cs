@@ -9,12 +9,16 @@ using UnityEngine.UI;
 public class NFTSelection : MonoBehaviour
 {
     public Transform nftGridParent;
-    public TMPro.TextMeshProUGUI furType;
+
+    public Transform playerPlatformParent;
+    public GameObject playerPlatformPrefab;
 
     public GameObject leftArrow;
     public GameObject rightArrow;
 
     public List<NFTImageButton> nftButtons;
+
+    private GameObject playerPlatform;
 
     private int crtPage = 0;
     private int pageSize = 6;
@@ -23,6 +27,15 @@ public class NFTSelection : MonoBehaviour
     private async void OnEnable()
     {
         await InitPage();
+    }
+
+    private void OnDisable()
+    {
+        if(playerPlatform != null)
+        {
+            Destroy(playerPlatform);
+            playerPlatform = null;
+        }
     }
 
     public async UniTask InitPage()
@@ -64,15 +77,26 @@ public class NFTSelection : MonoBehaviour
             int crtIdx = idx;
             nftButtons[idx].GetComponent<Button>().onClick.AddListener(()=>
             {
-                GameState.SetSelectedNFT(GameState.nfts[crtPage * pageSize + crtIdx]);
-                nftButtons[crtIdx].Select();
+                SelectNFT(crtIdx);
             });
-            furType.text = nft.furType;
             idx++;
         }
 
-        GameState.SetSelectedNFT(GameState.nfts[crtPage * pageSize + 0]);
-        nftButtons[0].Select();
+        SelectNFT(0);
+    }
+
+    private void SelectNFT(int idx)
+    {
+        if(playerPlatform != null)
+        {
+            Destroy(playerPlatform);
+        }
+
+        GameState.SetSelectedNFT(GameState.nfts[crtPage * pageSize + idx]);
+        nftButtons[idx].Select();
+        playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformParent);
+        playerPlatform.transform.localPosition = Vector3.zero;
+
     }
 
     private void HandleArrows(int page)

@@ -6,7 +6,7 @@ public class PlayerPlatformBehaviour : MonoBehaviour
 {
     public PlayerCustomization playerCustomization;
 
-    void Start()
+    void OnEnable()
     {
         playerCustomization.SetCat(GameState.selectedNFT.ids);
     }

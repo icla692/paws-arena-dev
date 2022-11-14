@@ -14,11 +14,11 @@ public class LobbyUIManager : MonoBehaviour
     public GameObject connectingToServerScreen;
 
     [Header("NFT Selection")]
-    public GameObject nftSelectionScreen;
+    public List<GameObject> nftSelectionScreens;
 
     [Header("Game Menu")]
     public GameObject gameMenuPanel;
-    public GameObject gameMenuSprites;
+    //public GameObject gameMenuSprites;
 
     [Header("Connecting")]
     public GameObject connectingToRoom;
@@ -48,15 +48,21 @@ public class LobbyUIManager : MonoBehaviour
         passwordScreen.SetActive(false);
         connectingToServerScreen.SetActive(false);
         gameMenuPanel.SetActive(false);
-        gameMenuSprites.SetActive(false);
+        //gameMenuSprites.SetActive(false);
         connectingToRoom.SetActive(false);
 
-        nftSelectionScreen.SetActive(true);
+        foreach (GameObject screen in nftSelectionScreens)
+        {
+            screen.SetActive(true);
+        }
     }
 
     private void OpenLoadingScreen()
     {
-        nftSelectionScreen.SetActive(false);
+        foreach (GameObject screen in nftSelectionScreens)
+        {
+            screen.SetActive(false);
+        }
         loadingScreen.SetActive(true);
     }
 
@@ -67,13 +73,13 @@ public class LobbyUIManager : MonoBehaviour
         passwordScreen.SetActive(false);
 
         gameMenuPanel.SetActive(true);
-        gameMenuSprites.SetActive(true);
+        //gameMenuSprites.SetActive(true);
     }
 
     private void CloseGameMenu()
     {
         gameMenuPanel.SetActive(false);
-        gameMenuSprites.SetActive(false);
+        //gameMenuSprites.SetActive(false);
     }
 
     public void TryConnectToRoom()
