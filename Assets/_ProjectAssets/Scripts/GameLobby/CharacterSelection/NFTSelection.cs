@@ -8,21 +8,14 @@ using UnityEngine.UI;
 
 public class NFTSelection : MonoBehaviour
 {
-    public Transform nftGridParent;
-
     public Transform playerPlatformParent;
     public GameObject playerPlatformPrefab;
 
-    public GameObject leftArrow;
-    public GameObject rightArrow;
+    public GameObject nftButtonPrefab;
+    public Transform nftButtonsParent;
 
-    public List<NFTImageButton> nftButtons;
-
+    private List<GameObject> nftButtons = new List<GameObject>();
     private GameObject playerPlatform;
-
-    private int crtPage = 0;
-    private int pageSize = 6;
-    private int nrOfPages;
 
     private async void OnEnable()
     {
@@ -40,30 +33,37 @@ public class NFTSelection : MonoBehaviour
 
     public async UniTask InitPage()
     {
-        nrOfPages = GetNrOfPages();
-        await PopulateGrid(crtPage);
+        await PopulateGrid();
     }
 
-    private async UniTask PopulateGrid(int page)
+    private async UniTask PopulateGrid()
     {
-        HandleArrows(page);
-
-        foreach(NFTImageButton but in nftButtons)
+        foreach(GameObject but in nftButtons)
         {
-            but.ResetState();
+            Destroy(but);
         }
 
+        nftButtons.Clear();
 
-        List<NFT> nfts = GetNFTs(page, pageSize);
+
+        List<NFT> nfts = GameState.nfts;
 
         //Grab all images from internet
         List<UniTask> tasks = new List<UniTask>();
         int idx = 0;
         foreach (NFT nft in nfts)
         {
-            nftButtons[idx].SetLoadingState();
+            GameObject go = Instantiate(nftButtonPrefab, nftButtonsParent);
+            nftButtons.Add(go);
+            go.GetComponent<NFTImageButton>().SetLoadingState();
             tasks.Add(nft.GrabImage());
             idx++;
+        }
+
+        for(int i=nfts.Count; i<9; i++)
+        {
+            GameObject go = Instantiate(nftButtonPrefab, nftButtonsParent);
+            nftButtons.Add(go);
         }
         await UniTask.WhenAll(tasks.ToArray());
 
@@ -71,7 +71,7 @@ public class NFTSelection : MonoBehaviour
         idx = 0;
         foreach (NFT nft in nfts)
         {
-            nftButtons[idx].SetTexture(nft.imageTex);
+            nftButtons[idx].GetComponent<NFTImageButton>().SetTexture(nft.imageTex);
             nftButtons[idx].GetComponent<Button>().onClick.RemoveAllListeners();
 
             int crtIdx = idx;
@@ -92,54 +92,9 @@ public class NFTSelection : MonoBehaviour
             Destroy(playerPlatform);
         }
 
-        GameState.SetSelectedNFT(GameState.nfts[crtPage * pageSize + idx]);
-        nftButtons[idx].Select();
+        GameState.SetSelectedNFT(GameState.nfts[idx]);
+        nftButtons[idx].GetComponent<NFTImageButton>().Select();
         playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformParent);
         playerPlatform.transform.localPosition = Vector3.zero;
-
-    }
-
-    private void HandleArrows(int page)
-    {
-        if (page == 0)
-        {
-            leftArrow.SetActive(false);
-        }
-        else
-        {
-            leftArrow.SetActive(true);
-        }
-
-        if (page == nrOfPages)
-        {
-            rightArrow.SetActive(false);
-        }
-        else
-        {
-            rightArrow.SetActive(true);
-        }
-    }
-
-    public async void NextPage()
-    {
-        crtPage++;
-        await PopulateGrid(crtPage);
-    }
-
-    public async void PreviousPage()
-    {
-        crtPage--;
-        await PopulateGrid(crtPage);
-    }
-
-    private int GetNrOfPages()
-    {
-        return GameState.nfts.Count / pageSize;
-    }
-
-    private List<NFT> GetNFTs(int page, int pageSize)
-    {
-        List<NFT> nfts = GameState.nfts;
-        return nfts.Skip(pageSize * page).Take(pageSize).ToList();
     }
 }
