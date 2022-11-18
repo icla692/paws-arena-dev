@@ -37,6 +37,7 @@ public class PlayerDataCustomView : MonoBehaviour
     {
         RectTransform rt = GetComponent<RectTransform>();
         rt.SetParent(GameObject.Find(parentPath).transform);
+        rt.localScale = Vector3.one;
         int myseat = PUNGameRoomManager.Instance.GetMySeat();
 
         bool isMyPlayer = (myseat == 0 && photonview.IsMine || myseat == 1 && !photonview.IsMine);
