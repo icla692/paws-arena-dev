@@ -13,8 +13,6 @@ public class MainMenuScreen : MonoBehaviour
 
     void OnEnable()
     {
-        betCoins.text = "" + ConfigurationManager.Instance.Config.GetBetValue();
-
         playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformPosition);
         playerPlatform.transform.position = Vector3.zero;
     }

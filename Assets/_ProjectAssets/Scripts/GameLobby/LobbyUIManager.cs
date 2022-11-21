@@ -17,7 +17,7 @@ public class LobbyUIManager : MonoBehaviour
     public List<GameObject> nftSelectionScreens;
 
     [Header("Game Menu")]
-    public GameObject gameMenuPanel;
+    public List<GameObject> gameMenuScreens;
     //public GameObject gameMenuSprites;
 
     [Header("Connecting")]
@@ -47,9 +47,12 @@ public class LobbyUIManager : MonoBehaviour
     {
         passwordScreen.SetActive(false);
         connectingToServerScreen.SetActive(false);
-        gameMenuPanel.SetActive(false);
-        //gameMenuSprites.SetActive(false);
         connectingToRoom.SetActive(false);
+
+        foreach (GameObject screen in gameMenuScreens)
+        {
+            screen.SetActive(false);
+        }
 
         foreach (GameObject screen in nftSelectionScreens)
         {
@@ -72,14 +75,19 @@ public class LobbyUIManager : MonoBehaviour
         connectingToServerScreen.SetActive(false);
         passwordScreen.SetActive(false);
 
-        gameMenuPanel.SetActive(true);
-        //gameMenuSprites.SetActive(true);
+
+        foreach (GameObject screen in gameMenuScreens)
+        {
+            screen.SetActive(true);
+        }
     }
 
     private void CloseGameMenu()
     {
-        gameMenuPanel.SetActive(false);
-        //gameMenuSprites.SetActive(false);
+        foreach (GameObject screen in gameMenuScreens)
+        {
+            screen.SetActive(false);
+        }
     }
 
     public void TryConnectToRoom()
