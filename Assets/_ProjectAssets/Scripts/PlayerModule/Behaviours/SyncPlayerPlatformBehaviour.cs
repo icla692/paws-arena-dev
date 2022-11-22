@@ -36,9 +36,9 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
         PUNRoomUtils.onPlayerJoined -= OnPlayerJoined;
     }
 
-    private void OnPlayerJoined(string nickname)
+    private void OnPlayerJoined(string nickname, string userId)
     {
-        Player player = PhotonNetwork.PlayerList.First(player => player.NickName == nickname);
+        Player player = PhotonNetwork.PlayerList.First(player => player.UserId == userId);
         photonView.RPC("SetCatStyle", player, GameState.selectedNFT.ids.ToArray());
     }
 
