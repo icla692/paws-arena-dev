@@ -15,6 +15,12 @@ public class AfterGameMainTitle : MonoBehaviour
     public Color winColor;
     public Color loseColor;
     public Color drawColor;
+
+    [Header("Cat Stand")]
+    public SpriteRenderer standGlow;
+    public Color standWinColor;
+    public Color standLoseColor;
+    public Color standDrawColor;
     void Start()
     {
         int checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
@@ -24,18 +30,21 @@ public class AfterGameMainTitle : MonoBehaviour
             winTitle.SetActive(true);
             bg.GetComponent<Image>().color = winColor;
             totalCoinsValue.color = winColor;
+            standGlow.color = winColor;
         }
         else if (checkIfIWon < 0)
         {
             loseTitle.SetActive(true);
             bg.GetComponent<Image>().color = loseColor;
             totalCoinsValue.color = loseColor;
+            standGlow.color = loseColor;
         }
         else
         {
             drawTitle.SetActive(true);
             bg.GetComponent<Image>().color = drawColor;
             totalCoinsValue.color = drawColor;
+            standGlow.color = drawColor;
         }
     }
 }

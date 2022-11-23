@@ -50,6 +50,7 @@ public class PlayerDataCustomView : MonoBehaviour
         {
             healthUIBehaviour.SetOrientationRight();
             nicknameText.alignment = TMPro.TextAlignmentOptions.Right;
+            GetComponent<RectTransform>().anchoredPosition = new Vector2(-220, GetComponent<RectTransform>().anchoredPosition.y); 
         }
 
     }
