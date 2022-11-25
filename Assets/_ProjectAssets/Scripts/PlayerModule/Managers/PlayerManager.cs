@@ -86,6 +86,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
         float damagePercentage = (area - dmgDistance) / area;
         int dmgToBeDone = damageByDistance ? (int)Math.Floor(damagePercentage * maxDamage) : maxDamage;
+        Debug.Log($"Got damage {dmgToBeDone} / {myPlayerHealth}");
         SetMyPlayerHealth(myPlayerHealth - dmgToBeDone);
 
         if (hasPushForce)
