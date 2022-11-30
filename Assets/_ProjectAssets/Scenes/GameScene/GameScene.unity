@@ -2779,7 +2779,6 @@ GameObject:
   m_Component:
   - component: {fileID: 839985179}
   - component: {fileID: 839985178}
-  - component: {fileID: 839985180}
   m_Layer: 0
   m_Name: CollidableLogicLayer
   m_TagString: Untagged
@@ -2803,7 +2802,7 @@ MonoBehaviour:
   <ChunkCountY>k__BackingField: 32
   chunkTemplate: {fileID: 3810740569203461728, guid: 3eabd84b596421147ae7ffa783b510e1, type: 3}
   <OriginalTexture>k__BackingField: {fileID: 2800000, guid: 2707171559acefa419dc50c743bebaaa, type: 3}
-  <PPU>k__BackingField: 32
+  <PPU>k__BackingField: 36
   filterMode: 0
   <SortingLayerID>k__BackingField: 0
   isInit: 0
@@ -2822,20 +2821,6 @@ Transform:
   m_Father: {fileID: 1083721035}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &839985180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 839985177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0735998033f8b0644bfd49d9fb9cef8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  paintableLayer: {fileID: 839985178}
-  targetScale: {x: 0.9, y: 0.9, z: 0.9}
 --- !u!1 &841186585
 GameObject:
   m_ObjectHideFlags: 0
@@ -4210,7 +4195,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1324263550}
   - component: {fileID: 1324263549}
-  - component: {fileID: 1324263551}
   m_Layer: 0
   m_Name: VisibleLayer
   m_TagString: Untagged
@@ -4234,7 +4218,7 @@ MonoBehaviour:
   <ChunkCountY>k__BackingField: 1
   chunkTemplate: {fileID: 1203567635039567098, guid: 75b628c577fa5cd40a74b2173d98e33a, type: 3}
   <OriginalTexture>k__BackingField: {fileID: 2800000, guid: 2dff2ec616cb1d640ae6475137238dff, type: 3}
-  <PPU>k__BackingField: 32
+  <PPU>k__BackingField: 36
   filterMode: 0
   <SortingLayerID>k__BackingField: 0
   isInit: 0
@@ -4253,20 +4237,6 @@ Transform:
   m_Father: {fileID: 1083721035}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1324263551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324263548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0735998033f8b0644bfd49d9fb9cef8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  paintableLayer: {fileID: 1324263549}
-  targetScale: {x: 0.9, y: 0.9, z: 0.9}
 --- !u!1 &1417513450
 GameObject:
   m_ObjectHideFlags: 0

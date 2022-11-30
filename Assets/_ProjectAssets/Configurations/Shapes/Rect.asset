@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eff4155d05a69764c9de196fec5e905e, type: 3}
-  m_Name: Ellipse
+  m_Name: Rect
   m_EditorClassIdentifier: 
-  ID: 277012fe-d22b-4cf6-b54b-00f8985ecb61
-  shapeType: Ellipse
+  ID: fdaa74ef-6484-43f5-af4b-19b2b4d9361a
+  shapeType: Rect
   circleSize: 0
-  width: 0
-  height: 0
-  radiusX: 64
-  radiusY: 64
-  pixelSize: 16
+  width: 64
+  height: 64
+  radiusX: 0
+  radiusY: 0
+  pixelSize: 0

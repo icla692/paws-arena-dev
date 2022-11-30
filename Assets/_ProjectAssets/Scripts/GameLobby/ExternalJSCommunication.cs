@@ -30,15 +30,15 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
 
     public async void TryConnectWallet()
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            ConnectWallet();
-#else
+//#if UNITY_WEBGL && !UNITY_EDITOR
+//            ConnectWallet();
+//#else
         await UniTask.Delay(1000);
         WalletConnected();
 
         await UniTask.Delay(1000);
         ProvideNFTs("{ \"nfts\":[{ \"url\":\"https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/txxtf-bqkor-uwiaa-aaaaa-cqace-eaqca-aac5q-q\"}]}");
-#endif
+//#endif
     }
 
     [ContextMenu("Connect Wallet")]

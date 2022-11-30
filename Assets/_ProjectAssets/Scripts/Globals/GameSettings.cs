@@ -10,9 +10,11 @@ public class GameSettings
     private const string key = "gamesettings";
 
     [SerializeField]
-    public bool hasMusic;
+    public float masterVolume = 1f;
     [SerializeField]
-    public bool hasSoundFX;
+    public float musicVolume = 1f;
+    [SerializeField]
+    public float soundFXVolume = 1f;
 
     public static GameSettings Default()
     {
@@ -22,8 +24,9 @@ public class GameSettings
         }
         return new GameSettings()
         {
-            hasMusic = true,
-            hasSoundFX = true,
+            masterVolume = 1f,
+            musicVolume = 1f,
+            soundFXVolume = 1f
         };
     }
     public void Apply()
