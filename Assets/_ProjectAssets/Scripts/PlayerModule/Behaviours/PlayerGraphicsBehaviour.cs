@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -15,7 +16,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     private Animator animator;
     [SerializeField]
     private PlayerCustomization playerCustomization;
-
+    private bool isMultiplayer;
     private PhotonView _photonView;
     private PlayerState playerState;
 
@@ -23,8 +24,14 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
     void Start()
     {
+        isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
+
         _photonView = GetComponent<PhotonView>();
-        if (_photonView.IsMine)
+        if (isMultiplayer)
+        {
+            _photonView.enabled = false;
+            SetCatNFT(GameState.selectedNFT.ids.ToArray());
+        }else if (_photonView.IsMine)
         {
             _photonView.RPC("SetCatNFT", RpcTarget.All, GameState.selectedNFT.ids.ToArray());
         }
@@ -33,8 +40,6 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     [PunRPC]
     public void SetCatNFT(string[] ids)
     {
-        Debug.Log(ids.Length);
-        Debug.Log(ids[0]);
         playerCustomization.SetCat(ids.ToList());
     }
 
@@ -51,7 +56,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
     public void PreJumpAnimEnded()
     {
-        if (_photonView.IsMine)
+        if (!isMultiplayer || _photonView.IsMine)
         {
             this.playerState.SetQueueJumpImpulse(true);
             SFXManager.Instance.PlayOneShot(jumpStartSound);
@@ -60,7 +65,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
     public void SetIsMidJump()
     {
-        if (_photonView.IsMine)
+        if (!isMultiplayer || _photonView.IsMine)
         {
             this.playerState.SetIsMidJump(true);
         }
@@ -68,7 +73,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
     public void AfterJump()
     {
-        if (_photonView.IsMine)
+        if (!isMultiplayer || _photonView.IsMine)
         {
             this.playerState.SetHasJump(false);
         }

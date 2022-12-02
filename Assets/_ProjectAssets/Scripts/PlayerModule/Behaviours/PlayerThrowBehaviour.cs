@@ -17,6 +17,7 @@ public class PlayerThrowBehaviour : MonoBehaviour
     private Config config => ConfigurationManager.Instance.Config;
 
     private PhotonView photonView;
+    private bool isMultiplayer;
     private bool isEnabled = false;
 
     private List<GameObject> projectiles;
@@ -24,10 +25,19 @@ public class PlayerThrowBehaviour : MonoBehaviour
     private void OnEnable()
     {
         photonView = GetComponent<PhotonView>();
-        isEnabled = true;
-        if (photonView.IsMine)
+        isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
+
+        if (!isMultiplayer)
         {
-            PlayerActionsBar.OnShoot += PrepareLaunch;
+            photonView.enabled = false;
+        }
+        else
+        {
+            isEnabled = true;
+            if (photonView.IsMine)
+            {
+                PlayerActionsBar.OnShoot += PrepareLaunch;
+            }
         }
     }
 
@@ -56,7 +66,17 @@ public class PlayerThrowBehaviour : MonoBehaviour
         projectiles = new List<GameObject>();
 
         for (int i = 0; i < weapon.numberOfProjectiles; i++) {
-            var obj = PhotonNetwork.Instantiate("Bullets/" + weapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
+            GameObject obj;
+            if (isMultiplayer)
+            {
+                obj = PhotonNetwork.Instantiate("Bullets/" + weapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
+            }
+            else
+            {
+                var bulletPrefab = Resources.Load("Bullets/" + weapon.bulletPrefab.name) as GameObject;
+                obj = GameObject.Instantiate(bulletPrefab, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
+            }
+
             projectiles.Add(obj);
             if(i != weapon.numberOfProjectiles / 2)
             {
@@ -65,7 +85,14 @@ public class PlayerThrowBehaviour : MonoBehaviour
         }
 
         //So that animation etc plays on all clients
-        photonView.RPC("OnLaunchPreparing", RpcTarget.All);
+        if (isMultiplayer)
+        {
+            photonView.RPC("OnLaunchPreparing", RpcTarget.All);
+        }
+        else
+        {
+            OnLaunchPreparing();
+        }
     }
 
     [PunRPC]

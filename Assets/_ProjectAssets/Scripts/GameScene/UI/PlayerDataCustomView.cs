@@ -20,10 +20,22 @@ public class PlayerDataCustomView : MonoBehaviour
     [SerializeField]
     private PhotonView photonview;
 
+    private bool isMultiplayer;
+
     void Start()
     {
+        isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
+
         healthUIBehaviour.Init();
-        if (photonview.IsMine)
+
+        if (!isMultiplayer)
+        {
+            PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
+            SetNickname("Test");
+            OnHealthUpdated(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
+
+        }
+        else if (photonview.IsMine)
         {
             PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
             photonview.RPC("SetNickname", RpcTarget.All, PhotonNetwork.NickName);
@@ -38,14 +50,15 @@ public class PlayerDataCustomView : MonoBehaviour
         RectTransform rt = GetComponent<RectTransform>();
         rt.SetParent(GameObject.Find(parentPath).transform);
         rt.localScale = Vector3.one;
-        int myseat = PUNGameRoomManager.Instance.GetMySeat();
+
+        int myseat = isMultiplayer ? PUNGameRoomManager.Instance.GetMySeat() : 0;
 
         bool isMyPlayer = (myseat == 0 && photonview.IsMine || myseat == 1 && !photonview.IsMine);
         rt.anchorMin = rt.anchorMax = rt.pivot = isMyPlayer ? new Vector2(0, 1) : new Vector2(1, 1);
         rt.anchoredPosition = new Vector2(0, 0);
 
         //Mirror UI for right UI
-        bool isPlayer2Data = (PhotonNetwork.LocalPlayer.IsMasterClient && !photonview.IsMine) || (!PhotonNetwork.LocalPlayer.IsMasterClient && photonview.IsMine);
+        bool isPlayer2Data = isMultiplayer && (PhotonNetwork.LocalPlayer.IsMasterClient && !photonview.IsMine) || (!PhotonNetwork.LocalPlayer.IsMasterClient && photonview.IsMine);
         if (isPlayer2Data)
         {
             healthUIBehaviour.SetOrientationRight();
@@ -57,7 +70,14 @@ public class PlayerDataCustomView : MonoBehaviour
 
     private void OnHealthUpdated(int val)
     {
-        photonview.RPC("SetHealth", RpcTarget.All, val);
+        if (isMultiplayer)
+        {
+            photonview.RPC("SetHealth", RpcTarget.All, val);
+        }
+        else
+        {
+            SetHealth(val);
+        }
     }
 
     [PunRPC]

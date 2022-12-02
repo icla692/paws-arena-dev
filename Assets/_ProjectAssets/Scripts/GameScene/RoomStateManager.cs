@@ -30,6 +30,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     [HideInInspector]
     public IRoomState currentState;
+    private bool isMultiplayer;
 
     void Start()
     {
@@ -39,6 +40,8 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     private void OnEnable()
     {
+        isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
+
         PUNRoomUtils.onPlayerLeft += OnPlayerLeft;
     }
 
@@ -50,10 +53,16 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     private void Init()
     {
-        SetState(new WaitingForAllPlayersToJoinState()); ;
-        photonView.RPC("OnPlayerSceneLoaded", RpcTarget.All);
+        if (isMultiplayer)
+        {
+            SetState(new WaitingForAllPlayersToJoinState()); ;
+            photonView.RPC("OnPlayerSceneLoaded", RpcTarget.All);
+        }
+        else
+        {
+            OnPlayerSceneLoaded_SinglePlayer();
+        }
     }
-
 
     public void SetState(IRoomState state)
     {
@@ -73,7 +82,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public void SetFirstPlayerTurn()
     {
         roundNumber++;
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (!isMultiplayer || PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             SetState(new MyTurnState());
         }
@@ -85,6 +94,8 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     public bool WasMyRound()
     {
+        if (!isMultiplayer) return true;
+
         return (lastPlayerRound == 0 && PhotonNetwork.LocalPlayer.IsMasterClient) ||
             (lastPlayerRound == 1 && !PhotonNetwork.LocalPlayer.IsMasterClient);
     }
@@ -101,7 +112,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     public void TryStartNextRound()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (!isMultiplayer || PhotonNetwork.IsMasterClient)
         {
             GameResolveState resolveState = PlayerManager.Instance.GetWinnerByDeath();
             if (resolveState != GameResolveState.NO_WIN)
@@ -118,13 +129,27 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
                 if (nextRound > ConfigurationManager.Instance.Config.GetMaxNumberOfRounds())
                 {
                     resolveState = PlayerManager.Instance.GetWinnerByHealth();
-                    photonView.RPC("StartResolveGame", RpcTarget.All, resolveState);
+                    if (!isMultiplayer)
+                    {
+                        StartResolveGame(resolveState);
+                    }
+                    else
+                    {
+                        photonView.RPC("StartResolveGame", RpcTarget.All, resolveState);
+                    }
                     return;
                 }
 
                 if (sceneInfo.usersInScene == 1)
                 {
-                    photonView.RPC("StartNextRound", RpcTarget.All, 0, nextRound);
+                    if (!isMultiplayer)
+                    {
+                        StartNextRound(0, nextRound);
+                    }
+                    else
+                    {
+                        photonView.RPC("StartNextRound", RpcTarget.All, 0, nextRound);
+                    }
                 }
                 else
                 {
@@ -185,6 +210,12 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
                 photonView.RPC("OnAllPlayersJoinedScene", RpcTarget.All);
             }
         }
+    }
+
+    private void OnPlayerSceneLoaded_SinglePlayer()
+    {
+        sceneInfo.usersInScene = 1;
+        OnAllPlayersJoinedScene();
     }
 
     [PunRPC]

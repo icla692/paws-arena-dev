@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
 using System;
 using UnityEngine;
@@ -14,17 +15,28 @@ public class PlayerComponent : MonoBehaviour
 
     private GameInputActions.PlayerActions playerActions;
     private PlayerMotionBehaviour playerMotionBehaviour;
+    private bool isMultiplayer;
     private PhotonView photonView;
 
 
     private void Awake()
     {
+        isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
+
         photonView = GetComponent<PhotonView>();
         playerMotionBehaviour = GetComponent<PlayerMotionBehaviour>();
     }
     private void Start()
     {
+        isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
         photonView = GetComponent<PhotonView>();
+
+        if (!isMultiplayer)
+        {
+            photonView.enabled = false;
+            GetComponent<PhotonTransformView>().enabled = false;
+            photonView = null;
+        }
 
         if (photonView != null && !photonView.IsMine) {
             SetupOtherPlayer();
@@ -36,7 +48,7 @@ public class PlayerComponent : MonoBehaviour
 
     private void OnEnable()
     {
-        if (photonView != null && photonView.IsMine)
+        if (!isMultiplayer || (photonView != null && photonView.IsMine))
         {
             RoomStateManager.OnStateUpdated += OnStateUpdatedForMyPlayer;
         }
@@ -136,12 +148,27 @@ public class PlayerComponent : MonoBehaviour
     private void OnWeaponOutChanged(int val)
     {
         playerMotionBehaviour.SetIsPaused(val >= 0);
-        photonView.RPC("NetworkedChangeWeaponState", RpcTarget.All, val);
+
+        if (isMultiplayer)
+        {
+            photonView.RPC("NetworkedChangeWeaponState", RpcTarget.All, val);
+        }
+        else
+        {
+            NetworkedChangeWeaponState(val);
+        }
     }
 
     public bool IsMine()
     {
-        return photonView.IsMine;
+        if (isMultiplayer)
+        {
+            return photonView.IsMine;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     //Actual logic
