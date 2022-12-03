@@ -16,6 +16,8 @@ public class BulletComponent : MonoBehaviour
     private bool isTouched = false;
     protected Rigidbody2D rb;
     protected PhotonView photonView;
+    protected bool isMultiplayer;
+
     private Transform thisT;
 
     private void Start()
@@ -27,6 +29,14 @@ public class BulletComponent : MonoBehaviour
         rb.isKinematic = true;
 
         HandleStart();
+
+        isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
+        if (!isMultiplayer)
+        {
+            photonView.enabled = false;
+            GetComponent<PhotonRigidbody2DView>().enabled = false;
+            photonView = null;
+        }
     }
 
     protected virtual void HandleStart()
@@ -55,19 +65,20 @@ public class BulletComponent : MonoBehaviour
 
         if (hasEnabledPositionTracking)
         {
-            onBulletMoved?.Invoke(photonView.IsMine, transform.position);
+            bool isMine = !isMultiplayer || photonView.IsMine;
+            onBulletMoved?.Invoke(isMine, transform.position);
         }
     }
 
     protected virtual void HandleCollision(Vector2 hitPose)
     {
         //If it blows very fast, on other player Start doesn't even has time to play
-        if (photonView != null && photonView.IsMine)
+        if (photonView == null || photonView.IsMine)
         {
             VFXManager.Instance.PUN_InstantiateExplosion(hitPose, explosionPrefab);
         }
 
-        PhotonNetwork.Destroy(gameObject);
+        SingleAndMultiplayerUtils.Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

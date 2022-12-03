@@ -28,19 +28,11 @@ public class PlayerDataCustomView : MonoBehaviour
 
         healthUIBehaviour.Init();
 
-        if (!isMultiplayer)
-        {
-            PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
-            SetNickname("Test");
-            OnHealthUpdated(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
+        string nickname = !isMultiplayer ? "Test" : PhotonNetwork.NickName;
 
-        }
-        else if (photonview.IsMine)
-        {
-            PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
-            photonview.RPC("SetNickname", RpcTarget.All, PhotonNetwork.NickName);
-            OnHealthUpdated(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
-        }
+        PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetNickname", RpcTarget.All, nickname);
+        OnHealthUpdated(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
 
         Init();
     }
@@ -70,14 +62,7 @@ public class PlayerDataCustomView : MonoBehaviour
 
     private void OnHealthUpdated(int val)
     {
-        if (isMultiplayer)
-        {
-            photonview.RPC("SetHealth", RpcTarget.All, val);
-        }
-        else
-        {
-            SetHealth(val);
-        }
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, false, "SetHealth", RpcTarget.All, val);
     }
 
     [PunRPC]
@@ -90,7 +75,7 @@ public class PlayerDataCustomView : MonoBehaviour
     public void SetHealth(int val)
     {
         healthUIBehaviour.OnHealthUpdated(val);
-        if (!photonview.IsMine)
+        if (photonview != null && !photonview.IsMine)
         {
             PlayerManager.Instance.otherPlayerHealth = val;
         }

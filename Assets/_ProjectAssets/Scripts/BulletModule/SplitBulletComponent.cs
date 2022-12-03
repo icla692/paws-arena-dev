@@ -14,7 +14,7 @@ public class SplitBulletComponent : BulletComponent
 
     protected override void HandleStart()
     {
-        if (photonView.IsMine)
+        if (!isMultiplayer || photonView.IsMine)
         {
             playerActions = GameInputManager.Instance.GetWeaponsActionMap().GetWeaponsInputActions();
             playerActions.MainAction.performed += Split;
@@ -23,7 +23,7 @@ public class SplitBulletComponent : BulletComponent
 
     private void OnDestroy()
     {
-        if (photonView.IsMine)
+        if (!isMultiplayer || photonView.IsMine)
         {
             playerActions.MainAction.performed -= Split;
         }
@@ -31,11 +31,10 @@ public class SplitBulletComponent : BulletComponent
 
     public void Split(InputAction.CallbackContext args)
     {
-        Debug.Log("SPLIT!!");
         launchedRockets = new List<GameObject>();
         for (int i = 0; i < splitNumber; i++)
         {
-            var obj = PhotonNetwork.Instantiate("Bullets/" + bulletPrefab.name, transform.position, Quaternion.Euler(transform.rotation.eulerAngles));
+            GameObject obj = SingleAndMultiplayerUtils.Instantiate("Bullets/" + bulletPrefab.name, transform.position, Quaternion.Euler(transform.rotation.eulerAngles));
 
             var bullet = obj.GetComponent<BulletComponent>();
             bullet.hasEnabledPositionTracking = false;
@@ -63,6 +62,6 @@ public class SplitBulletComponent : BulletComponent
             launchedRockets[i].GetComponent<BulletComponent>().Launch(dir, rb.velocity.magnitude);
         }
 
-        PhotonNetwork.Destroy(gameObject);
+        SingleAndMultiplayerUtils.Destroy(gameObject);
     }
 }

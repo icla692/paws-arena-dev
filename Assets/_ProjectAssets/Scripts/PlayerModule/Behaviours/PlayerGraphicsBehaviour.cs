@@ -27,14 +27,12 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
 
         _photonView = GetComponent<PhotonView>();
-        if (isMultiplayer)
+        if (!isMultiplayer)
         {
             _photonView.enabled = false;
-            SetCatNFT(GameState.selectedNFT.ids.ToArray());
-        }else if (_photonView.IsMine)
-        {
-            _photonView.RPC("SetCatNFT", RpcTarget.All, GameState.selectedNFT.ids.ToArray());
         }
+
+        SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, GameState.selectedNFT.ids.ToArray());
     }
 
     [PunRPC]

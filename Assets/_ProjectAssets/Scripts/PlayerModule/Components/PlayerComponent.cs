@@ -149,14 +149,7 @@ public class PlayerComponent : MonoBehaviour
     {
         playerMotionBehaviour.SetIsPaused(val >= 0);
 
-        if (isMultiplayer)
-        {
-            photonView.RPC("NetworkedChangeWeaponState", RpcTarget.All, val);
-        }
-        else
-        {
-            NetworkedChangeWeaponState(val);
-        }
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "NetworkedChangeWeaponState", RpcTarget.All, val);
     }
 
     public bool IsMine()
@@ -173,7 +166,7 @@ public class PlayerComponent : MonoBehaviour
 
     //Actual logic
     [PunRPC]
-    private void NetworkedChangeWeaponState(int val)
+    public void NetworkedChangeWeaponState(int val)
     {
         weaponWrapper.SetActive(val >= 0);
         weaponWrapper.GetComponent<WeaponBehaviour>().Init(val);

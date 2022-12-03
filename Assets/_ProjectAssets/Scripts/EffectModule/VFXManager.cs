@@ -7,6 +7,6 @@ public class VFXManager : MonoSingleton<VFXManager>
 {
     public void PUN_InstantiateExplosion(Vector3 position, GameObject explosion)
     {
-        PhotonNetwork.Instantiate("Explosions/" + explosion.name, position, Quaternion.identity);
+        SingleAndMultiplayerUtils.Instantiate("Explosions/" + explosion.name, position, Quaternion.identity);
     }
 }

@@ -57,11 +57,12 @@ public class PlayerIndicatorBehaviour : MonoBehaviour
     private void OnIndicatorPlaced(float angle, float power)
     {
         indicator.rotation = Quaternion.Euler(Vector3.zero.WithZ(angle));
-        photonView.RPC("SetPowerLineLength", RpcTarget.All, power);
+
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "SetPowerLineLength", RpcTarget.All, power);
     }
 
     [PunRPC]
-    private void SetPowerLineLength(float power)
+    public void SetPowerLineLength(float power)
     {
         lineIndicatorSpeed.SetPosition(1, new Vector3(0.2f + power * maxRadius, 0, 1));
         currentPower = power;

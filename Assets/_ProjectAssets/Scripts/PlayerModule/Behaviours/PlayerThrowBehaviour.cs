@@ -30,21 +30,20 @@ public class PlayerThrowBehaviour : MonoBehaviour
         if (!isMultiplayer)
         {
             photonView.enabled = false;
+            photonView = null;
         }
-        else
+
+        isEnabled = true;
+        if (!isMultiplayer || photonView.IsMine)
         {
-            isEnabled = true;
-            if (photonView.IsMine)
-            {
-                PlayerActionsBar.OnShoot += PrepareLaunch;
-            }
+            PlayerActionsBar.OnShoot += PrepareLaunch;
         }
     }
 
     private void OnDisable()
     {
         isEnabled = false;
-        if (photonView.IsMine)
+        if (!isMultiplayer || photonView.IsMine)
         {
             PlayerActionsBar.OnShoot -= PrepareLaunch;
         }
@@ -66,17 +65,8 @@ public class PlayerThrowBehaviour : MonoBehaviour
         projectiles = new List<GameObject>();
 
         for (int i = 0; i < weapon.numberOfProjectiles; i++) {
-            GameObject obj;
-            if (isMultiplayer)
-            {
-                obj = PhotonNetwork.Instantiate("Bullets/" + weapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
-            }
-            else
-            {
-                var bulletPrefab = Resources.Load("Bullets/" + weapon.bulletPrefab.name) as GameObject;
-                obj = GameObject.Instantiate(bulletPrefab, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
-            }
-
+            GameObject obj = SingleAndMultiplayerUtils.Instantiate("Bullets/" + weapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
+            
             projectiles.Add(obj);
             if(i != weapon.numberOfProjectiles / 2)
             {
@@ -85,25 +75,18 @@ public class PlayerThrowBehaviour : MonoBehaviour
         }
 
         //So that animation etc plays on all clients
-        if (isMultiplayer)
-        {
-            photonView.RPC("OnLaunchPreparing", RpcTarget.All);
-        }
-        else
-        {
-            OnLaunchPreparing();
-        }
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "OnLaunchPreparing", RpcTarget.All);
     }
 
     [PunRPC]
-    private void OnLaunchPreparing()
+    public void OnLaunchPreparing()
     {
         onLaunchPreparing?.Invoke();
     }
 
     public void Launch()
     {
-        if (!photonView.IsMine) return;
+        if (photonView != null && !photonView.IsMine) return;
 
         int weaponIdx = playerComponent.state.weaponIdx;
         var weapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
