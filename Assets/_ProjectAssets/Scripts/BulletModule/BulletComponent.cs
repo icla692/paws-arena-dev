@@ -78,7 +78,7 @@ public class BulletComponent : MonoBehaviour
             VFXManager.Instance.PUN_InstantiateExplosion(hitPose, explosionPrefab);
         }
 
-        SingleAndMultiplayerUtils.Destroy(gameObject);
+        SingleAndMultiplayerUtils.Destroy(photonView, gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

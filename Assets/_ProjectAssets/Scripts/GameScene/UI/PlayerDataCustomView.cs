@@ -28,7 +28,7 @@ public class PlayerDataCustomView : MonoBehaviour
 
         healthUIBehaviour.Init();
 
-        string nickname = !isMultiplayer ? "Test" : PhotonNetwork.NickName;
+        string nickname = !isMultiplayer ? "SINGLEPLAYER" : PhotonNetwork.NickName;
 
         PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
         SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetNickname", RpcTarget.All, nickname);
@@ -62,7 +62,7 @@ public class PlayerDataCustomView : MonoBehaviour
 
     private void OnHealthUpdated(int val)
     {
-        SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, false, "SetHealth", RpcTarget.All, val);
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetHealth", RpcTarget.All, val);
     }
 
     [PunRPC]
@@ -75,7 +75,7 @@ public class PlayerDataCustomView : MonoBehaviour
     public void SetHealth(int val)
     {
         healthUIBehaviour.OnHealthUpdated(val);
-        if (photonview != null && !photonview.IsMine)
+        if (isMultiplayer && photonview != null && !photonview.IsMine)
         {
             PlayerManager.Instance.otherPlayerHealth = val;
         }

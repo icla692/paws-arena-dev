@@ -20,11 +20,14 @@ public class SingleAndMultiplayerUtils
         }
     }
 
-    public static void Destroy(GameObject go)
+    public static void Destroy(PhotonView photonView, GameObject go)
     {
         if (ConfigurationManager.Instance.Config.GetIsMultiplayer())
         {
-            PhotonNetwork.Destroy(go);
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.Destroy(go);
+            }
         }
         else
         {
