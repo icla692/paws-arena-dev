@@ -62,6 +62,6 @@ public class SplitBulletComponent : BulletComponent
             launchedRockets[i].GetComponent<BulletComponent>().Launch(dir, rb.velocity.magnitude);
         }
 
-        SingleAndMultiplayerUtils.Destroy(gameObject);
+        SingleAndMultiplayerUtils.Destroy(photonView, gameObject);
     }
 }

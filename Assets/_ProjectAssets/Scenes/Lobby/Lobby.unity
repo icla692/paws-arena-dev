@@ -11154,6 +11154,7 @@ MonoBehaviour:
   playerPlatformPrefab: {fileID: 9122209185718362659, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
   nftButtonPrefab: {fileID: 4135986911533133119, guid: 46c5edbde698c0346a8efe08017403b3, type: 3}
   nftButtonsParent: {fileID: 1694092204}
+  enterArenaButton: {fileID: 1381142838}
 --- !u!1 &1690297588
 GameObject:
   m_ObjectHideFlags: 0

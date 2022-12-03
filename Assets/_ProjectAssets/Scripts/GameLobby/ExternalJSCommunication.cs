@@ -37,7 +37,20 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
         WalletConnected();
 
         await UniTask.Delay(1000);
-        ProvideNFTs("{ \"nfts\":[{ \"url\":\"https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/txxtf-bqkor-uwiaa-aaaaa-cqace-eaqca-aac5q-q\"}]}");
+        //ProvideNFTs("{ \"nfts\":[{ \"url\":\"https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/txxtf-bqkor-uwiaa-aaaaa-cqace-eaqca-aac5q-q\"}]}");
+
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/jjzf6-5ikor-uwiaa-aaaaa-cqace-eaqca-aadai-q" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/ymih6-7akor-uwiaa-aaaaa-cqace-eaqca-aaeow-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/u62g2-kikor-uwiaa-aaaaa-cqace-eaqca-aacuw-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/xtc2f-jqkor-uwiaa-aaaaa-cqace-eaqca-aacd3-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/ry5ro-5ikor-uwiaa-aaaaa-cqace-eaqca-aaeb3-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/or7s5-qqkor-uwiaa-aaaaa-cqace-eaqca-aaaux-q" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/w6e26-xqkor-uwiaa-aaaaa-cqace-eaqca-aadoy-q" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/urzol-uikor-uwiaa-aaaaa-cqace-eaqca-aacaq-q" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/awrxn-lykor-uwiaa-aaaaa-cqace-eaqca-aacca-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/or3jr-dqkor-uwiaa-aaaaa-cqace-eaqca-aabec-a" });
+
+        onNFTsReceived?.Invoke();
 //#endif
     }
 

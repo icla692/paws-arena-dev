@@ -14,6 +14,8 @@ public class NFTSelection : MonoBehaviour
     public GameObject nftButtonPrefab;
     public Transform nftButtonsParent;
 
+    public GameObject enterArenaButton;
+
     private List<GameObject> nftButtons = new List<GameObject>();
     private GameObject playerPlatform;
 
@@ -38,6 +40,7 @@ public class NFTSelection : MonoBehaviour
 
     private async UniTask PopulateGrid()
     {
+        enterArenaButton.GetComponent<Button>().interactable = false;
         foreach(GameObject but in nftButtons)
         {
             Destroy(but);
@@ -66,6 +69,7 @@ public class NFTSelection : MonoBehaviour
             nftButtons.Add(go);
         }
         await UniTask.WhenAll(tasks.ToArray());
+        enterArenaButton.GetComponent<Button>().interactable = true;
 
         //Attach to images
         idx = 0;
