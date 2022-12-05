@@ -53,6 +53,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     private void Init()
     {
+        MapsManager.Instance.CreateMap();
         if (isMultiplayer)
         {
             SetState(new WaitingForAllPlayersToJoinState()); ;

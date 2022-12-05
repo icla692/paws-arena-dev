@@ -8,8 +8,8 @@ using UnityEngine;
 public class PaintingManager : MonoSingleton<PaintingManager>
 {
 
-    [SerializeField] private BasicPaintableLayer primaryLayer;
-    [SerializeField] private BasicPaintableLayer secondaryLayer;
+    [SerializeField] public BasicPaintableLayer primaryLayer;
+    [SerializeField] public BasicPaintableLayer secondaryLayer;
 
     private ShapeConfig currentShape;
 

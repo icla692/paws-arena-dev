@@ -48,6 +48,11 @@ public class GameMatchingScreen : MonoBehaviour
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             punRoomUtils.AddPlayerCustomProperty("seat", "0");
+
+            int mapIdx = UnityEngine.Random.Range(0, 2);
+            Debug.Log("Selected map " + mapIdx);
+            punRoomUtils.AddRoomCustomProperty("mapIdx", mapIdx);
+
             OccupySeat(seats[0], PhotonNetwork.LocalPlayer.NickName);
             if (PhotonNetwork.CurrentRoom.MaxPlayers == PhotonNetwork.CurrentRoom.PlayerCount)
             {

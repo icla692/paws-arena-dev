@@ -28,6 +28,18 @@ public class PUNRoomUtils : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
     }
 
+    public void AddRoomCustomProperty(string key, int value)
+    {
+        Hashtable props = new Hashtable();
+        props.Add(key, value);
+        PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+    }
+
+    public object GetRoomCustomProperty(string key)
+    {
+        return PhotonNetwork.CurrentRoom.CustomProperties[key];
+    }
+
 
     public List<Player> GetOtherPlayers()
     {

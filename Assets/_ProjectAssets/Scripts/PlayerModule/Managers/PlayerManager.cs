@@ -96,6 +96,11 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         }
     }
 
+    public void DirectDamage(int damage)
+    {
+        SetMyPlayerHealth(myPlayerHealth - damage);
+    }
+
     private void PushPlayer(float force, Vector2 direction)
     {
         myPlayer.GetComponent<Rigidbody2D>().AddForce(direction.normalized * force, ForceMode2D.Impulse);
