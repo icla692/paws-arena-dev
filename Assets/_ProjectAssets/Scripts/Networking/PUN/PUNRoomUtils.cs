@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class PUNRoomUtils : MonoBehaviourPunCallbacks
 {
-    public static event Action<string> onPlayerJoined;
+    public static event Action<string, string> onPlayerJoined;
     public static event Action onPlayerLeft;
     public void TryLeaveRoom()
     {
@@ -37,7 +37,7 @@ public class PUNRoomUtils : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log($"Player Joined room {newPlayer.NickName}");
-        onPlayerJoined?.Invoke(newPlayer.NickName);
+        onPlayerJoined?.Invoke(newPlayer.NickName, newPlayer.UserId);
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {

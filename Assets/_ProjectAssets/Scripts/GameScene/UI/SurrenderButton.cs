@@ -10,7 +10,7 @@ public class SurrenderButton : MonoBehaviour
     {
         modal.ShowModal("Are you sure you want to surrender?", () =>
         {
-            RoomStateManager.Instance.Retreat();
+            RoomStateManager.Instance.SendRetreatRPC();
         });
     }
 }

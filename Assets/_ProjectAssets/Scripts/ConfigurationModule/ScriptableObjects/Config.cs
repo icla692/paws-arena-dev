@@ -9,6 +9,8 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [Space]
 
         [SerializeField]
+        private bool isMultiplayer = true;
+        [SerializeField]
         private int maxNumberOfRounds = 15;
         [SerializeField]
         private int turnDurationInSeconds = 30;
@@ -51,6 +53,10 @@ namespace Anura.ConfigurationModule.ScriptableObjects
 
         [SerializeField] private int betValue=25;
 
+        public bool GetIsMultiplayer()
+        {
+            return isMultiplayer;
+        }
         public int GetMaxNumberOfRounds()
         {
             return maxNumberOfRounds;

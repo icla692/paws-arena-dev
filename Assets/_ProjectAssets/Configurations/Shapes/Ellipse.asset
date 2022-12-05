@@ -18,6 +18,5 @@ MonoBehaviour:
   width: 0
   height: 0
   radiusX: 64
-  radiusY: 32
-  pixelSize: 8
-  visualFX: {fileID: 0}
+  radiusY: 64
+  pixelSize: 16

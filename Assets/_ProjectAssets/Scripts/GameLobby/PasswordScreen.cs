@@ -29,7 +29,9 @@ public class PasswordScreen : MonoBehaviour
         text.text = "Pretending we connect to ICP Wallet...";
 
         //Mock data. To be removed
-        GameState.nfts.Add(new NFT() { imageUrl = "https://v3zkd-syaaa-aaaah-qcm5a-cai.raw.ic0.app/?&tokenid=j4efc-wikor-uwiaa-aaaaa-b4ath-iaqca-aaabd-a" });
+        GameState.nfts.Add(
+            new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/jjzf6-5ikor-uwiaa-aaaaa-cqace-eaqca-aadai-q" }
+            );
         GameState.walletId = "asd";
 
         yield return new WaitForSeconds(1f);

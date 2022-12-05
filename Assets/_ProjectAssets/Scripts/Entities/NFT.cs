@@ -30,8 +30,4 @@ public class NFT
             ids = NFTImageLoader.GetIds(doc);
         }
     }
-
-    public void GetItems()
-    {
-    }
 }

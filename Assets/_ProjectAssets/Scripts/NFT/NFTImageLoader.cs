@@ -32,6 +32,8 @@ public class NFTImageLoader
         for (int i = 0; i < images.Count; i++)
         {
             var id = images[i].Attributes["id"];
+
+            if (id == null) continue;
             if (id.Value.Contains("bg"))
             {
                 continue;

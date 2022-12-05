@@ -1,4 +1,5 @@
 
+using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -17,12 +18,23 @@ public class StartingGameState : IRoomState
     private IEnumerator HandleStartingSceneCoroutine(RoomStateManager context)
     {
         yield return new WaitForSeconds(1.5f);
-        int seat = context.photonManager.GetMySeat();
-        Vector2 spawnPos = seat == 0 ? PlayerManager.Instance.GetPlayer1SpawnPos() : PlayerManager.Instance.GetPlayer2SpawnPos();
-        PhotonNetwork.Instantiate(context.playerPrefab.name, spawnPos, Quaternion.identity);
-        PhotonNetwork.Instantiate(context.playerUIPrefab.name, Vector3.zero, Quaternion.identity);
+
+        InstantiatePlayer(context);
 
         yield return new WaitForSeconds(3f);
         context.SetFirstPlayerTurn();
+    }
+
+    private void InstantiatePlayer(RoomStateManager context)
+    {
+        int seat = 0;
+        if (ConfigurationManager.Instance.Config.GetIsMultiplayer())
+        {
+            seat = context.photonManager.GetMySeat();
+        }
+        Vector2 spawnPos = seat == 0 ? PlayerManager.Instance.GetPlayer1SpawnPos() : PlayerManager.Instance.GetPlayer2SpawnPos();
+
+        SingleAndMultiplayerUtils.Instantiate(context.playerPrefab.name, spawnPos, Quaternion.identity);
+        SingleAndMultiplayerUtils.Instantiate(context.playerUIPrefab.name, Vector3.zero, Quaternion.identity);
     }
 }

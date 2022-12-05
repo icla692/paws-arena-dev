@@ -12,25 +12,34 @@ public class ConnectingToServer : MonoBehaviour
     public GameObject connectButton;
     public GameObject logText;
 
+    private void OnDisable()
+    {
+        ExternalJSCommunication.Instance.onWalletConnected -= OnWalletConnected;
+        ExternalJSCommunication.Instance.onNFTsReceived -= OnNFTsReceived;
+    }
     public void ConnectToWallet()
     {
-        StartCoroutine(WalletConnectionCoroutine());
-    }
-
-    private IEnumerator WalletConnectionCoroutine()
-    {
+        ExternalJSCommunication.Instance.TryConnectWallet();
         connectButton.SetActive(false);
         logText.SetActive(true);
         var text = logText.GetComponent<TMPro.TextMeshProUGUI>();
-        text.text = "Pretending we connect to ICP Wallet...";
+        text.text = "Waiting the connection with ICP Wallet to be approved...";
 
-        //Mock data. To be removed
-        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?tokenid=xgzpf-bikor-uwiaa-aaaaa-cqace-eaqca-aacgt-q" });
+        ExternalJSCommunication.Instance.onWalletConnected += OnWalletConnected;
+        ExternalJSCommunication.Instance.onNFTsReceived += OnNFTsReceived;
+    }
+
+    public void OnWalletConnected()
+    {
+        ExternalJSCommunication.Instance.onWalletConnected -= OnWalletConnected;
+        var text = logText.GetComponent<TMPro.TextMeshProUGUI>();
+        text.text = "Connection made. Waiting for NFTs...";
+    }
+
+    public void OnNFTsReceived()
+    {
+        ExternalJSCommunication.Instance.onNFTsReceived -= OnNFTsReceived;
         GameState.walletId = "asd";
-
-        yield return new WaitForSeconds(1f);
-        text.text = "Pretending we get info from server...";
-
         lobbyUIManager.OpenNFTSelectionScreen();
     }
 }

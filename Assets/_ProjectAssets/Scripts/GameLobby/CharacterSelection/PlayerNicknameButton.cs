@@ -33,7 +33,7 @@ public class PlayerNicknameButton : MonoBehaviour
 
     public void EnableEdit(bool isCancelable)
     {
-        inputModal.Show("How should we call you?", "ICKITTY", isCancelable, (nickname) =>
+        inputModal.Show("Nickname", "Nickname", isCancelable, (nickname) =>
         {
             SetPlayerName(nickname);
         });

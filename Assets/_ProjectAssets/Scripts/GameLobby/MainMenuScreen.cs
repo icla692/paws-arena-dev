@@ -6,9 +6,24 @@ using Anura.ConfigurationModule.Managers;
 public class MainMenuScreen : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI betCoins;
+    public Transform playerPlatformPosition;
+    public GameObject playerPlatformPrefab;
+
+    private GameObject playerPlatform;
 
     void OnEnable()
     {
-        betCoins.text = "" + ConfigurationManager.Instance.Config.GetBetValue();
+        playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformPosition);
+        playerPlatform.transform.position = Vector3.zero;
     }
+
+    private void OnDisable()
+    {
+        if(playerPlatform != null)
+        {
+            Destroy(playerPlatform);
+        }
+    }
+
+
 }

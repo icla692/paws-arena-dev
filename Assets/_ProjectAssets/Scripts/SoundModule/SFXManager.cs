@@ -41,12 +41,12 @@ public class SFXManager : MonoSingleton<SFXManager>
     {
         if(musicSource != null)
         {
-            musicSource.volume = GameState.gameSettings.hasMusic ? initialMusicSourceVolume : 0;
+            musicSource.volume = GameState.gameSettings.musicVolume * GameState.gameSettings.masterVolume;
         }
 
         if(oneShotAudioSource != null)
         {
-            oneShotAudioSource.volume = GameState.gameSettings.hasSoundFX ? initialOneShotSourceVolume : 0;
+            oneShotAudioSource.volume = GameState.gameSettings.soundFXVolume * GameState.gameSettings.masterVolume;
         }
     }
 

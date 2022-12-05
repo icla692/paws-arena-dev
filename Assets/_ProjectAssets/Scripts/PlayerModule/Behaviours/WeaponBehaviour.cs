@@ -18,7 +18,7 @@ public class WeaponBehaviour : MonoBehaviour
     {
         if (weaponIdx < 0)
         {
-            Debug.LogWarning("No weapon selected but weapon enabled");
+            //Debug.LogWarning("No weapon selected but weapon enabled");
             return;
         }
 

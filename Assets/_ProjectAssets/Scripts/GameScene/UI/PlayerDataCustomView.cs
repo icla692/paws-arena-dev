@@ -20,15 +20,19 @@ public class PlayerDataCustomView : MonoBehaviour
     [SerializeField]
     private PhotonView photonview;
 
+    private bool isMultiplayer;
+
     void Start()
     {
+        isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
+
         healthUIBehaviour.Init();
-        if (photonview.IsMine)
-        {
-            PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
-            photonview.RPC("SetNickname", RpcTarget.All, PhotonNetwork.NickName);
-            OnHealthUpdated(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
-        }
+
+        string nickname = !isMultiplayer ? "SINGLEPLAYER" : PhotonNetwork.NickName;
+
+        PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetNickname", RpcTarget.All, nickname);
+        OnHealthUpdated(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
 
         Init();
     }
@@ -37,25 +41,28 @@ public class PlayerDataCustomView : MonoBehaviour
     {
         RectTransform rt = GetComponent<RectTransform>();
         rt.SetParent(GameObject.Find(parentPath).transform);
-        int myseat = PUNGameRoomManager.Instance.GetMySeat();
+        rt.localScale = Vector3.one;
+
+        int myseat = isMultiplayer ? PUNGameRoomManager.Instance.GetMySeat() : 0;
 
         bool isMyPlayer = (myseat == 0 && photonview.IsMine || myseat == 1 && !photonview.IsMine);
         rt.anchorMin = rt.anchorMax = rt.pivot = isMyPlayer ? new Vector2(0, 1) : new Vector2(1, 1);
         rt.anchoredPosition = new Vector2(0, 0);
 
         //Mirror UI for right UI
-        bool isPlayer2Data = (PhotonNetwork.LocalPlayer.IsMasterClient && !photonview.IsMine) || (!PhotonNetwork.LocalPlayer.IsMasterClient && photonview.IsMine);
+        bool isPlayer2Data = isMultiplayer && (PhotonNetwork.LocalPlayer.IsMasterClient && !photonview.IsMine) || (!PhotonNetwork.LocalPlayer.IsMasterClient && photonview.IsMine);
         if (isPlayer2Data)
         {
             healthUIBehaviour.SetOrientationRight();
             nicknameText.alignment = TMPro.TextAlignmentOptions.Right;
+            GetComponent<RectTransform>().anchoredPosition = new Vector2(-220, GetComponent<RectTransform>().anchoredPosition.y); 
         }
 
     }
 
     private void OnHealthUpdated(int val)
     {
-        photonview.RPC("SetHealth", RpcTarget.All, val);
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetHealth", RpcTarget.All, val);
     }
 
     [PunRPC]
@@ -68,7 +75,7 @@ public class PlayerDataCustomView : MonoBehaviour
     public void SetHealth(int val)
     {
         healthUIBehaviour.OnHealthUpdated(val);
-        if (!photonview.IsMine)
+        if (isMultiplayer && photonview != null && !photonview.IsMine)
         {
             PlayerManager.Instance.otherPlayerHealth = val;
         }

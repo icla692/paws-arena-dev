@@ -11,9 +11,6 @@ using UnityEngine.SceneManagement;
 public class SeatGameobject
 {
     [SerializeField]
-    public GameObject occupiedSeatParent;
-
-    [SerializeField]
     public TextMeshProUGUI occupierNickname;
 }
 public class GameMatchingScreen : MonoBehaviour
@@ -25,9 +22,6 @@ public class GameMatchingScreen : MonoBehaviour
     public GameObject notices;
     public List<SeatGameobject> seats;
     public Countdown countdown;
-
-    [Header("Externals")]
-    public BetsController betsController;
 
     private void OnEnable()
     {
@@ -84,18 +78,16 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void OccupySeat(SeatGameobject seat, string nickName)
     {
-        seat.occupiedSeatParent.SetActive(true);
         seat.occupierNickname.text = nickName;
 
     }
 
     private void FreeSeat(SeatGameobject seat)
     {
-        seat.occupiedSeatParent.SetActive(false);
         seat.occupierNickname.text = "-";
     }
 
-    private void OnPlayerJoined(string opponentNickname)
+    private void OnPlayerJoined(string opponentNickname, string userId)
     {
         int mySeat = Int32.Parse(PhotonNetwork.LocalPlayer.CustomProperties["seat"].ToString());
         int otherSeat = (mySeat + 1) % 2;
@@ -140,18 +132,7 @@ public class GameMatchingScreen : MonoBehaviour
     [PunRPC]
     public void StartGameRoutine()
     {
-        if (betsController != null)
-        {
-            betsController.ShowPrizes();
-            betsController.onBetsRoutineFinished += () =>
-            {
-                StartCountdown();
-            };
-        }
-        else
-        {
-            StartCountdown();
-        }
+        StartCountdown();
     }
 
     private void StartCountdown()

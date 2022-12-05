@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerCustomization : MonoBehaviour
@@ -82,6 +83,14 @@ public class PlayerCustomization : MonoBehaviour
     [SerializeField]
     private List<Sprite> eyewearSprites;
 
+    [SerializeField]
+    private SpriteRenderer closeableEyewearSpriteRenderer;
+
+    [SerializeField]
+    private List<string> closeableEyewearKeysMapping;
+    [SerializeField]
+    private List<Sprite> closeableEyewearSprites;
+
     [Header("Mouth")]
     [SerializeField]
     private SpriteRenderer mouthSpriteRenderer;
@@ -135,12 +144,11 @@ public class PlayerCustomization : MonoBehaviour
             groundTransform.gameObject.SetActive(false);
         }
 
-        SetCat(GameState.selectedNFT);
     }
 
-    public void SetCat(NFT nft)
+    public void SetCat(List<string> ids)
     {
-        foreach(string id in nft.ids)
+        foreach(string id in ids)
         {
             SetKittyColor(id);
             SetEyes(id);
@@ -214,6 +222,7 @@ public class PlayerCustomization : MonoBehaviour
     public void SetEyewear(string eyewearId)
     {
         SetSingleSpriteElement(eyewearId, eyewearKeysMapping, eyewearSprites, eyewearSpriteRenderer);
+        SetSingleSpriteElement(eyewearId, closeableEyewearKeysMapping, closeableEyewearSprites, closeableEyewearSpriteRenderer);
     }
 
     public void SetMouth(string mouthId)
@@ -241,10 +250,8 @@ public class PlayerCustomization : MonoBehaviour
 
     private void SetSingleSpriteElement(string key, List<string> elements, List<Sprite> sprites, SpriteRenderer spriteRenderer)
     {
-        Debug.Log($"Trying to set {key}");
         if (!elements.Contains(key))
         {
-            Debug.LogWarning($"No {key} in our list");
             return;
         }
 
@@ -254,10 +261,8 @@ public class PlayerCustomization : MonoBehaviour
 
     private void SetColor(string key, SerializableStringColorDictionary elements, List<SpriteRenderer> targets)
     {
-        Debug.Log($"Trying to set {key}");
         if (!elements.ContainsKey(key))
         {
-            Debug.LogWarning($"No {key} in our list");
             return;
         }
 
@@ -269,10 +274,8 @@ public class PlayerCustomization : MonoBehaviour
     }
     private void SetSingleActiveElement(string key, List<string> ids, List<GameObject> targets)
     {
-        Debug.Log($"Trying to set {key}");
         if (!ids.Contains(key))
         {
-            Debug.LogWarning($"No {key} in our list");
             return;
         }
 
