@@ -2,6 +2,13 @@ using UnityEngine;
 
 namespace Anura.ConfigurationModule.ScriptableObjects
 {
+    public enum GameType
+    {
+        MULTIPLAYER,
+        SINGLEPLAYER,
+        TUTORIAL
+    }
+
     [CreateAssetMenu(fileName = "Config", menuName = "Configurations/Config", order = 1)]
     public class Config : ScriptableObject
     {
@@ -9,7 +16,8 @@ namespace Anura.ConfigurationModule.ScriptableObjects
         [Space]
 
         [SerializeField]
-        private bool isMultiplayer = true;
+        private GameType gameType;
+
         [SerializeField]
         private int maxNumberOfRounds = 15;
         [SerializeField]
@@ -55,7 +63,12 @@ namespace Anura.ConfigurationModule.ScriptableObjects
 
         public bool GetIsMultiplayer()
         {
-            return isMultiplayer;
+            return gameType == GameType.MULTIPLAYER;
+        }
+
+        public GameType GetGameType()
+        {
+            return gameType;
         }
         public int GetMaxNumberOfRounds()
         {

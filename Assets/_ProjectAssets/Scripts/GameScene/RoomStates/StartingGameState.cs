@@ -22,7 +22,16 @@ public class StartingGameState : IRoomState
         InstantiatePlayer(context);
 
         yield return new WaitForSeconds(3f);
-        context.SetFirstPlayerTurn();
+
+        //If tutorial don't auto-start game
+        if (ConfigurationManager.Instance.Config.GetGameType() == Anura.ConfigurationModule.ScriptableObjects.GameType.TUTORIAL)
+        {
+            context.SetState(new GamePausedState());
+        }
+        else
+        {
+            context.SetFirstPlayerTurn();
+        }
     }
 
     private void InstantiatePlayer(RoomStateManager context)

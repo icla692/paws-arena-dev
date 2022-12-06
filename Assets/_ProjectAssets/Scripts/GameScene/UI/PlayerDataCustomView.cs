@@ -45,7 +45,7 @@ public class PlayerDataCustomView : MonoBehaviour
 
         int myseat = isMultiplayer ? PUNGameRoomManager.Instance.GetMySeat() : 0;
 
-        bool isMyPlayer = (myseat == 0 && photonview.IsMine || myseat == 1 && !photonview.IsMine);
+        bool isMyPlayer = !isMultiplayer || (myseat == 0 && photonview.IsMine || myseat == 1 && !photonview.IsMine);
         rt.anchorMin = rt.anchorMax = rt.pivot = isMyPlayer ? new Vector2(0, 1) : new Vector2(1, 1);
         rt.anchoredPosition = new Vector2(0, 0);
 

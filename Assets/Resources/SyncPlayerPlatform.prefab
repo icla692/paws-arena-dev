@@ -470,7 +470,7 @@ PrefabInstance:
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: closeableEyewearSpriteRenderer
       value: 
-      objectReference: {fileID: 3339524541469448521}
+      objectReference: {fileID: 0}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: eyewearKeysMapping.Array.data[3]
       value: eyewear11
@@ -596,11 +596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddd111b8ee5eac49a9a6d6a4d30c47e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &3339524541469448521 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 5057208074727821912, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-  m_PrefabInstance: {fileID: 7527362240045894417}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9122209185582796645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1652268006294160500, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}

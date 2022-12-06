@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Anura.Templates.MonoSingleton;
 using DTerrain;
 using System.Collections;
@@ -9,10 +10,13 @@ public class MapsManager : MonoSingleton<MapsManager>
 {
     public PUNRoomUtils punRoomUtils;
     public List<GameObject> mapPrefabs;
+    private bool isMultiplayer;
 
     public void CreateMap()
     {
-        int mapIdx = (int)punRoomUtils.GetRoomCustomProperty("mapIdx");
+        isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
+        int mapIdx = isMultiplayer ? (int)punRoomUtils.GetRoomCustomProperty("mapIdx") : 0;
+
         var go = GameObject.Instantiate(mapPrefabs[mapIdx], Vector3.zero, Quaternion.identity, transform);
         List<BasicPaintableLayer> paintables =  go.GetComponentsInChildren<BasicPaintableLayer>().ToList();
         if(paintables.Count != 2)
