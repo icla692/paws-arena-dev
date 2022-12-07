@@ -43,4 +43,10 @@ public class PlayerActionsBar : MonoBehaviour
     {
         WeaponIndexUpdated?.Invoke(value);
     }
+
+    public void EnableWeaponsBar()
+    {
+        playerActionsWrapper.SetActive(true);
+        weaponsBar.SetActive(true);
+    }
 }

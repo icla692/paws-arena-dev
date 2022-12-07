@@ -10,7 +10,7 @@ public class CrateHealthBehaviour : MonoBehaviour
     public AudioClip healSFX;
 
     [HideInInspector]
-    public int healValue = 0;
+    public int healValue = -1;
 
     private PhotonView photonView;
 
@@ -20,8 +20,10 @@ public class CrateHealthBehaviour : MonoBehaviour
 
         var cratesConfig = ConfigurationManager.Instance.Crates;
         HealthCrate config = cratesConfig.GetCrate<HealthCrate>();
-        healValue = UnityEngine.Random.Range(config.minHP, config.maxHP);
-
+        if (healValue == -1)
+        {
+            healValue = UnityEngine.Random.Range(config.minHP, config.maxHP);
+        }
     }
     public void OnChildCollisionEnter2D(Collision2D collision)
     {
@@ -29,7 +31,7 @@ public class CrateHealthBehaviour : MonoBehaviour
         if(playerComponent != null && playerComponent.IsMine())
         {
             PlayerManager.Instance.Heal(healValue);
-            photonView.RPC("DestroyCrate", RpcTarget.MasterClient);
+            SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "DestroyCrate", RpcTarget.MasterClient);
         }
     }
 
@@ -38,6 +40,6 @@ public class CrateHealthBehaviour : MonoBehaviour
     public void DestroyCrate()
     {
         audioSource.PlayOneShot(healSFX);
-        PhotonNetwork.Destroy(gameObject);
+        SingleAndMultiplayerUtils.Destroy(photonView, gameObject);
     }
 }

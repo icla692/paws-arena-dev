@@ -1,11 +1,12 @@
 using Anura.ConfigurationModule.Managers;
+using Anura.Templates.MonoSingleton;
 using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CratesManager : MonoBehaviour
+public class CratesManager : MonoSingleton<CratesManager>
 {
     [SerializeField]
     private Vector2 minPos;
@@ -47,9 +48,14 @@ public class CratesManager : MonoBehaviour
         }                
     }
 
+    public void SpawnCrate(Vector3 pos, int healingValue)
+    {
+        GameObject go = SingleAndMultiplayerUtils.Instantiate(cratesConfig.GetCrate().prefab.name, pos, Quaternion.identity);
+        go.GetComponent<CrateHealthBehaviour>().healValue = healingValue;
+    }
     private void SpawnCrate(CrateConfig crateConfig)
     {
         Vector2 randomPos = new Vector2(UnityEngine.Random.Range(minPos.x, maxPos.x), UnityEngine.Random.Range(minPos.y, maxPos.y));
-        PhotonNetwork.Instantiate(crateConfig.prefab.name, randomPos, Quaternion.identity);
+        SingleAndMultiplayerUtils.Instantiate(crateConfig.prefab.name, randomPos, Quaternion.identity);
     }
 }

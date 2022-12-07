@@ -160,7 +160,7 @@ public class PlayerComponent : MonoBehaviour
         }
         else
         {
-            return false;
+            return true;
         }
     }
 
