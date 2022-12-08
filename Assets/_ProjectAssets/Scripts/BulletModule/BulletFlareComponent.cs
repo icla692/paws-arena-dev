@@ -13,11 +13,11 @@ public class BulletFlareComponent : BulletComponent
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
 
-        photonView.RPC("CallAirplane", RpcTarget.All, hitPose);
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "CallAirplane", RpcTarget.All, hitPose);
     }
 
     [PunRPC]
-    private void CallAirplane(Vector2 hitPose)
+    public void CallAirplane(Vector2 hitPose)
     {
         StartCoroutine(CallAirplaneCoroutine(hitPose));
     }
@@ -26,16 +26,14 @@ public class BulletFlareComponent : BulletComponent
     {
         bulletGraphics.SetActive(false);
         yield return new WaitForSeconds(0.5f);
-        AirplaneManager.Instance.StartRoutine(hitPose, photonView.IsMine);
+        AirplaneManager.Instance.StartRoutine(hitPose, photonView == null ? true : photonView.IsMine);
 
         yield return new WaitForSeconds(1f);
         var emission = particles.emission;
         emission.rateOverTime = 0;
 
         yield return new WaitForSeconds(3.5f);
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
+
+        SingleAndMultiplayerUtils.Destroy(photonView, gameObject);
     }
 }

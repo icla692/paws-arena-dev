@@ -72,19 +72,19 @@ public class AirplaneManager : MonoSingleton<AirplaneManager>
     }
     private IEnumerator DropBombCoroutine()
     {
-        var go = PhotonNetwork.Instantiate("Bullets/" + bombPrefab.name, bombStartPos.transform.position, Quaternion.identity);
+        var go = SingleAndMultiplayerUtils.Instantiate("Bullets/" + bombPrefab.name, bombStartPos.transform.position, Quaternion.identity);
         go.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;
         yield return new WaitForEndOfFrame();
         go.GetComponent<BulletComponent>().Launch(Vector3.zero, 0);
 
         yield return new WaitForSeconds(0.15f);
-        go = PhotonNetwork.Instantiate("Bullets/" + bombPrefab.name, bombStartPos.transform.position, Quaternion.identity);
+        go = SingleAndMultiplayerUtils.Instantiate("Bullets/" + bombPrefab.name, bombStartPos.transform.position, Quaternion.identity);
         go.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;
         yield return new WaitForEndOfFrame();
         go.GetComponent<BulletComponent>().Launch(Vector3.zero, 0);
 
         yield return new WaitForSeconds(0.15f);
-        go = PhotonNetwork.Instantiate("Bullets/" + bombPrefab.name, bombStartPos.transform.position, Quaternion.identity);
+        go = SingleAndMultiplayerUtils.Instantiate("Bullets/" + bombPrefab.name, bombStartPos.transform.position, Quaternion.identity);
         go.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;
         yield return new WaitForEndOfFrame();
         go.GetComponent<BulletComponent>().Launch(Vector3.zero, 0);

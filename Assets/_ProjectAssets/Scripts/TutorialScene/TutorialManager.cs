@@ -15,6 +15,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     [Header("Elements")]
     public Image bg;
     public GameObject pascal;
+    public DummyBehaviour dummy;
 
     public List<GameObject> tutorialGameObjects;
 
@@ -37,7 +38,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     [Header("Stage 7")]
     public PlayerActionsBar playerActionsBar;
-    public GameObject weapon0;
+    public List<GameObject> weapons;
     public GameObject arrow_stage7;
 
     private bool enteredJumpCollider = false;
@@ -188,8 +189,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             arrow_stage7.SetActive(true);
             playerActionsBar.EnableWeaponsBar();
             
-            oldParentWeapon0 = weapon0.transform.parent;
-            weapon0.transform.parent = overlayCanvas;
+            oldParentWeapon0 = weapons[0].transform.parent;
+            weapons[0].transform.parent = overlayCanvas;
 
             PlayerActionsBar.WeaponIndexUpdated += SetStage8;
         });
@@ -204,10 +205,60 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         col.a = 0;
         bg.color = col;
 
-        weapon0.transform.parent = oldParentWeapon0;
+        weapons[0].transform.parent = oldParentWeapon0;
         arrow_stage7.SetActive(false);
 
         upperRightInstructionsText.text = messages[7];
+
+        dummy.EnableDummy();
+
+        dummy.onDummyHit += SetStage9;
+    }
+
+    private void SetStage9()
+    {
+        dummy.onDummyHit -= SetStage9;
+        StartCoroutine(Stage9Coroutine());
+    }
+
+    private IEnumerator Stage9Coroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        upperRightInstructionsText.text = messages[8];
+
+        Color col = bg.color;
+        col.a = 0.5f;
+        bg.color = col;
+
+
+        oldParentWeapon0 = weapons[0].transform.parent;
+        for(int i=1; i<weapons.Count; i++)
+        {
+            weapons[i].transform.parent = overlayCanvas;
+        }
+
+        PlayerActionsBar.WeaponIndexUpdated += SetStage9Phase2;
+    }
+
+    private void SetStage9Phase2(int idx)
+    {
+        GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions().Enable();
+
+        Color col = bg.color;
+        col.a = 0f;
+        bg.color = col;
+
+        for (int i = 1; i < weapons.Count; i++)
+        {
+            weapons[i].transform.parent = oldParentWeapon0;
+        }
+
+        dummy.onDummyHit += SetStage10;
+    }
+
+    private void SetStage10()
+    {
+        upperRightInstructionsText.text = messages[9];
     }
 
     private void SetTutorialGameObjectsVisible(bool value)

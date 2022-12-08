@@ -23,7 +23,8 @@ public class AreaDamageBehaviour : MonoBehaviour
         PaintingManager.Instance.Destroy(transform.position);
 
         GameScenePostprocessingManager.Instance.EnableExplosionLayer(0.4f);
-        PlayerManager.Instance.AreaDamage(transform.position, area, maxDamage, doesDamageByDistance, hasPushForce, pushForce);
+        //PlayerManager.Instance.AreaDamage(transform.position, area, maxDamage, doesDamageByDistance, hasPushForce, pushForce);
+        AreaEffectsManager.Instance.AreaDamage(transform.position, area, maxDamage, doesDamageByDistance, hasPushForce, pushForce);
         SFXManager.Instance.PlayOneShot(explosionSfx);
     }
 }

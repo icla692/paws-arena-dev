@@ -21,7 +21,13 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public void RegisterMyPlayer(PlayerComponent playerComponent)
     {
         myPlayer = playerComponent;
+        AreaEffectsManager.Instance.OnAreaDamage += AreaDamage;
         SetMyPlayerHealth(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
+    }
+
+    private void OnDestroy()
+    {
+        AreaEffectsManager.Instance.OnAreaDamage -= AreaDamage;
     }
 
     public GameResolveState GetWinnerByDeath()

@@ -169,7 +169,14 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [PunRPC]
     public void StartProjectileLaunchedState(float waitBeforeEndTurn)
     {
-        SetState(new ProjectileLaunchedState(waitBeforeEndTurn));
+        if (ConfigurationManager.Instance.Config.GetGameType() == Anura.ConfigurationModule.ScriptableObjects.GameType.TUTORIAL)
+        {
+            SetState(new GamePausedState());
+        }
+        else
+        {
+            SetState(new ProjectileLaunchedState(waitBeforeEndTurn));
+        }
     }
 
     [PunRPC]
