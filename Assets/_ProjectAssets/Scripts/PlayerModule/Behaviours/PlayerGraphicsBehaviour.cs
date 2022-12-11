@@ -32,11 +32,11 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
             _photonView.enabled = false;
         }
 
-        SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, GameState.selectedNFT.ids.ToArray());
+        SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, GameState.selectedNFT.ids);
     }
 
     [PunRPC]
-    public void SetCatNFT(string[] ids)
+    public void SetCatNFT(List<string> ids)
     {
         playerCustomization.SetCat(ids.ToList());
     }

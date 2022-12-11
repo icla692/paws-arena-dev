@@ -52,6 +52,10 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         PUNRoomUtils.onPlayerLeft -= OnPlayerLeft;
     }
 
+    private void OnDestroy()
+    {
+        LeanTween.cancelAll();
+    }
     private void Init()
     {
         MapsManager.Instance.CreateMap();

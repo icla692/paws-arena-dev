@@ -10,6 +10,8 @@ public class DummyBehaviour : MonoBehaviour
     private GameObject dummyWrapper;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private List<Transform> possibleLocations;
 
     private void Start()
     {
@@ -30,5 +32,16 @@ public class DummyBehaviour : MonoBehaviour
         animator.SetTrigger("IsHit");
 
         onDummyHit?.Invoke();
+    }
+
+    public void Relocate()
+    {
+        LeanTween.scale(dummyWrapper, Vector3.zero, 0.5f).setDelay(1f).setOnComplete(() =>
+        {
+            dummyWrapper.transform.parent = possibleLocations[UnityEngine.Random.Range(0, possibleLocations.Count)];
+            dummyWrapper.transform.localPosition = Vector3.zero;
+
+            LeanTween.scale(dummyWrapper, Vector3.one, 0.5f).setDelay(0.5f);
+        });
     }
 }

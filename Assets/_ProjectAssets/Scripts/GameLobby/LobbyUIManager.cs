@@ -36,12 +36,22 @@ public class LobbyUIManager : MonoBehaviour
     {
         PhotonManager.OnStartedConnection += OpenLoadingScreen;
         PhotonManager.OnConnectedServer += OpenGameMenu;
+
+        if(GameState.selectedNFT != null)
+        {
+            OpenGameMenu();
+        }
     }
 
     private void OnDisable()
     {
         PhotonManager.OnStartedConnection -= OpenLoadingScreen;
         PhotonManager.OnConnectedServer -= OpenGameMenu;
+    }
+
+    private void OnDestroy()
+    {
+        LeanTween.cancelAll();
     }
 
     public void OpenNFTSelectionScreen()

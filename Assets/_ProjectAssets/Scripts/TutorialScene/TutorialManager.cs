@@ -272,6 +272,15 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         finished = true;
         RoomStateManager.Instance.SetState(new MyTurnState());
+
+        dummy.onDummyHit += dummy.Relocate;
+        StartCoroutine(StopTutorialAfterSeconds(4f));
+    }
+
+    private IEnumerator StopTutorialAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SetTutorialGameObjectsVisible(false);
     }
 
     private void SetTutorialGameObjectsVisible(bool value)
