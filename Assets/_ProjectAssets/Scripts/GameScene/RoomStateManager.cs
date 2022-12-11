@@ -3,6 +3,7 @@ using Anura.Templates.MonoSingleton;
 using Photon.Pun;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoomStateManager : MonoSingleton<RoomStateManager>
 {
@@ -158,6 +159,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "Retreat", RpcTarget.MasterClient, isMaster);
     }
 
+    public void SinglePlayerReturnMainMenu()
+    {
+        SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
+    }
+
     public void LoadAfterGameScene(GameResolveState state)
     {
         if (!isMultiplayer || PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -169,7 +175,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [PunRPC]
     public void StartProjectileLaunchedState(float waitBeforeEndTurn)
     {
-        if (ConfigurationManager.Instance.Config.GetGameType() == Anura.ConfigurationModule.ScriptableObjects.GameType.TUTORIAL)
+        if (ConfigurationManager.Instance.Config.GetGameType() == Anura.ConfigurationModule.ScriptableObjects.GameType.TUTORIAL && !TutorialManager.Instance.finished)
         {
             SetState(new GamePausedState());
         }
@@ -183,6 +189,13 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public void StartNextRound(int playerNumber, int roundNumber)
     {
         this.roundNumber = roundNumber;
+
+        if (!isMultiplayer)
+        {
+            SetState(new MyTurnState());
+            return;
+        }
+
         if (playerNumber == 0)
         {
             SetState(PhotonNetwork.LocalPlayer.IsMasterClient ? new MyTurnState() : new OtherPlayerTurnState());

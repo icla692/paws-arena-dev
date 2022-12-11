@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class LobbyUIManager : MonoBehaviour
 {
@@ -99,9 +100,10 @@ public class LobbyUIManager : MonoBehaviour
 
     public void TryConnectToTrainingRoom()
     {
-        CloseGameMenu();
-        connectingToRoom.SetActive(true);
-        lobbyPhotonConnection.TryJoinSinglePlayerRoom();
+        //CloseGameMenu();
+        //connectingToRoom.SetActive(true);
+        //lobbyPhotonConnection.TryJoinSinglePlayerRoom();
+        SceneManager.LoadScene("GameSceneTutorial", LoadSceneMode.Single);
     }
 
     public void OpenSettings()

@@ -5157,7 +5157,7 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.25
+  - time: 0.21666667
     functionName: AfterJump
     data: 
     objectReferenceParameter: {fileID: 0}

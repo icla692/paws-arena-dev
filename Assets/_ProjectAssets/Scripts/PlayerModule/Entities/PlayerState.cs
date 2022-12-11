@@ -49,6 +49,7 @@ public class PlayerState
 
     public void SetIsMidJump(bool val)
     {
+        Debug.Log("Is mid jump " + val);
         isMidJump = val;
         onMidJumpChanged.Invoke(val);
     }

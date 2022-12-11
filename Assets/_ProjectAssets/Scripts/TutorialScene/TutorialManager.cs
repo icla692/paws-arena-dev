@@ -15,6 +15,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     [Header("Elements")]
     public Image bg;
     public GameObject pascal;
+    public GameObject pascalSecondaryPosition;
     public DummyBehaviour dummy;
 
     public List<GameObject> tutorialGameObjects;
@@ -24,6 +25,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public Transform mainCanvas;
     public Transform overlayCanvas;
+
+    public bool finished = false;
 
     [Header("Instructions")]
     public GameObject lowerLeftInstructions;
@@ -178,13 +181,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         textBox.SetActive(false);
         LeanTween.scale(pascal, Vector3.zero, 2f).setEaseInBack().setOnComplete(()=>
         {
-            pascal.SetActive(false);
 
             upperRightInstructions.transform.localScale = Vector3.zero;
             upperRightInstructionsText.text = messages[6];
             upperRightInstructions.SetActive(true);
 
             LeanTween.scale(upperRightInstructions, Vector3.one, 1f).setEaseOutBack();
+            pascal.transform.parent = pascalSecondaryPosition.transform;
+            pascal.transform.localPosition = Vector3.zero;
+            LeanTween.scale(pascal, Vector3.one, 1f).setEaseOutBack();
+
 
             arrow_stage7.SetActive(true);
             playerActionsBar.EnableWeaponsBar();
@@ -242,6 +248,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void SetStage9Phase2(int idx)
     {
+        PlayerActionsBar.WeaponIndexUpdated -= SetStage9Phase2;
+
         GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions().Enable();
 
         Color col = bg.color;
@@ -259,6 +267,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     private void SetStage10()
     {
         upperRightInstructionsText.text = messages[9];
+        dummy.onDummyHit -= SetStage10;
+        bg.raycastTarget = false;
+
+        finished = true;
+        RoomStateManager.Instance.SetState(new MyTurnState());
     }
 
     private void SetTutorialGameObjectsVisible(bool value)

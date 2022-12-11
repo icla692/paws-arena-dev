@@ -1,4 +1,5 @@
 
+using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -38,7 +39,7 @@ public class ProjectileLaunchedState : IRoomState
         {
             context.trajectory.StopRecording();
         }
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (!ConfigurationManager.Instance.Config.GetIsMultiplayer() || PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             context.TryStartNextRound();
         }
