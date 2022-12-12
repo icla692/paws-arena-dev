@@ -28,7 +28,7 @@ public class PlayerNicknameButton : MonoBehaviour
         }
 
         OnPlayerNameUpdated?.Invoke(nicknameText.text);
-        PhotonNetwork.NickName = nicknameText.text;
+        GameState.nickname = GameState.nickname = PhotonNetwork.NickName = nicknameText.text;
     }
 
     public void EnableEdit(bool isCancelable)

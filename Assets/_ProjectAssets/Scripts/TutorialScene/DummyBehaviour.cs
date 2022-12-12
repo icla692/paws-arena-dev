@@ -6,6 +6,7 @@ using UnityEngine;
 public class DummyBehaviour : MonoBehaviour
 {
     public event Action onDummyHit;
+    public event Action onDummyMiss;
     [SerializeField]
     private GameObject dummyWrapper;
     [SerializeField]
@@ -27,7 +28,11 @@ public class DummyBehaviour : MonoBehaviour
     {
         Vector3 dummyPos = dummyWrapper.transform.position;
         float dmgDistance = Vector3.Distance(dummyPos, position);
-        if (dmgDistance > area) return;
+        if (dmgDistance > area)
+        {
+            onDummyMiss?.Invoke();
+            return;
+        };
 
         animator.SetTrigger("IsHit");
 

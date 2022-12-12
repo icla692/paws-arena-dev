@@ -28,7 +28,7 @@ public class PlayerDataCustomView : MonoBehaviour
 
         healthUIBehaviour.Init();
 
-        string nickname = !isMultiplayer ? "SINGLEPLAYER" : PhotonNetwork.NickName;
+        string nickname = !isMultiplayer ? GameState.nickname : PhotonNetwork.NickName;
 
         PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
         SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetNickname", RpcTarget.All, nickname);
