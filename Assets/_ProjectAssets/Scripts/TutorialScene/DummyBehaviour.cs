@@ -21,25 +21,35 @@ public class DummyBehaviour : MonoBehaviour
 
     private void Start()
     {
-        npcHPBar = PlayerDataCustomView.npcBar;
-
-        Init();
-        dummyWrapper.SetActive(false);
+        StartCoroutine(Init());
     }
 
-    private void Init()
+
+    private IEnumerator Init()
     {
         myHP = ConfigurationManager.Instance.Dummy.dummyHP;
+        while (PlayerDataCustomView.npcBar == null)
+        {
+            yield return null;
+        }
+
+        npcHPBar = PlayerDataCustomView.npcBar;
         npcHPBar.SetHealth(myHP);
+
+        dummyWrapper.SetActive(false);
     }
     public void EnableDummy()
     {
         dummyWrapper.SetActive(true);
-
+        Debug.Log("Setting Nickname");
         npcHPBar.SetNickname("Dummy");
+        Debug.Log("Setting HP");
         myHP = ConfigurationManager.Instance.Dummy.dummyHP;
         npcHPBar.SetHealth(myHP);
+        Debug.Log("Setting Events");
         AreaEffectsManager.Instance.OnAreaDamage += OnAreaDamage;
+
+        Debug.Log("Done");
     }
 
     private void OnAreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce)
@@ -73,7 +83,7 @@ public class DummyBehaviour : MonoBehaviour
     {
         LeanTween.scale(dummyWrapper, Vector3.zero, 0.5f).setDelay(1f).setOnComplete(() =>
         {
-            Init();
+            StartCoroutine(Init());
             dummyWrapper.transform.parent = possibleLocations[UnityEngine.Random.Range(0, possibleLocations.Count)];
             dummyWrapper.transform.localPosition = Vector3.zero;
 

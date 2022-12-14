@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class PlayerGraphicsBehaviour : MonoBehaviour
@@ -32,13 +33,20 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
             _photonView.enabled = false;
         }
 
-        SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, GameState.selectedNFT.ids);
+        StringBuilder ids = new StringBuilder();
+        foreach (string id in GameState.selectedNFT.ids)
+        {
+            ids.Append(id);
+            ids.Append(",");
+        }
+
+        SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, ids.ToString());
     }
 
     [PunRPC]
-    public void SetCatNFT(List<string> ids)
+    public void SetCatNFT(string ids)
     {
-        playerCustomization.SetCat(ids.ToList());
+        playerCustomization.SetCat(ids.Split(",").ToList());
     }
 
     public void RegisterPlayerState(PlayerState playerState)

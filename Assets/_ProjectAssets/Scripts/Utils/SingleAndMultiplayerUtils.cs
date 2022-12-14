@@ -5,6 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct StringListWrapper
+{
+    [SerializeField]
+    public string[] strings;
+}
 public class SingleAndMultiplayerUtils
 {
     public static GameObject Instantiate(string path, Vector3 position, Quaternion rotation)
