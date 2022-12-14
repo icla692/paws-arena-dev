@@ -12,6 +12,7 @@ public class BulletFlareComponent : BulletComponent
     {
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
+        rb.Sleep();
 
         SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "CallAirplane", RpcTarget.All, hitPose);
     }

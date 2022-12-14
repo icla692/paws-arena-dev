@@ -17,15 +17,19 @@ MonoBehaviour:
     bulletPrefab: {fileID: 4174453076262886263, guid: 7512ed148be88794a8d115915ddc0da6, type: 3}
     numberOfProjectiles: 1
     waitBeforeTurnEnd: 4
+    numberOfDamageDealers: 1
   - launcher: {fileID: 9074758971582012280, guid: ab8289951a3793f48af3947112ea9945, type: 3}
     bulletPrefab: {fileID: 4174453076262886263, guid: f27856aa2b1b76943a1c423982df6788, type: 3}
     numberOfProjectiles: 1
     waitBeforeTurnEnd: 7
+    numberOfDamageDealers: 1
   - launcher: {fileID: 5477031773624607558, guid: 254262e8eb03fe1459924b75ffd00e67, type: 3}
     bulletPrefab: {fileID: 4174453076262886263, guid: 8cf0ccb2c164cf3478a2f5873c70f138, type: 3}
     numberOfProjectiles: 1
     waitBeforeTurnEnd: 6
+    numberOfDamageDealers: 3
   - launcher: {fileID: 5477031773624607558, guid: a71723c62e139f84d897eb6dcbf1538b, type: 3}
     bulletPrefab: {fileID: 4174453076262886263, guid: 22db018f416a4a641bd7f383b29881c7, type: 3}
     numberOfProjectiles: 1
     waitBeforeTurnEnd: 9
+    numberOfDamageDealers: 3

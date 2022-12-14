@@ -22,7 +22,7 @@ public class WeaponMobileLauncherBehaviour : MonoBehaviour
         PlayerThrowBehaviour.onLaunchPreparing -= PrepareLaunch;
     }
 
-    private void PrepareLaunch()
+    private void PrepareLaunch(WeaponEntity weapon)
     {
         _animator.SetTrigger("Shoot");
         if (sfx != null)

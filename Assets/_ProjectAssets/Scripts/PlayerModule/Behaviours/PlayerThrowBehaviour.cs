@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class PlayerThrowBehaviour : MonoBehaviour
 {
-    public static event Action onLaunchPreparing;
+    public static event Action<WeaponEntity> onLaunchPreparing;
     [SerializeField] private PlayerComponent playerComponent;
 
     [SerializeField] private PlayerIndicatorBehaviour indicator;
@@ -20,6 +20,7 @@ public class PlayerThrowBehaviour : MonoBehaviour
     private bool isMultiplayer;
     private bool isEnabled = false;
 
+    private WeaponEntity currentWeapon;
     private List<GameObject> projectiles;
 
     private void OnEnable()
@@ -60,15 +61,15 @@ public class PlayerThrowBehaviour : MonoBehaviour
         isEnabled = false;
 
         int weaponIdx = playerComponent.state.weaponIdx;
-        var weapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
+        currentWeapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
 
         projectiles = new List<GameObject>();
 
-        for (int i = 0; i < weapon.numberOfProjectiles; i++) {
-            GameObject obj = SingleAndMultiplayerUtils.Instantiate("Bullets/" + weapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
+        for (int i = 0; i < currentWeapon.numberOfProjectiles; i++) {
+            GameObject obj = SingleAndMultiplayerUtils.Instantiate("Bullets/" + currentWeapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
             
             projectiles.Add(obj);
-            if(i != weapon.numberOfProjectiles / 2)
+            if(i != currentWeapon.numberOfProjectiles / 2)
             {
                 obj.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;
             }
@@ -81,7 +82,7 @@ public class PlayerThrowBehaviour : MonoBehaviour
     [PunRPC]
     public void OnLaunchPreparing()
     {
-        onLaunchPreparing?.Invoke();
+        onLaunchPreparing?.Invoke(currentWeapon);
     }
 
     public void Launch()

@@ -74,6 +74,19 @@ public class PlayerCustomization : MonoBehaviour
     [SerializeField]
     private List<Sprite> hatsBetweenEarsSprites;
 
+
+    [Header("Earrings")]
+    [SerializeField]
+    private List<GameObject> earrings;
+    [SerializeField]
+    private List<string> earringsIds;
+    [SerializeField]
+    private Sprite earringSprite;
+    [SerializeField]
+    private string boneHatId;
+    [SerializeField]
+    private Sprite boneHatSprite;
+
     [Header("Eyewear")]
     [SerializeField]
     private SpriteRenderer eyewearSpriteRenderer;
@@ -185,6 +198,32 @@ public class PlayerCustomization : MonoBehaviour
 
     public void SetHat(string hatId)
     {
+        if (earringsIds.Contains(hatId)){
+            int idx = earringsIds.IndexOf(hatId);
+            if (idx == 0) //right
+            {
+                earrings[1].GetComponent<SpriteRenderer>().sprite = earringSprite;
+            }else if(idx == 1) //left
+            {
+                earrings[0].GetComponent<SpriteRenderer>().sprite = earringSprite;
+            }
+            else //dual
+            {
+                earrings[0].GetComponent<SpriteRenderer>().sprite = earrings[1].GetComponent<SpriteRenderer>().sprite = earringSprite;
+            }
+
+            return;
+        }else if(boneHatId == hatId)
+        {
+            earrings[1].GetComponent<SpriteRenderer>().sprite = boneHatSprite;
+            return;
+        }
+        else
+        {
+            earrings[0].GetComponent<SpriteRenderer>().sprite = earrings[1].GetComponent<SpriteRenderer>().sprite = null;
+        }
+        
+        
         if (hatsBetweenEarsMapping.Contains(hatId)){
             lEar.SetActive(true);
             rEar.SetActive(true);

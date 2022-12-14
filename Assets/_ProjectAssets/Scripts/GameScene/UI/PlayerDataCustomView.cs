@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class PlayerDataCustomView : MonoBehaviour
 {
+    public static PlayerDataCustomView npcBar;
     [SerializeField]
     private TMPro.TextMeshProUGUI nicknameText;
 
@@ -20,6 +21,9 @@ public class PlayerDataCustomView : MonoBehaviour
     [SerializeField]
     private PhotonView photonview;
 
+    [SerializeField]
+    private bool isForNPC = false;
+
     private bool isMultiplayer;
 
     void Start()
@@ -28,12 +32,18 @@ public class PlayerDataCustomView : MonoBehaviour
 
         healthUIBehaviour.Init();
 
-        string nickname = !isMultiplayer ? GameState.nickname : PhotonNetwork.NickName;
+        if (!isForNPC)
+        {
+            string nickname = !isMultiplayer ? GameState.nickname : PhotonNetwork.NickName;
 
-        PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
-        SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetNickname", RpcTarget.All, nickname);
-        OnHealthUpdated(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
-
+            PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
+            SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetNickname", RpcTarget.All, nickname);
+            OnHealthUpdated(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
+        }
+        else
+        {
+            npcBar = this; SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetNickname", RpcTarget.All, "");
+        }
         Init();
     }
 
@@ -45,12 +55,12 @@ public class PlayerDataCustomView : MonoBehaviour
 
         int myseat = isMultiplayer ? PUNGameRoomManager.Instance.GetMySeat() : 0;
 
-        bool isMyPlayer = !isMultiplayer || (myseat == 0 && photonview.IsMine || myseat == 1 && !photonview.IsMine);
+        bool isMyPlayer = !isForNPC && (!isMultiplayer || (myseat == 0 && photonview.IsMine || myseat == 1 && !photonview.IsMine));
         rt.anchorMin = rt.anchorMax = rt.pivot = isMyPlayer ? new Vector2(0, 1) : new Vector2(1, 1);
         rt.anchoredPosition = new Vector2(0, 0);
 
         //Mirror UI for right UI
-        bool isPlayer2Data = isMultiplayer && (PhotonNetwork.LocalPlayer.IsMasterClient && !photonview.IsMine) || (!PhotonNetwork.LocalPlayer.IsMasterClient && photonview.IsMine);
+        bool isPlayer2Data = isForNPC || (isMultiplayer && (PhotonNetwork.LocalPlayer.IsMasterClient && !photonview.IsMine) || (!PhotonNetwork.LocalPlayer.IsMasterClient && photonview.IsMine));
         if (isPlayer2Data)
         {
             healthUIBehaviour.SetOrientationRight();
@@ -75,7 +85,7 @@ public class PlayerDataCustomView : MonoBehaviour
     public void SetHealth(int val)
     {
         healthUIBehaviour.OnHealthUpdated(val);
-        if (isMultiplayer && photonview != null && !photonview.IsMine)
+        if (isForNPC || (isMultiplayer && photonview != null && !photonview.IsMine))
         {
             PlayerManager.Instance.otherPlayerHealth = val;
         }

@@ -12,6 +12,7 @@ namespace Anura.ConfigurationModule.Managers
         [SerializeField, Expandable] private ShapeList shapes;
         [SerializeField, Expandable] private CratesConfig crates;
         [SerializeField, Expandable] private WeaponsConfig weapons;
+        [SerializeField, Expandable] private DummyConfig dummy;
 
         protected override void Awake()
         {
@@ -28,5 +29,7 @@ namespace Anura.ConfigurationModule.Managers
         public CratesConfig Crates => crates;
 
         public WeaponsConfig Weapons => weapons;
+
+        public DummyConfig Dummy => dummy;
     }
 }

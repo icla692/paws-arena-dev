@@ -30,9 +30,9 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
 
     public async void TryConnectWallet()
     {
-//#if UNITY_WEBGL && !UNITY_EDITOR
-//            ConnectWallet();
-//#else
+#if UNITY_WEBGL && !UNITY_EDITOR
+            ConnectWallet();
+#else
         await UniTask.Delay(1000);
         WalletConnected();
 
@@ -51,7 +51,7 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
         GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/or3jr-dqkor-uwiaa-aaaaa-cqace-eaqca-aabec-a" });
 
         onNFTsReceived?.Invoke();
-//#endif
+#endif
     }
 
     [ContextMenu("Connect Wallet")]

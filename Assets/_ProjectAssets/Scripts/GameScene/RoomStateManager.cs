@@ -170,9 +170,12 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     public void LoadAfterGameScene(GameResolveState state)
     {
-        if (!isMultiplayer || PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             PhotonNetwork.LoadLevel("AfterGame");
+        }else if (!isMultiplayer)
+        {
+            SinglePlayerReturnMainMenu();
         }
     }
 
@@ -251,6 +254,6 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public void Retreat(int playerIdx)
     {
         GameResolveState resolveState = PlayerManager.Instance.GetWinnerByLoserIndex(playerIdx);
-        photonView.RPC("StartResolveGame", RpcTarget.All, resolveState);
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "StartResolveGame", RpcTarget.All, resolveState);
     }
 }

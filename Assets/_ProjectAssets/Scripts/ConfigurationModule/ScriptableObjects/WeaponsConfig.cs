@@ -15,6 +15,8 @@ public class WeaponEntity
     public int numberOfProjectiles = 1;
     [SerializeField]
     public float waitBeforeTurnEnd = 4f;
+    [SerializeField]
+    public int numberOfDamageDealers = 1;
 }
 
 [CreateAssetMenu(fileName = "WeaponsConfig", menuName = "Configurations/Weapons Config", order = 4)]
