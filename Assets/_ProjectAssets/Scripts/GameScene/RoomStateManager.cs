@@ -12,8 +12,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public PUNGameRoomManager photonManager;
     [Header("Player")]
     public GameObject playerPrefab;
-
     public GameObject playerUIPrefab;
+
+    
+    [Header("Bots")]
+    public GameObject botPlayerPrefab;
 
     public Transform playerUIParent;
     [Header("Others")]
@@ -31,7 +34,9 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     [HideInInspector]
     public IRoomState currentState;
-    private bool isMultiplayer;
+    
+    [HideInInspector]
+    public bool isMultiplayer;
 
     void Start()
     {
@@ -146,7 +151,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
                 }
                 else
                 {
-                    photonView.RPC("StartNextRound", RpcTarget.All, (lastPlayerRound + 1) % 2, nextRound);
+                    SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "StartNextRound", RpcTarget.All, (lastPlayerRound + 1) % 2, nextRound);
                 }
             }
         }
@@ -197,9 +202,23 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     {
         this.roundNumber = roundNumber;
 
-        if (!isMultiplayer)
+        if (ConfigurationManager.Instance.Config.GetGameType() == Anura.ConfigurationModule.ScriptableObjects.GameType.TUTORIAL)
         {
             SetState(new MyTurnState());
+            return;
+        }
+
+        if (!isMultiplayer)
+        {
+            if (playerNumber == 0)
+            {
+                SetState(new MyTurnState());
+            }
+            else
+            {
+                Debug.Log("Bot turn!");
+                SetState(new BotTurnState());
+            }
             return;
         }
 
@@ -230,7 +249,15 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     private void OnPlayerSceneLoaded_SinglePlayer()
     {
-        sceneInfo.usersInScene = 1;
+        if (ConfigurationManager.Instance.Config.GetGameType() == Anura.ConfigurationModule.ScriptableObjects.GameType.TUTORIAL)
+        {
+            sceneInfo.usersInScene = 1;
+        }
+        else
+        {
+            //Me + bot;
+            sceneInfo.usersInScene = 2;
+        }
         OnAllPlayersJoinedScene();
     }
 

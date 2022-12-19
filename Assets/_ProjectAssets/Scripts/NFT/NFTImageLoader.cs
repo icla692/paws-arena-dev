@@ -33,8 +33,8 @@ public class NFTImageLoader
         {
             var id = images[i].Attributes["id"];
 
-            if (id == null) continue;
-            if (id.Value.Contains("bg"))
+            //if (id == null) continue;
+            if (id != null && id.Value.Contains("bg"))
             {
                 continue;
             }
@@ -69,10 +69,8 @@ public class NFTImageLoader
                     }
                 }
             }
-
             finalTex.Apply();
         }
-
 
         return finalTex;
     }
@@ -140,6 +138,7 @@ public class NFTImageLoader
         }
 
         string rawText = www.downloadHandler.text;
+        Debug.Log("URL: " + URL);
         Debug.Log("Success: " + rawText);
 
         return rawText;

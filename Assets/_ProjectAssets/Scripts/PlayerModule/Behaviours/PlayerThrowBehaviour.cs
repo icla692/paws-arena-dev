@@ -54,6 +54,10 @@ public class PlayerThrowBehaviour : MonoBehaviour
     {
         playerActions.Approve.performed += _ => PrepareLaunch();
     }
+    public void RegisterThrowCallbacks(BotInputActions.PlayerActions playerActions)
+    {
+        playerActions.Approve.performed += _ => PrepareLaunch();
+    }
 
     private void PrepareLaunch()
     {

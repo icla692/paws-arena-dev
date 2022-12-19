@@ -1,6 +1,7 @@
 
 using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ public class StartingGameState : IRoomState
         yield return new WaitForSeconds(1.5f);
 
         InstantiatePlayer(context);
+        TryInstantiateBot(context);
 
         yield return new WaitForSeconds(3f);
 
@@ -32,6 +34,15 @@ public class StartingGameState : IRoomState
         {
             context.SetFirstPlayerTurn();
         }
+    }
+
+    private void TryInstantiateBot(RoomStateManager context)
+    {
+        if (ConfigurationManager.Instance.Config.GetGameType() != Anura.ConfigurationModule.ScriptableObjects.GameType.SINGLEPLAYER)
+            return;
+
+        Vector2 spawnPos = PlayerManager.Instance.GetPlayer2SpawnPos();
+        SingleAndMultiplayerUtils.Instantiate(context.botPlayerPrefab.name, spawnPos, Quaternion.identity);
     }
 
     private void InstantiatePlayer(RoomStateManager context)

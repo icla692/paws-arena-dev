@@ -1,3 +1,4 @@
+using Anura;
 using Anura.ConfigurationModule.Managers;
 using System;
 using UnityEngine;
@@ -31,28 +32,43 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     public void RegisterMovementCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        playerActions.Movement.performed += value => {
-            if (isPaused) return;
-            SetMovementDirection(value.ReadValue<float>());
-        };
-
-        playerActions.Movement.canceled += _ => {
-            if (isPaused) return;
-            SetMovementDirection(0); 
-        };
+        playerActions.Movement.performed += OnMovementPerformed;
+        playerActions.Movement.canceled += OnMovementCanceled;
+    }
+    public void RegisterMovementCallbacks(BotInputActions.PlayerActions playerActions)
+    {
+        playerActions.Movement.performed += OnMovementPerformed;
+        playerActions.Movement.canceled += OnMovementCanceled;
     }
 
     public void RegisterJumpCallbacks(GameInputActions.PlayerActions playerActions)
     {
-        playerActions.Jump.started += _ =>
-        {
-            if (isPaused) return;
-            //Throttle
-            if (playerState.hasJump || (Time.time - lastJumpTime < 1f)) return;
+        playerActions.Jump.started += OnJumpPerformed;
+    }
+    public void RegisterJumpCallbacks(BotInputActions.PlayerActions playerActions)
+    {
+        playerActions.Jump.started += OnJumpPerformed;
+    }
+    private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext value)
+    {
+        if (isPaused) return;
+        //Throttle
+        if (playerState.hasJump || (Time.time - lastJumpTime < 1f)) return;
 
-            lastJumpTime = Time.time;
-            playerState.SetHasJump(true);
-        };
+        lastJumpTime = Time.time;
+        playerState.SetHasJump(true);
+    }
+
+    private void OnMovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext value)
+    {
+        if (isPaused) return;
+        SetMovementDirection(value.ReadValue<float>());
+    }
+
+    private void OnMovementCanceled(UnityEngine.InputSystem.InputAction.CallbackContext value)
+    {
+        if (isPaused) return;
+        SetMovementDirection(0);
     }
 
     private void Update()

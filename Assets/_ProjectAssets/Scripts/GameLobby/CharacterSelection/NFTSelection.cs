@@ -96,6 +96,7 @@ public class NFTSelection : MonoBehaviour
             Destroy(playerPlatform);
         }
 
+        Debug.Log("Selected " + GameState.nfts[idx].imageUrl);
         GameState.SetSelectedNFT(GameState.nfts[idx]);
         nftButtons[idx].GetComponent<NFTImageButton>().Select();
         playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformParent);

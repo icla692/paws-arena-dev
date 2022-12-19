@@ -53,6 +53,12 @@ public class PlayerIndicatorBehaviour : MonoBehaviour
         playerActions.Select.started += _ => isHoldingSelect = indicatorCircle.IsSelected(lastMousePosition);
         playerActions.Select.canceled += _ => isHoldingSelect = false;
     }
+    public void RegisterDirectionCallbacks(BotInputActions.PlayerActions playerActions)
+    {
+        playerActions.ScreenPosition.performed += value => lastMousePosition = value.ReadValue<Vector2>();
+        playerActions.Select.started += _ => isHoldingSelect = indicatorCircle.IsSelected(lastMousePosition);
+        playerActions.Select.canceled += _ => isHoldingSelect = false;
+    }
 
     private void OnIndicatorPlaced(float angle, float power)
     {

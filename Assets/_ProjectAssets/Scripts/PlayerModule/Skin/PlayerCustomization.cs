@@ -211,16 +211,11 @@ public class PlayerCustomization : MonoBehaviour
             {
                 earrings[0].GetComponent<SpriteRenderer>().sprite = earrings[1].GetComponent<SpriteRenderer>().sprite = earringSprite;
             }
-
             return;
         }else if(boneHatId == hatId)
         {
             earrings[1].GetComponent<SpriteRenderer>().sprite = boneHatSprite;
             return;
-        }
-        else
-        {
-            earrings[0].GetComponent<SpriteRenderer>().sprite = earrings[1].GetComponent<SpriteRenderer>().sprite = null;
         }
         
         
