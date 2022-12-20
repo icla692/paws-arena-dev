@@ -23,7 +23,7 @@ public class PlayerActionsBar : MonoBehaviour
 
     private void OnStateUpdated(IRoomState state)
     {
-        if (state is MyTurnState)
+        if (state is MyTurnState || state is BotTurnState)
         {
             playerActionsWrapper.SetActive(true);
             weaponsBar.SetActive(true);

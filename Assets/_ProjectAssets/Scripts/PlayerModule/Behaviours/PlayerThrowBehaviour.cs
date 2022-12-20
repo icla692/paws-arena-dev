@@ -9,7 +9,7 @@ using UnityEngine;
 public class PlayerThrowBehaviour : MonoBehaviour
 {
     public static event Action<WeaponEntity> onLaunchPreparing;
-    [SerializeField] private PlayerComponent playerComponent;
+    [SerializeField] private BasePlayerComponent playerComponent;
 
     [SerializeField] private PlayerIndicatorBehaviour indicator;
     [SerializeField] private Transform launchPoint;
@@ -28,7 +28,7 @@ public class PlayerThrowBehaviour : MonoBehaviour
         photonView = GetComponent<PhotonView>();
         isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
 
-        if (!isMultiplayer)
+        if (!isMultiplayer && photonView != null)
         {
             photonView.enabled = false;
             photonView = null;

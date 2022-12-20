@@ -6,12 +6,9 @@ using UnityEngine;
 public class PlayerComponent : MonoBehaviour
 {
     [SerializeField]
-    private PlayerGraphicsBehaviour playerGraphicsBehaviour;
+    private BasePlayerComponent basePlayerComponent;
     [SerializeField]
-    private GameObject weaponWrapper;
-
-    [HideInInspector]
-    public PlayerState state;
+    private PlayerGraphicsBehaviour playerGraphicsBehaviour;
 
     private GameInputActions.PlayerActions playerActions;
     private PlayerMotionBehaviour playerMotionBehaviour;
@@ -52,10 +49,6 @@ public class PlayerComponent : MonoBehaviour
         {
             RoomStateManager.OnStateUpdated += OnStateUpdatedForMyPlayer;
         }
-        else
-        {
-            RoomStateManager.OnStateUpdated += OnStateUpdatedForOtherPlayer;
-        }
 
     }
 
@@ -67,35 +60,21 @@ public class PlayerComponent : MonoBehaviour
         {
             RoomStateManager.OnStateUpdated -= OnStateUpdatedForMyPlayer;
         }
-        else
-        {
-            RoomStateManager.OnStateUpdated -= OnStateUpdatedForOtherPlayer;
-        }
 
-    }
-
-    private void OnDestroy()
-    {
-        if (state != null)
-        {
-            state.onWeaponIdxChanged -= OnWeaponOutChanged;
-            PlayerActionsBar.WeaponIndexUpdated -= ChangeWeaponState;
-        }
     }
 
     private void SetupMyPlayer()
     {
         PlayerManager.Instance.RegisterMyPlayer(this);
-        state = new PlayerState();
-        state.onWeaponIdxChanged += OnWeaponOutChanged;
+        basePlayerComponent.PreSetup();
 
         playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();
 
         playerMotionBehaviour.RegisterMovementCallbacks(playerActions);
         playerMotionBehaviour.RegisterJumpCallbacks(playerActions);
-        playerMotionBehaviour.RegisterPlayerState(state);
+        playerMotionBehaviour.RegisterPlayerState(basePlayerComponent.state);
 
-        playerGraphicsBehaviour.RegisterPlayerState(state);
+        playerGraphicsBehaviour.RegisterPlayerState(basePlayerComponent.state);
 
         var playerIndicatorBehaviour = GetComponentInChildren<PlayerIndicatorBehaviour>();
         playerIndicatorBehaviour.RegisterDirectionCallbacks(playerActions);
@@ -103,10 +82,9 @@ public class PlayerComponent : MonoBehaviour
         var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
 
-        PlayerActionsBar.WeaponIndexUpdated += ChangeWeaponState;
-
-        ChangeWeaponState(-1);
+        basePlayerComponent.PostSetup();
         playerActions.Disable();
+
     }
 
     private void SetupOtherPlayer()
@@ -116,7 +94,7 @@ public class PlayerComponent : MonoBehaviour
 
     private void OnStateUpdatedForMyPlayer(IRoomState roomState)
     {
-        state.SetHasWeaponOut(-1);
+        basePlayerComponent.state.SetHasWeaponOut(-1);
         if (roomState is MyTurnState)
         {
            playerActions.Enable(); 
@@ -125,50 +103,5 @@ public class PlayerComponent : MonoBehaviour
         {
             playerActions.Disable();
         }
-    }
-
-    private void OnStateUpdatedForOtherPlayer(IRoomState roomState)
-    {
-        //weaponWrapper.SetActive(roomState is OtherPlayersShootingState);
-    }
-
-    //Set State
-    private void ChangeWeaponState(int idx)
-    {
-        if(state.weaponIdx == idx)
-        {
-            idx = -1;
-        }
-
-        state.SetHasWeaponOut(idx);
-    }
-
-
-    //Listen to state and propagate to all clients
-    private void OnWeaponOutChanged(int val)
-    {
-        playerMotionBehaviour.SetIsPaused(val >= 0);
-
-        SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "NetworkedChangeWeaponState", RpcTarget.All, val);
-    }
-
-    public bool IsMine()
-    {
-        if (isMultiplayer)
-        {
-            return photonView.IsMine;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    //Actual logic
-    [PunRPC]
-    public void NetworkedChangeWeaponState(int val)
-    {
-        weaponWrapper.SetActive(val >= 0);
-        weaponWrapper.GetComponent<WeaponBehaviour>().Init(val);
     }
 }

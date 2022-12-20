@@ -42,7 +42,8 @@ public class StartingGameState : IRoomState
             return;
 
         Vector2 spawnPos = PlayerManager.Instance.GetPlayer2SpawnPos();
-        SingleAndMultiplayerUtils.Instantiate(context.botPlayerPrefab.name, spawnPos, Quaternion.identity);
+        var go = SingleAndMultiplayerUtils.Instantiate(context.botPlayerPrefab.name, spawnPos, Quaternion.identity);
+        go.GetComponent<BasePlayerComponent>().playerSeat = 1;
     }
 
     private void InstantiatePlayer(RoomStateManager context)
@@ -54,7 +55,9 @@ public class StartingGameState : IRoomState
         }
         Vector2 spawnPos = seat == 0 ? PlayerManager.Instance.GetPlayer1SpawnPos() : PlayerManager.Instance.GetPlayer2SpawnPos();
 
-        SingleAndMultiplayerUtils.Instantiate(context.playerPrefab.name, spawnPos, Quaternion.identity);
+        var go = SingleAndMultiplayerUtils.Instantiate(context.playerPrefab.name, spawnPos, Quaternion.identity);
+        go.GetComponent<BasePlayerComponent>().playerSeat = seat;
+
         SingleAndMultiplayerUtils.Instantiate(context.playerUIPrefab.name, Vector3.zero, Quaternion.identity);
     }
 }

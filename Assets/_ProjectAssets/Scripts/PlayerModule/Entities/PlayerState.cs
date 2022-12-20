@@ -11,7 +11,6 @@ public class PlayerState
     public event Action<bool> onJumpImpulseQueuedChanged;
     public event Action<bool> onMidJumpChanged;
     public event Action<int> onWeaponIdxChanged;
-
     public bool isFacingRight { get; private set; } = true;
     public float movementDirection { get; private set; } = 0;
 

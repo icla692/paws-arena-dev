@@ -27,7 +27,7 @@ public class CrateHealthBehaviour : MonoBehaviour
     }
     public void OnChildCollisionEnter2D(Collision2D collision)
     {
-        var playerComponent = collision.gameObject.GetComponent<PlayerComponent>();
+        var playerComponent = collision.gameObject.GetComponent<BasePlayerComponent>();
         if(playerComponent != null && playerComponent.IsMine())
         {
             PlayerManager.Instance.Heal(healValue);

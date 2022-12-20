@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class WeaponBehaviour : MonoBehaviour
 {
-    public PlayerComponent playerComponent;
     public PlayerThrowBehaviour playerThrowBehaviour;
 
     public Transform mobileParent;

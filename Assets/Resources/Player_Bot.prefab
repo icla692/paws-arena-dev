@@ -74,7 +74,7 @@ PrefabInstance:
     - target: {fileID: 7054175045540231323, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
       propertyPath: playerComponent
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8475244123665925896}
     - target: {fileID: 7305658940416415570, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
       propertyPath: sceneViewId
       value: 0
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3008ad1aa3321434db2d1db230d8cb15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basePlayerComponent: {fileID: 8475244123665925896}
   playerGraphicsBehaviour: {fileID: 715241018659295173}
   weaponWrapper: {fileID: 2277166374119805807}
 --- !u!1 &2277166374119805807 stripped
@@ -133,3 +134,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 21623957980464943, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
   m_PrefabInstance: {fileID: 2294245500585530432}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8475244123665925896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7658601518159057736, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
+  m_PrefabInstance: {fileID: 2294245500585530432}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561784415950729518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e0217435a68b74a86de4c95f0fb93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

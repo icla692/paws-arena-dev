@@ -271,7 +271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a3442c34df17f4ea867105aff336ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerComponent: {fileID: 755019818390496615}
   playerThrowBehaviour: {fileID: 7054175045540231323}
   mobileParent: {fileID: 755019818828853374}
 --- !u!1 &683943952252279915
@@ -477,6 +476,7 @@ GameObject:
   - component: {fileID: 8049885241809094907}
   - component: {fileID: 8184845709526809990}
   - component: {fileID: 6707756325297860116}
+  - component: {fileID: 7658601518159057736}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -514,6 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febd6b5721671b84eae5e1c47f80be48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basePlayerComponent: {fileID: 7658601518159057736}
   playerGraphicsBehaviour: {fileID: 1602093763462273925}
   weaponWrapper: {fileID: 21623957980464943}
 --- !u!114 &755019818390496613
@@ -606,6 +607,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.43}
   m_Size: {x: 2, y: 1.24}
   m_Direction: 1
+--- !u!114 &7658601518159057736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755019818390496622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e0217435a68b74a86de4c95f0fb93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSeat: 0
+  weaponWrapper: {fileID: 21623957980464943}
 --- !u!1 &755019818643992944
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 908e380a9fd611b4bbdc458fb4609a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerComponent: {fileID: 755019818390496615}
+  playerComponent: {fileID: 7658601518159057736}
   indicator: {fileID: 3643903340823075089}
   launchPoint: {fileID: 755019818643992945}
 --- !u!114 &3643903340823075089

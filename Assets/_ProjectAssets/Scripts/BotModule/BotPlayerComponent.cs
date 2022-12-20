@@ -6,12 +6,11 @@ using UnityEngine;
 public class BotPlayerComponent : MonoBehaviour
 {
     [SerializeField]
-    private PlayerGraphicsBehaviour playerGraphicsBehaviour;
+    private BasePlayerComponent basePlayerComponent;
     [SerializeField]
-    private GameObject weaponWrapper;
+    private PlayerGraphicsBehaviour playerGraphicsBehaviour;
 
     private PlayerMotionBehaviour playerMotionBehaviour;
-    private PlayerState state;
 
     private BotInputActions.PlayerActions playerActions;
 
@@ -25,26 +24,19 @@ public class BotPlayerComponent : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (state != null)
-        {
-            state.onWeaponIdxChanged -= OnWeaponOutChanged;
-            PlayerActionsBar.WeaponIndexUpdated -= ChangeWeaponState;
-        }
-
         RoomStateManager.OnStateUpdated -= OnStateUpdatedForBot;
     }
 
     private void SetupBot()
     {
-        state = new PlayerState();
-        state.onWeaponIdxChanged += OnWeaponOutChanged;
+        basePlayerComponent.PreSetup();
 
         playerActions = GameInputManager.Instance.GetBotActionMap().GetPlayerActions();
         playerMotionBehaviour.RegisterMovementCallbacks(playerActions);
         playerMotionBehaviour.RegisterJumpCallbacks(playerActions);
-        playerMotionBehaviour.RegisterPlayerState(state);
+        playerMotionBehaviour.RegisterPlayerState(basePlayerComponent.state);
 
-        playerGraphicsBehaviour.RegisterPlayerState(state);
+        playerGraphicsBehaviour.RegisterPlayerState(basePlayerComponent.state);
 
         var playerIndicatorBehaviour = GetComponentInChildren<PlayerIndicatorBehaviour>();
         playerIndicatorBehaviour.RegisterDirectionCallbacks(playerActions);
@@ -52,15 +44,14 @@ public class BotPlayerComponent : MonoBehaviour
         var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
 
-        PlayerActionsBar.WeaponIndexUpdated += ChangeWeaponState;
 
-        ChangeWeaponState(-1);
+        basePlayerComponent.PostSetup();
         playerActions.Disable();
     }
 
     private void OnStateUpdatedForBot(IRoomState roomState)
     {
-        state.SetHasWeaponOut(-1);
+        basePlayerComponent.state.SetHasWeaponOut(-1);
         if (roomState is BotTurnState)
         {
             playerActions.Enable();
@@ -69,24 +60,5 @@ public class BotPlayerComponent : MonoBehaviour
         {
             playerActions.Disable();
         }
-    }
-
-    private void OnWeaponOutChanged(int val)
-    {
-        playerMotionBehaviour.SetIsPaused(val >= 0);
-
-        weaponWrapper.SetActive(val >= 0);
-        weaponWrapper.GetComponent<WeaponBehaviour>().Init(val);
-    }
-
-
-    private void ChangeWeaponState(int idx)
-    {
-        if (state.weaponIdx == idx)
-        {
-            idx = -1;
-        }
-
-        state.SetHasWeaponOut(idx);
     }
 }
