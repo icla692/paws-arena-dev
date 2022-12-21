@@ -44,6 +44,11 @@ public class StartingGameState : IRoomState
         Vector2 spawnPos = PlayerManager.Instance.GetPlayer2SpawnPos();
         var go = SingleAndMultiplayerUtils.Instantiate(context.botPlayerPrefab.name, spawnPos, Quaternion.identity);
         go.GetComponent<BasePlayerComponent>().playerSeat = 1;
+
+        var playerUI = SingleAndMultiplayerUtils.Instantiate(context.playerUIPrefab.name, Vector3.zero, Quaternion.identity);
+        playerUI.GetComponent<PlayerDataCustomView>().isForNPC = true;
+
+        BotManager.Instance.botUI = playerUI.GetComponent<PlayerDataCustomView>();
     }
 
     private void InstantiatePlayer(RoomStateManager context)

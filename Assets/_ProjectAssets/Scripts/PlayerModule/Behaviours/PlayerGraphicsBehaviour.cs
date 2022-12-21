@@ -28,9 +28,10 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
 
         _photonView = GetComponent<PhotonView>();
-        if (!isMultiplayer)
+        if (_photonView != null && !isMultiplayer)
         {
             _photonView.enabled = false;
+            _photonView = null;
         }
 
         StringBuilder ids = new StringBuilder();
@@ -127,7 +128,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         transform.localScale = theScale;
     }
 
-    private void OnHealthUpdated(int health)
+    public void OnHealthUpdated(int health)
     {
         if (health <= 0)
         {

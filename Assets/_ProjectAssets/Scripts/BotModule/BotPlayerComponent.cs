@@ -19,7 +19,7 @@ public class BotPlayerComponent : MonoBehaviour
         playerMotionBehaviour = GetComponent<PlayerMotionBehaviour>();
         RoomStateManager.OnStateUpdated += OnStateUpdatedForBot;
 
-        SetupBot();
+        StartCoroutine(Init());
     }
 
     private void OnDestroy()
@@ -27,8 +27,15 @@ public class BotPlayerComponent : MonoBehaviour
         RoomStateManager.OnStateUpdated -= OnStateUpdatedForBot;
     }
 
+    private IEnumerator Init()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SetupBot();
+    }
+
     private void SetupBot()
     {
+        BotManager.Instance.RegisterBot(this);
         basePlayerComponent.PreSetup();
 
         playerActions = GameInputManager.Instance.GetBotActionMap().GetPlayerActions();
@@ -37,6 +44,7 @@ public class BotPlayerComponent : MonoBehaviour
         playerMotionBehaviour.RegisterPlayerState(basePlayerComponent.state);
 
         playerGraphicsBehaviour.RegisterPlayerState(basePlayerComponent.state);
+        BotManager.Instance.onHealthUpdated += playerGraphicsBehaviour.OnHealthUpdated;
 
         var playerIndicatorBehaviour = GetComponentInChildren<PlayerIndicatorBehaviour>();
         playerIndicatorBehaviour.RegisterDirectionCallbacks(playerActions);
@@ -52,6 +60,7 @@ public class BotPlayerComponent : MonoBehaviour
     private void OnStateUpdatedForBot(IRoomState roomState)
     {
         basePlayerComponent.state.SetHasWeaponOut(-1);
+
         if (roomState is BotTurnState)
         {
             playerActions.Enable();

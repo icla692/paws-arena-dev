@@ -18,11 +18,15 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     [HideInInspector]
     public int otherPlayerHealth = int.MaxValue;
 
+    private int maxHP;
+
     public void RegisterMyPlayer(PlayerComponent playerComponent)
     {
         myPlayer = playerComponent;
         AreaEffectsManager.Instance.OnAreaDamage += AreaDamage;
-        SetMyPlayerHealth(ConfigurationManager.Instance.Config.GetPlayerTotalHealth());
+
+        maxHP = ConfigurationManager.Instance.Config.GetPlayerTotalHealth();
+        SetMyPlayerHealth(maxHP);
     }
 
     private void OnDestroy()
@@ -72,7 +76,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     private void SetMyPlayerHealth(int value)
     {
         value = Math.Max(0, value);
-        value = Math.Min(100, value);
+        value = Math.Min(maxHP, value);
 
         myPlayerHealth = value;
         onHealthUpdated?.Invoke(myPlayerHealth);

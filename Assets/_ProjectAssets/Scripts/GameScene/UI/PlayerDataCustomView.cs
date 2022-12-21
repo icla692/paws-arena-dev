@@ -22,7 +22,7 @@ public class PlayerDataCustomView : MonoBehaviour
     private PhotonView photonview;
 
     [SerializeField]
-    private bool isForNPC = false;
+    public bool isForNPC = false;
 
     private bool isMultiplayer;
 

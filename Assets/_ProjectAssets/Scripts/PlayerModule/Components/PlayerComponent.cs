@@ -75,6 +75,7 @@ public class PlayerComponent : MonoBehaviour
         playerMotionBehaviour.RegisterPlayerState(basePlayerComponent.state);
 
         playerGraphicsBehaviour.RegisterPlayerState(basePlayerComponent.state);
+        PlayerManager.Instance.onHealthUpdated += playerGraphicsBehaviour.OnHealthUpdated;
 
         var playerIndicatorBehaviour = GetComponentInChildren<PlayerIndicatorBehaviour>();
         playerIndicatorBehaviour.RegisterDirectionCallbacks(playerActions);

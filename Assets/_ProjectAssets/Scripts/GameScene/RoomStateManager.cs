@@ -128,7 +128,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
             GameResolveState resolveState = PlayerManager.Instance.GetWinnerByDeath();
             if (resolveState != GameResolveState.NO_WIN)
             {
-                photonView.RPC("StartResolveGame", RpcTarget.All, resolveState);
+                SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "StartResolveGame", RpcTarget.All, resolveState);
             }
             else
             {
