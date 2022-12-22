@@ -41,6 +41,13 @@ public class PlayerMotionBehaviour : MonoBehaviour
         playerActions.Movement.canceled += OnMovementCanceled;
     }
 
+    internal void RegisterBotAPICallbacks(BotPlayerAPI botPlayerAPI)
+    {
+        botPlayerAPI.onMove += OnMovementPerformed;
+        botPlayerAPI.onMoveCancelled += OnMovementCancelled;
+        botPlayerAPI.onJumpStarted += OnJumpPerformed;
+    }
+
     public void RegisterJumpCallbacks(GameInputActions.PlayerActions playerActions)
     {
         playerActions.Jump.started += OnJumpPerformed;
@@ -50,6 +57,11 @@ public class PlayerMotionBehaviour : MonoBehaviour
         playerActions.Jump.started += OnJumpPerformed;
     }
     private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext value)
+    {
+        OnJumpPerformed();
+    }
+
+    private void OnJumpPerformed()
     {
         if (isPaused) return;
         //Throttle
@@ -61,11 +73,20 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     private void OnMovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext value)
     {
+        OnMovementPerformed(value.ReadValue<float>());
+    }
+
+    private void OnMovementPerformed(float direction)
+    {
         if (isPaused) return;
-        SetMovementDirection(value.ReadValue<float>());
+        SetMovementDirection(direction);
     }
 
     private void OnMovementCanceled(UnityEngine.InputSystem.InputAction.CallbackContext value)
+    {
+        OnMovementCancelled();
+    }
+    private void OnMovementCancelled()
     {
         if (isPaused) return;
         SetMovementDirection(0);

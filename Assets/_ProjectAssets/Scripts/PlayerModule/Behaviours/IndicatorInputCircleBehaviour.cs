@@ -30,6 +30,11 @@ public class IndicatorInputCircleBehaviour : MonoBehaviour, IPointerUpHandler
         float angle = Vector2.SignedAngle(new Vector2(1, 0), mouseWorldPos - myPos);
         float power = (mouseWorldPos - myPos).magnitude / radius;
         power = Math.Clamp(power, 0, 1);
+        CheckPointerClick(angle, power);
+    }
+
+    public void CheckPointerClick(float angle, float power)
+    {
         onIndicatorPlaced?.Invoke(angle, power);
     }
 
@@ -38,4 +43,5 @@ public class IndicatorInputCircleBehaviour : MonoBehaviour, IPointerUpHandler
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pointerPos), Vector2.zero, indicatorLayer);
         return (hit.collider != null && hit.collider.gameObject == gameObject);
     }
+
 }

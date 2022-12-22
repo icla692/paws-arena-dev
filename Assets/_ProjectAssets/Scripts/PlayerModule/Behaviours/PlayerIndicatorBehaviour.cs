@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerIndicatorBehaviour : MonoBehaviour
 {
     [SerializeField] private Transform indicator;
-    [SerializeField] private IndicatorInputCircleBehaviour indicatorCircle;
+    [SerializeField] public IndicatorInputCircleBehaviour indicatorCircle;
     [SerializeField] private LineRenderer lineDirectionIndicator;
     [SerializeField] private LineRenderer lineIndicatorSpeed;
     [HideInInspector] public float currentPower;

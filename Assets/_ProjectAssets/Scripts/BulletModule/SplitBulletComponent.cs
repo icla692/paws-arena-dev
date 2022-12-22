@@ -19,6 +19,11 @@ public class SplitBulletComponent : BulletComponent
             playerActions = GameInputManager.Instance.GetWeaponsActionMap().GetWeaponsInputActions();
             playerActions.MainAction.performed += Split;
         }
+
+        if (BotPlayerAPI.Instance != null)
+        {
+            BotPlayerAPI.Instance.onMainAction += Split;
+        }
     }
 
     private void OnDestroy()
@@ -27,9 +32,14 @@ public class SplitBulletComponent : BulletComponent
         {
             playerActions.MainAction.performed -= Split;
         }
+
+        if (BotPlayerAPI.Instance != null)
+        {
+            BotPlayerAPI.Instance.onMainAction -= Split;
+        }
     }
 
-    public void Split(InputAction.CallbackContext args)
+    public void Split()
     {
         launchedRockets = new List<GameObject>();
         for (int i = 0; i < splitNumber; i++)
@@ -48,6 +58,10 @@ public class SplitBulletComponent : BulletComponent
         }
 
         GetComponent<Animator>().SetTrigger("Shoot");
+    }
+    public void Split(InputAction.CallbackContext args)
+    {
+        Split();
     }
 
     public void AfterSplit()

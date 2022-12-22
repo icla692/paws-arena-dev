@@ -28,7 +28,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [HideInInspector]
     public PhotonView photonView;
     [HideInInspector]
-    public int lastPlayerRound = -1;
+    public int lastPlayerRound = 0;
     [HideInInspector]
     public int roundNumber = 1;
 
@@ -40,6 +40,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     void Start()
     {
+        lastPlayerRound = 0;
         photonView = GetComponent<PhotonView>();
         Init();
     }
@@ -55,6 +56,11 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     private void OnDisable()
     {
         PUNRoomUtils.onPlayerLeft -= OnPlayerLeft;
+    }
+
+    private void Update()
+    {
+        Debug.Log("lastPlayerRound " + lastPlayerRound);
     }
 
     private void OnDestroy()

@@ -128,12 +128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePlayerComponent: {fileID: 8475244123665925896}
   playerGraphicsBehaviour: {fileID: 715241018659295173}
-  weaponWrapper: {fileID: 2277166374119805807}
---- !u!1 &2277166374119805807 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 21623957980464943, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
-  m_PrefabInstance: {fileID: 2294245500585530432}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8475244123665925896 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7658601518159057736, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}

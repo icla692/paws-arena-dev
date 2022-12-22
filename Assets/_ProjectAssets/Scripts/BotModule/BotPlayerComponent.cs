@@ -52,6 +52,7 @@ public class BotPlayerComponent : MonoBehaviour
         var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
 
+        BotPlayerAPI.Instance.Init(playerMotionBehaviour, playerIndicatorBehaviour.indicatorCircle);
 
         basePlayerComponent.PostSetup();
         playerActions.Disable();
