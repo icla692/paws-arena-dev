@@ -29,7 +29,7 @@ public class BotPlayerComponent : MonoBehaviour
 
     private IEnumerator Init()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForEndOfFrame();
         SetupBot();
     }
 

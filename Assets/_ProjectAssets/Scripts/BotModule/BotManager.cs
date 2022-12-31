@@ -41,7 +41,7 @@ public class BotManager : MonoSingleton<BotManager>
         onHealthUpdated?.Invoke(botHP);
     }
 
-    public void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce)
+    public void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
     {
         Vector3 playerPos = currentBot.transform.position;
         float dmgDistance = Vector3.Distance(playerPos, position);

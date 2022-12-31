@@ -247,7 +247,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     }
 
-    private void ResetStage7()
+    private void ResetStage7(int bulletCount)
     {
         dummy.onDummyHit -= SetStage9;
         dummy.onDummyMiss -= ResetStage7;
@@ -316,7 +316,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     }
 
 
-    private void SetStage9()
+    private void SetStage9(int bulletHits)
     {
         dummy.onDummyHit -= SetStage9;
         dummy.onDummyMiss -= ResetStage7;
@@ -373,16 +373,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     }
 
 
-    private void SetStage9IfAllMissed()
+    private void SetStage9IfAllMissed(int bulletCount)
     {
-        currentShots++;
+        currentShots+= bulletCount;
         if (currentShots >= crtWeapon.numberOfDamageDealers)
         {
-            SetStage9();
+            SetStage9(0);
         }
     }
 
-    private void SetSurrenderStage()
+    private void SetSurrenderStage(int bulletsHit)
     {
         currentShots = 0;
         dummy.onDummyHit -= SetSurrenderStage;
@@ -408,6 +408,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             arrow_surrenderStage.SetActive(true);
             upperRightInstructionsText.text = messages[9];
         });
+    }
+
+    private void SetLastStage(int bulletCount)
+    {
+        SetLastStage();
     }
 
     private void SetLastStage()

@@ -88,7 +88,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         SetMyPlayerHealth(myPlayerHealth + healValue);
     }
 
-    public void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce)
+    public void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
     {
         Vector3 playerPos = myPlayer.transform.position;
         float dmgDistance = Vector3.Distance(playerPos, position);

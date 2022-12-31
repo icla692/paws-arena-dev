@@ -49,6 +49,7 @@ public class BasePlayerComponent : MonoBehaviour
         if (state.weaponIdx == idx)
         {
             idx = -1;
+            state.SetHasWeaponOut(idx);
         }
         if (playerSeat == RoomStateManager.Instance.lastPlayerRound)
         {

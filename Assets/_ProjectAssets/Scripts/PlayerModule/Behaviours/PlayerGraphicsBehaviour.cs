@@ -1,4 +1,5 @@
 using Anura.ConfigurationModule.Managers;
+using Anura.Extensions;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class PlayerGraphicsBehaviour : MonoBehaviour
 {
@@ -17,11 +19,15 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     private Animator animator;
     [SerializeField]
     private PlayerCustomization playerCustomization;
+    [SerializeField]
+    private Transform weaponParent;
+
     private bool isMultiplayer;
     private PhotonView _photonView;
     private PlayerState playerState;
 
     private bool isFacingRight = true;
+    private Vector3 initialWeaponRotationOffset;
 
     void Start()
     {
@@ -42,6 +48,8 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         }
 
         SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, ids.ToString());
+
+
     }
 
     [PunRPC]
@@ -126,6 +134,16 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         var theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+
+        if (!isFacingRight)
+        {
+            initialWeaponRotationOffset = weaponParent.GetComponent<RotationConstraint>().rotationOffset;
+            weaponParent.GetComponent<RotationConstraint>().rotationOffset += Vector3.zero.WithZ(180);
+        }
+        else if(initialWeaponRotationOffset != Vector3.zero)
+        {
+            weaponParent.GetComponent<RotationConstraint>().rotationOffset = initialWeaponRotationOffset;
+        }
     }
 
     public void OnHealthUpdated(int health)

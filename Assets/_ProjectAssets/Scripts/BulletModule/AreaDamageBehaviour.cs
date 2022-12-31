@@ -16,6 +16,8 @@ public class AreaDamageBehaviour : MonoBehaviour
     private bool hasPushForce = false;
     [SerializeField]
     private float pushForce = 10f;
+    [SerializeField]
+    private int bulletCount = 1;
 
     private void OnEnable()
     {
@@ -24,7 +26,7 @@ public class AreaDamageBehaviour : MonoBehaviour
 
         GameScenePostprocessingManager.Instance.EnableExplosionLayer(0.4f);
         //PlayerManager.Instance.AreaDamage(transform.position, area, maxDamage, doesDamageByDistance, hasPushForce, pushForce);
-        AreaEffectsManager.Instance.AreaDamage(transform.position, area, maxDamage, doesDamageByDistance, hasPushForce, pushForce);
+        AreaEffectsManager.Instance.AreaDamage(transform.position, area, maxDamage, doesDamageByDistance, hasPushForce, pushForce, bulletCount);
         SFXManager.Instance.PlayOneShot(explosionSfx);
     }
 }

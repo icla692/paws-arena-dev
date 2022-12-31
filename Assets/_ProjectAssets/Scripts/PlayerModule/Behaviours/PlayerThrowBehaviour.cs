@@ -3,6 +3,7 @@ using Anura.ConfigurationModule.ScriptableObjects;
 using Anura.Extensions;
 using Photon.Pun;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -87,12 +88,14 @@ public class PlayerThrowBehaviour : MonoBehaviour
     public void OnLaunchPreparing()
     {
         onLaunchPreparing?.Invoke(currentWeapon);
+        StartCoroutine(Launch());
     }
 
-    public void Launch()
+    public IEnumerator Launch()
     {
-        if (photonView != null && !photonView.IsMine) return;
+        if (photonView != null && !photonView.IsMine) yield break;
 
+        yield return new WaitForEndOfFrame();
         int weaponIdx = playerComponent.state.weaponIdx;
         var weapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
 
