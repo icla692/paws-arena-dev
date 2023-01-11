@@ -1171,6 +1171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d558c841ae7c648b974ddcb38180ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftMapBound: {fileID: 570977875}
+  rightMapBound: {fileID: 852178216}
   botUI: {fileID: 0}
 --- !u!1 &458930842
 GameObject:

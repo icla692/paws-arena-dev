@@ -38,6 +38,8 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     [HideInInspector]
     public bool isMultiplayer;
 
+    public TurnTimerBehaviour Timer { get; set; }
+
     void Start()
     {
         lastPlayerRound = 0;

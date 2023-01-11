@@ -9,6 +9,9 @@ public class BotManager : MonoSingleton<BotManager>
 {
     public event Action<int> onHealthUpdated;
 
+    public Collider2D leftMapBound;
+    public Collider2D rightMapBound;
+
     [HideInInspector]
     public PlayerDataCustomView botUI;
 

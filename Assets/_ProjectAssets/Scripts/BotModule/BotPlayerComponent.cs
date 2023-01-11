@@ -14,6 +14,8 @@ public class BotPlayerComponent : MonoBehaviour
 
     private BotInputActions.PlayerActions playerActions;
 
+    private BotAI botAI;
+
     void Awake()
     {
         playerMotionBehaviour = GetComponent<PlayerMotionBehaviour>();
@@ -31,6 +33,7 @@ public class BotPlayerComponent : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         SetupBot();
+        SetupAI();
     }
 
     private void SetupBot()
@@ -58,6 +61,11 @@ public class BotPlayerComponent : MonoBehaviour
         playerActions.Disable();
     }
 
+    private void SetupAI()
+    {
+        botAI = gameObject.AddComponent<BotAI>();
+    }
+
     private void OnStateUpdatedForBot(IRoomState roomState)
     {
         basePlayerComponent.state.SetHasWeaponOut(-1);
@@ -65,10 +73,12 @@ public class BotPlayerComponent : MonoBehaviour
         if (roomState is BotTurnState)
         {
             playerActions.Enable();
+            botAI.Play();
         }
         else
         {
             playerActions.Disable();
+            botAI.Wait();
         }
     }
 }
