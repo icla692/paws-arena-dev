@@ -559,7 +559,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755019818643992944}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.11, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0.82, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -877,6 +877,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7883486962907541741}
+  - {fileID: 8101280090461054407}
   m_Father: {fileID: 755019818390496618}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -897,6 +898,7 @@ MonoBehaviour:
   animator: {fileID: 4203147118816665934}
   playerCustomization: {fileID: 365167107878039079}
   weaponParent: {fileID: 5152716949837815290}
+  damageDisplay: {fileID: 8101280090461054407}
 --- !u!114 &5227927056094972050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -936,6 +938,52 @@ MonoBehaviour:
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 1
   m_UseLocal: 1
+--- !u!1 &6460448395940318018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8101280090461054407}
+  - component: {fileID: 5061650519729598705}
+  m_Layer: 8
+  m_Name: DamageDealingDisplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8101280090461054407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6460448395940318018}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.844, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1966776401125919830}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5061650519729598705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6460448395940318018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a26999e394ef6d4f8e610c5b5882db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageDealPrefab: {fileID: 7028970255462701160, guid: d52912169a0a9c446ab242cf94253196, type: 3}
+  basePlayerComponent: {fileID: 7658601518159057736}
 --- !u!1001 &8901871953551226009
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,10 +11,10 @@ public class Test_MockNFT : MonoBehaviour
 
     private void Awake()
     {
-        submitButton.onClick.AddListener(async () =>
+        submitButton.onClick.AddListener(() =>
         {
             GameState.nfts.Add(new NFT() { imageUrl = urlInputField.text });
-            await nftSelectionPage.InitPage();
+            nftSelectionPage.InitNFTScreen();
         });
     }
 }

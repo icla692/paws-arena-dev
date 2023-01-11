@@ -6,8 +6,12 @@ using UnityEngine.UI;
 
 public class ButtonHoverable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public Sprite defaultSprite;
+
     public Color colorOverlay;
     public TMPro.TextMeshProUGUI text;
+
+    public Sprite onClickImage;
 
     private Button button;
     private Color initColor;

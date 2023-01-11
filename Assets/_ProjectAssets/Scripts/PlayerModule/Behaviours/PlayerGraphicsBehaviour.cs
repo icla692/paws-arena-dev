@@ -21,6 +21,8 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     private PlayerCustomization playerCustomization;
     [SerializeField]
     private Transform weaponParent;
+    [SerializeField]
+    private Transform damageDisplay;
 
     private bool isMultiplayer;
     private PhotonView _photonView;
@@ -135,6 +137,8 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         theScale.x *= -1;
         transform.localScale = theScale;
 
+        //Corrections
+        //Weapons
         if (!isFacingRight)
         {
             initialWeaponRotationOffset = weaponParent.GetComponent<RotationConstraint>().rotationOffset;
@@ -144,6 +148,9 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
         {
             weaponParent.GetComponent<RotationConstraint>().rotationOffset = initialWeaponRotationOffset;
         }
+
+        //DamageDisplay
+        damageDisplay.localScale = new Vector3(isFacingRight ? 1 : -1, 1, 1);
     }
 
     public void OnHealthUpdated(int health)

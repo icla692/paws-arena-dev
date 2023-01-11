@@ -2942,6 +2942,7 @@ MonoBehaviour:
   shapes: {fileID: 11400000, guid: 81082feba1188dc41ac9fa13714c93d2, type: 2}
   crates: {fileID: 11400000, guid: d48be5ae6987a0042b7eb35a219f617b, type: 2}
   weapons: {fileID: 11400000, guid: 606db63175b8d164bbd78f69a6f301ee, type: 2}
+  dummy: {fileID: 0}
 --- !u!1 &923091250
 GameObject:
   m_ObjectHideFlags: 0
@@ -3486,6 +3487,11 @@ MonoBehaviour:
   mapPrefabs:
   - {fileID: 8851946301562649407, guid: 007cd2eecf61c9b43816e11751be18e3, type: 3}
   - {fileID: 6237716996422082004, guid: 85938879427c20e45a5215f84924fcfb, type: 3}
+  - {fileID: 8851946301562649407, guid: 5651460385c62e44787aabfebe5b81ac, type: 3}
+  - {fileID: 8851946301562649407, guid: 5d199f410088f5b4fbc724390e2fafea, type: 3}
+  - {fileID: 8851946301562649407, guid: 0715efe54eb9bb040ad3e77e866c163b, type: 3}
+  - {fileID: 8851946301562649407, guid: cd4c9e523dfe175438b31701e4febf86, type: 3}
+  - {fileID: 8851946301562649407, guid: 6abf85706c9bda84e83f9d985eb63596, type: 3}
 --- !u!1 &1085779010
 GameObject:
   m_ObjectHideFlags: 0
@@ -3889,11 +3895,13 @@ MonoBehaviour:
   photonManager: {fileID: 1656311510}
   playerPrefab: {fileID: 755019818390496622, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
   playerUIPrefab: {fileID: 3779674071407529552, guid: 3134da00638c87b429fec23ba637362c, type: 3}
+  botPlayerPrefab: {fileID: 0}
   playerUIParent: {fileID: 573735136}
   trajectory: {fileID: 1582121529}
   photonView: {fileID: 0}
   lastPlayerRound: -1
   roundNumber: 0
+  isMultiplayer: 0
 --- !u!114 &1417513453
 MonoBehaviour:
   m_ObjectHideFlags: 0

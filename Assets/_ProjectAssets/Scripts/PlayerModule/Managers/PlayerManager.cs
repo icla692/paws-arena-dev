@@ -7,6 +7,7 @@ using Photon.Pun;
 public class PlayerManager : MonoSingleton<PlayerManager>
 {
     public event Action<int> onHealthUpdated;
+    public event Action<int> onDamageTaken;
 
     [SerializeField]
     private GameObject player1SpawnSquare;
@@ -23,7 +24,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public void RegisterMyPlayer(PlayerComponent playerComponent)
     {
         myPlayer = playerComponent;
-        AreaEffectsManager.Instance.OnAreaDamage += AreaDamage;
+        myPlayer.GetComponent<BasePlayerComponent>().onDamageTaken += OnDamageTaken;
 
         maxHP = ConfigurationManager.Instance.Config.GetPlayerTotalHealth();
         SetMyPlayerHealth(maxHP);
@@ -31,7 +32,13 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     private void OnDestroy()
     {
-        AreaEffectsManager.Instance.OnAreaDamage -= AreaDamage;
+        myPlayer.GetComponent<BasePlayerComponent>().onDamageTaken -= OnDamageTaken;
+    }
+
+    private void OnDamageTaken(int damage)
+    {
+        Debug.Log($"Got damage {damage} / {myPlayerHealth}");
+        SetMyPlayerHealth(myPlayerHealth - damage);
     }
 
     public GameResolveState GetWinnerByDeath()
@@ -88,32 +95,10 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         SetMyPlayerHealth(myPlayerHealth + healValue);
     }
 
-    public void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
-    {
-        Vector3 playerPos = myPlayer.transform.position;
-        float dmgDistance = Vector3.Distance(playerPos, position);
-        if (dmgDistance > area) return;
-
-        float damagePercentage = (area - dmgDistance) / area;
-        int dmgToBeDone = damageByDistance ? (int)Math.Floor(damagePercentage * maxDamage) : maxDamage;
-        Debug.Log($"Got damage {dmgToBeDone} / {myPlayerHealth}");
-        SetMyPlayerHealth(myPlayerHealth - dmgToBeDone);
-
-        if (hasPushForce)
-        {
-            Vector2 direction = new Vector2(playerPos.x, playerPos.y) - position;
-            PushPlayer(damagePercentage * pushForce, direction);
-        }
-    }
 
     public void DirectDamage(int damage)
     {
         SetMyPlayerHealth(myPlayerHealth - damage);
-    }
-
-    private void PushPlayer(float force, Vector2 direction)
-    {
-        myPlayer.GetComponent<Rigidbody2D>().AddForce(direction.normalized * force, ForceMode2D.Impulse);
     }
 
     public Vector2 GetPlayer1SpawnPos()
