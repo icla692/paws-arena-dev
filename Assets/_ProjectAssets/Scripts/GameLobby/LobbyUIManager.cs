@@ -17,6 +17,9 @@ public class LobbyUIManager : MonoBehaviour
     [Header("NFT Selection")]
     public List<GameObject> nftSelectionScreens;
 
+    [Header("Equipment")]
+    public List<GameObject> equipmentScreens;
+
     [Header("Game Menu")]
     public List<GameObject> gameMenuScreens;
     //public GameObject gameMenuSprites;
@@ -71,6 +74,19 @@ public class LobbyUIManager : MonoBehaviour
         }
     }
 
+    public void OpenEquipmentScreen()
+    {
+        foreach (GameObject screen in gameMenuScreens)
+        {
+            screen.SetActive(false);
+        }
+
+        foreach (GameObject screen in equipmentScreens)
+        {
+            screen.SetActive(true);
+        }
+    }
+
     private void OpenLoadingScreen()
     {
         foreach (GameObject screen in nftSelectionScreens)
@@ -86,6 +102,10 @@ public class LobbyUIManager : MonoBehaviour
         connectingToServerScreen.SetActive(false);
         passwordScreen.SetActive(false);
 
+        foreach(GameObject screen in equipmentScreens)
+        {
+            screen.SetActive(false);
+        }
 
         foreach (GameObject screen in gameMenuScreens)
         {
