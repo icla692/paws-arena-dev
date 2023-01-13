@@ -4,6 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum EquipmentType
+{
+    EYEWEAR,
+    HEAD,
+    MOUTH,
+    BODY,
+    TAIL,
+    LEGS
+}
 public class PlayerCustomization : MonoBehaviour
 {
     [SerializeField]
@@ -116,6 +125,7 @@ public class PlayerCustomization : MonoBehaviour
     [Header("GroundFront")]
     [SerializeField]
     private Transform groundFrontTransform;
+
     [SerializeField]
     private SpriteRenderer groundFrontSpriteRenderer;
     [SerializeField]
@@ -175,6 +185,37 @@ public class PlayerCustomization : MonoBehaviour
             SetGround(id);
         }
     }
+
+    public void SetEquipmentBySprite(EquipmentType equipmentType, Sprite equipmentSprite)
+    {
+        switch (equipmentType)
+        {
+            case EquipmentType.EYEWEAR:
+                {
+                    bool found = FindBySprite(equipmentSprite, eyewearSprites, eyewearKeysMapping, SetEyewear);
+                    
+                    if (found) { return; }
+                    
+                    FindBySprite(equipmentSprite, closeableEyewearSprites, closeableEyewearKeysMapping, SetEyewear);
+                    break;
+                }
+        }
+    }
+
+    private bool FindBySprite(Sprite sprite, List<Sprite> sprites, List<string> mapping, Action<string> callback)
+    {
+        string id = "";
+        int idx = sprites.FindIndex(el => el == sprite);
+        if (idx != -1)
+        {
+            id = mapping[idx];
+            callback?.Invoke(id);
+            return true;
+        }
+
+        return false;
+    }
+
     public void SetKittyColor(string colorId)
     {
         SetColor(colorId, kittyColorMapping, colorMultiplyElements);

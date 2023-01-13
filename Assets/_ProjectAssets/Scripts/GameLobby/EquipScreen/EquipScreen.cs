@@ -25,16 +25,25 @@ public class EquipScreen : MonoBehaviour
     private GameObject playerPlatform;
     private ButtonHoverable selectedBtn;
 
+    private List<NFTImageSprite> equipments;
+    private PlayerCustomization playerCustomization;
+    private EquipmentType currentType;
+    private NFTImageSprite selectedEquipment;
+
     private void OnEnable()
     {
         playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformParent);
         playerPlatform.transform.localPosition = Vector3.zero;
+
+        playerCustomization = playerPlatform.GetComponent<PlayerPlatformBehaviour>().playerCustomization;
     }
 
     private void Start()
     {
+        equipments = new List<NFTImageSprite>();
         PopulateEyes();
     }
+
     private void OnDisable()
     {
         if (playerPlatform != null)
@@ -47,26 +56,32 @@ public class EquipScreen : MonoBehaviour
 
     public void PopulateEyes()
     {
+        currentType = EquipmentType.EYEWEAR;
         Populate(equipmentsConfig.eyes, eyeBtn);
     }
     public void PopulateHead()
     {
+        currentType = EquipmentType.HEAD;
         Populate(equipmentsConfig.head, headBtn);
     }
     public void PopulateMouth()
     {
+        currentType = EquipmentType.MOUTH;
         Populate(equipmentsConfig.mouth, mouthBtn);
     }
     public void PopulateBody()
     {
+        currentType = EquipmentType.BODY;
         Populate(equipmentsConfig.body, bodyBtn);
     }
     public void PopulateTail()
     {
+        currentType = EquipmentType.TAIL;
         Populate(equipmentsConfig.tail, tailBtn);
     }
     public void PopulateLegs()
     {
+        currentType = EquipmentType.LEGS;
         Populate(equipmentsConfig.legs, legsBtn);
     }
 
@@ -79,13 +94,26 @@ public class EquipScreen : MonoBehaviour
         foreach (Transform t in content)
         {
             Destroy(t.gameObject);
+            equipments.Clear();
         }
 
         foreach(Sprite el in elements)
         {
             var go = GameObject.Instantiate(nftPrefab, content);
-            go.transform.Find("Image").GetComponent<Image>().sprite = el;
+            go.GetComponent<NFTImageSprite>().mainImage.sprite = el;
+            equipments.Add(go.GetComponent<NFTImageSprite>());
+
+            int idx = equipments.Count - 1;
+            equipments[idx].onClick += ()=> OnEquipmentSelected(idx);
         }
+    }
+
+    private void OnEquipmentSelected(int idx)
+    {
+        selectedEquipment?.Deselect();
+        selectedEquipment = equipments[idx];
+        selectedEquipment.Select();
+        playerCustomization.SetEquipmentBySprite(currentType, equipments[idx].mainImage.sprite);
     }
 
     private void DePopulate()
@@ -93,6 +121,7 @@ public class EquipScreen : MonoBehaviour
         foreach (Transform t in content)
         {
             Destroy(t.gameObject);
+            equipments.Clear();
         }
     }
 }
