@@ -16,8 +16,10 @@ public class BotAI : MonoBehaviour
 
     private const float MOVEMENT_ARRIVAL = 0.2f;
     private const int UPDATE_FRAMES = 10;
+    private const float UPDATE_TIME_STUCK = 3;
 
     private BotPlayerAPI api = BotPlayerAPI.Instance;
+    private float TimeLeft => RoomStateManager.Instance.Timer.TimeLeft;
 
     private Bounds Bounds => Collider.bounds;
     private Vector3 Center => Bounds.center;
@@ -26,7 +28,20 @@ public class BotAI : MonoBehaviour
     private Collider2D Collider { get; set; }
 
     // For debugging, to be deleted
+    #region Debugging
     private bool debug = false;
+    private List<GameObject> debugGOs = new List<GameObject>();
+    private void DebugLocation(Location l, float scale = 1)
+    {
+        if (!debug) return;
+
+        GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        g.transform.position = l.position;
+        g.transform.localScale = Vector3.one * scale;
+        Destroy(g.GetComponent<Collider>());
+        debugGOs.Add(g);
+    }
+    #endregion
 
     private void Start()
     {
@@ -36,6 +51,9 @@ public class BotAI : MonoBehaviour
 
     public void Play()
     {
+        foreach (var g in debugGOs) Destroy(g);
+        debugGOs.Clear();
+
         StartCoroutine(PlayTurn());
     }
 
@@ -45,39 +63,50 @@ public class BotAI : MonoBehaviour
 
     private IEnumerator PlayTurn()
     {
-        List<Location> potentialLocations = GetPotentialLocations();
-        Location choice = ChooseLocation(potentialLocations);
+        int moveDir = 0;
 
-        if (debug)
+        do
         {
-            GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            g.transform.position = choice.position;
-            Destroy(g.GetComponent<Collider>());
-        }        
+            List<Location> potentialLocations = GetPotentialLocations(moveDir != -1, moveDir != 1);
+            Location choice = ChooseLocation(potentialLocations);
+            moveDir = choice.direction;
 
-        yield return StartCoroutine(MoveTo(choice));
+            DebugLocation(choice);
 
-        yield return new WaitForSeconds(1);
+            yield return StartCoroutine(MoveTo(choice));
+            yield return new WaitForSeconds(2);
+        }
+        while (repeatMoveTo && TimeLeft > 2);        
 
-        yield return StartCoroutine(Shoot(choice));
+        yield return StartCoroutine(Shoot());
     }
 
-    private List<Location> GetPotentialLocations()
+    private List<Location> GetPotentialLocations(bool left, bool right)
     {
-        var result = new List<Location>
-        {
-            GetLocation()
-        };
+        var result = new List<Location> { GetLocation() };
 
         float movementStep = Bounds.size.x * 0.9f;
 
         for (int i = 1; i <= 10; i++)
         {
-            result.Add(GetLocation(-1, i * movementStep));
-            result.Add(GetLocation(1, i * movementStep));
+            if (left) AddLocationIfNew(ref result, GetLocation(-1, i * movementStep));
+            if (right) AddLocationIfNew(ref result, GetLocation(1, i * movementStep));
         }
 
+        foreach (var l in result) DebugLocation(l, 0.5f);
+
         return result;
+    }
+
+    private void AddLocationIfNew(ref List<Location> list, Location location)
+    {
+        foreach (var l in list)
+        {
+            if (Vector3.Distance(l.position, location.position) < MOVEMENT_ARRIVAL)
+                return;
+        }
+
+        list.Add(location);
     }
 
     private Location ChooseLocation(List<Location> locations)
@@ -87,14 +116,20 @@ public class BotAI : MonoBehaviour
         return locations[0];
     }
 
+    private bool repeatMoveTo = false;
+
     private IEnumerator MoveTo(Location location)
     {
         yield return null;
         yield return null;
+        repeatMoveTo = false;
 
         api.Move(location.direction);
 
         int counter = 0;
+
+        float stuckTime = Time.time;
+        Vector3 stuckPos = Center;
         
         while (Mathf.Abs(Center.x - location.position.x) > MOVEMENT_ARRIVAL)
         {            
@@ -117,7 +152,18 @@ public class BotAI : MonoBehaviour
                     {
                         api.Jump();
                     }
+                }                
+            }
+            // Check if stuck
+            else if (Time.time - stuckTime >= UPDATE_TIME_STUCK)
+            {
+                if (Vector3.Distance(Center, stuckPos) < Bounds.size.x)
+                {
+                    repeatMoveTo = true;
+                    break;
                 }
+                stuckTime = Time.time;
+                stuckPos = Center;
             }
 
             counter++;
@@ -126,7 +172,7 @@ public class BotAI : MonoBehaviour
         api.CancelMove();
     }
 
-    private IEnumerator Shoot(Location location)
+    private IEnumerator Shoot()
     {
         yield return null;
         yield return null;

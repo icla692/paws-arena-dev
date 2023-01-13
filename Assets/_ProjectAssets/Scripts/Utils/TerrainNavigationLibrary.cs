@@ -13,12 +13,23 @@ static class TerrainNavigationLibrary
         Right
     }
 
-    private const int LAYER_TERRAIN = 6;
-    private static readonly LayerMask LAYERMASK_TERRAIN = 1 << LAYER_TERRAIN;
+    private const int LAYER_CHUNK = 6;
+    private const int LAYER_ENVIRONMENT = 9;
+
+    private static readonly LayerMask LAYERMASK_CHUNK = 1 << LAYER_CHUNK;
+    private static readonly LayerMask LAYERMASK_ENVIRONMENT = 1 << LAYER_ENVIRONMENT;
+    private static readonly LayerMask LAYERMASK_TERRAIN = LAYERMASK_CHUNK | LAYERMASK_ENVIRONMENT;
 
     private const float TRACING_STEP = 0.2f;
     //private const float KITTY_HEIGHT = 1.13833f;
 
+    /// <summary>
+    /// Get the position where 'obj' would end up by traveling (up to) 'xDisplacement' in a given 'direction'.
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="direction"></param>
+    /// <param name="xDisplacement"></param>
+    /// <returns></returns>
     public static Vector3 GetPositionAtXDisplacement(Bounds obj, Direction direction, float xDisplacement)
     {
         Vector3 xDir = DirectionToVec(direction);
@@ -42,15 +53,28 @@ static class TerrainNavigationLibrary
             RaycastHit2D hit = RaycastDownAtYIntervals(probingPos, obj);
             if (hit)
             {
-                probingPos.y = hit.point.y + (obj.size.y / 2);
+                probingPos.y = hit.point.y + (obj.size.y / 2);                
             }
             else
             {
                 break;
             }
 
-            lastGoodProbingPos = probingPos;
-            xLengthTraversed += TRACING_STEP;
+            // Check if object can fit in the location
+            if (Physics2D.OverlapCapsule(
+                hit.point + obj.size.y / 2 * Vector2.up,
+                0.9f * obj.size,
+                GetCapsuleDirection(obj),
+                0,
+                LAYERMASK_TERRAIN) == null)
+            {
+                lastGoodProbingPos = probingPos;
+                xLengthTraversed += TRACING_STEP;
+            }
+            else
+            {
+                xLengthTraversed += TRACING_STEP / 2;
+            }
         }
 
         return lastGoodProbingPos;
@@ -74,6 +98,11 @@ static class TerrainNavigationLibrary
         return Physics2D.Raycast(origin, Vector3.down, Mathf.Infinity, LAYERMASK_TERRAIN);
     }
 
+    /*private static RaycastHit2D CirclecastDown(Vector3 origin)
+    {
+        return Physics2D.CircleCast(origin, 1, Vector3.down, Mathf.Infinity, LAYERMASK_TERRAIN);
+    }*/
+
     private static RaycastHit2D RaycastDownAtYIntervals(Vector3 origin, Bounds obj, int attempts = 100)
     {
         float y = 0;
@@ -81,11 +110,20 @@ static class TerrainNavigationLibrary
         for (int i=0; i<attempts; i++)
         {
             RaycastHit2D hit = RaycastDown(origin + Vector3.up * y);
-            if (hit) return hit;
+            if (hit)
+            {
+                return hit;
+            }
             y += obj.size.y / 2;
         }
 
         return new RaycastHit2D();
+    }
+
+    private static CapsuleDirection2D GetCapsuleDirection(Bounds bounds)
+    {
+        if (bounds.size.x > bounds.size.y) return CapsuleDirection2D.Horizontal;
+        return CapsuleDirection2D.Vertical;
     }
 
     private static Vector3 DirectionToVec(Direction dir)
