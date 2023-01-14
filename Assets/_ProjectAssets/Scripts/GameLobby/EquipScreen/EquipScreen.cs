@@ -56,39 +56,37 @@ public class EquipScreen : MonoBehaviour
 
     public void PopulateEyes()
     {
-        currentType = EquipmentType.EYEWEAR;
-        Populate(equipmentsConfig.eyes, eyeBtn);
+        Populate(EquipmentType.EYEWEAR, equipmentsConfig.eyes, eyeBtn);
     }
     public void PopulateHead()
     {
-        currentType = EquipmentType.HEAD;
-        Populate(equipmentsConfig.head, headBtn);
+        Populate(EquipmentType.HAT, equipmentsConfig.head, headBtn);
     }
     public void PopulateMouth()
     {
-        currentType = EquipmentType.MOUTH;
-        Populate(equipmentsConfig.mouth, mouthBtn);
+        Populate(EquipmentType.MOUTH, equipmentsConfig.mouth, mouthBtn);
     }
     public void PopulateBody()
     {
-        currentType = EquipmentType.BODY;
-        Populate(equipmentsConfig.body, bodyBtn);
+        Populate(EquipmentType.BODY, equipmentsConfig.body, bodyBtn);
     }
     public void PopulateTail()
     {
-        currentType = EquipmentType.TAIL;
-        Populate(equipmentsConfig.tail, tailBtn);
+        Populate(EquipmentType.TAIL, equipmentsConfig.tail, tailBtn);
     }
     public void PopulateLegs()
     {
-        currentType = EquipmentType.LEGS;
-        Populate(equipmentsConfig.legs, legsBtn);
+        Populate(EquipmentType.LEGS, equipmentsConfig.legs, legsBtn);
     }
 
-    private void Populate(List<Sprite> elements, ButtonHoverable eyeBtn)
+    private void Populate(EquipmentType eqType, List<Sprite> elements, ButtonHoverable targetBtn)
     {
+        currentType = eqType;
+
+        selectedEquipment = null;
+
         selectedBtn?.Deselect();
-        selectedBtn = eyeBtn;
+        selectedBtn = targetBtn;
         selectedBtn.Select();
 
         foreach (Transform t in content)

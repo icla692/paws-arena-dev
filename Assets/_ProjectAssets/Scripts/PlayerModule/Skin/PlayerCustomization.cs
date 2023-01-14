@@ -6,13 +6,49 @@ using UnityEngine;
 
 public enum EquipmentType
 {
-    EYEWEAR,
-    HEAD,
-    MOUTH,
+    COLOR,
+    EYES,
+    BACK,
     BODY,
+    HAT,
+    EYEWEAR,
+    MOUTH,
     TAIL,
-    LEGS
+    LEGS,
+    GROUND_FRONT,
+    GROUND_BACK,
+    GROUND
 }
+
+[System.Serializable]
+public class Equipment
+{
+    [SerializeField]
+    public string id;
+}
+
+[System.Serializable]
+public class SpriteEquipment: Equipment
+{
+    [SerializeField]
+    public Sprite sprite;
+}
+
+[System.Serializable]
+public class ColorEquipment : Equipment
+{
+    [SerializeField]
+    public Color color;
+}
+
+[System.Serializable]
+public class GameObjectEquipment : Equipment
+{
+    [SerializeField]
+    public GameObject target;
+}
+
+
 public class PlayerCustomization : MonoBehaviour
 {
     [SerializeField]
@@ -30,25 +66,19 @@ public class PlayerCustomization : MonoBehaviour
     private List<SpriteRenderer> colorMultiplyElements;
 
     [SerializeField]
-    private SerializableStringColorDictionary kittyColorMapping = new SerializableStringColorDictionary();
+    private List<ColorEquipment> kittyColorEquipment;
 
     [Header("Eyes")]
     [SerializeField]
-    private List<GameObject> eyesGameObjects;
-
-    [SerializeField]
-    private List<string> eyesKeyIdxMapping;
+    private List<GameObjectEquipment> eyesEquipment;
 
     [Header("Back")]
     [SerializeField]
     private GameObject backParent;
     [SerializeField]
     private SpriteRenderer backSpriteRenderer;
-
     [SerializeField]
-    private List<string> backKeysMapping;
-    [SerializeField]
-    private List<Sprite> backSprites;
+    private List<SpriteEquipment> backEquipment;
 
 
     [Header("Body")]
@@ -56,9 +86,7 @@ public class PlayerCustomization : MonoBehaviour
     private SpriteRenderer bodySpriteRenderer;
 
     [SerializeField]
-    private List<string> bodyKeysMapping;
-    [SerializeField]
-    private List<Sprite> bodySprites;
+    private List<SpriteEquipment> bodyEquipment;
 
 
     [Header("Hats")]
@@ -70,57 +98,44 @@ public class PlayerCustomization : MonoBehaviour
     private SpriteRenderer hatsBetweenEarsRenderer;
 
     [SerializeField]
-    private List<string> hatsKeysMapping;
-    [SerializeField]
-    private List<string> hatsNoEarsKeysMapping;
-    [SerializeField]
-    private List<string> hatsBetweenEarsMapping;
+    private List<SpriteEquipment> hatsEquipment;
 
     [SerializeField]
-    private List<Sprite> hatsSprites;
+    private List<SpriteEquipment> hatsNoEarsEquipment;
+
     [SerializeField]
-    private List<Sprite> hatsNoEarsSprites;
-    [SerializeField]
-    private List<Sprite> hatsBetweenEarsSprites;
+    private List<SpriteEquipment> hatsBetweenEarsEquipment;
 
 
     [Header("Earrings")]
     [SerializeField]
     private List<GameObject> earrings;
+
     [SerializeField]
-    private List<string> earringsIds;
+    private List<Equipment> earringsEquipment;
+
     [SerializeField]
     private Sprite earringSprite;
     [SerializeField]
-    private string boneHatId;
-    [SerializeField]
-    private Sprite boneHatSprite;
+    private SpriteEquipment boneHatEquipment;
 
     [Header("Eyewear")]
     [SerializeField]
     private SpriteRenderer eyewearSpriteRenderer;
-
     [SerializeField]
-    private List<string> eyewearKeysMapping;
-    [SerializeField]
-    private List<Sprite> eyewearSprites;
+    private List<SpriteEquipment> eyewearEquipment;
 
     [SerializeField]
     private SpriteRenderer closeableEyewearSpriteRenderer;
 
     [SerializeField]
-    private List<string> closeableEyewearKeysMapping;
-    [SerializeField]
-    private List<Sprite> closeableEyewearSprites;
+    private List<SpriteEquipment> closeableEyewearEquipment;
 
     [Header("Mouth")]
     [SerializeField]
     private SpriteRenderer mouthSpriteRenderer;
-
     [SerializeField]
-    private List<string> mouthKeysMapping;
-    [SerializeField]
-    private List<Sprite> mouthSprites;
+    private List<SpriteEquipment> mouthEquipment;
 
     [Header("GroundFront")]
     [SerializeField]
@@ -128,10 +143,9 @@ public class PlayerCustomization : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer groundFrontSpriteRenderer;
+
     [SerializeField]
-    private List<string> groundFrontKeysMapping;
-    [SerializeField]
-    private List<Sprite> groundFrontSprites;
+    private List<SpriteEquipment> groundFrontEquipment;
 
     [Header("GroundBack")]
     [SerializeField]
@@ -139,19 +153,19 @@ public class PlayerCustomization : MonoBehaviour
     [SerializeField]
     private SpriteRenderer groundBackSpriteRenderer;
     [SerializeField]
-    private List<string> groundBackKeysMapping;
-    [SerializeField]
-    private List<Sprite> groundBackSprites;
+    private List<SpriteEquipment> groundBackEquipment;
 
     [Header("Ground")]
     [SerializeField]
     private Transform groundTransform;
     [SerializeField]
     private SpriteRenderer groundSpriteRenderer;
+
     [SerializeField]
-    private List<string> groundKeysMapping;
-    [SerializeField]
-    private List<Sprite> groundSprites;
+    private List<SpriteEquipment> groundEquipment;
+
+    [HideInInspector]
+    public Dictionary<EquipmentType, Equipment> playerEquipmentConfig;
 
     private void OnEnable()
     {
@@ -171,7 +185,8 @@ public class PlayerCustomization : MonoBehaviour
 
     public void SetCat(List<string> ids)
     {
-        foreach(string id in ids)
+        playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
+        foreach (string id in ids)
         {
             SetKittyColor(id);
             SetEyes(id);
@@ -192,24 +207,51 @@ public class PlayerCustomization : MonoBehaviour
         {
             case EquipmentType.EYEWEAR:
                 {
-                    bool found = FindBySprite(equipmentSprite, eyewearSprites, eyewearKeysMapping, SetEyewear);
-                    
-                    if (found) { return; }
-                    
-                    FindBySprite(equipmentSprite, closeableEyewearSprites, closeableEyewearKeysMapping, SetEyewear);
+                    bool found = FindBySprite(equipmentSprite, eyewearEquipment, SetEyewear);
+
+                    if (found) { break; }
+
+                    FindBySprite(equipmentSprite, closeableEyewearEquipment, SetEyewear);
+                    break;
+                }
+            case EquipmentType.HAT:
+                {
+                    bool found = FindBySprite(equipmentSprite, hatsEquipment, SetHat);
+                    if (found) { break; }
+
+                    found = FindBySprite(equipmentSprite, hatsNoEarsEquipment, SetHat);
+                    if (found) { break; }
+
+                    found = FindBySprite(equipmentSprite, hatsBetweenEarsEquipment, SetHat);
+                    break;
+                }
+            case EquipmentType.MOUTH:
+                {
+                    FindBySprite(equipmentSprite, mouthEquipment, SetMouth);
+                    break;
+                }
+            case EquipmentType.BODY:
+                {
+                    FindBySprite(equipmentSprite, bodyEquipment, SetBody);
+                    break;
+                }
+            case EquipmentType.TAIL:
+                {
+                    break;
+                }
+            case EquipmentType.LEGS:
+                {
                     break;
                 }
         }
     }
 
-    private bool FindBySprite(Sprite sprite, List<Sprite> sprites, List<string> mapping, Action<string> callback)
+    private bool FindBySprite(Sprite sprite, List<SpriteEquipment> equipment, Action<string> callback)
     {
-        string id = "";
-        int idx = sprites.FindIndex(el => el == sprite);
+        int idx = equipment.FindIndex(el => el.sprite == sprite);
         if (idx != -1)
         {
-            id = mapping[idx];
-            callback?.Invoke(id);
+            callback?.Invoke(equipment[idx].id);
             return true;
         }
 
@@ -218,33 +260,55 @@ public class PlayerCustomization : MonoBehaviour
 
     public void SetKittyColor(string colorId)
     {
-        SetColor(colorId, kittyColorMapping, colorMultiplyElements);
+        ColorEquipment equipment = SetColor(colorId, kittyColorEquipment, colorMultiplyElements);
+        if (equipment != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.COLOR, equipment);
+        }
     }
 
     public void SetEyes(string eyesId)
     {
-        SetSingleActiveElement(eyesId, eyesKeyIdxMapping, eyesGameObjects);
+        GameObjectEquipment eq = SetSingleActiveElement(eyesId, eyesEquipment);
+
+        if (eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.EYES, eq);
+        }
     }
 
     public void SetBack(string backId)
     {
         if (inGame) return;
-        SetSingleSpriteElement(backId, backKeysMapping, backSprites, backSpriteRenderer);
+        SpriteEquipment eq = SetSingleSpriteElement(backId, backEquipment, backSpriteRenderer);
+
+        if (eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.BACK, eq);
+        }
     }
 
     public void SetBody(string bodyId)
     {
-        SetSingleSpriteElement(bodyId, bodyKeysMapping, bodySprites, bodySpriteRenderer);
+        SpriteEquipment eq = SetSingleSpriteElement(bodyId, bodyEquipment, bodySpriteRenderer);
+
+        if (eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.BODY, eq);
+        }
     }
 
     public void SetHat(string hatId)
     {
-        if (earringsIds.Contains(hatId)){
-            int idx = earringsIds.IndexOf(hatId);
+        int idx = earringsEquipment.FindIndex(el => el.id == hatId);
+        if (idx >= 0)
+        {
+            AddOrUpdateEquipment(EquipmentType.HAT, earringsEquipment[idx]);
             if (idx == 0) //right
             {
                 earrings[1].GetComponent<SpriteRenderer>().sprite = earringSprite;
-            }else if(idx == 1) //left
+            }
+            else if (idx == 1) //left
             {
                 earrings[0].GetComponent<SpriteRenderer>().sprite = earringSprite;
             }
@@ -253,14 +317,20 @@ public class PlayerCustomization : MonoBehaviour
                 earrings[0].GetComponent<SpriteRenderer>().sprite = earrings[1].GetComponent<SpriteRenderer>().sprite = earringSprite;
             }
             return;
-        }else if(boneHatId == hatId)
+        }
+        else if (boneHatEquipment.id == hatId)
         {
-            earrings[1].GetComponent<SpriteRenderer>().sprite = boneHatSprite;
+            AddOrUpdateEquipment(EquipmentType.HAT, boneHatEquipment);
+            earrings[1].GetComponent<SpriteRenderer>().sprite = boneHatEquipment.sprite;
             return;
         }
-        
-        
-        if (hatsBetweenEarsMapping.Contains(hatId)){
+
+
+        idx = hatsBetweenEarsEquipment.FindIndex(el => el.id == hatId);
+        if (idx >= 0)
+        {
+            AddOrUpdateEquipment(EquipmentType.HAT, hatsBetweenEarsEquipment[idx]);
+
             lEar.SetActive(true);
             rEar.SetActive(true);
 
@@ -268,10 +338,16 @@ public class PlayerCustomization : MonoBehaviour
             hatsNoEarsRenderer.gameObject.SetActive(false);
             hatsSpriteRenderer.gameObject.SetActive(false);
 
-            SetSingleSpriteElement(hatId, hatsBetweenEarsMapping, hatsBetweenEarsSprites, hatsBetweenEarsRenderer);
+            SetSingleSpriteElement(hatId, hatsBetweenEarsEquipment, hatsBetweenEarsRenderer);
+            return;
         }
-        else if (hatsKeysMapping.Contains(hatId))
+
+        idx = hatsEquipment.FindIndex(el => el.id == hatId);
+
+        if (idx >= 0)
         {
+            AddOrUpdateEquipment(EquipmentType.HAT, hatsEquipment[idx]);
+
             lEar.SetActive(true);
             rEar.SetActive(true);
 
@@ -279,10 +355,15 @@ public class PlayerCustomization : MonoBehaviour
             hatsNoEarsRenderer.gameObject.SetActive(false);
             hatsSpriteRenderer.gameObject.SetActive(true);
 
-            SetSingleSpriteElement(hatId, hatsKeysMapping, hatsSprites, hatsSpriteRenderer);
+            SetSingleSpriteElement(hatId, hatsEquipment, hatsSpriteRenderer);
+            return;
         }
-        else if (hatsNoEarsKeysMapping.Contains(hatId))
+
+        idx = hatsNoEarsEquipment.FindIndex(el => el.id == hatId);
+        if (idx >= 0)
         {
+            AddOrUpdateEquipment(EquipmentType.HAT, hatsNoEarsEquipment[idx]);
+
             lEar.SetActive(false);
             rEar.SetActive(false);
 
@@ -290,74 +371,120 @@ public class PlayerCustomization : MonoBehaviour
             hatsNoEarsRenderer.gameObject.SetActive(true);
             hatsSpriteRenderer.gameObject.SetActive(false);
 
-            SetSingleSpriteElement(hatId, hatsNoEarsKeysMapping, hatsNoEarsSprites, hatsNoEarsRenderer);
+            SetSingleSpriteElement(hatId, hatsNoEarsEquipment, hatsNoEarsRenderer);
+            return;
         }
     }
 
     public void SetEyewear(string eyewearId)
     {
-        SetSingleSpriteElement(eyewearId, eyewearKeysMapping, eyewearSprites, eyewearSpriteRenderer);
-        SetSingleSpriteElement(eyewearId, closeableEyewearKeysMapping, closeableEyewearSprites, closeableEyewearSpriteRenderer);
+        SpriteEquipment eq = SetSingleSpriteElement(eyewearId, eyewearEquipment, eyewearSpriteRenderer);
+        if (eq == null)
+        {
+            eq = SetSingleSpriteElement(eyewearId, closeableEyewearEquipment, closeableEyewearSpriteRenderer);
+        }
+
+        if (eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.EYEWEAR, eq);
+        }
     }
 
     public void SetMouth(string mouthId)
     {
-        SetSingleSpriteElement(mouthId, mouthKeysMapping, mouthSprites, mouthSpriteRenderer);
+        SpriteEquipment eq = SetSingleSpriteElement(mouthId, mouthEquipment, mouthSpriteRenderer);
+        if (eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.MOUTH, eq);
+        }
     }
 
     public void SetGroundFront(string groundId)
     {
         if (inGame) return;
-        SetSingleSpriteElement(groundId, groundFrontKeysMapping, groundFrontSprites, groundFrontSpriteRenderer);
+
+        SpriteEquipment eq = SetSingleSpriteElement(groundId, groundFrontEquipment, groundFrontSpriteRenderer);
+        if (eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.GROUND_FRONT, eq);
+        }
     }
 
     public void SetGroundBack(string groundId)
     {
         if (inGame) return;
-        SetSingleSpriteElement(groundId, groundBackKeysMapping, groundBackSprites, groundBackSpriteRenderer);
+
+        SpriteEquipment eq = SetSingleSpriteElement(groundId, groundBackEquipment, groundBackSpriteRenderer);
+        if (eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.GROUND_BACK, eq);
+        }
     }
 
     public void SetGround(string groundId)
     {
         if (inGame) return;
-        SetSingleSpriteElement(groundId, groundKeysMapping, groundSprites, groundSpriteRenderer);
+
+        SpriteEquipment eq = SetSingleSpriteElement(groundId, groundEquipment, groundSpriteRenderer);
+        if (eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.GROUND, eq);
+        }
     }
 
-    private void SetSingleSpriteElement(string key, List<string> elements, List<Sprite> sprites, SpriteRenderer spriteRenderer)
+    private SpriteEquipment SetSingleSpriteElement(string key, List<SpriteEquipment> equipment, SpriteRenderer spriteRenderer)
     {
-        if (!elements.Contains(key))
+        int idx = equipment.FindIndex(eq => eq.id == key);
+        if (idx < 0)
         {
-            return;
+            return null;
         }
 
-        int idx = elements.IndexOf(key);
-        spriteRenderer.sprite = sprites[idx];
+        spriteRenderer.sprite = equipment[idx].sprite;
+
+        return equipment[idx];
     }
 
-    private void SetColor(string key, SerializableStringColorDictionary elements, List<SpriteRenderer> targets)
+    private ColorEquipment SetColor(string key, List<ColorEquipment> elements, List<SpriteRenderer> targets)
     {
-        if (!elements.ContainsKey(key))
+        int idx = elements.FindIndex(el => el.id == key);
+        if (idx < 0)
         {
-            return;
+            return null;
         }
 
-        Color col = elements[key];
+        Color col = elements[idx].color;
         foreach (SpriteRenderer sprite in targets)
         {
             sprite.color = col;
         }
+        return elements[idx];
     }
-    private void SetSingleActiveElement(string key, List<string> ids, List<GameObject> targets)
+    private GameObjectEquipment SetSingleActiveElement(string key, List<GameObjectEquipment> equipment)
     {
-        if (!ids.Contains(key))
+        int idx = equipment.FindIndex(el => el.id == key);
+        if (idx < 0)
         {
-            return;
+            return null;
         }
 
-        int idx = ids.IndexOf(key);
-        for(int i=0; i<targets.Count; i++)
+        for (int i = 0; i < equipment.Count; i++)
         {
-            targets[i].SetActive(i == idx);
+            equipment[i].target.SetActive(i == idx);
+        }
+
+        return equipment[idx];
+    }
+
+    private void AddOrUpdateEquipment(EquipmentType equipmentType, Equipment equipment)
+    {
+        if (playerEquipmentConfig.ContainsKey(equipmentType))
+        {
+            playerEquipmentConfig[equipmentType] = equipment;
+        }
+        else
+        {
+            playerEquipmentConfig.Add(equipmentType, equipment);
         }
     }
 }
