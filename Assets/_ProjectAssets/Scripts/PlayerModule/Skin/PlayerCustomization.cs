@@ -167,6 +167,8 @@ public class PlayerCustomization : MonoBehaviour
     [HideInInspector]
     public Dictionary<EquipmentType, Equipment> playerEquipmentConfig;
 
+    private string url;
+
     private void OnEnable()
     {
         if (!inGame)
@@ -183,56 +185,97 @@ public class PlayerCustomization : MonoBehaviour
 
     }
 
-    public void SetCat(List<string> ids)
+    public void SetCat(string url, List<string> ids)
     {
-        playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
-        foreach (string id in ids)
+        this.url = url;
+
+        var config = KittiesCustomizationService.GetCustomization(url);
+
+        if (config == null)
         {
-            SetKittyColor(id);
-            SetEyes(id);
-            SetBack(id);
-            SetBody(id);
-            SetHat(id);
-            SetEyewear(id);
-            SetMouth(id);
-            SetGroundFront(id);
-            SetGroundBack(id);
-            SetGround(id);
+            playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
+
+            foreach (string id in ids)
+            {
+                SetKittyColor(id);
+                SetEyes(id);
+                SetBack(id);
+                SetBody(id);
+                SetHat(id);
+                SetEyewear(id);
+                SetMouth(id);
+                SetGroundFront(id);
+                SetGroundBack(id);
+                SetGround(id);
+            }
+        }
+        else
+        {
+            playerEquipmentConfig = config.playerEquipmentConfig;
+            ApplyConfig(playerEquipmentConfig);
         }
     }
 
-    public void SetEquipmentBySprite(EquipmentType equipmentType, Sprite equipmentSprite)
+    private void ApplyConfig(Dictionary<EquipmentType, Equipment> playerEquipmentConfig)
+    {
+        foreach(KeyValuePair<EquipmentType, Equipment> pair in playerEquipmentConfig)
+        {
+            SetSpriteEquipment(pair.Key, pair.Value.id);
+        }
+    }
+
+    private void SetSpriteEquipment(EquipmentType equipmentType, string id)
     {
         switch (equipmentType)
         {
-            case EquipmentType.EYEWEAR:
+            case EquipmentType.COLOR:
                 {
-                    bool found = FindBySprite(equipmentSprite, eyewearEquipment, SetEyewear);
-
-                    if (found) { break; }
-
-                    FindBySprite(equipmentSprite, closeableEyewearEquipment, SetEyewear);
+                    SetKittyColor(id, false);
                     break;
                 }
-            case EquipmentType.HAT:
+            case EquipmentType.EYES:
                 {
-                    bool found = FindBySprite(equipmentSprite, hatsEquipment, SetHat);
-                    if (found) { break; }
-
-                    found = FindBySprite(equipmentSprite, hatsNoEarsEquipment, SetHat);
-                    if (found) { break; }
-
-                    found = FindBySprite(equipmentSprite, hatsBetweenEarsEquipment, SetHat);
+                    SetEyes(id, false);
                     break;
                 }
-            case EquipmentType.MOUTH:
+            case EquipmentType.BACK:
                 {
-                    FindBySprite(equipmentSprite, mouthEquipment, SetMouth);
+                    SetBack(id, false);
                     break;
                 }
             case EquipmentType.BODY:
                 {
-                    FindBySprite(equipmentSprite, bodyEquipment, SetBody);
+                    SetBody(id, false);
+                    break;
+                }
+            case EquipmentType.HAT:
+                {
+                    SetHat(id, false);
+                    break;
+                }
+            case EquipmentType.EYEWEAR:
+                {
+                    SetEyewear(id, false);
+                    break;
+                }
+            case EquipmentType.MOUTH:
+                {
+                    SetMouth(id, false);
+                    break;
+                }
+            case EquipmentType.GROUND:
+                {
+                    SetGround(id, false);
+                    break;
+                }
+            case EquipmentType.GROUND_BACK:
+                {
+                    SetGroundBack(id, false);
+                    break;
+                }
+            case EquipmentType.GROUND_FRONT:
+                {
+                    SetGroundFront(id, false);
                     break;
                 }
             case EquipmentType.TAIL:
@@ -244,6 +287,57 @@ public class PlayerCustomization : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    public void SetEquipmentBySprite(EquipmentType equipmentType, Sprite equipmentSprite)
+    {
+        switch (equipmentType)
+        {
+            case EquipmentType.EYEWEAR:
+                {
+                    bool found = FindBySprite(equipmentSprite, eyewearEquipment, id => SetEyewear(id));
+
+                    if (found) { break; }
+
+                    FindBySprite(equipmentSprite, closeableEyewearEquipment, id => SetEyewear(id));
+                    break;
+                }
+            case EquipmentType.HAT:
+                {
+                    bool found = FindBySprite(equipmentSprite, hatsEquipment, id => SetHat(id));
+                    if (found) { break; }
+
+                    found = FindBySprite(equipmentSprite, hatsNoEarsEquipment, id => SetHat(id));
+                    if (found) { break; }
+
+                    found = FindBySprite(equipmentSprite, hatsBetweenEarsEquipment, id => SetHat(id));
+                    break;
+                }
+            case EquipmentType.MOUTH:
+                {
+                    FindBySprite(equipmentSprite, mouthEquipment, id => SetMouth(id));
+                    break;
+                }
+            case EquipmentType.BODY:
+                {
+                    FindBySprite(equipmentSprite, bodyEquipment, id => SetBody(id));
+                    break;
+                }
+            case EquipmentType.TAIL:
+                {
+                    break;
+                }
+            case EquipmentType.LEGS:
+                {
+                    break;
+                }
+        }
+    }
+
+    [ContextMenu("Save")]
+    public void Save()
+    {
+        KittiesCustomizationService.Save(url, playerEquipmentConfig);
     }
 
     private bool FindBySprite(Sprite sprite, List<SpriteEquipment> equipment, Action<string> callback)
@@ -258,52 +352,55 @@ public class PlayerCustomization : MonoBehaviour
         return false;
     }
 
-    public void SetKittyColor(string colorId)
+    public void SetKittyColor(string colorId, bool updateConfig = true)
     {
         ColorEquipment equipment = SetColor(colorId, kittyColorEquipment, colorMultiplyElements);
-        if (equipment != null)
+        if (updateConfig && equipment != null)
         {
             AddOrUpdateEquipment(EquipmentType.COLOR, equipment);
         }
     }
 
-    public void SetEyes(string eyesId)
+    public void SetEyes(string eyesId, bool updateConfig = true)
     {
         GameObjectEquipment eq = SetSingleActiveElement(eyesId, eyesEquipment);
 
-        if (eq != null)
+        if (updateConfig && eq != null)
         {
             AddOrUpdateEquipment(EquipmentType.EYES, eq);
         }
     }
 
-    public void SetBack(string backId)
+    public void SetBack(string backId, bool updateConfig = true)
     {
         if (inGame) return;
         SpriteEquipment eq = SetSingleSpriteElement(backId, backEquipment, backSpriteRenderer);
 
-        if (eq != null)
+        if (updateConfig && eq != null)
         {
             AddOrUpdateEquipment(EquipmentType.BACK, eq);
         }
     }
 
-    public void SetBody(string bodyId)
+    public void SetBody(string bodyId, bool updateConfig = true)
     {
         SpriteEquipment eq = SetSingleSpriteElement(bodyId, bodyEquipment, bodySpriteRenderer);
 
-        if (eq != null)
+        if (updateConfig && eq != null)
         {
             AddOrUpdateEquipment(EquipmentType.BODY, eq);
         }
     }
 
-    public void SetHat(string hatId)
+    public void SetHat(string hatId, bool updateConfig = true)
     {
         int idx = earringsEquipment.FindIndex(el => el.id == hatId);
         if (idx >= 0)
         {
-            AddOrUpdateEquipment(EquipmentType.HAT, earringsEquipment[idx]);
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, earringsEquipment[idx]);
+            }
             if (idx == 0) //right
             {
                 earrings[1].GetComponent<SpriteRenderer>().sprite = earringSprite;
@@ -320,7 +417,10 @@ public class PlayerCustomization : MonoBehaviour
         }
         else if (boneHatEquipment.id == hatId)
         {
-            AddOrUpdateEquipment(EquipmentType.HAT, boneHatEquipment);
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, boneHatEquipment);
+            }
             earrings[1].GetComponent<SpriteRenderer>().sprite = boneHatEquipment.sprite;
             return;
         }
@@ -329,7 +429,10 @@ public class PlayerCustomization : MonoBehaviour
         idx = hatsBetweenEarsEquipment.FindIndex(el => el.id == hatId);
         if (idx >= 0)
         {
-            AddOrUpdateEquipment(EquipmentType.HAT, hatsBetweenEarsEquipment[idx]);
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, hatsBetweenEarsEquipment[idx]);
+            }
 
             lEar.SetActive(true);
             rEar.SetActive(true);
@@ -346,7 +449,10 @@ public class PlayerCustomization : MonoBehaviour
 
         if (idx >= 0)
         {
-            AddOrUpdateEquipment(EquipmentType.HAT, hatsEquipment[idx]);
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, hatsEquipment[idx]);
+            }
 
             lEar.SetActive(true);
             rEar.SetActive(true);
@@ -362,7 +468,10 @@ public class PlayerCustomization : MonoBehaviour
         idx = hatsNoEarsEquipment.FindIndex(el => el.id == hatId);
         if (idx >= 0)
         {
-            AddOrUpdateEquipment(EquipmentType.HAT, hatsNoEarsEquipment[idx]);
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, hatsNoEarsEquipment[idx]);
+            }
 
             lEar.SetActive(false);
             rEar.SetActive(false);
@@ -376,7 +485,7 @@ public class PlayerCustomization : MonoBehaviour
         }
     }
 
-    public void SetEyewear(string eyewearId)
+    public void SetEyewear(string eyewearId, bool updateConfig = true)
     {
         SpriteEquipment eq = SetSingleSpriteElement(eyewearId, eyewearEquipment, eyewearSpriteRenderer);
         if (eq == null)
@@ -384,49 +493,49 @@ public class PlayerCustomization : MonoBehaviour
             eq = SetSingleSpriteElement(eyewearId, closeableEyewearEquipment, closeableEyewearSpriteRenderer);
         }
 
-        if (eq != null)
+        if (updateConfig && eq != null)
         {
             AddOrUpdateEquipment(EquipmentType.EYEWEAR, eq);
         }
     }
 
-    public void SetMouth(string mouthId)
+    public void SetMouth(string mouthId, bool updateConfig = true)
     {
         SpriteEquipment eq = SetSingleSpriteElement(mouthId, mouthEquipment, mouthSpriteRenderer);
-        if (eq != null)
+        if (updateConfig && eq != null)
         {
             AddOrUpdateEquipment(EquipmentType.MOUTH, eq);
         }
     }
 
-    public void SetGroundFront(string groundId)
+    public void SetGroundFront(string groundId, bool updateConfig = true)
     {
         if (inGame) return;
 
         SpriteEquipment eq = SetSingleSpriteElement(groundId, groundFrontEquipment, groundFrontSpriteRenderer);
-        if (eq != null)
+        if (updateConfig && eq != null)
         {
             AddOrUpdateEquipment(EquipmentType.GROUND_FRONT, eq);
         }
     }
 
-    public void SetGroundBack(string groundId)
+    public void SetGroundBack(string groundId, bool updateConfig = true)
     {
         if (inGame) return;
 
         SpriteEquipment eq = SetSingleSpriteElement(groundId, groundBackEquipment, groundBackSpriteRenderer);
-        if (eq != null)
+        if (updateConfig && eq != null)
         {
             AddOrUpdateEquipment(EquipmentType.GROUND_BACK, eq);
         }
     }
 
-    public void SetGround(string groundId)
+    public void SetGround(string groundId, bool updateConfig = true)
     {
         if (inGame) return;
 
         SpriteEquipment eq = SetSingleSpriteElement(groundId, groundEquipment, groundSpriteRenderer);
-        if (eq != null)
+        if (updateConfig && eq != null)
         {
             AddOrUpdateEquipment(EquipmentType.GROUND, eq);
         }

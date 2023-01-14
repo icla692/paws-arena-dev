@@ -20,7 +20,7 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
         if (photonView.IsMine)
         {
             transform.position = SyncPlatformsBehaviour.Instance.myPos;
-            playerCustomization.SetCat(GameState.selectedNFT.ids);
+            playerCustomization.SetCat(GameState.selectedNFT.imageUrl, GameState.selectedNFT.ids);
 
             photonView.RPC("SetCatStyle", RpcTarget.Others, GameState.selectedNFT.ids.ToArray());
         }
@@ -39,13 +39,13 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
     private void OnPlayerJoined(string nickname, string userId)
     {
         Player player = PhotonNetwork.PlayerList.First(player => player.UserId == userId);
-        photonView.RPC("SetCatStyle", player, GameState.selectedNFT.ids.ToArray());
+        photonView.RPC("SetCatStyle", player, GameState.selectedNFT.imageUrl, GameState.selectedNFT.ids.ToArray());
     }
 
     [PunRPC]
-    public void SetCatStyle(string[] ids)
+    public void SetCatStyle(string url, string[] ids)
     {
-        playerCustomization.SetCat(ids.ToList());
+        playerCustomization.SetCat(url, ids.ToList());
     }
 
 

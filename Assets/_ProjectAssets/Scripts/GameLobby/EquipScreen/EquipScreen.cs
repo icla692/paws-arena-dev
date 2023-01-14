@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class EquipScreen : MonoBehaviour
 {
+    public LobbyUIManager lobbyUIManager;
     public Transform playerPlatformParent;
     public GameObject playerPlatformPrefab;
 
@@ -95,11 +96,26 @@ public class EquipScreen : MonoBehaviour
             equipments.Clear();
         }
 
+        Equipment equippedItem = null;
+        if (playerCustomization.playerEquipmentConfig.ContainsKey(eqType))
+        {
+            equippedItem = playerCustomization.playerEquipmentConfig[eqType];
+        }
+
         foreach(Sprite el in elements)
         {
             var go = GameObject.Instantiate(nftPrefab, content);
-            go.GetComponent<NFTImageSprite>().mainImage.sprite = el;
-            equipments.Add(go.GetComponent<NFTImageSprite>());
+            var nftImageSprite = go.GetComponent<NFTImageSprite>();
+            nftImageSprite.mainImage.sprite = el;
+            equipments.Add(nftImageSprite);
+
+            if(equippedItem != null && equippedItem is SpriteEquipment spriteItem && 
+                el == spriteItem.sprite)
+            {
+                Debug.Log("Found match for " + spriteItem.sprite.name);
+                nftImageSprite.Select();
+                selectedEquipment = nftImageSprite;
+            }
 
             int idx = equipments.Count - 1;
             equipments[idx].onClick += ()=> OnEquipmentSelected(idx);
@@ -121,5 +137,11 @@ public class EquipScreen : MonoBehaviour
             Destroy(t.gameObject);
             equipments.Clear();
         }
+    }
+
+    public void SaveAndClose()
+    {
+        playerCustomization.Save();
+        lobbyUIManager.OpenGameMenu();
     }
 }

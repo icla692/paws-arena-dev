@@ -49,15 +49,15 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
             ids.Append(",");
         }
 
-        SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, ids.ToString());
+        SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, GameState.selectedNFT.imageUrl, ids.ToString());
 
 
     }
 
     [PunRPC]
-    public void SetCatNFT(string ids)
+    public void SetCatNFT(string url, string ids)
     {
-        playerCustomization.SetCat(ids.Split(",").ToList());
+        playerCustomization.SetCat(url, ids.Split(",").ToList());
     }
 
     public void RegisterPlayerState(PlayerState playerState)

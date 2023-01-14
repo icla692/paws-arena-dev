@@ -9303,9 +9303,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1311700191}
-        m_TargetAssemblyTypeName: LobbyUIManager, Assembly-CSharp
-        m_MethodName: OpenGameMenu
+      - m_Target: {fileID: 1789404310}
+        m_TargetAssemblyTypeName: EquipScreen, Assembly-CSharp
+        m_MethodName: SaveAndClose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16642,6 +16642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aab116081df74f489cb451e07336d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lobbyUIManager: {fileID: 0}
   playerPlatformParent: {fileID: 1708989333}
   playerPlatformPrefab: {fileID: 9122209185718362659, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
   equipmentsConfig: {fileID: 11400000, guid: b1c54d560f2953b40ad580080dc5b0e8, type: 2}
