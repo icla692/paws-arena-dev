@@ -688,6 +688,30 @@ PrefabInstance:
       propertyPath: closeableEyewearKeysMapping.Array.data[2]
       value: eyewear15
       objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[0].color.b
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[0].color.g
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[0].color.r
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[5].color.b
+      value: 0.8392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[5].color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[5].color.r
+      value: 0.8235294
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
 --- !u!114 &1652268005445013935 stripped

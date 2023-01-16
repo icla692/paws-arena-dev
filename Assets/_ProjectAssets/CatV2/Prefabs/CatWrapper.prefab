@@ -644,7 +644,7 @@ MonoBehaviour:
   - {fileID: 4746047893215436165}
   kittyColorEquipment:
   - id: kittycolor1
-    color: {r: 0.5294118, g: 0.5294118, b: 0.5294118, a: 1}
+    color: {r: 0.8509804, g: 0.8509804, b: 0.8509804, a: 1}
   - id: kittycolor2
     color: {r: 0, g: 0.6039216, b: 0.09803922, a: 1}
   - id: kittycolor3
@@ -654,9 +654,9 @@ MonoBehaviour:
   - id: kittycolor5
     color: {r: 0.94509804, g: 0.29803923, b: 0.29803923, a: 1}
   - id: kittycolor6
-    color: {r: 0.8352941, g: 0.043137256, b: 0.85882354, a: 1}
+    color: {r: 0.8, g: 0.16470589, b: 0.81960785, a: 1}
   - id: kittycolor7
-    color: {r: 0.41568628, g: 0, b: 1, a: 1}
+    color: {r: 0.6156863, g: 0.28235295, b: 0.9529412, a: 1}
   eyesEquipment:
   - id: eyes1
     target: {fileID: 4746047893583650793}
@@ -983,60 +983,6 @@ MonoBehaviour:
     sprite: {fileID: 2017375310, guid: 65124d07f452a1b46861fbedcdcde455, type: 3}
   groundBackTransform: {fileID: 1944812094525316717}
   groundBackSpriteRenderer: {fileID: 6650270707812142709}
-  groundBackKeysMapping:
-  - groundback22
-  - groundback26
-  - groundback25
-  - groundback24
-  - groundback14
-  - groundback18
-  - groundback17
-  - groundback16
-  - groundback12
-  - groundback15
-  - groundback19
-  - groundback23
-  - groundback11
-  - groundback13
-  - groundback20
-  - groundback21
-  - groundback8
-  - groundback6
-  - groundback7
-  - groundback5
-  - groundback9
-  - groundback10
-  - groundback4
-  - groundback3
-  - groundback1
-  - groundback2
-  groundBackSprites:
-  - {fileID: 2095470552, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: 2145993248, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: -1763048142, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: -134289743, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: 479704780, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: 1364552768, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: 1759646176, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: 1671381798, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: -650742414, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: 17920008, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: -1605637658, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: -994869919, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: 415825089, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: -648001466, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: -1995089500, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: -484223285, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
-  - {fileID: 931308118, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
-  - {fileID: 861762513, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
-  - {fileID: 1506503713, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
-  - {fileID: 432283421, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
-  - {fileID: -228345020, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
-  - {fileID: -255228018, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
-  - {fileID: -1965401272, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
-  - {fileID: -1012177146, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
-  - {fileID: -1167198987, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
-  - {fileID: -4635641, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
   groundBackEquipment:
   - id: groundback22
     sprite: {fileID: 2095470552, guid: 398b41f7e86781b4c85b819444cf9d9f, type: 3}
@@ -1092,30 +1038,6 @@ MonoBehaviour:
     sprite: {fileID: -4635641, guid: 83744abb1b23c1241acbab6ef4256b69, type: 3}
   groundTransform: {fileID: 3997028694561444585}
   groundSpriteRenderer: {fileID: 286065053290537983}
-  groundKeysMapping:
-  - ground6
-  - ground10
-  - ground9
-  - ground8
-  - ground11
-  - ground7
-  - ground5
-  - ground4
-  - ground3
-  - ground1
-  - ground2
-  groundSprites:
-  - {fileID: 20494521, guid: 48d527eee27168a42b6bc524f1344f41, type: 3}
-  - {fileID: 855007682, guid: 48d527eee27168a42b6bc524f1344f41, type: 3}
-  - {fileID: 736634546, guid: 48d527eee27168a42b6bc524f1344f41, type: 3}
-  - {fileID: 522968209, guid: 48d527eee27168a42b6bc524f1344f41, type: 3}
-  - {fileID: 2091651585, guid: e32c37de256114b469c90af2122aaba7, type: 3}
-  - {fileID: -1928305653, guid: e32c37de256114b469c90af2122aaba7, type: 3}
-  - {fileID: 436934194, guid: e32c37de256114b469c90af2122aaba7, type: 3}
-  - {fileID: 1892406240, guid: e32c37de256114b469c90af2122aaba7, type: 3}
-  - {fileID: -30407097, guid: 47ef4ea9af360bc478b1471b659872a3, type: 3}
-  - {fileID: 652933786, guid: 47ef4ea9af360bc478b1471b659872a3, type: 3}
-  - {fileID: 1500544045, guid: 47ef4ea9af360bc478b1471b659872a3, type: 3}
   groundEquipment:
   - id: ground6
     sprite: {fileID: 20494521, guid: 48d527eee27168a42b6bc524f1344f41, type: 3}
