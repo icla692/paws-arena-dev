@@ -15,6 +15,8 @@ public class EquipScreen : MonoBehaviour
     public Transform content;
     public GameObject nftPrefab;
 
+    public Sprite empty;
+
     [Header("Btns")]
     public ButtonHoverable eyeBtn;
     public ButtonHoverable headBtn;
@@ -127,7 +129,14 @@ public class EquipScreen : MonoBehaviour
         selectedEquipment?.Deselect();
         selectedEquipment = equipments[idx];
         selectedEquipment.Select();
-        playerCustomization.SetEquipmentBySprite(currentType, equipments[idx].mainImage.sprite);
+        if (equipments[idx].mainImage.sprite.name != "none")
+        {
+            playerCustomization.SetEquipmentBySprite(currentType, equipments[idx].mainImage.sprite);
+        }
+        else
+        {
+            playerCustomization.SetEquipmentBySprite(currentType, null);
+        }
     }
 
     private void DePopulate()

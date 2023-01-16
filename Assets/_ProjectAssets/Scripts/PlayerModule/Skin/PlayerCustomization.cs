@@ -363,6 +363,13 @@ public class PlayerCustomization : MonoBehaviour
         {
             case EquipmentType.EYEWEAR:
                 {
+                    //Empty case
+                    if(equipmentSprite == null)
+                    {
+                        SetEyewear("none");
+                        break;
+                    }
+
                     bool found = FindBySprite(equipmentSprite, eyewearEquipment, id => SetEyewear(id));
 
                     if (found) { break; }
@@ -372,22 +379,41 @@ public class PlayerCustomization : MonoBehaviour
                 }
             case EquipmentType.HAT:
                 {
+                    //Empty case
+                    if (equipmentSprite == null)
+                    {
+                        SetHat("none");
+                        break;
+                    }
+
                     bool found = FindBySprite(equipmentSprite, hatsEquipment, id => SetHat(id));
                     if (found) { break; }
 
                     found = FindBySprite(equipmentSprite, hatsNoEarsEquipment, id => SetHat(id));
                     if (found) { break; }
 
-                    found = FindBySprite(equipmentSprite, hatsBetweenEarsEquipment, id => SetHat(id));
+                    FindBySprite(equipmentSprite, hatsBetweenEarsEquipment, id => SetHat(id));
                     break;
                 }
             case EquipmentType.MOUTH:
                 {
+                    //Empty case
+                    if (equipmentSprite == null)
+                    {
+                        SetMouth("none");
+                        break;
+                    }
                     FindBySprite(equipmentSprite, mouthEquipment, id => SetMouth(id));
                     break;
                 }
             case EquipmentType.BODY:
                 {
+                    //Empty case
+                    if (equipmentSprite == null)
+                    {
+                        SetBody("none");
+                        break;
+                    }
                     FindBySprite(equipmentSprite, bodyEquipment, id => SetBody(id));
                     break;
                 }
@@ -563,6 +589,10 @@ public class PlayerCustomization : MonoBehaviour
         if (eq == null)
         {
             eq = SetSingleSpriteElement(eyewearId, closeableEyewearEquipment, closeableEyewearSpriteRenderer);
+            if(eq == null)
+            {
+
+            }
         }
 
         if (updateConfig && eq != null)
@@ -622,7 +652,6 @@ public class PlayerCustomization : MonoBehaviour
         }
 
         spriteRenderer.sprite = equipment[idx].sprite;
-
         return equipment[idx];
     }
 

@@ -16648,6 +16648,7 @@ MonoBehaviour:
   equipmentsConfig: {fileID: 11400000, guid: b1c54d560f2953b40ad580080dc5b0e8, type: 2}
   content: {fileID: 1433113695}
   nftPrefab: {fileID: 4135986911533133119, guid: c6e499f5a9f16694e9194edfae84c341, type: 3}
+  empty: {fileID: 0}
   eyeBtn: {fileID: 2059816573}
   headBtn: {fileID: 893207421}
   mouthBtn: {fileID: 543261523}

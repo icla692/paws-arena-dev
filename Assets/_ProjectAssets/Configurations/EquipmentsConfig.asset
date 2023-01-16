@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EquipmentsConfig
   m_EditorClassIdentifier: 
   eyes:
+  - {fileID: 21300000, guid: 372b64445bbce18478b08cdd300fbb2a, type: 3}
   - {fileID: -1403935026, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
   - {fileID: 1502350701, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
   - {fileID: 1412653485, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
@@ -38,6 +39,7 @@ MonoBehaviour:
   - {fileID: 1874525996, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
   - {fileID: 2088381011, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
   head:
+  - {fileID: 21300000, guid: 372b64445bbce18478b08cdd300fbb2a, type: 3}
   - {fileID: 1687324264, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
   - {fileID: -295639090, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
   - {fileID: -1661232333, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
@@ -73,6 +75,7 @@ MonoBehaviour:
   - {fileID: -707013611, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - {fileID: 1600589697, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   mouth:
+  - {fileID: 21300000, guid: 372b64445bbce18478b08cdd300fbb2a, type: 3}
   - {fileID: 1295844308, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
   - {fileID: 668439670, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
   - {fileID: -99249145, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
@@ -87,6 +90,7 @@ MonoBehaviour:
   - {fileID: -1183200575, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
   - {fileID: -659008090, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
   body:
+  - {fileID: 21300000, guid: 372b64445bbce18478b08cdd300fbb2a, type: 3}
   - {fileID: -705067254, guid: 786ee73db49f28f42a0f14f0b449d33a, type: 3}
   - {fileID: -1172480427, guid: 786ee73db49f28f42a0f14f0b449d33a, type: 3}
   - {fileID: -1712347349, guid: 786ee73db49f28f42a0f14f0b449d33a, type: 3}

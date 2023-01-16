@@ -763,6 +763,8 @@ MonoBehaviour:
     sprite: {fileID: 114281807, guid: 179a704625ff4f446b9ffef155cb4d30, type: 3}
   - id: body9
     sprite: {fileID: -56959623, guid: 179a704625ff4f446b9ffef155cb4d30, type: 3}
+  - id: none
+    sprite: {fileID: 0}
   hatsSpriteRenderer: {fileID: 7735798722957965988}
   hatsNoEarsRenderer: {fileID: 5596275756161589988}
   hatsBetweenEarsRenderer: {fileID: 7237662042038308760}
@@ -797,6 +799,8 @@ MonoBehaviour:
     sprite: {fileID: -442576377, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
   - id: hat23
     sprite: {fileID: -194796099, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
+  - id: none
+    sprite: {fileID: 0}
   hatsNoEarsEquipment:
   - id: hat10
     sprite: {fileID: 1326935763, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
@@ -896,6 +900,8 @@ MonoBehaviour:
     sprite: {fileID: -480745194, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
   - id: eyewear16
     sprite: {fileID: 1874525996, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
+  - id: none
+    sprite: {fileID: 0}
   closeableEyewearSpriteRenderer: {fileID: 4339837636844918865}
   closeableEyewearEquipment: []
   mouthSpriteRenderer: {fileID: 3035412671965841575}
@@ -926,6 +932,8 @@ MonoBehaviour:
     sprite: {fileID: -1183200575, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
   - id: mouth13
     sprite: {fileID: -659008090, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
+  - id: none
+    sprite: {fileID: 0}
   groundFrontTransform: {fileID: 2396240541805243297}
   groundFrontSpriteRenderer: {fileID: 436819567781837478}
   groundFrontEquipment:
