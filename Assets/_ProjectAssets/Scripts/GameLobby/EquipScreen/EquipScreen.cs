@@ -141,7 +141,12 @@ public class EquipScreen : MonoBehaviour
 
     public void SaveAndClose()
     {
-        playerCustomization.Save();
+        playerCustomization.SaveCustomConfig();
         lobbyUIManager.OpenGameMenu();
+    }
+
+    public void ResetConfig()
+    {
+        playerCustomization.ResetToOriginal();
     }
 }

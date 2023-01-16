@@ -17,7 +17,8 @@ public enum EquipmentType
     LEGS,
     GROUND_FRONT,
     GROUND_BACK,
-    GROUND
+    GROUND,
+    NONE
 }
 
 [System.Serializable]
@@ -28,7 +29,7 @@ public class Equipment
 }
 
 [System.Serializable]
-public class SpriteEquipment: Equipment
+public class SpriteEquipment : Equipment
 {
     [SerializeField]
     public Sprite sprite;
@@ -191,34 +192,47 @@ public class PlayerCustomization : MonoBehaviour
 
         var config = KittiesCustomizationService.GetCustomization(url);
 
+        //Generate original config
         if (config == null)
         {
             playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
 
             foreach (string id in ids)
             {
-                SetKittyColor(id);
-                SetEyes(id);
-                SetBack(id);
-                SetBody(id);
-                SetHat(id);
-                SetEyewear(id);
-                SetMouth(id);
-                SetGroundFront(id);
-                SetGroundBack(id);
-                SetGround(id);
+                EquipmentType equipmentType = GetEquipmentTypeById(id);
+
+                if (equipmentType == EquipmentType.NONE) continue;
+
+                playerEquipmentConfig.Add(equipmentType, new Equipment()
+                {
+                    id = id
+                });
             }
+
+            config = SaveOriginalConfig();
+        }
+
+        playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
+        if (config.playerEquipmentConfig != null)
+        {
+            ApplyConfig(config.playerEquipmentConfig);
         }
         else
         {
-            playerEquipmentConfig = config.playerEquipmentConfig;
-            ApplyConfig(playerEquipmentConfig);
+            ApplyConfig(config.originalConfig);
         }
+    }
+
+    public void ResetToOriginal()
+    {
+        KittiesCustomizationService.RemoveCustomizations(url);
+        var config = KittiesCustomizationService.GetCustomization(url);
+        ApplyConfig(config.originalConfig);
     }
 
     private void ApplyConfig(Dictionary<EquipmentType, Equipment> playerEquipmentConfig)
     {
-        foreach(KeyValuePair<EquipmentType, Equipment> pair in playerEquipmentConfig)
+        foreach (KeyValuePair<EquipmentType, Equipment> pair in playerEquipmentConfig)
         {
             SetSpriteEquipment(pair.Key, pair.Value.id);
         }
@@ -230,52 +244,52 @@ public class PlayerCustomization : MonoBehaviour
         {
             case EquipmentType.COLOR:
                 {
-                    SetKittyColor(id, false);
+                    SetKittyColor(id);
                     break;
                 }
             case EquipmentType.EYES:
                 {
-                    SetEyes(id, false);
+                    SetEyes(id);
                     break;
                 }
             case EquipmentType.BACK:
                 {
-                    SetBack(id, false);
+                    SetBack(id);
                     break;
                 }
             case EquipmentType.BODY:
                 {
-                    SetBody(id, false);
+                    SetBody(id);
                     break;
                 }
             case EquipmentType.HAT:
                 {
-                    SetHat(id, false);
+                    SetHat(id);
                     break;
                 }
             case EquipmentType.EYEWEAR:
                 {
-                    SetEyewear(id, false);
+                    SetEyewear(id);
                     break;
                 }
             case EquipmentType.MOUTH:
                 {
-                    SetMouth(id, false);
+                    SetMouth(id);
                     break;
                 }
             case EquipmentType.GROUND:
                 {
-                    SetGround(id, false);
+                    SetGround(id);
                     break;
                 }
             case EquipmentType.GROUND_BACK:
                 {
-                    SetGroundBack(id, false);
+                    SetGroundBack(id);
                     break;
                 }
             case EquipmentType.GROUND_FRONT:
                 {
-                    SetGroundFront(id, false);
+                    SetGroundFront(id);
                     break;
                 }
             case EquipmentType.TAIL:
@@ -287,6 +301,60 @@ public class PlayerCustomization : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    public EquipmentType GetEquipmentTypeById(string id)
+    {
+        if (kittyColorEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.COLOR;
+        }
+        if (eyesEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.EYES;
+        }
+        if (backEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.BACK;
+        }
+        if (bodyEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.BODY;
+        }
+        if (earringsEquipment.FindIndex(eq => eq.id == id) >= 0 || boneHatEquipment.id == id ||
+            hatsBetweenEarsEquipment.FindIndex(eq => eq.id == id) >= 0 ||
+            hatsEquipment.FindIndex(eq => eq.id == id) >= 0 ||
+            hatsNoEarsEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.HAT;
+        }
+
+        if (eyewearEquipment.FindIndex(eq => eq.id == id) >= 0 || closeableEyewearEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.EYEWEAR;
+        }
+
+        if (mouthEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.MOUTH;
+        }
+
+        if (groundBackEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.GROUND_BACK;
+        }
+
+        if (groundEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.GROUND;
+        }
+
+        if (groundFrontEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.GROUND_FRONT;
+        }
+
+        return EquipmentType.NONE;
     }
 
     public void SetEquipmentBySprite(EquipmentType equipmentType, Sprite equipmentSprite)
@@ -335,9 +403,13 @@ public class PlayerCustomization : MonoBehaviour
     }
 
     [ContextMenu("Save")]
-    public void Save()
+    public void SaveCustomConfig()
     {
-        KittiesCustomizationService.Save(url, playerEquipmentConfig);
+        KittiesCustomizationService.SaveCustomConfig(url, playerEquipmentConfig);
+    }
+    public KittyCustomization SaveOriginalConfig()
+    {
+        return KittiesCustomizationService.SaveOriginalConfig(url, playerEquipmentConfig);
     }
 
     private bool FindBySprite(Sprite sprite, List<SpriteEquipment> equipment, Action<string> callback)
