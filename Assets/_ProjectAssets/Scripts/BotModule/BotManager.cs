@@ -9,8 +9,12 @@ public class BotManager : MonoSingleton<BotManager>
 {
     public event Action<int> onHealthUpdated;
 
+    [Header("Dependencies")]
     public Collider2D leftMapBound;
     public Collider2D rightMapBound;
+    public GameObject bulletPrefab;  // Must contain rigidbody and collider
+
+    public List<Collider2D> Enemy { get; private set; } = new List<Collider2D>();
 
     [HideInInspector]
     public PlayerDataCustomView botUI;
@@ -25,6 +29,11 @@ public class BotManager : MonoSingleton<BotManager>
         AreaEffectsManager.Instance.OnAreaDamage += AreaDamage;
         maxHP = ConfigurationManager.Instance.Config.GetPlayerTotalHealth();
         SetBotHealth(maxHP);
+    }
+
+    public void RegisterBotEnemy(PlayerComponent playerComponent)
+    {
+        Enemy.AddRange(playerComponent.gameObject.GetComponentsInChildren<Collider2D>());
     }
 
     private void OnDestroy()

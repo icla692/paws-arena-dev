@@ -11,6 +11,7 @@ public class BotPlayerComponent : MonoBehaviour
     private PlayerGraphicsBehaviour playerGraphicsBehaviour;
 
     private PlayerMotionBehaviour playerMotionBehaviour;
+    private PlayerThrowBehaviour playerThrowBehaviour;
 
     private BotInputActions.PlayerActions playerActions;
 
@@ -52,7 +53,7 @@ public class BotPlayerComponent : MonoBehaviour
         var playerIndicatorBehaviour = GetComponentInChildren<PlayerIndicatorBehaviour>();
         playerIndicatorBehaviour.RegisterDirectionCallbacks(playerActions);
 
-        var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
+        playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
 
         BotPlayerAPI.Instance.Init(playerMotionBehaviour, playerIndicatorBehaviour.indicatorCircle);
@@ -64,6 +65,7 @@ public class BotPlayerComponent : MonoBehaviour
     private void SetupAI()
     {
         botAI = gameObject.AddComponent<BotAI>();
+        botAI.LaunchPoint = playerThrowBehaviour.GetLaunchPoint();
     }
 
     private void OnStateUpdatedForBot(IRoomState roomState)

@@ -7,11 +7,16 @@ using UnityEngine;
 
 public class BotAI : MonoBehaviour
 {
-    private struct Location
+    public struct Location
     {
         public Vector3 position;
+        public Vector3 launchPosition;
         public int direction;  // leftOfOrigin=-1, origin=0, rightOfOrigin=1
         public float score;
+        public float bestAngle;
+        public float bestPower;
+        public float bestDistanceToEnemy;
+        public bool directHit;
     }
 
     private const float MOVEMENT_ARRIVAL = 0.2f;
@@ -26,6 +31,9 @@ public class BotAI : MonoBehaviour
 
     private Rigidbody2D Rigidbody { get; set; }
     private Collider2D Collider { get; set; }
+    public Transform LaunchPoint { get; set; }
+
+    private BotAIAim BotAIAim { get; set; }
 
     // For debugging, to be deleted
     #region Debugging
@@ -47,6 +55,8 @@ public class BotAI : MonoBehaviour
     {
         Rigidbody = GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
+
+        BotAIAim = new BotAIAim(BotManager.Instance.Enemy.ToArray());
     }
 
     public void Play()
@@ -64,11 +74,12 @@ public class BotAI : MonoBehaviour
     private IEnumerator PlayTurn()
     {
         int moveDir = 0;
+        Location choice;
 
         do
         {
             List<Location> potentialLocations = GetPotentialLocations(moveDir != -1, moveDir != 1);
-            Location choice = ChooseLocation(potentialLocations);
+            choice = ChooseLocation(potentialLocations);
             moveDir = choice.direction;
 
             DebugLocation(choice);
@@ -78,7 +89,7 @@ public class BotAI : MonoBehaviour
         }
         while (repeatMoveTo && TimeLeft > 2);        
 
-        yield return StartCoroutine(Shoot());
+        yield return StartCoroutine(Shoot(choice));
     }
 
     private List<Location> GetPotentialLocations(bool left, bool right)
@@ -87,7 +98,7 @@ public class BotAI : MonoBehaviour
 
         float movementStep = Bounds.size.x * 0.9f;
 
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1; i <= 1; i++)
         {
             if (left) AddLocationIfNew(ref result, GetLocation(-1, i * movementStep));
             if (right) AddLocationIfNew(ref result, GetLocation(1, i * movementStep));
@@ -172,7 +183,7 @@ public class BotAI : MonoBehaviour
         api.CancelMove();
     }
 
-    private IEnumerator Shoot()
+    private IEnumerator Shoot(Location location)
     {
         yield return null;
         yield return null;
@@ -181,9 +192,14 @@ public class BotAI : MonoBehaviour
         api.SelectWeapon();
 
         yield return null;
-        api.shootAngle = Random.Range(125, 145);
-        api.shootPower = Random.Range(0.75f, 1);
+        api.shootAngle = location.bestAngle; //Random.Range(125, 145);
+        api.shootPower = location.bestPower; //Random.Range(0.75f, 1);
         api.SelectAnglePower();
+
+        Debug.Log("Best distance: " + location.bestDistanceToEnemy);
+        Debug.Log("location.bestAngle: " + location.bestAngle);
+        Debug.Log("location.bestPower: " + location.bestPower);
+        Debug.Log("Best score: " + location.score);
 
         yield return null;        
         api.Shoot();
@@ -195,20 +211,24 @@ public class BotAI : MonoBehaviour
         {
             direction = 0,
             position = Center,
-            score = 0
+            launchPosition = LaunchPoint.position,
+            directHit = false
         };
     }
 
     private Location GetLocation(int direction, float xOffset)
-    {   
+    {
+        Vector3 newPosition = TerrainNavigationLibrary.GetPositionAtXDisplacement(
+                Bounds,
+                GetTerrainDirection(direction),
+                xOffset);
+
         return new Location
         {
             direction = direction,
-            position = TerrainNavigationLibrary.GetPositionAtXDisplacement(
-                Bounds, 
-                GetTerrainDirection(direction),
-                xOffset),
-            score = 0
+            position = newPosition,
+            launchPosition = newPosition + (LaunchPoint.position - Center),
+            directHit = false
         };
     }
 
@@ -222,7 +242,11 @@ public class BotAI : MonoBehaviour
         for (int i=0; i<locations.Count; i++)
         {
             Location l = locations[i];
-            l.score = Random.Range(0, 1f);
+            BotAIAim.SimulateLocationAim(ref l);
+
+            if (l.directHit) l.score = 0.5f;
+            l.score += Mathf.Lerp(0.5f, 0, Mathf.Clamp(l.bestDistanceToEnemy, 0, 5) / 5);
+
             locations[i] = l;
         }
     }

@@ -15,10 +15,14 @@ static class TerrainNavigationLibrary
 
     private const int LAYER_CHUNK = 6;
     private const int LAYER_ENVIRONMENT = 9;
+    private const int LAYER_CHARACTER = 8;
 
-    private static readonly LayerMask LAYERMASK_CHUNK = 1 << LAYER_CHUNK;
-    private static readonly LayerMask LAYERMASK_ENVIRONMENT = 1 << LAYER_ENVIRONMENT;
-    private static readonly LayerMask LAYERMASK_TERRAIN = LAYERMASK_CHUNK | LAYERMASK_ENVIRONMENT;
+    public static readonly LayerMask LAYERMASK_CHUNK = 1 << LAYER_CHUNK;
+    public static readonly LayerMask LAYERMASK_ENVIRONMENT = 1 << LAYER_ENVIRONMENT;
+    public static readonly LayerMask LAYERMASK_CHARACTER = 1 << LAYER_CHARACTER;
+
+    public static readonly LayerMask LAYERMASK_TERRAIN = LAYERMASK_CHUNK | LAYERMASK_ENVIRONMENT;
+    public static readonly LayerMask LAYERMASK_HITTABLES = LAYERMASK_TERRAIN | LAYERMASK_CHARACTER;
 
     private const float TRACING_STEP = 0.2f;
     //private const float KITTY_HEIGHT = 1.13833f;
