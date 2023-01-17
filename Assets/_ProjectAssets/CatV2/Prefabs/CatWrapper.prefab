@@ -426,6 +426,90 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1402143213220070364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8430807790854172289}
+  - component: {fileID: 5761971189222306693}
+  m_Layer: 0
+  m_Name: eyewear_01_0 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8430807790854172289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402143213220070364}
+  m_LocalRotation: {x: -0.0000000018626451, y: 2.910383e-11, z: 1.0322765e-10, w: 1}
+  m_LocalPosition: {x: 0.03999996, y: 0.6199999, z: -0.37999988}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 423976781383273483}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &5761971189222306693
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402143213220070364}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 60
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 5.12, y: 5.12}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1530138108891818211
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,8 +944,6 @@ MonoBehaviour:
     sprite: {fileID: 1502350701, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
   - id: eyewear12
     sprite: {fileID: 1412653485, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
-  - id: eyewear14
-    sprite: {fileID: -958296059, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
   - id: eyewear11
     sprite: {fileID: 1972757250, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
   - id: eyewear5
@@ -894,16 +976,18 @@ MonoBehaviour:
     sprite: {fileID: -639412727, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
   - id: eyewear2
     sprite: {fileID: -640684955, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
-  - id: eyewear18
-    sprite: {fileID: -1436513588, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
   - id: eyewear17
     sprite: {fileID: -480745194, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
   - id: eyewear16
     sprite: {fileID: 1874525996, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
   - id: none
     sprite: {fileID: 0}
-  closeableEyewearSpriteRenderer: {fileID: 4339837636844918865}
-  closeableEyewearEquipment: []
+  closeableEyewearSpriteRenderer: {fileID: 5761971189222306693}
+  closeableEyewearEquipment:
+  - id: eyewear14
+    sprite: {fileID: -958296059, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
+  - id: eyewear18
+    sprite: {fileID: -1436513588, guid: 55fb829fb47cb264dadd595dc6739dfd, type: 3}
   mouthSpriteRenderer: {fileID: 3035412671965841575}
   mouthEquipment:
   - id: mouth10
@@ -1354,6 +1438,38 @@ Transform:
   m_Father: {fileID: 6598879850001336404}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3600533775604942542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 423976781383273483}
+  m_Layer: 0
+  m_Name: eyewear_closeable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &423976781383273483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3600533775604942542}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8430807790854172289}
+  m_Father: {fileID: 4746047892103309988}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3752153787812021054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,6 +1904,7 @@ Transform:
   - {fileID: 4746047892050810447}
   - {fileID: 4746047893300846020}
   - {fileID: 4746047893849802709}
+  - {fileID: 423976781383273483}
   m_Father: {fileID: 4746047893793959889}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1982,8 +2099,8 @@ MonoBehaviour:
   - {fileID: 4746047892390765509}
   - {fileID: 4746047892950087352}
   m_Bounds:
-    m_Center: {x: -0.641381, y: 1.279486, z: 0.18}
-    m_Extent: {x: 0.8745017, y: 1.4301118, z: 0.000000007450581}
+    m_Center: {x: -0.641381, y: 1.2794863, z: 0.18}
+    m_Extent: {x: 0.8745017, y: 1.4301119, z: 0.000000007450581}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -2268,7 +2385,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4746047892521903393}
-  m_LocalRotation: {x: 4.0576498e-10, y: -0.0000000037055026, z: 0.095938824, w: 0.9953873}
+  m_LocalRotation: {x: 4.0579112e-10, y: -0.0000000037057413, z: 0.095940016, w: 0.9953872}
   m_LocalPosition: {x: 0.2953624, y: 0.014666447, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2889,7 +3006,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4746047893174013441}
-  m_LocalRotation: {x: 0.000000025912955, y: 6.428536e-10, z: -0.024802038, w: 0.99969244}
+  m_LocalRotation: {x: 0.000000025912966, y: 6.4297767e-10, z: -0.024803227, w: 0.9996923}
   m_LocalPosition: {x: 0.064, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3004,7 +3121,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4746047893226113810}
-  m_LocalRotation: {x: -0.000000011743724, y: 0.000000039124927, z: 0.2527151, w: 0.96754074}
+  m_LocalRotation: {x: -0.000000011743755, y: 0.000000039125034, z: 0.25271618, w: 0.9675405}
   m_LocalPosition: {x: 0.30515254, y: 0.0013521906, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3351,7 +3468,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4746047893347027567}
-  m_LocalRotation: {x: 0.000000041118028, y: -0.000000026366928, z: 0.8523463, w: 0.5229779}
+  m_LocalRotation: {x: 0.00000004111808, y: -0.000000026366962, z: 0.8523457, w: 0.52297884}
   m_LocalPosition: {x: 0.069826275, y: 0.000020249041, z: 0.000000029802322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3466,8 +3583,8 @@ MonoBehaviour:
   - {fileID: 4746047893226113811}
   - {fileID: 4746047892521903394}
   m_Bounds:
-    m_Center: {x: -0.1579524, y: 0.20684424, z: 0.000000049270696}
-    m_Extent: {x: 0.3467233, y: 0.3308415, z: 0.000000028838283}
+    m_Center: {x: -0.1579513, y: 0.20684473, z: 0.00000004927069}
+    m_Extent: {x: 0.34672284, y: 0.3308417, z: 0.000000028838272}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0

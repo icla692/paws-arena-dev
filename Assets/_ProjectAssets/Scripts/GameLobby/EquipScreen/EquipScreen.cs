@@ -15,8 +15,6 @@ public class EquipScreen : MonoBehaviour
     public Transform content;
     public GameObject nftPrefab;
 
-    public Sprite empty;
-
     [Header("Btns")]
     public ButtonHoverable eyeBtn;
     public ButtonHoverable headBtn;
@@ -39,11 +37,14 @@ public class EquipScreen : MonoBehaviour
         playerPlatform.transform.localPosition = Vector3.zero;
 
         playerCustomization = playerPlatform.GetComponent<PlayerPlatformBehaviour>().playerCustomization;
+
+        equipments = new List<NFTImageSprite>();
+        StartCoroutine(InitCoroutine());
     }
 
-    private void Start()
+    private IEnumerator InitCoroutine()
     {
-        equipments = new List<NFTImageSprite>();
+        yield return new WaitForEndOfFrame();
         PopulateEyes();
     }
 
