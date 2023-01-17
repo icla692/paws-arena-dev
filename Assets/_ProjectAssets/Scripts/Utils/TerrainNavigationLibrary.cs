@@ -86,7 +86,7 @@ static class TerrainNavigationLibrary
 
     public static bool PositionIsBetweenHorizontalBounds(Vector3 pos, Bounds obj)
     {
-        float objWidth = obj.size.x;
+        float objWidth = obj.size.x / 2;
 
         Bounds left = BotManager.Instance.leftMapBound.bounds;
         if (pos.x < left.max.x + objWidth) return false;

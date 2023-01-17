@@ -26,28 +26,39 @@ public class BotAIAim
 
     private Collider2D[] enemy;
 
+    private readonly Dictionary<int, Vector2> angleDirectionsCache = new Dictionary<int, Vector2>();
+
     public BotAIAim(Collider2D[] enemy)
     {
         this.enemy = enemy;
 
         bulletCapsule = BotManager.Instance.bulletPrefab.GetComponent<CapsuleCollider2D>();
         bulletMass = BotManager.Instance.bulletPrefab.GetComponent<Rigidbody2D>().mass;
+
+        CacheAngleDirections();
+    }
+
+    private void CacheAngleDirections()
+    {
+        for (int i=0; i<=180; i++)
+        {
+            angleDirectionsCache.Add(i, new Vector2(Mathf.Cos(Mathf.Deg2Rad * i), Mathf.Sin(Mathf.Deg2Rad * i)));
+        }
     }
 
     public void SimulateLocationAim(ref Location location)
     {
         float bestDistance = Mathf.Infinity;
 
-        for (int angle = 0; angle < 180; angle++)
+        float xDiff = location.position.x - enemy[0].transform.position.x;
+        int increment = xDiff > 0 ? 1 : -1;
+
+        for (int angle = 90 + increment; angle >= 0 && angle <= 180; angle += increment) 
         {
             for (float power = 0.1f; power <= 1; power += 0.05f)
             {
-                Debug.Log("Angle " + angle);
-                Vector2 direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle));
-                Debug.Log("direction " + direction);
-
                 List<Vector3> arc = new List<Vector3>();
-                CollisionInfo collision = SimulateArc(direction, location.launchPosition, GetBulletForce(power), ref arc);
+                CollisionInfo collision = SimulateArc(angleDirectionsCache[angle], location.launchPosition, GetBulletForce(power), ref arc);
                 if (collision.hit)
                 {
                     if (collision.distanceFromEnemy < bestDistance)

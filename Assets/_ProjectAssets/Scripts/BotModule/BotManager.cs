@@ -1,16 +1,51 @@
 using Anura.ConfigurationModule.Managers;
 using Anura.Templates.MonoSingleton;
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public class BotConfiguration
+{
+    [Header("General Parameters")]
+
+    [Tooltip("1 travel step = 0.9 * (width of character)")]
+    public float maxTravelSteps = 5;
+
+    [Tooltip("Frequency of usage for each weapon")]
+    public int[] weaponWeights;
+
+    [Header("Weights for evaluating a location. Set to zero to turn off.")]
+
+    [Tooltip("How far from the enemy is the best shot achievable from the location.")]
+    public int weightBestShotDistance = 25;
+
+    [Tooltip("Is a direct hit possible from the location.")]
+    public int weightDirectHit = 75;
+
+    [Tooltip("How much to prioritize walking away instead of towards the enemy.")]
+    public int weightDirectionImportance = 25;
+
+    [Tooltip("How much to prioritize staying on a high altitude.")]
+    public int weightHeightImportance = 25;
+
+    public int WeightsTotal =>
+        weightBestShotDistance +
+        weightDirectHit +
+        weightDirectionImportance +
+        weightHeightImportance;
+}
+
 public class BotManager : MonoSingleton<BotManager>
 {
     public event Action<int> onHealthUpdated;
 
+    public BotConfiguration configuration;
+
     [Header("Dependencies")]
-    public Collider2D leftMapBound;
+    public Collider2D leftMapBound;  
     public Collider2D rightMapBound;
     public GameObject bulletPrefab;  // Must contain rigidbody and collider
 

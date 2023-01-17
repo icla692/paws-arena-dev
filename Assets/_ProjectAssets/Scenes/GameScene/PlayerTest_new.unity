@@ -1171,6 +1171,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d558c841ae7c648b974ddcb38180ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  configuration:
+    maxTravelSteps: 5
+    weaponWeights: 00000000010000000300000000000000
+    weightBestShotDistance: 25
+    weightDirectHit: 75
+    weightDirectionImportance: 25
+    weightHeightImportance: 25
   leftMapBound: {fileID: 570977875}
   rightMapBound: {fileID: 852178216}
   bulletPrefab: {fileID: 4174453076262886263, guid: 7512ed148be88794a8d115915ddc0da6, type: 3}

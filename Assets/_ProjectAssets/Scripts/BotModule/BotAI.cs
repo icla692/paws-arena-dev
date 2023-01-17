@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -9,9 +11,11 @@ public class BotAI : MonoBehaviour
 {
     public struct Location
     {
+        public int stepsFromOrigin;
         public Vector3 position;
         public Vector3 launchPosition;
         public int direction;  // leftOfOrigin=-1, origin=0, rightOfOrigin=1
+        public int enemyDirection;  // leftOfOrigin=-1, rightOfOrigin=1
         public float score;
         public float bestAngle;
         public float bestPower;
@@ -25,13 +29,21 @@ public class BotAI : MonoBehaviour
 
     private BotPlayerAPI api = BotPlayerAPI.Instance;
     private float TimeLeft => RoomStateManager.Instance.Timer.TimeLeft;
+    private BotConfiguration Configuration => BotManager.Instance.configuration;
 
     private Bounds Bounds => Collider.bounds;
     private Vector3 Center => Bounds.center;
 
+    private float MapMinY { get; set; }
+    private float MapMaxY { get; set; }
+    private List<int> WeaponsWeightedList { get; set; }
+
     private Rigidbody2D Rigidbody { get; set; }
     private Collider2D Collider { get; set; }
     public Transform LaunchPoint { get; set; }
+
+    private Vector3 EnemyPosition => BotManager.Instance.Enemy[0].transform.position;
+    private float MovementStep => Bounds.size.x * 0.9f;
 
     private BotAIAim BotAIAim { get; set; }
 
@@ -56,6 +68,14 @@ public class BotAI : MonoBehaviour
         Rigidbody = GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
 
+        MapMinY = BotManager.Instance.leftMapBound.bounds.min.y;
+        MapMaxY = BotManager.Instance.leftMapBound.bounds.max.y;
+
+        WeaponsWeightedList = new List<int>();
+        for (int i = 0; i < Configuration.weaponWeights.Length; i++)
+            for (int j = 0; j < Configuration.weaponWeights[i]; j++)
+                WeaponsWeightedList.Add(i);
+
         BotAIAim = new BotAIAim(BotManager.Instance.Enemy.ToArray());
     }
 
@@ -71,17 +91,22 @@ public class BotAI : MonoBehaviour
     {
     }
 
+    private Location? turnChoice = null;
+
     private IEnumerator PlayTurn()
     {
         int moveDir = 0;
-        Location choice;
+        turnChoice = null;
 
         do
         {
             List<Location> potentialLocations = GetPotentialLocations(moveDir != -1, moveDir != 1);
-            choice = ChooseLocation(potentialLocations);
-            moveDir = choice.direction;
 
+            yield return StartCoroutine(ChooseLocation(potentialLocations));
+            if (turnChoice == null) yield break;
+
+            Location choice = turnChoice.Value;
+            moveDir = choice.direction;
             DebugLocation(choice);
 
             yield return StartCoroutine(MoveTo(choice));
@@ -89,19 +114,17 @@ public class BotAI : MonoBehaviour
         }
         while (repeatMoveTo && TimeLeft > 2);        
 
-        yield return StartCoroutine(Shoot(choice));
+        yield return StartCoroutine(Shoot());
     }
 
     private List<Location> GetPotentialLocations(bool left, bool right)
     {
         var result = new List<Location> { GetLocation() };
 
-        float movementStep = Bounds.size.x * 0.9f;
-
-        for (int i = 1; i <= 1; i++)
+        for (int i = 1; i <= Configuration.maxTravelSteps; i++)
         {
-            if (left) AddLocationIfNew(ref result, GetLocation(-1, i * movementStep));
-            if (right) AddLocationIfNew(ref result, GetLocation(1, i * movementStep));
+            if (left) AddLocationIfNew(ref result, GetLocation(-1, i));
+            if (right) AddLocationIfNew(ref result, GetLocation(1, i));
         }
 
         foreach (var l in result) DebugLocation(l, 0.5f);
@@ -120,11 +143,54 @@ public class BotAI : MonoBehaviour
         list.Add(location);
     }
 
-    private Location ChooseLocation(List<Location> locations)
+    private IEnumerator ChooseLocation(List<Location> locations)
     {
-        CalculateLocationScores(ref locations);
+        for (int i = 0; i < locations.Count; i++)
+        {
+            Location l = locations[i];
+
+            BotAIAim.SimulateLocationAim(ref l);
+            EvaluateLocationScore(ref l);
+
+            locations[i] = l;
+
+            yield return null;
+            yield return null;
+        }
+
         locations = locations.OrderByDescending(x => x.score).ToList();
-        return locations[0];
+
+        turnChoice = locations[0];
+    }
+
+    private void EvaluateLocationScore(ref Location location)
+    {
+        float score = 0;
+
+        if (Configuration.weightDirectHit > 0)
+        {
+            if (location.directHit) score += Configuration.weightDirectHit;
+        }
+
+        if (Configuration.weightBestShotDistance > 0)
+        {
+            float maxDist = 5 * Bounds.size.x;
+            score += Mathf.Lerp(Configuration.weightBestShotDistance, 0, Mathf.Clamp(location.bestDistanceToEnemy, 0, maxDist) / maxDist);
+        }
+
+        if (Configuration.weightDirectionImportance > 0)
+        {
+            float s = Configuration.maxTravelSteps * location.enemyDirection;
+            score += Mathf.InverseLerp(s, -s, location.stepsFromOrigin) * Configuration.weightDirectionImportance;
+        }
+
+        if (Configuration.weightHeightImportance > 0)
+        {
+            float heightFraction = Mathf.InverseLerp(MapMinY, MapMaxY, location.position.y);
+            score += Mathf.Lerp(0, Configuration.weightHeightImportance, heightFraction);
+        }
+
+        location.score = score / Configuration.WeightsTotal;
     }
 
     private bool repeatMoveTo = false;
@@ -183,23 +249,25 @@ public class BotAI : MonoBehaviour
         api.CancelMove();
     }
 
-    private IEnumerator Shoot(Location location)
+    private IEnumerator Shoot()
     {
+        if (turnChoice is not Location location) yield break;
+
         yield return null;
         yield return null;
 
-        api.weaponIdx = Random.Range(0, 3);
+        api.weaponIdx = GetWeightedRandomWeapon();
         api.SelectWeapon();
 
         yield return null;
-        api.shootAngle = location.bestAngle; //Random.Range(125, 145);
-        api.shootPower = location.bestPower; //Random.Range(0.75f, 1);
+        api.shootAngle = location.bestAngle;
+        api.shootPower = location.bestPower;
         api.SelectAnglePower();
 
-        Debug.Log("Best distance: " + location.bestDistanceToEnemy);
-        Debug.Log("location.bestAngle: " + location.bestAngle);
-        Debug.Log("location.bestPower: " + location.bestPower);
-        Debug.Log("Best score: " + location.score);
+        Debug.Log("Shooting::distance: " + location.bestDistanceToEnemy);
+        Debug.Log("Shooting::angle: " + location.bestAngle);
+        Debug.Log("Shooting::power: " + location.bestPower);
+        Debug.Log("Shooting::score: " + location.score);
 
         yield return null;        
         api.Shoot();
@@ -210,14 +278,18 @@ public class BotAI : MonoBehaviour
         return new Location
         {
             direction = 0,
+            stepsFromOrigin = 0,
             position = Center,
             launchPosition = LaunchPoint.position,
-            directHit = false
+            directHit = false,
+            enemyDirection = GetEnemyDirection(Center)
         };
     }
 
-    private Location GetLocation(int direction, float xOffset)
+    private Location GetLocation(int direction, int steps)
     {
+        float xOffset = steps * MovementStep;
+
         Vector3 newPosition = TerrainNavigationLibrary.GetPositionAtXDisplacement(
                 Bounds,
                 GetTerrainDirection(direction),
@@ -226,28 +298,28 @@ public class BotAI : MonoBehaviour
         return new Location
         {
             direction = direction,
+            enemyDirection = GetEnemyDirection(newPosition),
+            stepsFromOrigin = direction * steps,
             position = newPosition,
             launchPosition = newPosition + (LaunchPoint.position - Center),
             directHit = false
         };
     }
 
+    private int GetWeightedRandomWeapon()
+    {
+        return WeaponsWeightedList[Random.Range(0, WeaponsWeightedList.Count)];
+    }
+
+    private int GetEnemyDirection(Vector3 pos)
+    {
+        float xDif = pos.x - EnemyPosition.x;
+        if (xDif > 0) return -1;
+        return 1;
+    }
+
     private TerrainNavigationLibrary.Direction GetTerrainDirection(int d)
     {
         return d == -1 ? TerrainNavigationLibrary.Direction.Left : TerrainNavigationLibrary.Direction.Right;
-    }
-
-    private void CalculateLocationScores(ref List<Location> locations)
-    {
-        for (int i=0; i<locations.Count; i++)
-        {
-            Location l = locations[i];
-            BotAIAim.SimulateLocationAim(ref l);
-
-            if (l.directHit) l.score = 0.5f;
-            l.score += Mathf.Lerp(0.5f, 0, Mathf.Clamp(l.bestDistanceToEnemy, 0, 5) / 5);
-
-            locations[i] = l;
-        }
     }
 }
