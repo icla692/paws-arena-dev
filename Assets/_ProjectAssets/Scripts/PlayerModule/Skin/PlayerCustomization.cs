@@ -4,6 +4,52 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum EquipmentType
+{
+    COLOR,
+    EYES,
+    BACK,
+    BODY,
+    HAT,
+    EYEWEAR,
+    MOUTH,
+    TAIL,
+    LEGS,
+    GROUND_FRONT,
+    GROUND_BACK,
+    GROUND,
+    NONE
+}
+
+[System.Serializable]
+public class Equipment
+{
+    [SerializeField]
+    public string id;
+}
+
+[System.Serializable]
+public class SpriteEquipment : Equipment
+{
+    [SerializeField]
+    public Sprite sprite;
+}
+
+[System.Serializable]
+public class ColorEquipment : Equipment
+{
+    [SerializeField]
+    public Color color;
+}
+
+[System.Serializable]
+public class GameObjectEquipment : Equipment
+{
+    [SerializeField]
+    public GameObject target;
+}
+
+
 public class PlayerCustomization : MonoBehaviour
 {
     [SerializeField]
@@ -21,25 +67,19 @@ public class PlayerCustomization : MonoBehaviour
     private List<SpriteRenderer> colorMultiplyElements;
 
     [SerializeField]
-    private SerializableStringColorDictionary kittyColorMapping = new SerializableStringColorDictionary();
+    private List<ColorEquipment> kittyColorEquipment;
 
     [Header("Eyes")]
     [SerializeField]
-    private List<GameObject> eyesGameObjects;
-
-    [SerializeField]
-    private List<string> eyesKeyIdxMapping;
+    private List<GameObjectEquipment> eyesEquipment;
 
     [Header("Back")]
     [SerializeField]
     private GameObject backParent;
     [SerializeField]
     private SpriteRenderer backSpriteRenderer;
-
     [SerializeField]
-    private List<string> backKeysMapping;
-    [SerializeField]
-    private List<Sprite> backSprites;
+    private List<SpriteEquipment> backEquipment;
 
 
     [Header("Body")]
@@ -47,9 +87,7 @@ public class PlayerCustomization : MonoBehaviour
     private SpriteRenderer bodySpriteRenderer;
 
     [SerializeField]
-    private List<string> bodyKeysMapping;
-    [SerializeField]
-    private List<Sprite> bodySprites;
+    private List<SpriteEquipment> bodyEquipment;
 
 
     [Header("Hats")]
@@ -61,67 +99,54 @@ public class PlayerCustomization : MonoBehaviour
     private SpriteRenderer hatsBetweenEarsRenderer;
 
     [SerializeField]
-    private List<string> hatsKeysMapping;
-    [SerializeField]
-    private List<string> hatsNoEarsKeysMapping;
-    [SerializeField]
-    private List<string> hatsBetweenEarsMapping;
+    private List<SpriteEquipment> hatsEquipment;
 
     [SerializeField]
-    private List<Sprite> hatsSprites;
+    private List<SpriteEquipment> hatsNoEarsEquipment;
+
     [SerializeField]
-    private List<Sprite> hatsNoEarsSprites;
-    [SerializeField]
-    private List<Sprite> hatsBetweenEarsSprites;
+    private List<SpriteEquipment> hatsBetweenEarsEquipment;
 
 
     [Header("Earrings")]
     [SerializeField]
     private List<GameObject> earrings;
+
     [SerializeField]
-    private List<string> earringsIds;
+    private List<Equipment> earringsEquipment;
+
     [SerializeField]
     private Sprite earringSprite;
     [SerializeField]
-    private string boneHatId;
-    [SerializeField]
-    private Sprite boneHatSprite;
+    private SpriteEquipment boneHatEquipment;
 
     [Header("Eyewear")]
     [SerializeField]
     private SpriteRenderer eyewearSpriteRenderer;
-
     [SerializeField]
-    private List<string> eyewearKeysMapping;
-    [SerializeField]
-    private List<Sprite> eyewearSprites;
+    private List<SpriteEquipment> eyewearEquipment;
 
     [SerializeField]
     private SpriteRenderer closeableEyewearSpriteRenderer;
 
     [SerializeField]
-    private List<string> closeableEyewearKeysMapping;
-    [SerializeField]
-    private List<Sprite> closeableEyewearSprites;
+    private List<SpriteEquipment> closeableEyewearEquipment;
 
     [Header("Mouth")]
     [SerializeField]
     private SpriteRenderer mouthSpriteRenderer;
-
     [SerializeField]
-    private List<string> mouthKeysMapping;
-    [SerializeField]
-    private List<Sprite> mouthSprites;
+    private List<SpriteEquipment> mouthEquipment;
 
     [Header("GroundFront")]
     [SerializeField]
     private Transform groundFrontTransform;
+
     [SerializeField]
     private SpriteRenderer groundFrontSpriteRenderer;
+
     [SerializeField]
-    private List<string> groundFrontKeysMapping;
-    [SerializeField]
-    private List<Sprite> groundFrontSprites;
+    private List<SpriteEquipment> groundFrontEquipment;
 
     [Header("GroundBack")]
     [SerializeField]
@@ -129,19 +154,21 @@ public class PlayerCustomization : MonoBehaviour
     [SerializeField]
     private SpriteRenderer groundBackSpriteRenderer;
     [SerializeField]
-    private List<string> groundBackKeysMapping;
-    [SerializeField]
-    private List<Sprite> groundBackSprites;
+    private List<SpriteEquipment> groundBackEquipment;
 
     [Header("Ground")]
     [SerializeField]
     private Transform groundTransform;
     [SerializeField]
     private SpriteRenderer groundSpriteRenderer;
+
     [SerializeField]
-    private List<string> groundKeysMapping;
-    [SerializeField]
-    private List<Sprite> groundSprites;
+    private List<SpriteEquipment> groundEquipment;
+
+    [HideInInspector]
+    public Dictionary<EquipmentType, Equipment> playerEquipmentConfig;
+
+    private string url;
 
     private void OnEnable()
     {
@@ -159,51 +186,324 @@ public class PlayerCustomization : MonoBehaviour
 
     }
 
-    public void SetCat(List<string> ids)
+    public void SetCat(string url, List<string> ids)
     {
-        foreach(string id in ids)
+        this.url = url;
+
+        var config = KittiesCustomizationService.GetCustomization(url);
+
+        //Generate original config
+        if (config == null)
         {
-            SetKittyColor(id);
-            SetEyes(id);
-            SetBack(id);
-            SetBody(id);
-            SetHat(id);
-            SetEyewear(id);
-            SetMouth(id);
-            SetGroundFront(id);
-            SetGroundBack(id);
-            SetGround(id);
+            playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
+
+            foreach (string id in ids)
+            {
+                EquipmentType equipmentType = GetEquipmentTypeById(id);
+
+                if (equipmentType == EquipmentType.NONE) continue;
+
+                playerEquipmentConfig.Add(equipmentType, new Equipment()
+                {
+                    id = id
+                });
+            }
+
+            config = SaveOriginalConfig();
+        }
+
+        playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
+        if (config.playerEquipmentConfig != null)
+        {
+            ApplyConfig(config.playerEquipmentConfig);
+        }
+        else
+        {
+            ApplyConfig(config.originalConfig);
         }
     }
-    public void SetKittyColor(string colorId)
+
+    public void ResetToOriginal()
     {
-        SetColor(colorId, kittyColorMapping, colorMultiplyElements);
+        KittiesCustomizationService.RemoveCustomizations(url);
+        var config = KittiesCustomizationService.GetCustomization(url);
+        ApplyConfig(config.originalConfig);
     }
 
-    public void SetEyes(string eyesId)
+    private void ApplyConfig(Dictionary<EquipmentType, Equipment> playerEquipmentConfig)
     {
-        SetSingleActiveElement(eyesId, eyesKeyIdxMapping, eyesGameObjects);
+        foreach (KeyValuePair<EquipmentType, Equipment> pair in playerEquipmentConfig)
+        {
+            SetSpriteEquipment(pair.Key, pair.Value.id);
+        }
     }
 
-    public void SetBack(string backId)
+    private void SetSpriteEquipment(EquipmentType equipmentType, string id)
+    {
+        switch (equipmentType)
+        {
+            case EquipmentType.COLOR:
+                {
+                    SetKittyColor(id);
+                    break;
+                }
+            case EquipmentType.EYES:
+                {
+                    SetEyes(id);
+                    break;
+                }
+            case EquipmentType.BACK:
+                {
+                    SetBack(id);
+                    break;
+                }
+            case EquipmentType.BODY:
+                {
+                    SetBody(id);
+                    break;
+                }
+            case EquipmentType.HAT:
+                {
+                    SetHat(id);
+                    break;
+                }
+            case EquipmentType.EYEWEAR:
+                {
+                    SetEyewear(id);
+                    break;
+                }
+            case EquipmentType.MOUTH:
+                {
+                    SetMouth(id);
+                    break;
+                }
+            case EquipmentType.GROUND:
+                {
+                    SetGround(id);
+                    break;
+                }
+            case EquipmentType.GROUND_BACK:
+                {
+                    SetGroundBack(id);
+                    break;
+                }
+            case EquipmentType.GROUND_FRONT:
+                {
+                    SetGroundFront(id);
+                    break;
+                }
+            case EquipmentType.TAIL:
+                {
+                    break;
+                }
+            case EquipmentType.LEGS:
+                {
+                    break;
+                }
+        }
+    }
+
+    public EquipmentType GetEquipmentTypeById(string id)
+    {
+        if (kittyColorEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.COLOR;
+        }
+        if (eyesEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.EYES;
+        }
+        if (backEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.BACK;
+        }
+        if (bodyEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.BODY;
+        }
+        if (earringsEquipment.FindIndex(eq => eq.id == id) >= 0 || boneHatEquipment.id == id ||
+            hatsBetweenEarsEquipment.FindIndex(eq => eq.id == id) >= 0 ||
+            hatsEquipment.FindIndex(eq => eq.id == id) >= 0 ||
+            hatsNoEarsEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.HAT;
+        }
+
+        if (eyewearEquipment.FindIndex(eq => eq.id == id) >= 0 || closeableEyewearEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.EYEWEAR;
+        }
+
+        if (mouthEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.MOUTH;
+        }
+
+        if (groundBackEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.GROUND_BACK;
+        }
+
+        if (groundEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.GROUND;
+        }
+
+        if (groundFrontEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.GROUND_FRONT;
+        }
+
+        return EquipmentType.NONE;
+    }
+
+    public void SetEquipmentBySprite(EquipmentType equipmentType, Sprite equipmentSprite)
+    {
+        switch (equipmentType)
+        {
+            case EquipmentType.EYEWEAR:
+                {
+                    //Empty case
+                    if(equipmentSprite == null)
+                    {
+                        SetEyewear("none");
+                        break;
+                    }
+
+                    bool found = FindBySprite(equipmentSprite, eyewearEquipment, id => SetEyewear(id));
+
+                    if (found) { break; }
+
+                    FindBySprite(equipmentSprite, closeableEyewearEquipment, id => SetEyewear(id));
+                    break;
+                }
+            case EquipmentType.HAT:
+                {
+                    //Empty case
+                    if (equipmentSprite == null)
+                    {
+                        SetHat("none");
+                        break;
+                    }
+
+                    bool found = FindBySprite(equipmentSprite, hatsEquipment, id => SetHat(id));
+                    if (found) { break; }
+
+                    found = FindBySprite(equipmentSprite, hatsNoEarsEquipment, id => SetHat(id));
+                    if (found) { break; }
+
+                    FindBySprite(equipmentSprite, hatsBetweenEarsEquipment, id => SetHat(id));
+                    break;
+                }
+            case EquipmentType.MOUTH:
+                {
+                    //Empty case
+                    if (equipmentSprite == null)
+                    {
+                        SetMouth("none");
+                        break;
+                    }
+                    FindBySprite(equipmentSprite, mouthEquipment, id => SetMouth(id));
+                    break;
+                }
+            case EquipmentType.BODY:
+                {
+                    //Empty case
+                    if (equipmentSprite == null)
+                    {
+                        SetBody("none");
+                        break;
+                    }
+                    FindBySprite(equipmentSprite, bodyEquipment, id => SetBody(id));
+                    break;
+                }
+            case EquipmentType.TAIL:
+                {
+                    break;
+                }
+            case EquipmentType.LEGS:
+                {
+                    break;
+                }
+        }
+    }
+
+    [ContextMenu("Save")]
+    public void SaveCustomConfig()
+    {
+        KittiesCustomizationService.SaveCustomConfig(url, playerEquipmentConfig);
+    }
+    public KittyCustomization SaveOriginalConfig()
+    {
+        return KittiesCustomizationService.SaveOriginalConfig(url, playerEquipmentConfig);
+    }
+
+    private bool FindBySprite(Sprite sprite, List<SpriteEquipment> equipment, Action<string> callback)
+    {
+        int idx = equipment.FindIndex(el => el.sprite == sprite);
+        if (idx != -1)
+        {
+            callback?.Invoke(equipment[idx].id);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void SetKittyColor(string colorId, bool updateConfig = true)
+    {
+        ColorEquipment equipment = SetColor(colorId, kittyColorEquipment, colorMultiplyElements);
+        if (updateConfig && equipment != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.COLOR, equipment);
+        }
+    }
+
+    public void SetEyes(string eyesId, bool updateConfig = true)
+    {
+        GameObjectEquipment eq = SetSingleActiveElement(eyesId, eyesEquipment);
+
+        if (updateConfig && eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.EYES, eq);
+        }
+    }
+
+    public void SetBack(string backId, bool updateConfig = true)
     {
         if (inGame) return;
-        SetSingleSpriteElement(backId, backKeysMapping, backSprites, backSpriteRenderer);
+        SpriteEquipment eq = SetSingleSpriteElement(backId, backEquipment, backSpriteRenderer);
+
+        if (updateConfig && eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.BACK, eq);
+        }
     }
 
-    public void SetBody(string bodyId)
+    public void SetBody(string bodyId, bool updateConfig = true)
     {
-        SetSingleSpriteElement(bodyId, bodyKeysMapping, bodySprites, bodySpriteRenderer);
+        SpriteEquipment eq = SetSingleSpriteElement(bodyId, bodyEquipment, bodySpriteRenderer);
+
+        if (updateConfig && eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.BODY, eq);
+        }
     }
 
-    public void SetHat(string hatId)
+    public void SetHat(string hatId, bool updateConfig = true)
     {
-        if (earringsIds.Contains(hatId)){
-            int idx = earringsIds.IndexOf(hatId);
+        int idx = earringsEquipment.FindIndex(el => el.id == hatId);
+        if (idx >= 0)
+        {
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, earringsEquipment[idx]);
+            }
             if (idx == 0) //right
             {
                 earrings[1].GetComponent<SpriteRenderer>().sprite = earringSprite;
-            }else if(idx == 1) //left
+            }
+            else if (idx == 1) //left
             {
                 earrings[0].GetComponent<SpriteRenderer>().sprite = earringSprite;
             }
@@ -212,14 +512,26 @@ public class PlayerCustomization : MonoBehaviour
                 earrings[0].GetComponent<SpriteRenderer>().sprite = earrings[1].GetComponent<SpriteRenderer>().sprite = earringSprite;
             }
             return;
-        }else if(boneHatId == hatId)
+        }
+        else if (boneHatEquipment.id == hatId)
         {
-            earrings[1].GetComponent<SpriteRenderer>().sprite = boneHatSprite;
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, boneHatEquipment);
+            }
+            earrings[1].GetComponent<SpriteRenderer>().sprite = boneHatEquipment.sprite;
             return;
         }
-        
-        
-        if (hatsBetweenEarsMapping.Contains(hatId)){
+
+
+        idx = hatsBetweenEarsEquipment.FindIndex(el => el.id == hatId);
+        if (idx >= 0)
+        {
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, hatsBetweenEarsEquipment[idx]);
+            }
+
             lEar.SetActive(true);
             rEar.SetActive(true);
 
@@ -227,10 +539,19 @@ public class PlayerCustomization : MonoBehaviour
             hatsNoEarsRenderer.gameObject.SetActive(false);
             hatsSpriteRenderer.gameObject.SetActive(false);
 
-            SetSingleSpriteElement(hatId, hatsBetweenEarsMapping, hatsBetweenEarsSprites, hatsBetweenEarsRenderer);
+            SetSingleSpriteElement(hatId, hatsBetweenEarsEquipment, hatsBetweenEarsRenderer);
+            return;
         }
-        else if (hatsKeysMapping.Contains(hatId))
+
+        idx = hatsEquipment.FindIndex(el => el.id == hatId);
+
+        if (idx >= 0)
         {
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, hatsEquipment[idx]);
+            }
+
             lEar.SetActive(true);
             rEar.SetActive(true);
 
@@ -238,10 +559,18 @@ public class PlayerCustomization : MonoBehaviour
             hatsNoEarsRenderer.gameObject.SetActive(false);
             hatsSpriteRenderer.gameObject.SetActive(true);
 
-            SetSingleSpriteElement(hatId, hatsKeysMapping, hatsSprites, hatsSpriteRenderer);
+            SetSingleSpriteElement(hatId, hatsEquipment, hatsSpriteRenderer);
+            return;
         }
-        else if (hatsNoEarsKeysMapping.Contains(hatId))
+
+        idx = hatsNoEarsEquipment.FindIndex(el => el.id == hatId);
+        if (idx >= 0)
         {
+            if (updateConfig)
+            {
+                AddOrUpdateEquipment(EquipmentType.HAT, hatsNoEarsEquipment[idx]);
+            }
+
             lEar.SetActive(false);
             rEar.SetActive(false);
 
@@ -249,74 +578,123 @@ public class PlayerCustomization : MonoBehaviour
             hatsNoEarsRenderer.gameObject.SetActive(true);
             hatsSpriteRenderer.gameObject.SetActive(false);
 
-            SetSingleSpriteElement(hatId, hatsNoEarsKeysMapping, hatsNoEarsSprites, hatsNoEarsRenderer);
-        }
-    }
-
-    public void SetEyewear(string eyewearId)
-    {
-        SetSingleSpriteElement(eyewearId, eyewearKeysMapping, eyewearSprites, eyewearSpriteRenderer);
-        SetSingleSpriteElement(eyewearId, closeableEyewearKeysMapping, closeableEyewearSprites, closeableEyewearSpriteRenderer);
-    }
-
-    public void SetMouth(string mouthId)
-    {
-        SetSingleSpriteElement(mouthId, mouthKeysMapping, mouthSprites, mouthSpriteRenderer);
-    }
-
-    public void SetGroundFront(string groundId)
-    {
-        if (inGame) return;
-        SetSingleSpriteElement(groundId, groundFrontKeysMapping, groundFrontSprites, groundFrontSpriteRenderer);
-    }
-
-    public void SetGroundBack(string groundId)
-    {
-        if (inGame) return;
-        SetSingleSpriteElement(groundId, groundBackKeysMapping, groundBackSprites, groundBackSpriteRenderer);
-    }
-
-    public void SetGround(string groundId)
-    {
-        if (inGame) return;
-        SetSingleSpriteElement(groundId, groundKeysMapping, groundSprites, groundSpriteRenderer);
-    }
-
-    private void SetSingleSpriteElement(string key, List<string> elements, List<Sprite> sprites, SpriteRenderer spriteRenderer)
-    {
-        if (!elements.Contains(key))
-        {
+            SetSingleSpriteElement(hatId, hatsNoEarsEquipment, hatsNoEarsRenderer);
             return;
         }
-
-        int idx = elements.IndexOf(key);
-        spriteRenderer.sprite = sprites[idx];
     }
 
-    private void SetColor(string key, SerializableStringColorDictionary elements, List<SpriteRenderer> targets)
+    public void SetEyewear(string eyewearId, bool updateConfig = true)
     {
-        if (!elements.ContainsKey(key))
+        SpriteEquipment eq = SetSingleSpriteElement(eyewearId, eyewearEquipment, eyewearSpriteRenderer);
+        if (eq == null)
         {
-            return;
+            eq = SetSingleSpriteElement(eyewearId, closeableEyewearEquipment, closeableEyewearSpriteRenderer);
+            if(eq == null)
+            {
+
+            }
         }
 
-        Color col = elements[key];
+        if (updateConfig && eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.EYEWEAR, eq);
+        }
+    }
+
+    public void SetMouth(string mouthId, bool updateConfig = true)
+    {
+        SpriteEquipment eq = SetSingleSpriteElement(mouthId, mouthEquipment, mouthSpriteRenderer);
+        if (updateConfig && eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.MOUTH, eq);
+        }
+    }
+
+    public void SetGroundFront(string groundId, bool updateConfig = true)
+    {
+        if (inGame) return;
+
+        SpriteEquipment eq = SetSingleSpriteElement(groundId, groundFrontEquipment, groundFrontSpriteRenderer);
+        if (updateConfig && eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.GROUND_FRONT, eq);
+        }
+    }
+
+    public void SetGroundBack(string groundId, bool updateConfig = true)
+    {
+        if (inGame) return;
+
+        SpriteEquipment eq = SetSingleSpriteElement(groundId, groundBackEquipment, groundBackSpriteRenderer);
+        if (updateConfig && eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.GROUND_BACK, eq);
+        }
+    }
+
+    public void SetGround(string groundId, bool updateConfig = true)
+    {
+        if (inGame) return;
+
+        SpriteEquipment eq = SetSingleSpriteElement(groundId, groundEquipment, groundSpriteRenderer);
+        if (updateConfig && eq != null)
+        {
+            AddOrUpdateEquipment(EquipmentType.GROUND, eq);
+        }
+    }
+
+    private SpriteEquipment SetSingleSpriteElement(string key, List<SpriteEquipment> equipment, SpriteRenderer spriteRenderer)
+    {
+        int idx = equipment.FindIndex(eq => eq.id == key);
+        if (idx < 0)
+        {
+            return null;
+        }
+
+        spriteRenderer.sprite = equipment[idx].sprite;
+        return equipment[idx];
+    }
+
+    private ColorEquipment SetColor(string key, List<ColorEquipment> elements, List<SpriteRenderer> targets)
+    {
+        int idx = elements.FindIndex(el => el.id == key);
+        if (idx < 0)
+        {
+            return null;
+        }
+
+        Color col = elements[idx].color;
         foreach (SpriteRenderer sprite in targets)
         {
             sprite.color = col;
         }
+        return elements[idx];
     }
-    private void SetSingleActiveElement(string key, List<string> ids, List<GameObject> targets)
+    private GameObjectEquipment SetSingleActiveElement(string key, List<GameObjectEquipment> equipment)
     {
-        if (!ids.Contains(key))
+        int idx = equipment.FindIndex(el => el.id == key);
+        if (idx < 0)
         {
-            return;
+            return null;
         }
 
-        int idx = ids.IndexOf(key);
-        for(int i=0; i<targets.Count; i++)
+        for (int i = 0; i < equipment.Count; i++)
         {
-            targets[i].SetActive(i == idx);
+            equipment[i].target.SetActive(i == idx);
+        }
+
+        return equipment[idx];
+    }
+
+    private void AddOrUpdateEquipment(EquipmentType equipmentType, Equipment equipment)
+    {
+        if (playerEquipmentConfig.ContainsKey(equipmentType))
+        {
+            playerEquipmentConfig[equipmentType] = equipment;
+        }
+        else
+        {
+            playerEquipmentConfig.Add(equipmentType, equipment);
         }
     }
 }

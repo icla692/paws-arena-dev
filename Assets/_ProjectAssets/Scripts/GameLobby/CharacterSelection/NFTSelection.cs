@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class NFTSelection : MonoBehaviour
 {
+    public PagesBehaviour pages;
+
     public Transform playerPlatformParent;
     public GameObject playerPlatformPrefab;
 
@@ -16,31 +18,65 @@ public class NFTSelection : MonoBehaviour
 
     public GameObject enterArenaButton;
 
+    public LoadingScreen loadingScreen;
+
     private List<GameObject> nftButtons = new List<GameObject>();
     private GameObject playerPlatform;
 
-    private async void OnEnable()
+    private int currentPage = 0;
+    private int pageSize = 9;
+
+    private List<NFT> currentNFTs = new List<NFT>();
+
+    private void OnEnable()
     {
-        await InitPage();
+        InitNFTScreen();
+        pages.OnClick += OnPageSelected;
     }
 
     private void OnDisable()
     {
-        if(playerPlatform != null)
+        foreach (NFT nfts in currentNFTs)
+        {
+            Destroy(nfts.imageTex);
+            nfts.imageTex = null;
+        }
+        currentNFTs.Clear();
+
+        if (playerPlatform != null)
         {
             Destroy(playerPlatform);
             playerPlatform = null;
         }
+
+
+        pages.OnClick -= OnPageSelected;
     }
 
-    public async UniTask InitPage()
+    public async void InitNFTScreen()
     {
-        await PopulateGrid();
+        currentPage = 0;
+        int maxPages = (int)Math.Floor((GameState.nfts.Count - 1) * 1.0 / pageSize);
+        pages.SetNumberOfPages(maxPages + 1);
+        await PopulateGridAsync();
+        SelectNFT(0);
     }
 
-    private async UniTask PopulateGrid()
+    private async void OnPageSelected(int idx)
+    {
+        currentPage = idx;
+        await PopulateGridAsync();
+    }
+
+    private List<NFT> GetNFTs(int pageNr, int pageSize)
+    {
+        return GameState.nfts.Skip(pageNr * pageSize).Take(pageSize).ToList();
+    }
+    private async UniTask PopulateGridAsync()
     {
         enterArenaButton.GetComponent<Button>().interactable = false;
+
+        loadingScreen.Activate("Loading NFTs...");
         foreach(GameObject but in nftButtons)
         {
             Destroy(but);
@@ -48,13 +84,19 @@ public class NFTSelection : MonoBehaviour
 
         nftButtons.Clear();
 
+        foreach(NFT nfts in currentNFTs)
+        {
+            Destroy(nfts.imageTex);
+            nfts.imageTex = null;
+        }
 
-        List<NFT> nfts = GameState.nfts;
+
+        currentNFTs = GetNFTs(currentPage, pageSize);
 
         //Grab all images from internet
         List<UniTask> tasks = new List<UniTask>();
         int idx = 0;
-        foreach (NFT nft in nfts)
+        foreach (NFT nft in currentNFTs)
         {
             GameObject go = Instantiate(nftButtonPrefab, nftButtonsParent);
             nftButtons.Add(go);
@@ -63,17 +105,20 @@ public class NFTSelection : MonoBehaviour
             idx++;
         }
 
-        for(int i=nfts.Count; i<9; i++)
+        for(int i= currentNFTs.Count; i<9; i++)
         {
             GameObject go = Instantiate(nftButtonPrefab, nftButtonsParent);
             nftButtons.Add(go);
         }
         await UniTask.WhenAll(tasks.ToArray());
+
+        loadingScreen.Deactivate();
+
         enterArenaButton.GetComponent<Button>().interactable = true;
 
         //Attach to images
         idx = 0;
-        foreach (NFT nft in nfts)
+        foreach (NFT nft in currentNFTs)
         {
             nftButtons[idx].GetComponent<NFTImageButton>().SetTexture(nft.imageTex);
             nftButtons[idx].GetComponent<Button>().onClick.RemoveAllListeners();
@@ -85,8 +130,6 @@ public class NFTSelection : MonoBehaviour
             });
             idx++;
         }
-
-        SelectNFT(0);
     }
 
     private void SelectNFT(int idx)
@@ -96,8 +139,8 @@ public class NFTSelection : MonoBehaviour
             Destroy(playerPlatform);
         }
 
-        Debug.Log("Selected " + GameState.nfts[idx].imageUrl);
-        GameState.SetSelectedNFT(GameState.nfts[idx]);
+        Debug.Log("Selected " + currentNFTs[idx].imageUrl);
+        GameState.SetSelectedNFT(currentNFTs[idx]);
         nftButtons[idx].GetComponent<NFTImageButton>().Select();
         playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformParent);
         playerPlatform.transform.localPosition = Vector3.zero;

@@ -5,15 +5,12 @@ using UnityEngine;
 
 public class WeaponMobileLauncherBehaviour : MonoBehaviour
 {
-    private Animator _animator;
-    public AudioClip sfx;
-
-    [HideInInspector]
-    public PlayerThrowBehaviour throwBehaviour;
+    //private Animator _animator;
+    //public AudioClip sfx;
 
     void Start()
     {
-        _animator = GetComponent<Animator>();
+        //_animator = GetComponent<Animator>();
         PlayerThrowBehaviour.onLaunchPreparing += PrepareLaunch;
     }
 
@@ -24,15 +21,16 @@ public class WeaponMobileLauncherBehaviour : MonoBehaviour
 
     private void PrepareLaunch(WeaponEntity weapon)
     {
-        _animator.SetTrigger("Shoot");
-        if (sfx != null)
-        {
-            SFXManager.Instance.PlayOneShot(sfx);
-        }
+        //_animator.SetTrigger("Shoot");
+        //if (sfx != null)
+        //{
+        //    SFXManager.Instance.PlayOneShot(sfx);
+        //}
+        //StartCoroutine(Launch());
     }
     
-    public void Launch()
-    {
-        throwBehaviour.Launch();
-    }
+    //public IEnumerator Launch()
+    //{
+    //    //throwBehaviour.Launch();
+    //}
 }

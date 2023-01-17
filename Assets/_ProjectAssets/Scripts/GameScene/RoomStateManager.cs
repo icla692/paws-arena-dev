@@ -58,11 +58,6 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         PUNRoomUtils.onPlayerLeft -= OnPlayerLeft;
     }
 
-    private void Update()
-    {
-        Debug.Log("lastPlayerRound " + lastPlayerRound);
-    }
-
     private void OnDestroy()
     {
         LeanTween.cancelAll();

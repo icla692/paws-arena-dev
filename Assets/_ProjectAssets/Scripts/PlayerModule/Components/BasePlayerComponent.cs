@@ -1,11 +1,13 @@
 using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BasePlayerComponent : MonoBehaviour
 {
+    public event Action<int> onDamageTaken;
     [HideInInspector]
     public PlayerState state;
     [HideInInspector]
@@ -16,6 +18,39 @@ public class BasePlayerComponent : MonoBehaviour
     private PlayerMotionBehaviour playerMotionBehaviour;
     private bool isMultiplayer;
     private PhotonView photonView;
+
+    private void OnEnable()
+    {
+        AreaEffectsManager.Instance.OnAreaDamage += AreaDamage;
+    }
+
+    private void OnDisable()
+    {
+        AreaEffectsManager.Instance.OnAreaDamage -= AreaDamage;
+    }
+
+    private void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
+    {
+        Vector3 playerPos = transform.position;
+        float dmgDistance = Vector3.Distance(playerPos, position);
+        if (dmgDistance > area) return;
+
+        float damagePercentage = (area - dmgDistance) / area;
+        int dmgToBeDone = damageByDistance ? (int)Math.Floor(damagePercentage * maxDamage) : maxDamage;
+
+        onDamageTaken?.Invoke(dmgToBeDone);
+
+        if (hasPushForce)
+        {
+            Vector2 direction = new Vector2(playerPos.x, playerPos.y) - position;
+            PushPlayer(damagePercentage * pushForce, direction);
+        }
+    }
+
+    private void PushPlayer(float force, Vector2 direction)
+    {
+        GetComponent<Rigidbody2D>().AddForce(direction.normalized * force, ForceMode2D.Impulse);
+    }
 
     private void Awake()
     {
@@ -49,6 +84,7 @@ public class BasePlayerComponent : MonoBehaviour
         if (state.weaponIdx == idx)
         {
             idx = -1;
+            state.SetHasWeaponOut(idx);
         }
         if (playerSeat == RoomStateManager.Instance.lastPlayerRound)
         {

@@ -60,7 +60,6 @@ public class PlayerComponent : MonoBehaviour
         {
             RoomStateManager.OnStateUpdated -= OnStateUpdatedForMyPlayer;
         }
-
     }
 
     private void SetupMyPlayer()
@@ -85,7 +84,6 @@ public class PlayerComponent : MonoBehaviour
 
         basePlayerComponent.PostSetup();
         playerActions.Disable();
-
     }
 
     private void SetupOtherPlayer()

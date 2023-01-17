@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class DummyBehaviour : MonoBehaviour
 {
-    public event Action onDummyHit;
-    public event Action onDummyMiss;
+    public event Action<int> onDummyHit;
+    public event Action<int> onDummyMiss;
     public event Action onDummyDead;
     [SerializeField]
     private GameObject dummyWrapper;
@@ -38,6 +38,12 @@ public class DummyBehaviour : MonoBehaviour
 
         dummyWrapper.SetActive(false);
     }
+
+    public void ReInit()
+    {
+        myHP = ConfigurationManager.Instance.Dummy.dummyHP;
+        npcHPBar.SetHealth(myHP);
+    }
     public void EnableDummy()
     {
         dummyWrapper.SetActive(true);
@@ -52,13 +58,13 @@ public class DummyBehaviour : MonoBehaviour
         Debug.Log("Done");
     }
 
-    private void OnAreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce)
+    private void OnAreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
     {
         Vector3 dummyPos = dummyWrapper.transform.position;
         float dmgDistance = Vector3.Distance(dummyPos, position);
         if (dmgDistance > area)
         {
-            onDummyMiss?.Invoke();
+            onDummyMiss?.Invoke(bulletCount);
             return;
         };
 
@@ -72,7 +78,8 @@ public class DummyBehaviour : MonoBehaviour
 
         animator.SetTrigger("IsHit");
 
-        onDummyHit?.Invoke();
+        onDummyHit?.Invoke(bulletCount);
+
         if(myHP == 0)
         {
             onDummyDead?.Invoke();
@@ -83,7 +90,7 @@ public class DummyBehaviour : MonoBehaviour
     {
         LeanTween.scale(dummyWrapper, Vector3.zero, 0.5f).setDelay(1f).setOnComplete(() =>
         {
-            StartCoroutine(Init());
+            ReInit();
             dummyWrapper.transform.parent = possibleLocations[UnityEngine.Random.Range(0, possibleLocations.Count)];
             dummyWrapper.transform.localPosition = Vector3.zero;
 
