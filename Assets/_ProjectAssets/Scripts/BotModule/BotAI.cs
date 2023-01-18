@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using static BotAIAim;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class BotAI : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class BotAI : MonoBehaviour
         public float distanceToEnemy;
         public bool directHit;
         public bool simulated;
+        public float eta;
 
         public LocationSim(Location location)
         {
@@ -26,6 +28,7 @@ public class BotAI : MonoBehaviour
             angle = Random.Range(0, 360);
             power = Random.Range(0, 1f);
             distanceToEnemy = Mathf.Infinity;
+            eta = Mathf.Infinity;
             directHit = false;
             simulated = false;
         }
@@ -328,6 +331,12 @@ public class BotAI : MonoBehaviour
 
         yield return null;        
         api.Shoot();
+
+        if (chosenWeapon == Weapon.Split)
+        {
+            yield return new WaitForSeconds(chosenLocation.locationSims[chosenWeapon].eta - 1);
+            api.Shoot();
+        }        
     }
 
     private Location GetLocation()

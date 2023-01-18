@@ -43,6 +43,7 @@ public class BotAIAim
         public Vector3 position;
         public bool directHit;
         public float distanceFromEnemy;
+        public float time;
     }
 
     private BotAI botAI;
@@ -242,6 +243,7 @@ public class BotAIAim
                     if (collision.hit)
                     {
                         float distanceFromEnemy = collision.distanceFromEnemy;
+                        float time = collision.time;
 
                         if (wd.Key == Weapon.Flare)
                         {
@@ -268,6 +270,7 @@ public class BotAIAim
                             location.locationSims[wd.Key].angle = angle;
                             location.locationSims[wd.Key].power = power;
                             location.locationSims[wd.Key].distanceToEnemy = distanceFromEnemy;
+                            location.locationSims[wd.Key].eta = time;
                         }
                     }
 
@@ -318,7 +321,11 @@ public class BotAIAim
             float angle = Vector3.Angle(Vector3.right, calculatedDirection);
 
             CollisionInfo collision = CheckCollision(calculatedPosition, angle, weaponData.capsule.size, weaponData.capsule.direction);
-            if (collision.hit) return collision;
+            if (collision.hit)
+            {
+                collision.time = i * SIM_INTERVAL;
+                return collision;
+            }
         }
 
         return new CollisionInfo() { hit = false };
