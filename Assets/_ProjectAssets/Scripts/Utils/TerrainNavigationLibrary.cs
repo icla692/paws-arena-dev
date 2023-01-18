@@ -13,9 +13,9 @@ static class TerrainNavigationLibrary
         Right
     }
 
-    private const int LAYER_CHUNK = 6;
-    private const int LAYER_ENVIRONMENT = 9;
-    private const int LAYER_CHARACTER = 8;
+    public const int LAYER_CHUNK = 6;
+    public const int LAYER_ENVIRONMENT = 9;
+    public const int LAYER_CHARACTER = 8;
 
     public static readonly LayerMask LAYERMASK_CHUNK = 1 << LAYER_CHUNK;
     public static readonly LayerMask LAYERMASK_ENVIRONMENT = 1 << LAYER_ENVIRONMENT;
