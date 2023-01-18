@@ -1,6 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+[System.Serializable]
+public class SimpleSerializableDictionary<TK, TV>
+{
+    [SerializeField]
+    public List<TK> keys;
+    [SerializeField]
+    public List<TV> values;
+
+    public SimpleSerializableDictionary(Dictionary<TK, TV> dict)
+    {
+        if (dict == null) return;
+        keys = dict.Keys.ToList();
+        values = dict.Values.ToList();
+    }
+
+    public Dictionary<TK, TV> GetDictionary()
+    {
+        Dictionary<TK, TV> dict = new Dictionary<TK, TV>();
+
+        for(int i=0; i<keys.Count; i++)
+        {
+            dict.Add(keys[i], values[i]);
+        }
+
+        return dict;
+    }
+
+}
+
 
 [System.Serializable]
 public class SerializableStringColorDictionary : SerializableDictionary<string, Color> {

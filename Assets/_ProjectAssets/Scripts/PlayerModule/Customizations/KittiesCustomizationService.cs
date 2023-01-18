@@ -3,28 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KittyCustomization
-{
-    public Dictionary<EquipmentType, Equipment> playerEquipmentConfig;
-    public Dictionary<EquipmentType, Equipment> originalConfig;
-}
 
-public class KittiesCustomizations
-{
-    public Dictionary<string, KittyCustomization> customizationByCatUrl;
-
-    public KittiesCustomizations()
-    {
-        customizationByCatUrl = new Dictionary<string, KittyCustomization>();
-    }
-}
 
 public class KittiesCustomizationService
 {
     public static KittiesCustomizations config;
+    private static string CONFIGURATIONS_KEY = "KITTIES_CONFIGURATIONS";
 
-    static KittiesCustomizationService(){
+    static KittiesCustomizationService()
+    {
         config = new KittiesCustomizations();
+
+        if (PlayerPrefs.HasKey(CONFIGURATIONS_KEY))
+        {
+            string configurationsJson = PlayerPrefs.GetString(CONFIGURATIONS_KEY);
+            Debug.Log("Loading " + configurationsJson);
+
+            config = KittiesCustomizations.GetFromJson(configurationsJson);
+            Debug.Log("Got " + config.customizationByCatUrl.Count + " configurations");
+        }
     }
 
     public static KittyCustomization GetCustomization(string url)
@@ -54,6 +51,8 @@ public class KittiesCustomizationService
 
             config.customizationByCatUrl.Add(url, customization);
         }
+
+        PlayerPrefs.SetString(CONFIGURATIONS_KEY, config.Serialize());
     }
 
     public static KittyCustomization SaveOriginalConfig(string url, Dictionary<EquipmentType, Equipment> playerEquipmentConfig)

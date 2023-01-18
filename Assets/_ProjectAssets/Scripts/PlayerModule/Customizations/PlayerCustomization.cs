@@ -213,7 +213,7 @@ public class PlayerCustomization : MonoBehaviour
         }
 
         playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
-        if (config.playerEquipmentConfig != null)
+        if (config.playerEquipmentConfig != null && config.playerEquipmentConfig.Count > 0)
         {
             ApplyConfig(config.playerEquipmentConfig);
         }
