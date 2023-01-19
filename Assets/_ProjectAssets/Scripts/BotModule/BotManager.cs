@@ -136,7 +136,7 @@ public class BotManager : MonoSingleton<BotManager>
     public void RegisterBot(BotPlayerComponent botComponent)
     {
         currentBot = botComponent;
-        AreaEffectsManager.Instance.OnAreaDamage += AreaDamage;
+        currentBot.GetComponent<BasePlayerComponent>().onDamageTaken += AreaDamage;
         maxHP = ConfigurationManager.Instance.Config.GetPlayerTotalHealth();
         SetBotHealth(maxHP);
     }
@@ -148,7 +148,7 @@ public class BotManager : MonoSingleton<BotManager>
 
     private void OnDestroy()
     {
-        AreaEffectsManager.Instance.OnAreaDamage -= AreaDamage;
+        currentBot.GetComponent<BasePlayerComponent>().onDamageTaken -= AreaDamage;
     }
 
     private void SetBotHealth(int value)
@@ -163,22 +163,10 @@ public class BotManager : MonoSingleton<BotManager>
         onHealthUpdated?.Invoke(botHP);
     }
 
-    public void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
+    public void AreaDamage(int damage)
     {
-        Vector3 playerPos = currentBot.transform.position;
-        float dmgDistance = Vector3.Distance(playerPos, position);
-        if (dmgDistance > area) return;
-
-        float damagePercentage = (area - dmgDistance) / area;
-        int dmgToBeDone = damageByDistance ? (int)Math.Floor(damagePercentage * maxDamage) : maxDamage;
-        Debug.Log($"Got damage {dmgToBeDone} / {botHP}");
-        SetBotHealth(botHP - dmgToBeDone);
-
-        if (hasPushForce)
-        {
-            Vector2 direction = new Vector2(playerPos.x, playerPos.y) - position;
-            Push(damagePercentage * pushForce, direction);
-        }
+        Debug.Log($"Got damage {damage} / {botHP}");
+        SetBotHealth(botHP - damage);
     }
 
     private void Push(float force, Vector2 direction)

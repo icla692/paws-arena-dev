@@ -619,6 +619,7 @@ MonoBehaviour:
   shapes: {fileID: 11400000, guid: 81082feba1188dc41ac9fa13714c93d2, type: 2}
   crates: {fileID: 11400000, guid: d48be5ae6987a0042b7eb35a219f617b, type: 2}
   weapons: {fileID: 0}
+  dummy: {fileID: 0}
 --- !u!1 &973175762
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +766,7 @@ GameObject:
   - component: {fileID: 1408831232}
   - component: {fileID: 1408831233}
   m_Layer: 0
-  m_Name: InteractablesManager
+  m_Name: CratesManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -847,11 +848,13 @@ MonoBehaviour:
   photonManager: {fileID: 0}
   playerPrefab: {fileID: 0}
   playerUIPrefab: {fileID: 0}
+  botPlayerPrefab: {fileID: 0}
   playerUIParent: {fileID: 0}
   trajectory: {fileID: 0}
   photonView: {fileID: 0}
   lastPlayerRound: -1
   roundNumber: 1
+  isMultiplayer: 0
 --- !u!1 &1597200586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,6 +1037,10 @@ PrefabInstance:
     - target: {fileID: 5767305366585896500, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
       propertyPath: sceneViewId
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6694115519913373700, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
+      propertyPath: sceneViewId
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7305658940416415570, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
       propertyPath: sceneViewId

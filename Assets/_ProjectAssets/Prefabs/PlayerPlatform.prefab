@@ -310,11 +310,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 975193665343492859, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: -0.29362226
+      value: -0.2936237
       objectReference: {fileID: 0}
     - target: {fileID: 975193665343492859, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 1.0056434
+      value: 1.0056432
       objectReference: {fileID: 0}
     - target: {fileID: 975193665343492859, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: m_Bounds.m_Extent.x
@@ -322,7 +322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 975193665343492859, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 1.1966448
+      value: 1.1966449
       objectReference: {fileID: 0}
     - target: {fileID: 1652268006294160500, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: m_RootOrder
@@ -577,10 +577,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1711218657, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: closeableEyewearSpriteRenderer
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: eyewearKeysMapping.Array.data[3]
       value: eyewear11
       objectReference: {fileID: 0}
@@ -691,6 +687,30 @@ PrefabInstance:
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: closeableEyewearKeysMapping.Array.data[2]
       value: eyewear15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[0].color.b
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[0].color.g
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[0].color.r
+      value: 0.8509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[5].color.b
+      value: 0.8392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[5].color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: kittyColorEquipment.Array.data[5].color.r
+      value: 0.8235294
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}

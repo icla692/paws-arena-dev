@@ -8,7 +8,7 @@ public class PlayerPlatformBehaviour : MonoBehaviour
 
     void OnEnable()
     {
-        playerCustomization.SetCat(GameState.selectedNFT.ids);
+        playerCustomization.SetCat(GameState.selectedNFT.imageUrl, GameState.selectedNFT.ids);
     }
 
 }
