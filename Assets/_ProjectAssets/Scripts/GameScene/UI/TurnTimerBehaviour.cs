@@ -16,9 +16,12 @@ public class TurnTimerBehaviour : MonoBehaviour
     private int turnTime;
     private float startTime;
 
+    public float TimeLeft { get; private set; }
+
     private void OnEnable()
     {
         roomStateManager = RoomStateManager.Instance;
+        roomStateManager.Timer = this;
         photonView = GetComponent<PhotonView>();
 
         turnTime = ConfigurationManager.Instance.Config.GetTurnDurationInSeconds();
@@ -68,7 +71,8 @@ public class TurnTimerBehaviour : MonoBehaviour
         }
         else
         {
-            SetTimerText(totalTime - passedTime);
+            TimeLeft = totalTime - passedTime;
+            SetTimerText(TimeLeft);
         }
     }
 
