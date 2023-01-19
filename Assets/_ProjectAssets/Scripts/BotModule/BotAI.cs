@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using static BotAIAim;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class BotAI : MonoBehaviour
 {
@@ -53,13 +52,6 @@ public class BotAI : MonoBehaviour
         }
     }
 
-    private const float MOVEMENT_ARRIVAL = 0.2f;
-    private const int UPDATE_FRAMES = 10;
-    private const float UPDATE_TIME_STUCK = 3;
-
-    private const int DECISION_LOC_TOP_CHOICES = 10;
-    private const float DECISION_LOC_TOP_MARGIN = 0.05f;
-
     private BotPlayerAPI api = BotPlayerAPI.Instance;
     private float TimeLeft => RoomStateManager.Instance.Timer.TimeLeft;
     private BotConfiguration Configuration => BotManager.Instance.configuration;
@@ -69,13 +61,15 @@ public class BotAI : MonoBehaviour
 
     public float MapMinY { get; private set; }
     public float MapMaxY { get; private set; }
+    public float MapXWidth { get; private set; }
 
     private Rigidbody2D Rigidbody { get; set; }
     private Collider2D Collider { get; set; }
     public Transform LaunchPoint { get; set; }
 
     private Vector3 EnemyPosition => BotManager.Instance.Enemy[0].transform.position;
-    private float MovementStep => Bounds.size.x * 0.9f;
+
+    private float movementStep;
 
     private BotAIAim BotAIAim { get; set; }
 
@@ -110,8 +104,13 @@ public class BotAI : MonoBehaviour
 
         MapMinY = BotManager.Instance.leftMapBound.bounds.min.y;
         MapMaxY = BotManager.Instance.leftMapBound.bounds.max.y;
+        MapXWidth = BotManager.Instance.rightMapBound.bounds.min.x - BotManager.Instance.leftMapBound.bounds.max.x;
 
         BotAIAim = new BotAIAim(this, BotManager.Instance.Enemy.ToArray());
+
+        previousHP = BotManager.Instance.GetHP();
+
+        movementStep = Bounds.size.x * Configuration.stepLength;
     }
 
     public void Play()
@@ -131,36 +130,55 @@ public class BotAI : MonoBehaviour
 
     private IEnumerator PlayTurn()
     {
-        int moveDir = 0;
         chosenLocation = null;
+
+        List<bool> moveDirs = new List<bool> { true, true };
+        int steps = Configuration.maxTravelSteps;
+        float stepFactor = 1;
+
+        int attempt = 0;
 
         do
         {
-            List<Location> potentialLocations = GetPotentialLocations(moveDir != -1, moveDir != 1);
+            List<Location> potentialLocations = GetPotentialLocations(moveDirs[0], moveDirs[1], steps, stepFactor);
 
             yield return StartCoroutine(ChooseLocation(potentialLocations));
-            if (chosenLocation == null) yield break;
+            if (chosenLocation == null) break;
 
-            Location choice = chosenLocation;
-            moveDir = choice.direction;
-            DebugLocation(choice);
+            DebugLocation(chosenLocation);
+            if (chosenLocation.direction == -1) moveDirs[0] = false;
+            if (chosenLocation.direction == 1) moveDirs[1] = false;
 
-            yield return StartCoroutine(MoveTo(choice));
+            // Prepare in case of repeat
+            if (!moveDirs.Contains(true))
+            {
+                if (attempt == 0)
+                {
+                    steps = 1;
+                    stepFactor = 0.5f;
+                    moveDirs = new List<bool> { true, true };
+                }
+                attempt++;
+            }
+
+            yield return StartCoroutine(Move());
             yield return new WaitForSeconds(2);
         }
         while (repeatMoveTo && TimeLeft > 2);        
 
         yield return StartCoroutine(Shoot());
+
+        previousHP = BotManager.Instance.GetHP();
     }
 
-    private List<Location> GetPotentialLocations(bool left, bool right)
+    private List<Location> GetPotentialLocations(bool left, bool right, int steps, float stepFactor)
     {
         var result = new List<Location> { GetLocation() };
 
-        for (int i = 1; i <= Configuration.maxTravelSteps; i++)
+        for (int i = 1; i <= steps; i++)
         {
-            if (left) AddLocationIfNew(ref result, GetLocation(-1, i));
-            if (right) AddLocationIfNew(ref result, GetLocation(1, i));
+            if (left) AddLocationIfNew(ref result, GetLocation(-1, i, stepFactor));
+            if (right) AddLocationIfNew(ref result, GetLocation(1, i, stepFactor));
         }
 
         foreach (var l in result) DebugLocation(l, 0.5f);
@@ -172,7 +190,7 @@ public class BotAI : MonoBehaviour
     {
         foreach (var l in list)
         {
-            if (Vector3.Distance(l.position, location.position) < MOVEMENT_ARRIVAL)
+            if (Vector3.Distance(l.position, location.position) < Configuration.movementArrivalDistance)
                 return;
         }
 
@@ -199,8 +217,8 @@ public class BotAI : MonoBehaviour
         foreach (Location l in locations)
             sims.AddRange(l.locationSims.Where(x => x.Value.simulated));
 
-        var ordered = sims.OrderByDescending(x => x.Value.score).Take(DECISION_LOC_TOP_CHOICES);
-        float marginScore = ordered.First().Value.score * (1 - DECISION_LOC_TOP_MARGIN);
+        var ordered = sims.OrderByDescending(x => x.Value.score).Take(Configuration.locationDecidingConsiderTopChoices);
+        float marginScore = ordered.First().Value.score * (1 - Configuration.locationDecidingMargin);
 
         List<Weapon> weightedList = new List<Weapon>();
 
@@ -213,6 +231,8 @@ public class BotAI : MonoBehaviour
         chosenWeapon = weightedList[Random.Range(0, weightedList.Count)];
         chosenLocation = ordered.First(x => x.Key == chosenWeapon).Value.location;
     }
+
+    private int previousHP;
 
     private void EvaluateLocationScores(Location location)
     {
@@ -229,8 +249,7 @@ public class BotAI : MonoBehaviour
 
             if (Configuration.weightBestShotDistance > 0)
             {
-                float maxDist = 5 * Bounds.size.x;
-                score += Mathf.Lerp(Configuration.weightBestShotDistance, 0, Mathf.Clamp(sim.Value.distanceToEnemy, 0, maxDist) / maxDist);
+                score += Mathf.Lerp(Configuration.weightBestShotDistance, 0, Mathf.Clamp(sim.Value.distanceToEnemy, 0, MapXWidth) / MapXWidth);
             }
 
             if (Configuration.weightDirectionImportance > 0)
@@ -245,38 +264,50 @@ public class BotAI : MonoBehaviour
                 score += Mathf.Lerp(0, Configuration.weightHeightImportance, heightFraction);
             }
 
+            if (Configuration.weightMoveAwayIfShot > 0)
+            {
+                float add = Configuration.weightMoveAwayIfShot;
+                if (BotManager.Instance.GetHP() != previousHP)
+                {
+                    add *= Mathf.InverseLerp(0, Configuration.maxTravelSteps, Mathf.Abs(location.stepsFromOrigin));
+                }
+                score += add;
+            }
+
             sim.Value.score = score / Configuration.WeightsTotal;
         }        
     }
 
     private bool repeatMoveTo = false;
 
-    private IEnumerator MoveTo(Location location)
+    private IEnumerator Move()
     {
         yield return null;
         yield return null;
+        if (chosenLocation == null) yield break;
+
         repeatMoveTo = false;
 
-        api.Move(location.direction);
+        api.Move(chosenLocation.direction);
 
         int counter = 0;
 
         float stuckTime = Time.time;
         Vector3 stuckPos = Center;
         
-        while (Mathf.Abs(Center.x - location.position.x) > MOVEMENT_ARRIVAL)
+        while (Mathf.Abs(Center.x - chosenLocation.position.x) > Configuration.movementArrivalDistance)
         {            
             yield return null;
 
-            if (counter % UPDATE_FRAMES == 0)
+            if (counter % Configuration.movementUpdateFrames == 0)
             {
                 // Change direction
-                if ((location.position.x - Center.x) * location.direction < 0)
+                if ((chosenLocation.position.x - Center.x) * chosenLocation.direction < 0)
                 {
-                    location.direction *= -1;
+                    chosenLocation.direction *= -1;
                     api.CancelMove();
                     yield return null;
-                    api.Move(location.direction);
+                    api.Move(chosenLocation.direction);
                 }
                 else
                 {
@@ -288,7 +319,7 @@ public class BotAI : MonoBehaviour
                 }                
             }
             // Check if stuck
-            else if (Time.time - stuckTime >= UPDATE_TIME_STUCK)
+            else if (Time.time - stuckTime >= Configuration.movementStuckTime)
             {
                 if (Vector3.Distance(Center, stuckPos) < Bounds.size.x)
                 {
@@ -344,9 +375,9 @@ public class BotAI : MonoBehaviour
         return new Location(this, 0, 0, Center, LaunchPoint.position);
     }
 
-    private Location GetLocation(int direction, int steps)
+    private Location GetLocation(int direction, int steps, float stepFactor)
     {
-        float xOffset = steps * MovementStep;
+        float xOffset = steps * movementStep * stepFactor;
 
         Vector3 newPosition = TerrainNavigationLibrary.GetPositionAtXDisplacement(
                 Bounds,

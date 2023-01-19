@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Burst.Intrinsics;
 using UnityEditor;
 using UnityEngine;
 using static BotAI;
@@ -53,17 +52,6 @@ public class BotAIAim
 
     public Dictionary<Weapon, WeaponData> WeaponsData { get; private set; } = new Dictionary<Weapon, WeaponData>();
 
-    private const float SIM_DURATION = 5f;
-    private const float SIM_INTERVAL = 0.05f;
-
-    private const float SIM_ANGLE_MIN = 0;
-    private const float SIM_ANGLE_MAX = 180;
-    private const int SIM_ANGLE_ORDER_POW = 3;  // increment angles by 2^this
-
-    private const float SIM_POWER_MIN = 0.1f;
-    private const float SIM_POWER_MAX = 1.0f;
-    private const float SIM_POWER_INC = 0.05f;
-
     private const string WEAPONDATA_EXTRA_FLARE_SECONDARY_RADIUS = "secondary_radius";
 
     private Collider2D[] enemy;
@@ -106,15 +94,15 @@ public class BotAIAim
 
     private void AnglePrecalculations()
     {
-        for (float i = SIM_ANGLE_MIN; i <= SIM_ANGLE_MAX; i++)
+        for (float i = BotConfig.simulationAngleMin; i <= BotConfig.simulationAngleMax; i++)
         {
             angleDirectionsCache.Add(i, new Vector2(Mathf.Cos(Mathf.Deg2Rad * i), Mathf.Sin(Mathf.Deg2Rad * i)));
         }
 
-        for (int i = SIM_ANGLE_ORDER_POW; i >= 0; i--)
+        for (int i = BotConfig.simulationAngleIncrement; i >= 0; i--)
         {
             int inc = (int)Mathf.Pow(2, i);
-            for (float j = SIM_ANGLE_MIN; j <= SIM_ANGLE_MAX; j += inc)
+            for (float j = BotConfig.simulationAngleMin; j <= BotConfig.simulationAngleMax; j += inc)
             {
                 if (!angleOrderCache.Contains(j))
                     angleOrderCache.Add(j);
@@ -188,7 +176,7 @@ public class BotAIAim
             // Don't even calculate if the enemy is in a different direction than the angle
             if (Mathf.Sign(angleDir.x) != Mathf.Sign(location.enemyDirection)) continue;
 
-            for (float power = SIM_POWER_MIN; power <= SIM_POWER_MAX; power += SIM_POWER_INC)
+            for (float power = BotConfig.simulationPowerMin; power <= BotConfig.simulationPowerMax; power += BotConfig.simulationPowerIncrement)
             {
                 if (StopLocationSimulation(stop)) break;
 
@@ -309,11 +297,13 @@ public class BotAIAim
         Vector3 previousPosition = launchPosition;
         float velocity = force / weaponData.rigidbody.mass;
 
-        int maxSteps = (int)(SIM_DURATION / SIM_INTERVAL);
+        float simInterval = BotConfig.simulationInterval;
+
+        int maxSteps = (int)(BotConfig.simulationMaxTime / simInterval);
         for (int i = 0; i < maxSteps; i++)
         {
-            Vector3 calculatedPosition = launchPosition + directionVector * velocity * i * SIM_INTERVAL;
-            calculatedPosition.y += Physics2D.gravity.y / 2 * Mathf.Pow(i * SIM_INTERVAL, 2);
+            Vector3 calculatedPosition = launchPosition + directionVector * velocity * i * simInterval;
+            calculatedPosition.y += Physics2D.gravity.y / 2 * Mathf.Pow(i * simInterval, 2);
 
             Vector3 calculatedDirection = i == 0 ? directionVector : calculatedPosition - previousPosition;
             previousPosition = calculatedPosition;
@@ -323,7 +313,7 @@ public class BotAIAim
             CollisionInfo collision = CheckCollision(calculatedPosition, angle, weaponData.capsule.size, weaponData.capsule.direction);
             if (collision.hit)
             {
-                collision.time = i * SIM_INTERVAL;
+                collision.time = i * simInterval;
                 return collision;
             }
         }

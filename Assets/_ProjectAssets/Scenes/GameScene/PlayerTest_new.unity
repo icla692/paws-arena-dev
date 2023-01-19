@@ -1174,12 +1174,19 @@ MonoBehaviour:
   configuration:
     maxTravelSteps: 5
     locationWeaponEvaluationMode: 1
-    weightBestShotDistance: 25
+    weightBestShotDistance: 100
     weightDirectHit: 75
-    weightDirectionImportance: 25
-    weightHeightImportance: 25
+    weightDirectionImportance: 20
+    weightHeightImportance: 20
+    weightMoveAwayIfShot: 40
     maxSimulationsPerFrame: 1000
     maxThinkingTime: 5
+    movementUpdateFrames: 10
+    movementStuckTime: 3
+    locationDecidingMargin: 0.05
+    locationDecidingConsiderTopChoices: 10
+    simulationMaxTime: 5
+    simulationInterval: 0.05
     debugBotAI: 1
   leftMapBound: {fileID: 570977875}
   rightMapBound: {fileID: 852178216}
