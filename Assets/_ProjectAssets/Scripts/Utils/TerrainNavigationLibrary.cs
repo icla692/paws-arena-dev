@@ -25,7 +25,6 @@ static class TerrainNavigationLibrary
     public static readonly LayerMask LAYERMASK_HITTABLES = LAYERMASK_TERRAIN | LAYERMASK_CHARACTER;
 
     private const float TRACING_STEP = 0.2f;
-    //private const float KITTY_HEIGHT = 1.13833f;
 
     /// <summary>
     /// Get the position where 'obj' would end up by traveling (up to) 'xDisplacement' in a given 'direction'.

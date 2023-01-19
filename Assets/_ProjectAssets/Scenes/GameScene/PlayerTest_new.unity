@@ -1172,21 +1172,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   configuration:
+    stepLength: 0.9
     maxTravelSteps: 5
     locationWeaponEvaluationMode: 1
-    weightBestShotDistance: 100
-    weightDirectHit: 75
+    weightBestShotDistance: 200
+    weightDirectHit: 80
     weightDirectionImportance: 20
     weightHeightImportance: 20
     weightMoveAwayIfShot: 40
     maxSimulationsPerFrame: 1000
     maxThinkingTime: 5
+    movementArrivalDistance: 0.2
     movementUpdateFrames: 10
-    movementStuckTime: 3
+    movementStuckTime: 2
     locationDecidingMargin: 0.05
     locationDecidingConsiderTopChoices: 10
     simulationMaxTime: 5
     simulationInterval: 0.05
+    simulationAngleMin: 0
+    simulationAngleMax: 180
+    simulationAngleIncrement: 3
+    simulationPowerMin: 0.1
+    simulationPowerMax: 1
+    simulationPowerIncrement: 0.05
     debugBotAI: 1
   leftMapBound: {fileID: 570977875}
   rightMapBound: {fileID: 852178216}
@@ -1195,7 +1203,7 @@ MonoBehaviour:
     weapon: 0
     rigidbody: {fileID: 4174453076262886256, guid: 7512ed148be88794a8d115915ddc0da6, type: 3}
     capsule: {fileID: 2856748976356809085, guid: 7512ed148be88794a8d115915ddc0da6, type: 3}
-    weight: 3
+    weight: 10
     customData: []
   - internalIndex: 1
     weapon: 1
@@ -1207,7 +1215,7 @@ MonoBehaviour:
     weapon: 2
     rigidbody: {fileID: 4174453076262886256, guid: 8cf0ccb2c164cf3478a2f5873c70f138, type: 3}
     capsule: {fileID: 2856748976356809085, guid: 8cf0ccb2c164cf3478a2f5873c70f138, type: 3}
-    weight: 1
+    weight: 2
     customData: []
   - internalIndex: 3
     weapon: 3
@@ -3833,7 +3841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punRoomUtils: {fileID: 0}
   mapPrefabs:
-  - {fileID: 6237716996422082004, guid: 85938879427c20e45a5215f84924fcfb, type: 3}
+  - {fileID: 8851946301562649407, guid: 5d199f410088f5b4fbc724390e2fafea, type: 3}
 --- !u!1 &1085779010
 GameObject:
   m_ObjectHideFlags: 0
