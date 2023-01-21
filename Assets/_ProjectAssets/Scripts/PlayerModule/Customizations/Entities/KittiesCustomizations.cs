@@ -19,7 +19,7 @@ public class KittiesCustomizations
             foreach (var kittyCustomization in customizations.customizationByCatUrl)
             {
                 //Skip non-customized kitties
-                if (kittyCustomization.Value.playerEquipmentConfig.Count == 0) continue;
+                if (kittyCustomization.Value.playerEquipmentConfig == null || kittyCustomization.Value.playerEquipmentConfig.Count == 0) continue;
 
                 serializedKittyCustomizations.Add(kittyCustomization.Key, kittyCustomization.Value.GetSerializableObject());
             }

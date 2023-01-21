@@ -12,7 +12,8 @@ public class DeathArea : MonoBehaviour
             PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
             if(pv == null || pv.IsMine)
             {
-                PlayerManager.Instance.DirectDamage(1000);
+                //PlayerManager.Instance.DirectDamage(1000);
+                collision.gameObject.GetComponent<BasePlayerComponent>().GiveDamage(1000);
                 RoomStateManager.Instance.TryStartNextRound();
             }
         }

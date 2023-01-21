@@ -49,26 +49,34 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
             ids.Append(",");
         }
 
-        SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, GameState.selectedNFT.imageUrl, ids.ToString());
+        if (!isMultiplayer || _photonView.IsMine)
+        {
+            string serializedConfig = JsonUtility.ToJson(KittiesCustomizationService.GetCustomization(GameState.selectedNFT.imageUrl).GetSerializableObject());
+            SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, GameState.selectedNFT.imageUrl, serializedConfig);
+        }
 
 
     }
 
     [PunRPC]
-    public void SetCatNFT(string url, string ids)
+    public void SetCatNFT(string url, string serializedConfig)
     {
-        playerCustomization.SetCat(url, ids.Split(",").ToList());
+        KittyCustomization customization = JsonUtility.FromJson<KittyCustomization.KittyCustomizationSerializable>(serializedConfig).GetNonSerializable();
+        playerCustomization.SetTransientCat(url, customization);
     }
 
     public void RegisterPlayerState(PlayerState playerState)
     {
+        RegisterBasePlayerState(playerState);
+        PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
+    }
 
+    public void RegisterBasePlayerState(PlayerState playerState)
+    {
         this.playerState = playerState;
         this.playerState.onJumpStateChanged += OnJumpStateChanged;
         this.playerState.onMovementDirectionChanged += OnMovementDirectionChanged;
         this.playerState.onMidJumpChanged += OnMidJumpStateChanged;
-
-        PlayerManager.Instance.onHealthUpdated += OnHealthUpdated;
     }
 
     public void PreJumpAnimEnded()

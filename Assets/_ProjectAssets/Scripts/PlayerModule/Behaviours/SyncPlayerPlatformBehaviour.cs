@@ -15,14 +15,17 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
 
     private void Start()
     {
-        PUNRoomUtils.onPlayerJoined += OnPlayerJoined;
         photonView = GetComponent<PhotonView>();
         if (photonView.IsMine)
         {
             transform.position = SyncPlatformsBehaviour.Instance.myPos;
-            playerCustomization.SetCat(GameState.selectedNFT.imageUrl, GameState.selectedNFT.ids);
 
-            photonView.RPC("SetCatStyle", RpcTarget.Others, GameState.selectedNFT.ids.ToArray());
+            var config = playerCustomization.SetCat(GameState.selectedNFT.imageUrl, GameState.selectedNFT.ids);
+            string serializedConfig = JsonUtility.ToJson(config.GetSerializableObject());
+
+            photonView.RPC("SetCatStyle", RpcTarget.Others, GameState.selectedNFT.imageUrl, serializedConfig);
+
+            PUNRoomUtils.onPlayerJoined += OnPlayerJoined;
         }
         else
         {
@@ -38,14 +41,17 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
 
     private void OnPlayerJoined(string nickname, string userId)
     {
+        Debug.Log($"!! On Player Joined !! {nickname}");
         Player player = PhotonNetwork.PlayerList.First(player => player.UserId == userId);
-        photonView.RPC("SetCatStyle", player, GameState.selectedNFT.imageUrl, GameState.selectedNFT.ids.ToArray());
+        string serializedConfig = JsonUtility.ToJson(KittiesCustomizationService.GetCustomization(GameState.selectedNFT.imageUrl).GetSerializableObject());
+        photonView.RPC("SetCatStyle", player, GameState.selectedNFT.imageUrl, serializedConfig);
     }
 
     [PunRPC]
-    public void SetCatStyle(string url, string[] ids)
+    public void SetCatStyle(string url, string configJson)
     {
-        playerCustomization.SetCat(url, ids.ToList());
+        KittyCustomization customization = JsonUtility.FromJson<KittyCustomization.KittyCustomizationSerializable>(configJson).GetNonSerializable();
+        playerCustomization.SetTransientCat(url, customization);
     }
 
 

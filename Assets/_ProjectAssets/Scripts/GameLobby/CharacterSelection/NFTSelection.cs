@@ -140,6 +140,7 @@ public class NFTSelection : MonoBehaviour
         }
 
         Debug.Log("Selected " + currentNFTs[idx].imageUrl);
+
         GameState.SetSelectedNFT(currentNFTs[idx]);
         nftButtons[idx].GetComponent<NFTImageButton>().Select();
         playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformParent);

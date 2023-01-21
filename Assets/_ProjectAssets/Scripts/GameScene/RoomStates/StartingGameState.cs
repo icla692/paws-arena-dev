@@ -61,8 +61,13 @@ public class StartingGameState : IRoomState
         Vector2 spawnPos = seat == 0 ? PlayerManager.Instance.GetPlayer1SpawnPos() : PlayerManager.Instance.GetPlayer2SpawnPos();
 
         var go = SingleAndMultiplayerUtils.Instantiate(context.playerPrefab.name, spawnPos, Quaternion.identity);
-        go.GetComponent<BasePlayerComponent>().playerSeat = seat;
 
+        if (!ConfigurationManager.Instance.Config.GetIsMultiplayer())
+        {
+            GameObject.Destroy(go.GetComponent<PhotonView>());
+        }
+
+        go.GetComponent<BasePlayerComponent>().playerSeat = seat;
         SingleAndMultiplayerUtils.Instantiate(context.playerUIPrefab.name, Vector3.zero, Quaternion.identity);
     }
 }

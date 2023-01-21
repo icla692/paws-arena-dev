@@ -43,7 +43,7 @@ public class BotPlayerComponent : MonoBehaviour
         playerMotionBehaviour.RegisterJumpCallbacks(playerActions);
         playerMotionBehaviour.RegisterPlayerState(basePlayerComponent.state);
 
-        playerGraphicsBehaviour.RegisterPlayerState(basePlayerComponent.state);
+        playerGraphicsBehaviour.RegisterBasePlayerState(basePlayerComponent.state);
         BotManager.Instance.onHealthUpdated += playerGraphicsBehaviour.OnHealthUpdated;
 
         var playerIndicatorBehaviour = GetComponentInChildren<PlayerIndicatorBehaviour>();

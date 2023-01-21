@@ -47,6 +47,16 @@ public class BulletComponent : MonoBehaviour
     {
         rb.isKinematic = false;
     }
+
+    private IEnumerator DelayedColliderCoroutine()
+    {
+        var collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+
+        yield return new WaitForSeconds(0.1f);
+        collider.enabled = true;
+    }
+
     public void Launch(Vector3 direction, float speed)
     {
         if (shotSfx)
@@ -55,6 +65,8 @@ public class BulletComponent : MonoBehaviour
         }
         rb.isKinematic = false;
         rb.AddForce(direction * speed, ForceMode2D.Impulse);
+
+        StartCoroutine(DelayedColliderCoroutine());
     }
 
     private void Update()
