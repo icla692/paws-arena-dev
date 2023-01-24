@@ -47,6 +47,11 @@ public class BasePlayerComponent : MonoBehaviour
         }
     }
 
+    public void GiveDamage(int dmg)
+    {
+        onDamageTaken?.Invoke(dmg);
+    }
+
     private void PushPlayer(float force, Vector2 direction)
     {
         GetComponent<Rigidbody2D>().AddForce(direction.normalized * force, ForceMode2D.Impulse);

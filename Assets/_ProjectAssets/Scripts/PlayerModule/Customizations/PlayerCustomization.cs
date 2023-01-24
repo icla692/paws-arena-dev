@@ -186,7 +186,7 @@ public class PlayerCustomization : MonoBehaviour
 
     }
 
-    public void SetCat(string url, List<string> ids)
+    public KittyCustomization SetCat(string url, List<string> ids)
     {
         this.url = url;
 
@@ -213,13 +213,31 @@ public class PlayerCustomization : MonoBehaviour
         }
 
         playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
-        if (config.playerEquipmentConfig != null)
+        if (config.playerEquipmentConfig != null && config.playerEquipmentConfig.Count > 0)
         {
             ApplyConfig(config.playerEquipmentConfig);
         }
         else
         {
             ApplyConfig(config.originalConfig);
+        }
+
+        return config;
+    }
+
+
+    public void SetTransientCat(string url, KittyCustomization customization)
+    {
+        this.url = url;
+
+        playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
+        if (customization.playerEquipmentConfig != null && customization.playerEquipmentConfig.Count > 0)
+        {
+            ApplyConfig(customization.playerEquipmentConfig);
+        }
+        else
+        {
+            ApplyConfig(customization.originalConfig);
         }
     }
 
