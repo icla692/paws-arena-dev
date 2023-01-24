@@ -482,6 +482,94 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105473339}
   m_CullTransparentMesh: 1
+--- !u!1 &149005680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 149005681}
+  - component: {fileID: 149005682}
+  m_Layer: 0
+  m_Name: Level 1 (Beginner)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &149005681
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149005680}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 485704609}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &149005682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149005680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d50017265465ef47ad20a11c5938366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accuracyMode: 2
+  accuracy: 10
+  botAccuracyPowerMargin: 0.005
+  botAccuracyPowerMarginMax: 0.15
+  configurationOverrides:
+    stepLength: -1
+    maxTravelSteps: 3
+    approachEnemy: -1
+    locationWeaponEvaluationMode: 0
+    weightBestShotDistance: -1
+    weightDirectHit: -1
+    weightDirectionImportance: 0
+    weightHeightImportance: 0
+    weightMoveAwayIfShot: 0
+    maxSimulationsPerFrame: -1
+    maxThinkingTime: -1
+    minThinkingTime: -1
+    weaponPickingTime: -1
+    aimingTime: -1
+    aimingThinkingFraction: -1
+    shootingTime: -1
+    humanityTimesRandomizer: -1
+    movementArrivalDistance: -1
+    movementUpdateFrames: -1
+    movementStuckTime: -1
+    locationDecidingMargin: -1
+    locationDecidingConsiderTopChoices: -1
+    simulationMaxTime: -1
+    simulationInterval: -1
+    simulationAngleMin: -1
+    simulationAngleMax: -1
+    simulationAngleIncrement: -1
+    simulationPowerMin: -1
+    simulationPowerMax: -1
+    simulationPowerIncrement: -1
+  weaponOverrides:
+  - weapon: 0
+    weight: 1
+  - weapon: 1
+    weight: 0
+  - weapon: 2
+    weight: 0
+  - weapon: 3
+    weight: 0
 --- !u!1 &170319846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,6 +1244,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 545213367}
+  - {fileID: 485704609}
   m_Father: {fileID: 973175763}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1171,20 +1260,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d558c841ae7c648b974ddcb38180ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preset: {fileID: 2116885973}
   configuration:
     stepLength: 0.9
-    maxTravelSteps: 5
+    maxTravelSteps: 10
+    approachEnemy: 3
     locationWeaponEvaluationMode: 1
     weightBestShotDistance: 200
     weightDirectHit: 80
     weightDirectionImportance: 20
     weightHeightImportance: 20
     weightMoveAwayIfShot: 40
-    maxSimulationsPerFrame: 1000
+    maxSimulationsPerFrame: 100
     maxThinkingTime: 5
+    minThinkingTime: 1.5
+    weaponPickingTime: 1
+    aimingTime: 3
+    aimingThinkingFraction: 0.3
+    shootingTime: 0.5
+    humanityTimesRandomizer: 30
     movementArrivalDistance: 0.2
     movementUpdateFrames: 10
-    movementStuckTime: 2
+    movementStuckTime: 2.5
     locationDecidingMargin: 0.05
     locationDecidingConsiderTopChoices: 10
     simulationMaxTime: 5
@@ -1195,7 +1292,6 @@ MonoBehaviour:
     simulationPowerMin: 0.1
     simulationPowerMax: 1
     simulationPowerIncrement: 0.05
-    debugBotAI: 1
   leftMapBound: {fileID: 570977875}
   rightMapBound: {fileID: 852178216}
   weaponsData:
@@ -1225,6 +1321,7 @@ MonoBehaviour:
     customData:
     - key: secondary_radius
       value: 0.15
+  debugBotAI: 1
   botUI: {fileID: 0}
 --- !u!1 &458930842
 GameObject:
@@ -1302,6 +1399,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458930842}
   m_CullTransparentMesh: 1
+--- !u!1 &485704608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 485704609}
+  m_Layer: 0
+  m_Name: Bot Presets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &485704609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485704608}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 149005681}
+  - {fileID: 766444270}
+  - {fileID: 1336872203}
+  - {fileID: 1103986342}
+  - {fileID: 2116885972}
+  m_Father: {fileID: 431529825}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &515852095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2516,6 +2649,94 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7, y: 0.17571723}
   m_EdgeRadius: 0
+--- !u!1 &766444269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 766444270}
+  - component: {fileID: 766444271}
+  m_Layer: 0
+  m_Name: Level 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &766444270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766444269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 485704609}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &766444271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766444269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d50017265465ef47ad20a11c5938366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accuracyMode: 2
+  accuracy: 30
+  botAccuracyPowerMargin: 0.005
+  botAccuracyPowerMarginMax: 0.15
+  configurationOverrides:
+    stepLength: -1
+    maxTravelSteps: 4
+    approachEnemy: -1
+    locationWeaponEvaluationMode: 0
+    weightBestShotDistance: -1
+    weightDirectHit: -1
+    weightDirectionImportance: 0
+    weightHeightImportance: 0
+    weightMoveAwayIfShot: 0
+    maxSimulationsPerFrame: -1
+    maxThinkingTime: -1
+    minThinkingTime: -1
+    weaponPickingTime: -1
+    aimingTime: -1
+    aimingThinkingFraction: -1
+    shootingTime: -1
+    humanityTimesRandomizer: -1
+    movementArrivalDistance: -1
+    movementUpdateFrames: -1
+    movementStuckTime: -1
+    locationDecidingMargin: -1
+    locationDecidingConsiderTopChoices: -1
+    simulationMaxTime: -1
+    simulationInterval: -1
+    simulationAngleMin: -1
+    simulationAngleMax: -1
+    simulationAngleIncrement: -1
+    simulationPowerMin: -1
+    simulationPowerMax: -1
+    simulationPowerIncrement: -1
+  weaponOverrides:
+  - weapon: 0
+    weight: 10
+  - weapon: 1
+    weight: 1
+  - weapon: 2
+    weight: 0
+  - weapon: 3
+    weight: 0
 --- !u!1 &779324855
 GameObject:
   m_ObjectHideFlags: 0
@@ -3841,7 +4062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punRoomUtils: {fileID: 0}
   mapPrefabs:
-  - {fileID: 8851946301562649407, guid: 5d199f410088f5b4fbc724390e2fafea, type: 3}
+  - {fileID: 6237716996422082004, guid: 85938879427c20e45a5215f84924fcfb, type: 3}
 --- !u!1 &1085779010
 GameObject:
   m_ObjectHideFlags: 0
@@ -3873,6 +4094,94 @@ Transform:
   m_Father: {fileID: 1260095656}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1103986341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1103986342}
+  - component: {fileID: 1103986343}
+  m_Layer: 0
+  m_Name: Level 4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1103986342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103986341}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 485704609}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1103986343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103986341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d50017265465ef47ad20a11c5938366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accuracyMode: 0
+  accuracy: 50
+  botAccuracyPowerMargin: 0.005
+  botAccuracyPowerMarginMax: 0.15
+  configurationOverrides:
+    stepLength: -1
+    maxTravelSteps: 8
+    approachEnemy: -1
+    locationWeaponEvaluationMode: 1
+    weightBestShotDistance: -1
+    weightDirectHit: -1
+    weightDirectionImportance: -1
+    weightHeightImportance: -1
+    weightMoveAwayIfShot: -1
+    maxSimulationsPerFrame: -1
+    maxThinkingTime: -1
+    minThinkingTime: -1
+    weaponPickingTime: -1
+    aimingTime: -1
+    aimingThinkingFraction: -1
+    shootingTime: -1
+    humanityTimesRandomizer: -1
+    movementArrivalDistance: -1
+    movementUpdateFrames: -1
+    movementStuckTime: -1
+    locationDecidingMargin: -1
+    locationDecidingConsiderTopChoices: -1
+    simulationMaxTime: -1
+    simulationInterval: -1
+    simulationAngleMin: -1
+    simulationAngleMax: -1
+    simulationAngleIncrement: -1
+    simulationPowerMin: -1
+    simulationPowerMax: -1
+    simulationPowerIncrement: -1
+  weaponOverrides:
+  - weapon: 0
+    weight: 10
+  - weapon: 1
+    weight: 1
+  - weapon: 2
+    weight: 1
+  - weapon: 3
+    weight: 0
 --- !u!1 &1146684623
 GameObject:
   m_ObjectHideFlags: 0
@@ -4154,6 +4463,94 @@ Transform:
   m_Father: {fileID: 1083721035}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1336872202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1336872203}
+  - component: {fileID: 1336872204}
+  m_Layer: 0
+  m_Name: Level 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1336872203
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336872202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 485704609}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1336872204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336872202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d50017265465ef47ad20a11c5938366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accuracyMode: 1
+  accuracy: 40
+  botAccuracyPowerMargin: 0.005
+  botAccuracyPowerMarginMax: 0.15
+  configurationOverrides:
+    stepLength: -1
+    maxTravelSteps: 5
+    approachEnemy: -1
+    locationWeaponEvaluationMode: 1
+    weightBestShotDistance: -1
+    weightDirectHit: -1
+    weightDirectionImportance: 0
+    weightHeightImportance: 0
+    weightMoveAwayIfShot: -1
+    maxSimulationsPerFrame: -1
+    maxThinkingTime: -1
+    minThinkingTime: -1
+    weaponPickingTime: -1
+    aimingTime: -1
+    aimingThinkingFraction: -1
+    shootingTime: -1
+    humanityTimesRandomizer: -1
+    movementArrivalDistance: -1
+    movementUpdateFrames: -1
+    movementStuckTime: -1
+    locationDecidingMargin: -1
+    locationDecidingConsiderTopChoices: -1
+    simulationMaxTime: -1
+    simulationInterval: -1
+    simulationAngleMin: -1
+    simulationAngleMax: -1
+    simulationAngleIncrement: -1
+    simulationPowerMin: -1
+    simulationPowerMax: -1
+    simulationPowerIncrement: -1
+  weaponOverrides:
+  - weapon: 0
+    weight: 10
+  - weapon: 1
+    weight: 1
+  - weapon: 2
+    weight: 0
+  - weapon: 3
+    weight: 0
 --- !u!1 &1417513450
 GameObject:
   m_ObjectHideFlags: 0
@@ -7226,3 +7623,91 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062671657}
   m_CullTransparentMesh: 1
+--- !u!1 &2116885971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2116885972}
+  - component: {fileID: 2116885973}
+  m_Layer: 0
+  m_Name: Level 5 (Expert)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2116885972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116885971}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 485704609}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2116885973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116885971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d50017265465ef47ad20a11c5938366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accuracyMode: 1
+  accuracy: 100
+  botAccuracyPowerMargin: 0.005
+  botAccuracyPowerMarginMax: 0.15
+  configurationOverrides:
+    stepLength: -1
+    maxTravelSteps: 10
+    approachEnemy: -1
+    locationWeaponEvaluationMode: 1
+    weightBestShotDistance: -1
+    weightDirectHit: -1
+    weightDirectionImportance: -1
+    weightHeightImportance: -1
+    weightMoveAwayIfShot: -1
+    maxSimulationsPerFrame: -1
+    maxThinkingTime: -1
+    minThinkingTime: -1
+    weaponPickingTime: -1
+    aimingTime: -1
+    aimingThinkingFraction: -1
+    shootingTime: -1
+    humanityTimesRandomizer: -1
+    movementArrivalDistance: -1
+    movementUpdateFrames: -1
+    movementStuckTime: -1
+    locationDecidingMargin: -1
+    locationDecidingConsiderTopChoices: -1
+    simulationMaxTime: -1
+    simulationInterval: -1
+    simulationAngleMin: -1
+    simulationAngleMax: -1
+    simulationAngleIncrement: -1
+    simulationPowerMin: -1
+    simulationPowerMax: -1
+    simulationPowerIncrement: -1
+  weaponOverrides:
+  - weapon: 0
+    weight: 10
+  - weapon: 1
+    weight: 1
+  - weapon: 2
+    weight: 2
+  - weapon: 3
+    weight: 1

@@ -1,7 +1,9 @@
 ﻿using Anura.ConfigurationModule.Managers;
+using Anura.ConfigurationModule.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -53,8 +55,8 @@ public class BotAI : MonoBehaviour
     }
 
     private BotPlayerAPI api = BotPlayerAPI.Instance;
-    private float TimeLeft => RoomStateManager.Instance.Timer.TimeLeft;
-    private BotConfiguration Configuration => BotManager.Instance.configuration;
+    private float TimeLeft => 30;  // TODO: Get the actual time left for the bot's turn
+    private BotConfiguration Configuration => BotManager.Instance.GetConfiguration();
 
     private Bounds Bounds => Collider.bounds;
     private Vector3 Center => Bounds.center;
@@ -142,6 +144,7 @@ public class BotAI : MonoBehaviour
         {
             List<Location> potentialLocations = GetPotentialLocations(moveDirs[0], moveDirs[1], steps, stepFactor);
 
+            float startThinkingTime = Time.time;
             yield return StartCoroutine(ChooseLocation(potentialLocations));
             if (chosenLocation == null) break;
 
@@ -161,14 +164,28 @@ public class BotAI : MonoBehaviour
                 attempt++;
             }
 
+            // Respect minimum thinking time (humanity)
+            float thinkingTime = Time.time - startThinkingTime;
+            float requiredThinkingTime = GetRandomizedHumanityTime(Configuration.minThinkingTime);
+            if (requiredThinkingTime > Configuration.maxThinkingTime) requiredThinkingTime = Configuration.maxThinkingTime;
+            if (thinkingTime < requiredThinkingTime)
+                yield return new WaitForSeconds(requiredThinkingTime - thinkingTime);
+
             yield return StartCoroutine(Move());
-            yield return new WaitForSeconds(2);
         }
-        while (repeatMoveTo && TimeLeft > 2);        
+        while (repeatMoveTo && TimeLeft > Configuration.ActionTimeTotal);
+        if (BotManager.Instance.debugBotAI && TimeLeft < Configuration.ActionTimeTotal) 
+            Debug.Log("BotAI: Not enough time left for the remaining actions! Required: " + 
+                Configuration.ActionTimeTotal + " Time left: " + TimeLeft);
 
         yield return StartCoroutine(Shoot());
 
         previousHP = BotManager.Instance.GetHP();
+    }
+
+    private float GetRandomizedHumanityTime(float time)
+    {
+        return time * Random.Range(1, Configuration.HumanityTimesRandomizerMultiplier);
     }
 
     private List<Location> GetPotentialLocations(bool left, bool right, int steps, float stepFactor)
@@ -301,6 +318,16 @@ public class BotAI : MonoBehaviour
 
             if (counter % Configuration.movementUpdateFrames == 0)
             {
+                // Do not approach enemy
+                if (Configuration.approachEnemy > 0 && chosenLocation.direction == GetEnemyDirection(Center))
+                {
+                    if (Vector3.Distance(Center, EnemyPosition) <= Configuration.approachEnemy * Bounds.size.x)
+                    {
+                        repeatMoveTo = true;
+                        break;
+                    }
+                }
+
                 // Change direction
                 if ((chosenLocation.position.x - Center.x) * chosenLocation.direction < 0)
                 {
@@ -340,34 +367,93 @@ public class BotAI : MonoBehaviour
     {
         if (chosenLocation == null) yield break;
 
+        // Weapon selection
         yield return null;
-        yield return null;
+        yield return new WaitForSeconds(GetRandomizedHumanityTime(Configuration.weaponPickingTime));
 
         api.weaponIdx = BotAIAim.WeaponsData[chosenWeapon].internalIndex;
         api.SelectWeapon();
 
-        yield return null;
-        api.shootAngle = chosenLocation.locationSims[chosenWeapon].angle;
-        api.shootPower = chosenLocation.locationSims[chosenWeapon].power;
+        // Aiming
+        yield return null;        
+        float targetAngle = chosenLocation.locationSims[chosenWeapon].angle;        
+        float targetPower = chosenLocation.locationSims[chosenWeapon].power;
+        float accPenalty = GetPowerAccuracyPenalty(targetPower);
+        targetPower += accPenalty;
+
+        float totalTime = GetRandomizedHumanityTime(Configuration.aimingTime);
+
+        if (totalTime > 0)
+        {
+            api.SelectAnglePower();
+            float startTime = Time.time;
+            yield return new WaitForSeconds(totalTime * Mathf.Clamp(Configuration.aimingThinkingFraction, 0, 1));
+
+            float startAngle = targetAngle * Random.Range(0.5f, 1.5f);
+            api.shootAngle = startAngle;
+            float startPower = targetPower * Random.Range(0.3f, 1f);
+            api.shootPower = startPower;
+            api.SelectAnglePower();
+
+            yield return null;
+
+            while (true)
+            {
+                float elapsed = Time.time - startTime;
+                float elapsedFraction = elapsed / totalTime;
+                if (elapsedFraction >= 1) break;
+
+                float logT = LogarithmicTimeInterpolation(elapsed, totalTime, 2, 12);
+                api.shootAngle = Mathf.Lerp(startAngle, targetAngle, logT);
+                api.shootPower = Mathf.Lerp(startPower, targetPower, logT);
+                api.SelectAnglePower();
+
+                yield return null;
+            }
+        }
+
+        api.shootAngle = targetAngle;
+        api.shootPower = targetPower;
         api.SelectAnglePower();
 
-        if (Configuration.debugBotAI)
+        // Shooting
+        yield return null;
+        yield return new WaitForSeconds(GetRandomizedHumanityTime(Configuration.shootingTime));
+
+        api.Shoot();
+
+        if (BotManager.Instance.debugBotAI)
         {
             Debug.Log("BotAI: Shooting::weapon: " + chosenWeapon);
             Debug.Log("BotAI: Shooting::distance: " + chosenLocation.locationSims[chosenWeapon].distanceToEnemy);
-            Debug.Log("BotAI: Shooting::angle: " + chosenLocation.locationSims[chosenWeapon].angle);
-            Debug.Log("BotAI: Shooting::power: " + chosenLocation.locationSims[chosenWeapon].power);
+            Debug.Log("BotAI: Shooting::angle: " + targetAngle);
+            Debug.Log("BotAI: Shooting::power: " + targetPower);
             Debug.Log("BotAI: Shooting::score: " + chosenLocation.locationSims[chosenWeapon].score);
-        }            
-
-        yield return null;        
-        api.Shoot();
+            Debug.Log("BotAI: Shooting::accuracy penalty: " + accPenalty);
+        }
 
         if (chosenWeapon == Weapon.Split)
         {
             yield return new WaitForSeconds(chosenLocation.locationSims[chosenWeapon].eta - 1);
             api.Shoot();
         }        
+    }
+
+    private float GetPowerAccuracyPenalty(float targetPower)
+    {
+        var preset = BotManager.Instance.GetPreset();
+        if (preset) return preset.GetPowerAccuracyPenalty(targetPower);
+        return 0;
+    }
+
+    private float LogarithmicTimeInterpolation(float time, float totalTime, float logBase, float logMaxY)
+    {
+        float maxX = Mathf.Pow(logBase, logMaxY);
+
+        float x = Mathf.Lerp(1, maxX, Mathf.InverseLerp(0, totalTime, time));
+        float y = Mathf.Log(x, logBase);
+
+        return Mathf.InverseLerp(0, logMaxY, y);
     }
 
     private Location GetLocation()

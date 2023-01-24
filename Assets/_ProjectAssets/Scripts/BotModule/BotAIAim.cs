@@ -48,7 +48,7 @@ public class BotAIAim
     private BotAI botAI;
 
     private Config Config => ConfigurationManager.Instance.Config;
-    private BotConfiguration BotConfig => BotManager.Instance.configuration;
+    private BotConfiguration BotConfig => BotManager.Instance.GetConfiguration();
 
     public Dictionary<Weapon, WeaponData> WeaponsData { get; private set; } = new Dictionary<Weapon, WeaponData>();
 
@@ -138,7 +138,7 @@ public class BotAIAim
         }
 
         simulating = false;
-        if (BotConfig.debugBotAI)
+        if (BotManager.Instance.debugBotAI)
         {
             Debug.Log("BotAIAim: Aiming calculations lasted " + (Time.time - simulationStartTime) + " seconds and " + 
                 debugFrameCount + " frames.");
@@ -192,7 +192,7 @@ public class BotAIAim
                 if (Time.time - simulationStartTime >= BotConfig.maxThinkingTime)
                 {
                     simulating = false;
-                    if (BotConfig.debugBotAI)
+                    if (BotManager.Instance.debugBotAI)
                     {
                         int progress =(int)((float)locationIndex / simulatedLocations.Count * 100);
                         Debug.Log("BotAIAim: Thinking time exceeded. Progress was at " + progress + "%.");

@@ -101,11 +101,6 @@ static class TerrainNavigationLibrary
         return Physics2D.Raycast(origin, Vector3.down, Mathf.Infinity, LAYERMASK_TERRAIN);
     }
 
-    /*private static RaycastHit2D CirclecastDown(Vector3 origin)
-    {
-        return Physics2D.CircleCast(origin, 1, Vector3.down, Mathf.Infinity, LAYERMASK_TERRAIN);
-    }*/
-
     private static RaycastHit2D RaycastDownAtYIntervals(Vector3 origin, Bounds obj, int attempts = 100)
     {
         float y = 0;

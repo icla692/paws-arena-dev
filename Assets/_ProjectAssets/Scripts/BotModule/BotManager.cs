@@ -23,7 +23,10 @@ public class BotConfiguration
 
     [Tooltip("The maximum number of steps that the bot will consider travelling in one turn.\n" +
         "Increasing this value will result in a prolonged thinking time.")]
-    public int maxTravelSteps = 5;
+    public int maxTravelSteps = 10;
+
+    [Tooltip("Do not approach the enemy close than this * [width of character]")]
+    public float approachEnemy = 3;
 
     [Tooltip("This parameter affects how the bot decides which weapon to use in a given location.\n" +
         "[Fast Mode]: Will use the first good weapon found. Better for performance.\n" +
@@ -33,10 +36,10 @@ public class BotConfiguration
     [Header("Weights for evaluating a location. Set to zero to turn off.")]
 
     [Tooltip("How far from the enemy is the best shot achievable from the location.")]
-    public int weightBestShotDistance = 100;
+    public int weightBestShotDistance = 200;
 
     [Tooltip("Is a direct hit possible from the location.")]
-    public int weightDirectHit = 75;
+    public int weightDirectHit = 80;
 
     [Tooltip("How much to prioritize walking away instead of towards the enemy.")]
     public int weightDirectionImportance = 20;
@@ -51,11 +54,31 @@ public class BotConfiguration
 
     [Tooltip("How many simulations the bot is allowed to perform per frame. " +
         "Reducing this will result in a single frame being calculated faster, but more frames will be required.")]
-    public int maxSimulationsPerFrame = 1000;
+    public int maxSimulationsPerFrame = 100;
 
     [Tooltip("The maximum amount of time in seconds that the bot is allowed to spend on thinking. " +
         "If this is exceeded, the bot will abort any remaining calculations and work with what it has.")]
     public float maxThinkingTime = 5;
+
+    [Header("Humanity")]
+
+    [Tooltip("Minimum amount of time to spend thinking before doing any movement.")]
+    public float minThinkingTime = 1.5f;
+
+    [Tooltip("Time between stopping movement and weapon selection.")]
+    public float weaponPickingTime = 1;
+
+    [Tooltip("Time between weapon selection and setting angle/power.")]
+    public float aimingTime = 3f;
+
+    [Tooltip("How much of the aiming time to spend thinking before touching the angle/power indicator. (A fraction between 0 and 1)")]
+    public float aimingThinkingFraction = 0.3f;
+
+    [Tooltip("Time between setting angle/power and shooting.")]
+    public float shootingTime = 0.5f;
+
+    [Tooltip("Randomly add up to this many % to all humanity time parameters.")]
+    public float humanityTimesRandomizer = 30;
 
     [Header("Advanced. Use with caution.")]
 
@@ -66,7 +89,7 @@ public class BotConfiguration
     public int movementUpdateFrames = 10;
 
     [Tooltip("How many seconds to wait before deciding it is stuck and launching a movement reevaluation.")]
-    public float movementStuckTime = 3;
+    public float movementStuckTime = 2.5f;
 
     [Tooltip("[0, 1] range. Consider only location scores within this margin of the top choice.")]
     public float locationDecidingMargin = 0.05f;
@@ -99,30 +122,36 @@ public class BotConfiguration
     [Tooltip("In simulations, power is incremented with this value.")]
     public float simulationPowerIncrement = 0.05f;
 
-    [Tooltip("")]
-
-    [Header("Debug")]
-    public bool debugBotAI = false;
-
     public int WeightsTotal =>
         weightBestShotDistance +
         weightDirectHit +
         weightDirectionImportance +
         weightHeightImportance +
         weightMoveAwayIfShot;
+
+    public float ActionTimeTotal =>
+        (weaponPickingTime + aimingTime + shootingTime) * HumanityTimesRandomizerMultiplier +
+        maxThinkingTime;
+
+    public float HumanityTimesRandomizerMultiplier =>
+        1 + humanityTimesRandomizer / 100;
 }
 
 public class BotManager : MonoSingleton<BotManager>
 {
     public event Action<int> onHealthUpdated;
 
-    public BotConfiguration configuration;
+    [SerializeField] private BotPreset preset;
+    [SerializeField] private BotConfiguration configuration;
 
     [Header("Dependencies")]
     [Header("These map bounds are also used to reference the height (e.g. lowest and highest Y points) of the map, so make sure they are the correct height.")]
     public Collider2D leftMapBound;  
     public Collider2D rightMapBound;
     public List<WeaponData> weaponsData;
+
+    [Header("Debug")]
+    public bool debugBotAI = false;
 
     public List<Collider2D> Enemy { get; private set; } = new List<Collider2D>();
 
@@ -132,6 +161,24 @@ public class BotManager : MonoSingleton<BotManager>
     private BotPlayerComponent currentBot;
     private int maxHP;
     private int botHP;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        if (preset) preset.Setup(configuration, ref weaponsData);
+    }
+
+    public BotConfiguration GetConfiguration()
+    {
+        if (preset == null || preset.configurationOverrides == null)
+            return configuration;
+        return preset.configurationOverrides;
+    }
+
+    public BotPreset GetPreset()
+    {
+        return preset;
+    }
 
     public void RegisterBot(BotPlayerComponent botComponent)
     {
