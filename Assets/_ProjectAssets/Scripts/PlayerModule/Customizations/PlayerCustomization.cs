@@ -138,6 +138,20 @@ public class PlayerCustomization : MonoBehaviour
     [SerializeField]
     private List<SpriteEquipment> mouthEquipment;
 
+    [Header("Tail")]
+    [SerializeField]
+    private SpriteRenderer overlayTailRenderer;
+    [SerializeField]
+    private List<SpriteEquipment> overlayTailEquipment;
+
+    [SerializeField]
+    private List<GameObjectEquipment> tailAnimatedObjectsEquipment;
+
+    [SerializeField]
+    private SpriteRenderer staticTailObjectRenderer;
+    [SerializeField]
+    private List<SpriteEquipment> tailStaticObjectsEquipment;
+
     [Header("GroundFront")]
     [SerializeField]
     private Transform groundFrontTransform;
@@ -312,6 +326,7 @@ public class PlayerCustomization : MonoBehaviour
                 }
             case EquipmentType.TAIL:
                 {
+                    SetTail(id);
                     break;
                 }
             case EquipmentType.LEGS:
@@ -355,6 +370,12 @@ public class PlayerCustomization : MonoBehaviour
         if (mouthEquipment.FindIndex(eq => eq.id == id) >= 0)
         {
             return EquipmentType.MOUTH;
+        }
+
+        if(tailAnimatedObjectsEquipment.FindIndex(eq => eq.id == id) >= 0 ||
+            overlayTailEquipment.FindIndex(eq => eq.id == id) >= 0)
+        {
+            return EquipmentType.TAIL;
         }
 
         if (groundBackEquipment.FindIndex(eq => eq.id == id) >= 0)
@@ -505,6 +526,35 @@ public class PlayerCustomization : MonoBehaviour
         if (updateConfig && eq != null)
         {
             AddOrUpdateEquipment(EquipmentType.BODY, eq);
+        }
+    }
+
+
+    private void SetTail(string id, bool updateConfig = true)
+    {
+        int idx = overlayTailEquipment.FindIndex(el => el.id == id);
+        if(idx >= 0)
+        {
+            SpriteEquipment eq = SetSingleSpriteElement(id, overlayTailEquipment, overlayTailRenderer);
+
+            if (updateConfig && eq != null)
+            {
+                AddOrUpdateEquipment(EquipmentType.TAIL, eq);
+            }
+
+            return;
+        }
+
+        idx = tailAnimatedObjectsEquipment.FindIndex(el => el.id == id);
+        if(idx >= 0)
+        {
+            GameObjectEquipment eq = SetSingleActiveElement(id, tailAnimatedObjectsEquipment);
+
+            if (updateConfig && eq != null)
+            {
+                AddOrUpdateEquipment(EquipmentType.TAIL, eq);
+            }
+            return;
         }
     }
 
