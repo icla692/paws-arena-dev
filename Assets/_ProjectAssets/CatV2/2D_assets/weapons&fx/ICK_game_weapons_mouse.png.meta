@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 97d39b25b6d717843859193a443ac8db
+guid: 1ee0ec338f37bbd409fedd1537db2b5b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -116,337 +116,316 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tail_fire_02_0
+      name: ICK_game_weapons_mouse_0
       rect:
         serializedVersion: 2
         x: 0
         y: 1536
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.38, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60825d8a2059ade4bb62b28ddc7760f7
-      internalID: -540109450
+      spriteID: 28fcb7e7742be99468c23067812920c0
+      internalID: -1030347861
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_1
+      name: ICK_game_weapons_mouse_1
       rect:
         serializedVersion: 2
         x: 512
         y: 1536
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.38424695, y: 0.54999995}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30efd1f2715f3874bb2caf369b81394b
-      internalID: -1035830794
+      spriteID: 9ba1ea104185b8f4db3f6d362dbc5db1
+      internalID: -1323762222
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_2
+      name: ICK_game_weapons_mouse_2
       rect:
         serializedVersion: 2
         x: 1024
         y: 1536
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.39274096, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02492646c9b88fd42b720eac158a2917
-      internalID: 317510391
+      spriteID: ea0697e77c37077489e6ff51d7346f65
+      internalID: -1412143876
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_3
+      name: ICK_game_weapons_mouse_3
       rect:
         serializedVersion: 2
         x: 1536
         y: 1536
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.40076995, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c3120f0eb717e641bdc20d4f376bd3b
-      internalID: -2105827342
+      spriteID: 9fb81fd137bbce54b92ca8e216e5e909
+      internalID: 415894752
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_4
+      name: ICK_game_weapons_mouse_4
       rect:
         serializedVersion: 2
         x: 0
         y: 1024
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.39136466, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36f1404c40256c346abf8d6fc31b85e2
-      internalID: -125355215
+      spriteID: 698c38d9b1ccff84ebc48efe1e8fd665
+      internalID: 1821389202
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_5
+      name: ICK_game_weapons_mouse_5
       rect:
         serializedVersion: 2
         x: 512
-        y: 1024
+        y: 1026
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.38673568, y: 0.55}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c29960682d86274dabf948ecb1b26aa
-      internalID: -1990704668
+      spriteID: 7a1fd80426a9b274084bee42142689f4
+      internalID: -714309184
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_6
+      name: ICK_game_weapons_mouse_6
       rect:
         serializedVersion: 2
         x: 1024
         y: 1024
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6324582, y: 0.6135354}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de6847196e988884b98db743ab914bef
-      internalID: 879271138
+      spriteID: e556ef6cc4e8a3744b5890a723c47b7d
+      internalID: -1580197620
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_7
+      name: ICK_game_weapons_mouse_7
       rect:
         serializedVersion: 2
         x: 1536
         y: 1024
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6561117, y: 0.6513808}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f39914b3d3a0f354c9c25f605bd43fc0
-      internalID: 1561224727
+      spriteID: c6157a06601147742b834620c70c6d79
+      internalID: 218547452
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_8
+      name: ICK_game_weapons_mouse_8
       rect:
         serializedVersion: 2
         x: 0
         y: 512
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.64191955, y: 0.4526931}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3128951b29b69d42bb1611ef76b43d5
-      internalID: 1216816897
+      spriteID: 9787633debbe71843854e967da3f4eae
+      internalID: -400887551
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_9
+      name: ICK_game_weapons_mouse_9
       rect:
         serializedVersion: 2
         x: 512
         y: 512
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.67503405, y: 0.6182661}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0556af5a177103a4aadd8f492f9ad1a1
-      internalID: -2006180759
+      spriteID: c2b0ec3cb9c402e4da42ca2ff6c70a05
+      internalID: 2070740529
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_10
+      name: ICK_game_weapons_mouse_10
       rect:
         serializedVersion: 2
         x: 1024
         y: 512
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6797645, y: 0.6182661}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d35cf59b3763e84a96be28a6853c615
-      internalID: -1338065953
+      spriteID: 1e7f92fa1a7e49d4a97eebdd72b75399
+      internalID: -267375191
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_11
+      name: ICK_game_weapons_mouse_11
       rect:
         serializedVersion: 2
         x: 1536
         y: 512
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53784513, y: 0.4101175}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21f2be06e5b0a2d488e53dffa692be79
-      internalID: 135021014
+      spriteID: 5cd96dc123683454eb0b42d120ff7628
+      internalID: 130864023
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_12
+      name: ICK_game_weapons_mouse_12
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.7365325, y: 0.5567676}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bddd413b0e395145b120e469b3d0264
-      internalID: -28016453
+      spriteID: 12011ca4f6c15b1459ab82c4cb7abf06
+      internalID: -1639379009
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_13
+      name: ICK_game_weapons_mouse_13
       rect:
         serializedVersion: 2
         x: 512
         y: 0
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5047307, y: 0.3959255}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0bcd24321a25374297ae54e9cc410fe
-      internalID: 2099022867
+      spriteID: a632063d876948e4f9451a2d4c83e4d7
+      internalID: 1130378797
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tail_fire_02_14
+      name: ICK_game_weapons_mouse_14
       rect:
         serializedVersion: 2
         x: 1024
         y: 0
         width: 512
         height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4858079, y: 0.3770029}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 052a166ee186ee84fbe28d65ce52ff8f
-      internalID: -1100719335
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tail_fire_02_15
-      rect:
-        serializedVersion: 2
-        x: 1536
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fe02987b1ac2ddf42bd6fa23c80afb8d
-      internalID: -1771055100
+      spriteID: ea707b12a359e9a459ac322368bb0da8
+      internalID: 1112606035
       vertices: []
       indices: 
       edges: []
@@ -462,22 +441,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      tail_fire_02_9: -2006180759
-      tail_fire_02_4: -125355215
-      tail_fire_02_12: -28016453
-      tail_fire_02_2: 317510391
-      tail_fire_02_15: -1771055100
-      tail_fire_02_0: -540109450
-      tail_fire_02_14: -1100719335
-      tail_fire_02_13: 2099022867
-      tail_fire_02_3: -2105827342
-      tail_fire_02_1: -1035830794
-      tail_fire_02_11: 135021014
-      tail_fire_02_7: 1561224727
-      tail_fire_02_6: 879271138
-      tail_fire_02_5: -1990704668
-      tail_fire_02_8: 1216816897
-      tail_fire_02_10: -1338065953
+      ICK_game_weapons_mouse_7: 218547452
+      ICK_game_weapons_mouse_6: -1580197620
+      ICK_game_weapons_mouse_14: 1112606035
+      ICK_game_weapons_mouse_4: 1821389202
+      ICK_game_weapons_mouse_11: 130864023
+      ICK_game_weapons_mouse_5: -714309184
+      ICK_game_weapons_mouse_0: -1030347861
+      ICK_game_weapons_mouse_2: -1412143876
+      ICK_game_weapons_mouse_1: -1323762222
+      ICK_game_weapons_mouse_13: 1130378797
+      ICK_game_weapons_mouse_3: 415894752
+      ICK_game_weapons_mouse_8: -400887551
+      ICK_game_weapons_mouse_12: -1639379009
+      ICK_game_weapons_mouse_9: 2070740529
+      ICK_game_weapons_mouse_10: -267375191
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
