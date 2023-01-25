@@ -373,7 +373,8 @@ public class PlayerCustomization : MonoBehaviour
         }
 
         if(tailAnimatedObjectsEquipment.FindIndex(eq => eq.id == id) >= 0 ||
-            overlayTailEquipment.FindIndex(eq => eq.id == id) >= 0)
+            overlayTailEquipment.FindIndex(eq => eq.id == id) >= 0 ||
+            tailStaticObjectsEquipment.FindIndex(eq => eq.id == id) >= 0)
         {
             return EquipmentType.TAIL;
         }
@@ -549,6 +550,18 @@ public class PlayerCustomization : MonoBehaviour
         if(idx >= 0)
         {
             GameObjectEquipment eq = SetSingleActiveElement(id, tailAnimatedObjectsEquipment);
+
+            if (updateConfig && eq != null)
+            {
+                AddOrUpdateEquipment(EquipmentType.TAIL, eq);
+            }
+            return;
+        }
+
+        idx = tailStaticObjectsEquipment.FindIndex(el => el.id == id);
+        if(idx > 0)
+        {
+            SpriteEquipment eq = SetSingleSpriteElement(id, tailStaticObjectsEquipment, staticTailObjectRenderer);
 
             if (updateConfig && eq != null)
             {

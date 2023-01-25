@@ -867,6 +867,7 @@ MonoBehaviour:
   shapes: {fileID: 11400000, guid: 81082feba1188dc41ac9fa13714c93d2, type: 2}
   crates: {fileID: 11400000, guid: d48be5ae6987a0042b7eb35a219f617b, type: 2}
   weapons: {fileID: 0}
+  dummy: {fileID: 0}
 --- !u!1 &905769325
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,8 +1228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncPlayerPlatformPrefab: {fileID: 9122209185718362659, guid: 3f631740f087cba4381debb0a059a5d8, type: 3}
-  myPos: {x: -1.847, y: -0.116, z: 0}
-  theirPos: {x: 1.847, y: -0.116, z: 0}
+  myPos: {x: -0.92, y: -0.35, z: 0}
+  theirPos: {x: 0.92, y: -0.35, z: 0}
 --- !u!4 &1429538793
 Transform:
   m_ObjectHideFlags: 0

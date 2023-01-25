@@ -135,6 +135,18 @@ public class LobbyUIManager : MonoBehaviour
         //lobbyPhotonConnection.TryJoinSinglePlayerRoom();
         SceneManager.LoadScene("GameSceneTutorial", LoadSceneMode.Single);
     }
+    public void GoToSinglePlayer()
+    {
+        //CloseGameMenu();
+        //connectingToRoom.SetActive(true);
+        //lobbyPhotonConnection.TryJoinSinglePlayerRoom();
+        SceneManager.LoadScene("PlayerTest_new", LoadSceneMode.Single);
+    }
+
+    public void GoToLeaderboard()
+    {
+        SceneManager.LoadScene("Leaderboard", LoadSceneMode.Single);
+    }
 
     public void OpenSettings()
     {

@@ -285,6 +285,7 @@ Transform:
   m_Children:
   - {fileID: 9122209185395961980}
   - {fileID: 9122209185582796645}
+  - {fileID: 9066315468741117563}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -301,6 +302,93 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCustomization: {fileID: 1652268005445013935}
+--- !u!1001 &2559999165442131602
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 9122209185718362652}
+    m_Modifications:
+    - target: {fileID: 1212432978861229125, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_Name
+      value: TailFloatingAssets
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.1366897
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.1705344
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+--- !u!1 &182492917366252020 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2382028144549455718, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+  m_PrefabInstance: {fileID: 2559999165442131602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3641363546234341622 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1229000525079596644, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+  m_PrefabInstance: {fileID: 2559999165442131602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &5713926118245678392 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7839922709254749098, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+  m_PrefabInstance: {fileID: 2559999165442131602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6235413839399297487 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8434769813998053213, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+  m_PrefabInstance: {fileID: 2559999165442131602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8721751411602920734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6525455411139777420, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+  m_PrefabInstance: {fileID: 2559999165442131602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9066315468741117563 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6797326359200268521, guid: f9d7f9876e2b79b47bbbdc4b0b56b4be, type: 3}
+  m_PrefabInstance: {fileID: 2559999165442131602}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7527362240045894417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -468,6 +556,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: staticTailObjectRenderer
+      value: 
+      objectReference: {fileID: 5713926118245678392}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: eyewearSprites.Array.size
       value: 20
@@ -668,6 +760,22 @@ PrefabInstance:
       propertyPath: closeableEyewearKeysMapping.Array.data[2]
       value: eyewear15
       objectReference: {fileID: 0}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: tailAnimatedObjectsEquipment.Array.data[0].target
+      value: 
+      objectReference: {fileID: 182492917366252020}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: tailAnimatedObjectsEquipment.Array.data[1].target
+      value: 
+      objectReference: {fileID: 3641363546234341622}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: tailAnimatedObjectsEquipment.Array.data[2].target
+      value: 
+      objectReference: {fileID: 6235413839399297487}
+    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: tailAnimatedObjectsEquipment.Array.data[3].target
+      value: 
+      objectReference: {fileID: 8721751411602920734}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
 --- !u!114 &1652268005445013935 stripped
