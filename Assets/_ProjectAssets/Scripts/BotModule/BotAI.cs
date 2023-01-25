@@ -115,8 +115,21 @@ public class BotAI : MonoBehaviour
         movementStep = Bounds.size.x * Configuration.stepLength;
     }
 
+    private void OnEnable()
+    {
+        AreaEffectsManager.Instance.OnAreaDamage += AreaDamage;
+    }
+
+    private void OnDisable()
+    {
+        AreaEffectsManager.Instance.OnAreaDamage -= AreaDamage;
+    }
+
+    private bool playing = false;
+
     public void Play()
     {
+        playing = true;
         foreach (var g in debugGOs) Destroy(g);
         debugGOs.Clear();
 
@@ -125,6 +138,14 @@ public class BotAI : MonoBehaviour
 
     public void Wait()
     {
+        playing = false;
+    }
+
+    private Vector3? lastPlayerHit = null;
+    private void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
+    {
+        if (playing) return;
+        lastPlayerHit = position;
     }
 
     private Location chosenLocation = null;
@@ -148,7 +169,7 @@ public class BotAI : MonoBehaviour
             yield return StartCoroutine(ChooseLocation(potentialLocations));
             if (chosenLocation == null) break;
 
-            DebugLocation(chosenLocation);
+            // DebugLocation(chosenLocation);
             if (chosenLocation.direction == -1) moveDirs[0] = false;
             if (chosenLocation.direction == 1) moveDirs[1] = false;
 
@@ -198,7 +219,7 @@ public class BotAI : MonoBehaviour
             if (right) AddLocationIfNew(ref result, GetLocation(1, i, stepFactor));
         }
 
-        foreach (var l in result) DebugLocation(l, 0.5f);
+        // foreach (var l in result) DebugLocation(l, 0.5f);
 
         return result;
     }
@@ -281,13 +302,11 @@ public class BotAI : MonoBehaviour
                 score += Mathf.Lerp(0, Configuration.weightHeightImportance, heightFraction);
             }
 
-            if (Configuration.weightMoveAwayIfShot > 0)
+            if (Configuration.weightMoveAwayFromPlayerShots > 0 && lastPlayerHit is Vector3 lph)
             {
-                float add = Configuration.weightMoveAwayIfShot;
-                if (BotManager.Instance.GetHP() != previousHP)
-                {
-                    add *= Mathf.InverseLerp(0, Configuration.maxTravelSteps, Mathf.Abs(location.stepsFromOrigin));
-                }
+                float add =                
+                    Configuration.weightMoveAwayFromPlayerShots *
+                    Mathf.InverseLerp(0, Configuration.maxTravelSteps * Configuration.stepLength, Vector3.Distance(location.position, lph));
                 score += add;
             }
 

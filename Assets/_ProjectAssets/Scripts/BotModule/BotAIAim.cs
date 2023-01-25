@@ -226,41 +226,38 @@ public class BotAIAim
                         simulationsInFrame++;                                              
                     }
 
-                    // Weapon-specific calculations
+                    // Weapon-specific calculations                    
+                    float distanceFromEnemy = collision.distanceFromEnemy;
+                    float time = collision.time;
 
-                    if (collision.hit)
+                    if (wd.Key == Weapon.Flare)
                     {
-                        float distanceFromEnemy = collision.distanceFromEnemy;
-                        float time = collision.time;
-
-                        if (wd.Key == Weapon.Flare)
+                        if (flareSecondaryRadius > 0)
                         {
-                            if (flareSecondaryRadius > 0)
+                            Vector3 castOrigin = collision.position;
+                            castOrigin.y = botAI.MapMaxY;
+                            RaycastHit2D hit = Physics2D.CircleCast(
+                                castOrigin, flareSecondaryRadius, Vector3.down, botAI.MapMaxY, TerrainNavigationLibrary.LAYERMASK_HITTABLES);
+                            if (hit)
                             {
-                                Vector3 castOrigin = collision.position;
-                                castOrigin.y = botAI.MapMaxY;
-                                RaycastHit2D hit = Physics2D.CircleCast(
-                                    castOrigin, flareSecondaryRadius, Vector3.down, botAI.MapMaxY, TerrainNavigationLibrary.LAYERMASK_HITTABLES);
-                                if (hit)
-                                {
-                                    location.locationSims[wd.Key].directHit = enemy.Contains(hit.collider);
-                                    distanceFromEnemy = GetDistanceFromEnemy(hit.point);
-                                }
+                                location.locationSims[wd.Key].directHit = enemy.Contains(hit.collider);
+                                distanceFromEnemy = GetDistanceFromEnemy(hit.point);
                             }
                         }
-                        else
-                        {
-                            location.locationSims[wd.Key].directHit = collision.directHit;
-                        }
-
-                        if (distanceFromEnemy < location.locationSims[wd.Key].distanceToEnemy)
-                        {
-                            location.locationSims[wd.Key].angle = angle;
-                            location.locationSims[wd.Key].power = power;
-                            location.locationSims[wd.Key].distanceToEnemy = distanceFromEnemy;
-                            location.locationSims[wd.Key].eta = time;
-                        }
                     }
+                    else
+                    {
+                        location.locationSims[wd.Key].directHit = collision.directHit;
+                    }
+
+                    if (distanceFromEnemy < location.locationSims[wd.Key].distanceToEnemy)
+                    {
+                        location.locationSims[wd.Key].angle = angle;
+                        location.locationSims[wd.Key].power = power;
+                        location.locationSims[wd.Key].distanceToEnemy = distanceFromEnemy;
+                        location.locationSims[wd.Key].eta = time;
+                    }
+                    
 
                     if (location.locationSims[wd.Key].directHit) stop[wd.Key] = true;
                     location.locationSims[wd.Key].simulated = true;
@@ -311,7 +308,7 @@ public class BotAIAim
             float angle = Vector3.Angle(Vector3.right, calculatedDirection);
 
             CollisionInfo collision = CheckCollision(calculatedPosition, angle, weaponData.capsule.size, weaponData.capsule.direction);
-            if (collision.hit)
+            if (collision.hit || i == maxSteps - 1)
             {
                 collision.time = i * simInterval;
                 return collision;

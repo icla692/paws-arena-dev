@@ -539,7 +539,7 @@ MonoBehaviour:
     weightDirectHit: -1
     weightDirectionImportance: 0
     weightHeightImportance: 0
-    weightMoveAwayIfShot: 0
+    weightMoveAwayFromPlayerShots: 0
     maxSimulationsPerFrame: -1
     maxThinkingTime: -1
     minThinkingTime: -1
@@ -1260,7 +1260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d558c841ae7c648b974ddcb38180ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preset: {fileID: 2116885973}
+  preset: {fileID: 1001354715}
   configuration:
     stepLength: 0.9
     maxTravelSteps: 10
@@ -1270,7 +1270,7 @@ MonoBehaviour:
     weightDirectHit: 80
     weightDirectionImportance: 20
     weightHeightImportance: 20
-    weightMoveAwayIfShot: 40
+    weightMoveAwayFromPlayerShots: 40
     maxSimulationsPerFrame: 100
     maxThinkingTime: 5
     minThinkingTime: 1.5
@@ -1432,6 +1432,7 @@ Transform:
   - {fileID: 1336872203}
   - {fileID: 1103986342}
   - {fileID: 2116885972}
+  - {fileID: 1001354714}
   m_Father: {fileID: 431529825}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2706,7 +2707,7 @@ MonoBehaviour:
     weightDirectHit: -1
     weightDirectionImportance: 0
     weightHeightImportance: 0
-    weightMoveAwayIfShot: 0
+    weightMoveAwayFromPlayerShots: 0
     maxSimulationsPerFrame: -1
     maxThinkingTime: -1
     minThinkingTime: -1
@@ -3773,6 +3774,86 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1001354713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1001354714}
+  - component: {fileID: 1001354715}
+  m_Layer: 0
+  m_Name: Optimized
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1001354714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001354713}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 485704609}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1001354715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001354713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d50017265465ef47ad20a11c5938366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accuracyMode: 1
+  accuracy: 100
+  botAccuracyPowerMargin: 0.005
+  botAccuracyPowerMarginMax: 0.15
+  configurationOverrides:
+    stepLength: 0.9
+    maxTravelSteps: 10
+    approachEnemy: 3
+    locationWeaponEvaluationMode: 1
+    weightBestShotDistance: 200
+    weightDirectHit: 80
+    weightDirectionImportance: 20
+    weightHeightImportance: 20
+    weightMoveAwayFromPlayerShots: 40
+    maxSimulationsPerFrame: 10
+    maxThinkingTime: 5
+    minThinkingTime: 1.5
+    weaponPickingTime: 1
+    aimingTime: 3
+    aimingThinkingFraction: 0.3
+    shootingTime: 0.5
+    humanityTimesRandomizer: 30
+    movementArrivalDistance: 0.2
+    movementUpdateFrames: 10
+    movementStuckTime: 2.5
+    locationDecidingMargin: 0.05
+    locationDecidingConsiderTopChoices: 10
+    simulationMaxTime: 5
+    simulationInterval: 0.07
+    simulationAngleMin: 0
+    simulationAngleMax: 180
+    simulationAngleIncrement: 4
+    simulationPowerMin: 0.2
+    simulationPowerMax: 1
+    simulationPowerIncrement: 0.05
+  weaponOverrides: []
 --- !u!1 &1011653045
 GameObject:
   m_ObjectHideFlags: 0
@@ -4062,7 +4143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punRoomUtils: {fileID: 0}
   mapPrefabs:
-  - {fileID: 6237716996422082004, guid: 85938879427c20e45a5215f84924fcfb, type: 3}
+  - {fileID: 8851946301562649407, guid: 5d199f410088f5b4fbc724390e2fafea, type: 3}
 --- !u!1 &1085779010
 GameObject:
   m_ObjectHideFlags: 0
@@ -4151,7 +4232,7 @@ MonoBehaviour:
     weightDirectHit: -1
     weightDirectionImportance: -1
     weightHeightImportance: -1
-    weightMoveAwayIfShot: -1
+    weightMoveAwayFromPlayerShots: -1
     maxSimulationsPerFrame: -1
     maxThinkingTime: -1
     minThinkingTime: -1
@@ -4520,7 +4601,7 @@ MonoBehaviour:
     weightDirectHit: -1
     weightDirectionImportance: 0
     weightHeightImportance: 0
-    weightMoveAwayIfShot: -1
+    weightMoveAwayFromPlayerShots: -1
     maxSimulationsPerFrame: -1
     maxThinkingTime: -1
     minThinkingTime: -1
@@ -7680,7 +7761,7 @@ MonoBehaviour:
     weightDirectHit: -1
     weightDirectionImportance: -1
     weightHeightImportance: -1
-    weightMoveAwayIfShot: -1
+    weightMoveAwayFromPlayerShots: -1
     maxSimulationsPerFrame: -1
     maxThinkingTime: -1
     minThinkingTime: -1

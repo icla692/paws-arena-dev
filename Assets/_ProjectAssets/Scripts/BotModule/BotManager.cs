@@ -47,8 +47,8 @@ public class BotConfiguration
     [Tooltip("How much to prioritize staying on a high altitude.")]
     public int weightHeightImportance = 20;
 
-    [Tooltip("How much to prioritize moving away from a location if damage was taken.")]
-    public int weightMoveAwayIfShot = 40;
+    [Tooltip("How much to prioritize moving away from the last location that the player hit.")]
+    public int weightMoveAwayFromPlayerShots = 40;
 
     [Header("Performance")]
 
@@ -127,7 +127,7 @@ public class BotConfiguration
         weightDirectHit +
         weightDirectionImportance +
         weightHeightImportance +
-        weightMoveAwayIfShot;
+        weightMoveAwayFromPlayerShots;
 
     public float ActionTimeTotal =>
         (weaponPickingTime + aimingTime + shootingTime) * HumanityTimesRandomizerMultiplier +
