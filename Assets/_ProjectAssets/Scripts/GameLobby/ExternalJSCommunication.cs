@@ -39,6 +39,9 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
         await UniTask.Delay(1000);
         //ProvideNFTs("{ \"nfts\":[{ \"url\":\"https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/txxtf-bqkor-uwiaa-aaaaa-cqace-eaqca-aac5q-q\"}]}");
 
+        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?&tokenid=hvtag-6ykor-uwiaa-aaaaa-cqace-eaqca-aaabd-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/jairp-5ykor-uwiaa-aaaaa-cqace-eaqca-aacdq-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/4gya5-nakor-uwiaa-aaaaa-cqace-eaqca-aaabu-a" });
         GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/jxrpt-fikor-uwiaa-aaaaa-cqace-eaqca-aaajx-q" });
         GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/hs6xe-7ikor-uwiaa-aaaaa-cqace-eaqca-aaaad-q" });
         GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/ivtko-hikor-uwiaa-aaaaa-cqace-eaqca-aaaql-q" });

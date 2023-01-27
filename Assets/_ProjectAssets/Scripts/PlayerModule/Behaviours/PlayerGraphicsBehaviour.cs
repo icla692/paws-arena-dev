@@ -11,6 +11,7 @@ using UnityEngine.Animations;
 
 public class PlayerGraphicsBehaviour : MonoBehaviour
 {
+    public event Action onCatFlipped;
     [SerializeField]
     private AudioClip jumpStartSound;
     [SerializeField]
@@ -159,6 +160,8 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
         //DamageDisplay
         damageDisplay.localScale = new Vector3(isFacingRight ? 1 : -1, 1, 1);
+
+        onCatFlipped?.Invoke();
     }
 
     public void OnHealthUpdated(int health)

@@ -1083,7 +1083,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3c49045f0d9e642a8b5f3943f2be7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1966776401125919830}
+  playerGraphicsBehaviour: {fileID: 1602093763462273925}
+  target: {fileID: 4203147119149110647}
   speed: 1
 --- !u!1 &6165918201853493509 stripped
 GameObject:
@@ -1632,6 +1633,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGraphicsBehaviour: {fileID: 1602093763462273925}
+--- !u!4 &4203147119149110647 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4746047892860969454, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+  m_PrefabInstance: {fileID: 8901871953551226009}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4423204382165420151 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5110369052887694574, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
