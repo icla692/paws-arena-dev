@@ -123,8 +123,8 @@ TextureImporter:
         y: 1536
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.51504034, y: 0.47743893}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -144,8 +144,8 @@ TextureImporter:
         y: 1536
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.4849596, y: 0.48495936}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -165,8 +165,8 @@ TextureImporter:
         y: 1536
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.49999976, y: 0.46991897}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -186,8 +186,8 @@ TextureImporter:
         y: 1536
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.51504016, y: 0.49999976}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -207,8 +207,8 @@ TextureImporter:
         y: 1024
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.5982929, y: 0.10951424}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -225,11 +225,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 512
-        y: 1025
+        y: 1024
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.53696704, y: 0.2509911}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -249,8 +249,8 @@ TextureImporter:
         y: 1024
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.64516425, y: 0.3385253}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -312,8 +312,8 @@ TextureImporter:
         y: 512
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.49262404, y: 0.5073756}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -333,8 +333,8 @@ TextureImporter:
         y: 512
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.5073757, y: 0.529503}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -354,8 +354,8 @@ TextureImporter:
         y: 512
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.5073757, y: 0.51475143}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -375,8 +375,8 @@ TextureImporter:
         y: 0
         width: 512
         height: 512
-      alignment: 9
-      pivot: {x: 0.57375765, y: 0.22709662}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -384,6 +384,48 @@ TextureImporter:
       bones: []
       spriteID: c474a5eca6d730043b1dd84c416e6093
       internalID: 2055553725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ICK_game_weapons_13
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 512
+        height: 512
+      alignment: 9
+      pivot: {x: 0.48108745, y: 0.50945634}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bab9632a419ff2498400437b413df1b
+      internalID: 126405493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ICK_game_weapons_14
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5316756, y: 0.47780663}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c7a3ac26ccfe7d41bfa7ff7c5ce0b0a
+      internalID: 290846388
       vertices: []
       indices: 
       edges: []
@@ -401,6 +443,7 @@ TextureImporter:
     nameFileIdTable:
       ICK_game_weapons_7: 1258345106
       ICK_game_weapons_3: 1301261837
+      ICK_game_weapons_13: 126405493
       ICK_game_weapons_5: 2130095653
       ICK_game_weapons_4: 973925633
       ICK_game_weapons_6: 1638588903
@@ -409,6 +452,7 @@ TextureImporter:
       ICK_game_weapons_1: 1102351251
       ICK_game_weapons_8: 968291336
       ICK_game_weapons_10: -1904900795
+      ICK_game_weapons_14: 290846388
       ICK_game_weapons_9: 2680139
       ICK_game_weapons_11: -1417551525
       ICK_game_weapons_0: -1378635134
