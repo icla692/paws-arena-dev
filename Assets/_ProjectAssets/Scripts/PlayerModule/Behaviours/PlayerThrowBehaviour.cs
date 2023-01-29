@@ -95,7 +95,8 @@ public class PlayerThrowBehaviour : MonoBehaviour
     {
         if (photonView != null && !photonView.IsMine) yield break;
 
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(.1f);
         int weaponIdx = playerComponent.state.weaponIdx;
         var weapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
 

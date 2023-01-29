@@ -8,7 +8,7 @@ using UnityEngine;
 public class WeaponEntity
 {
     [SerializeField]
-    public Sprite launcher;
+    public GameObject launcherPrefab;
     [SerializeField]
     public GameObject bulletPrefab;
     [SerializeField]

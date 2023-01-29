@@ -57,11 +57,10 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private bool enteredJumpCollider = false;
     private int idx = -1;
-    private Transform oldParent;
-    private Transform oldParent1;
     private WeaponEntity crtWeapon;
     private int currentShots;
 
+    private List<Transform> oldParents;
     private void Awake()
     {
         SetTutorialGameObjectsVisible(false);
@@ -69,6 +68,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Start()
     {
+        oldParents = new List<Transform>();
+
         RoomStateManager.OnStateUpdated += OnStateUpdated;
     }
 
@@ -123,8 +124,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         PlayerManager.Instance.DirectDamage(45);
         textBoxContent.text = messages[1];
+
+        oldParents.Clear();
         foreach (Transform t in stage2_UIToHighlight)
         {
+            oldParents.Add(t.parent);
             t.parent = overlayCanvas;
         }
         foreach (GameObject go in stage2_objectsToActivate)
@@ -141,10 +145,13 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     private IEnumerator SetStage4()
     {
         idx = 4;
+
+        int i = 0;
         foreach (Transform t in stage2_UIToHighlight)
         {
-            t.parent = mainCanvas;
+            t.parent = oldParents[i++];
         }
+
         foreach (GameObject go in stage2_objectsToActivate)
         {
             go.SetActive(false);
@@ -285,12 +292,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         col.a = .5f;
         bg.color = col;
 
-
-
         arrow_stage7.SetActive(true);
         playerActionsBar.EnableWeaponsBar();
 
-        oldParent = weapons[0].transform.parent;
+        oldParents.Clear();
+        oldParents.Add(weapons[0].transform.parent);
         weapons[0].transform.parent = overlayCanvas;
 
         PlayerActionsBar.WeaponIndexUpdated += SetStage8;
@@ -305,7 +311,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         col.a = 0;
         bg.color = col;
 
-        weapons[0].transform.parent = oldParent;
+        weapons[0].transform.parent = oldParents[0];
         arrow_stage7.SetActive(false);
 
         upperRightInstructionsText.text = messages[7];
@@ -336,10 +342,10 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         col.a = 0.5f;
         bg.color = col;
 
-
-        oldParent = weapons[0].transform.parent;
+        oldParents.Clear();
         for (int i = 1; i < weapons.Count; i++)
         {
+            oldParents.Add(weapons[i].transform.parent);
             weapons[i].transform.parent = overlayCanvas;
         }
 
@@ -364,7 +370,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         for (int i = 1; i < weapons.Count; i++)
         {
-            weapons[i].transform.parent = oldParent;
+            weapons[i].transform.parent = oldParents[i-1];
         }
 
         currentShots = 0;
@@ -397,10 +403,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             col.a = 0.5f;
             bg.color = col;
 
-            oldParent = surrenderUI.transform.parent;
+            oldParents.Clear();
+            oldParents.Add(surrenderUI.transform.parent);
             surrenderUI.transform.parent = overlayCanvas;
 
-            oldParent1 = confirmationModal.transform.parent;
+            oldParents.Add(confirmationModal.transform.parent);
             confirmationModal.transform.parent = overlayCanvas;
             confirmationModalButton.interactable = false;
             cancelModalButton.onClick.AddListener(SetLastStage);
@@ -417,8 +424,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void SetLastStage()
     {
-        surrenderUI.transform.parent = oldParent;
-        confirmationModal.transform.parent = oldParent1;
+        surrenderUI.transform.parent = oldParents[0];
+        confirmationModal.transform.parent = oldParents[1];
         confirmationModalButton.interactable = true;
         cancelModalButton.onClick.RemoveListener(SetLastStage);
         arrow_surrenderStage.SetActive(false);

@@ -10,7 +10,29 @@ public class WeaponBehaviour : MonoBehaviour
     public PlayerThrowBehaviour playerThrowBehaviour;
 
     public GameObject weaponWrapper;
-    public SpriteRenderer weaponBody;
+    public Transform weaponDirectParent;
+
+    private GameObject instantiatedWeapon;
+
+    private void OnEnable()
+    {
+        PlayerThrowBehaviour.onLaunchPreparing += OnLaunchPrepared;
+    }
+
+    private void OnDisable()
+    {
+        PlayerThrowBehaviour.onLaunchPreparing -= OnLaunchPrepared;
+        weaponWrapper.SetActive(false);
+    }
+
+    private void OnLaunchPrepared(WeaponEntity obj)
+    {
+        var animator = instantiatedWeapon.transform.GetChild(0).GetComponent<Animator>();
+        if(animator != null)
+        {
+            animator.SetTrigger("isShot");
+        }
+    }
 
     public void Init(int weaponIdx)
     {
@@ -23,12 +45,13 @@ public class WeaponBehaviour : MonoBehaviour
         weaponWrapper.SetActive(true);
 
         var weapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
-        weaponBody.sprite = weapon.launcher;
-    }
 
-    private void OnDisable()
-    {
-        weaponWrapper.SetActive(false);
+        if(instantiatedWeapon != null)
+        {
+            Destroy(instantiatedWeapon);
+        }
+
+        instantiatedWeapon = GameObject.Instantiate(weapon.launcherPrefab, weaponDirectParent);
     }
 
 }
