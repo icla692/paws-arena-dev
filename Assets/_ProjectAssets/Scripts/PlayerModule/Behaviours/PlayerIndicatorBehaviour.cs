@@ -7,10 +7,30 @@ using UnityEngine;
 
 public class PlayerIndicatorBehaviour : MonoBehaviour
 {
+    [SerializeField] private PlayerGraphicsBehaviour playerGraphicsBehaviour;
+    [SerializeField] private Transform indicatorWrapper;
     [SerializeField] private Transform indicator;
     [SerializeField] public IndicatorInputCircleBehaviour indicatorCircle;
     [SerializeField] private LineRenderer lineDirectionIndicator;
     [SerializeField] private LineRenderer lineIndicatorSpeed;
+    [SerializeField] private Transform launchPoint;
+
+    [Header("Positions")]
+    [SerializeField]
+    private Vector2 indicatorWrapperLeftPosition;
+    [SerializeField]
+    private Vector2 indicatorWrapperRightPosition;
+    [Space]
+    [SerializeField]
+    private Vector2 indicatorLeftPosition;
+    [SerializeField]
+    private Vector2 indicatorRightPosition;
+    [Space]
+    [SerializeField]
+    private Vector2 launchPointLeftPosition;
+    [SerializeField]
+    private Vector2 launchPointRightPosition;
+
     [HideInInspector] public float currentPower;
 
     private PhotonView photonView;
@@ -40,6 +60,22 @@ public class PlayerIndicatorBehaviour : MonoBehaviour
     private void OnEnable()
     {
         indicatorCircle.onIndicatorPlaced += OnIndicatorPlaced;
+        if (playerGraphicsBehaviour.isFacingRight)
+        {
+            SetDirection(true);
+        }
+        else
+        {
+            SetDirection(false);
+        }
+    }
+
+    private void SetDirection(bool isRight)
+    {
+        indicatorWrapper.transform.localPosition = isRight ? indicatorWrapperRightPosition : indicatorWrapperLeftPosition;
+        lineDirectionIndicator.transform.localPosition = isRight ? indicatorRightPosition : indicatorLeftPosition;
+        lineIndicatorSpeed.transform.localPosition = isRight ? indicatorRightPosition : indicatorLeftPosition;
+        launchPoint.transform.localPosition = isRight ? launchPointRightPosition : launchPointLeftPosition;
     }
 
     private void OnDisable()

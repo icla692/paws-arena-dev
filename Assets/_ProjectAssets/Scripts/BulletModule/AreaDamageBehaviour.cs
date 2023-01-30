@@ -18,11 +18,16 @@ public class AreaDamageBehaviour : MonoBehaviour
     private float pushForce = 10f;
     [SerializeField]
     private int bulletCount = 1;
+    [SerializeField]
+    private bool affectsTerrain = true;
 
     private void OnEnable()
     {
-        PaintingManager.Instance.GetShape(0);
-        PaintingManager.Instance.Destroy(transform.position);
+        if (affectsTerrain)
+        {
+            PaintingManager.Instance.GetShape(0);
+            PaintingManager.Instance.Destroy(transform.position);
+        }
 
         GameScenePostprocessingManager.Instance.EnableExplosionLayer(0.4f);
         //PlayerManager.Instance.AreaDamage(transform.position, area, maxDamage, doesDamageByDistance, hasPushForce, pushForce);

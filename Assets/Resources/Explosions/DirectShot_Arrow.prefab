@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: -4057790574283489226}
   - component: {fileID: 2585462950179134029}
   m_Layer: 0
-  m_Name: ThirdExplosion
+  m_Name: DirectShot_Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,13 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c27936251169d4593de63d4d4c0d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionSfx: {fileID: 8300000, guid: ee979591ef5d1d44e9dfe0a5cf5450fb, type: 3}
-  area: 5
-  maxDamage: 15
+  explosionSfx: {fileID: 8300000, guid: e530a4afca793ae4d963a7212e9e7b18, type: 3}
+  area: 1
+  maxDamage: 80
   doesDamageByDistance: 1
-  hasPushForce: 1
+  hasPushForce: 0
   pushForce: 10
   bulletCount: 1
+  affectsTerrain: 0
 --- !u!1 &7750145978208870714
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,8 +133,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7750145978208870714}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.02, z: 0}
-  m_LocalScale: {x: 25, y: 25, z: 25}
+  m_LocalPosition: {x: 0.34, y: -0.11, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1166057290638801933}
@@ -186,7 +187,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.48, y: 0.48}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

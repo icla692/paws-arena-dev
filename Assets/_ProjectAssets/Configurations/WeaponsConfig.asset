@@ -39,7 +39,7 @@ MonoBehaviour:
     waitBeforeTurnEnd: 7
     numberOfDamageDealers: 1
   - launcherPrefab: {fileID: 7791233325958276384, guid: 1d81ab45b2efd2d42bc31c35089ef51e, type: 3}
-    bulletPrefab: {fileID: 4174453076262886263, guid: 7512ed148be88794a8d115915ddc0da6, type: 3}
+    bulletPrefab: {fileID: 4174453076262886263, guid: 9a3231087f5de9048b7b9b0f4f03826e, type: 3}
     numberOfProjectiles: 1
     waitBeforeTurnEnd: 4
     numberOfDamageDealers: 1

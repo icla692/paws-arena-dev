@@ -29,7 +29,9 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     private PhotonView _photonView;
     private PlayerState playerState;
 
-    private bool isFacingRight = true;
+    [HideInInspector]
+    public bool isFacingRight = true;
+
     private Vector3 initialWeaponRotationOffset;
 
     void Start()

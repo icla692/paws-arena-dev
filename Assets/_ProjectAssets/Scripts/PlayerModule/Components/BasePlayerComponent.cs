@@ -32,7 +32,10 @@ public class BasePlayerComponent : MonoBehaviour
     private void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
     {
         Vector3 playerPos = transform.position;
-        float dmgDistance = Vector3.Distance(playerPos, position);
+
+        var closestPoint = GetComponent<CapsuleCollider2D>().ClosestPoint(position);
+        float dmgDistance = Vector3.Distance(closestPoint, position);
+
         if (dmgDistance > area) return;
 
         float damagePercentage = (area - dmgDistance) / area;
