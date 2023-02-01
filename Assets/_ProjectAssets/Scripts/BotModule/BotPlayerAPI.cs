@@ -109,7 +109,6 @@ public class BotPlayerAPI : MonoSingleton<BotPlayerAPI>
     [Button("Shoot")]
     public void Shoot()
     {
-        Debug.Log(wasLastTurnOfBot);
         if (wasLastTurnOfBot)
         {
             if(RoomStateManager.Instance.currentState is BotTurnState)

@@ -33,6 +33,7 @@ public class PlayerComponent : MonoBehaviour
             photonView.enabled = false;
             GetComponent<PhotonTransformView>().enabled = false;
             photonView = null;
+            BotManager.Instance.RegisterBotEnemy(this);
         }
 
         if (photonView != null && !photonView.IsMine) {

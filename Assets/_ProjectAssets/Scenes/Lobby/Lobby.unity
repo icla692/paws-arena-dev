@@ -7125,7 +7125,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: -106.355774}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &842331167
@@ -11663,6 +11663,8 @@ MonoBehaviour:
   - {fileID: 1705262670}
   - {fileID: 1876641550}
   connectingToRoom: {fileID: 1810941754}
+  connectingToRoomText: {fileID: 842331166}
+  photonManager: {fileID: 99993738}
   lobbyPhotonConnection: {fileID: 1011119104}
   settings: {fileID: 469892641}
   loadingScreen: {fileID: 1229414871}
@@ -12643,9 +12645,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 99993738}
-        m_TargetAssemblyTypeName: PhotonManager, Assembly-CSharp
-        m_MethodName: Connect
+      - m_Target: {fileID: 1311700191}
+        m_TargetAssemblyTypeName: LobbyUIManager, Assembly-CSharp
+        m_MethodName: OpenGameMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

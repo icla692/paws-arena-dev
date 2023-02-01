@@ -26,6 +26,8 @@ public class LobbyUIManager : MonoBehaviour
 
     [Header("Connecting")]
     public GameObject connectingToRoom;
+    public TMPro.TextMeshProUGUI connectingToRoomText;
+    public PhotonManager photonManager;
     public LobbyPhotonConnection lobbyPhotonConnection;
 
     [Header("Settings")]
@@ -37,19 +39,11 @@ public class LobbyUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        PhotonManager.OnStartedConnection += OpenLoadingScreen;
-        PhotonManager.OnConnectedServer += OpenGameMenu;
 
         if(GameState.selectedNFT != null)
         {
             OpenGameMenu();
         }
-    }
-
-    private void OnDisable()
-    {
-        PhotonManager.OnStartedConnection -= OpenLoadingScreen;
-        PhotonManager.OnConnectedServer -= OpenGameMenu;
     }
 
     private void OnDestroy()
@@ -102,7 +96,12 @@ public class LobbyUIManager : MonoBehaviour
         connectingToServerScreen.SetActive(false);
         passwordScreen.SetActive(false);
 
-        foreach(GameObject screen in equipmentScreens)
+        foreach (GameObject screen in nftSelectionScreens)
+        {
+            screen.SetActive(false);
+        }
+
+        foreach (GameObject screen in equipmentScreens)
         {
             screen.SetActive(false);
         }
@@ -125,21 +124,25 @@ public class LobbyUIManager : MonoBehaviour
     {
         CloseGameMenu();
         connectingToRoom.SetActive(true);
-        lobbyPhotonConnection.TryJoinRoom();
+
+        connectingToRoomText.text = "Connecting to Multiplayer Server(" + PhotonNetwork.CloudRegion + ")...";
+        
+        photonManager.OnConnectedServer += ()=>
+        {
+            connectingToRoomText.text = "Connected succeeded!";
+            lobbyPhotonConnection.TryJoinRoom();
+        };
+
+        photonManager.Connect();
     }
+
 
     public void TryConnectToTrainingRoom()
     {
-        //CloseGameMenu();
-        //connectingToRoom.SetActive(true);
-        //lobbyPhotonConnection.TryJoinSinglePlayerRoom();
         SceneManager.LoadScene("GameSceneTutorial", LoadSceneMode.Single);
     }
     public void GoToSinglePlayer()
     {
-        //CloseGameMenu();
-        //connectingToRoom.SetActive(true);
-        //lobbyPhotonConnection.TryJoinSinglePlayerRoom();
         SceneManager.LoadScene("PlayerTest_new", LoadSceneMode.Single);
     }
 

@@ -11,8 +11,11 @@ public class BotPlayerComponent : MonoBehaviour
     private PlayerGraphicsBehaviour playerGraphicsBehaviour;
 
     private PlayerMotionBehaviour playerMotionBehaviour;
+    private PlayerThrowBehaviour playerThrowBehaviour;
 
     private BotInputActions.PlayerActions playerActions;
+
+    private BotAI botAI;
 
     void Awake()
     {
@@ -31,6 +34,7 @@ public class BotPlayerComponent : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         SetupBot();
+        SetupAI();
     }
 
     private void SetupBot()
@@ -49,13 +53,19 @@ public class BotPlayerComponent : MonoBehaviour
         var playerIndicatorBehaviour = GetComponentInChildren<PlayerIndicatorBehaviour>();
         playerIndicatorBehaviour.RegisterDirectionCallbacks(playerActions);
 
-        var playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
+        playerThrowBehaviour = GetComponentInChildren<PlayerThrowBehaviour>();
         playerThrowBehaviour.RegisterThrowCallbacks(playerActions);
 
         BotPlayerAPI.Instance.Init(playerMotionBehaviour, playerIndicatorBehaviour.indicatorCircle);
 
         basePlayerComponent.PostSetup();
         playerActions.Disable();
+    }
+
+    private void SetupAI()
+    {
+        botAI = gameObject.AddComponent<BotAI>();
+        botAI.LaunchPoint = playerThrowBehaviour.GetLaunchPoint();
     }
 
     private void OnStateUpdatedForBot(IRoomState roomState)
@@ -65,10 +75,12 @@ public class BotPlayerComponent : MonoBehaviour
         if (roomState is BotTurnState)
         {
             playerActions.Enable();
+            botAI.Play();
         }
         else
         {
             playerActions.Disable();
+            botAI.Wait();
         }
     }
 }

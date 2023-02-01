@@ -19,12 +19,12 @@ public class LobbyPhotonConnection : MonoBehaviour
     {
         Init();
 
-        PhotonManager.OnCreatingRoom += OnCreatingRoom;
+        photonManager.OnCreatingRoom += OnCreatingRoom;
     }
 
     private void OnDisable()
     {
-        PhotonManager.OnCreatingRoom -= OnCreatingRoom;
+        photonManager.OnCreatingRoom -= OnCreatingRoom;
     }
 
     private void Init()

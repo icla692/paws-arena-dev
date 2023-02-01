@@ -9,10 +9,10 @@ using UnityEngine;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    public static event Action OnStartedConnection;
-    public static event Action OnConnectedServer;
-    public static event Action OnCreatingRoom;
-    public static event Action OnRoomLeft;
+    public event Action OnStartedConnection;
+    public event Action OnConnectedServer;
+    public event Action OnCreatingRoom;
+    public event Action OnRoomLeft;
 
     [SerializeField]
     private byte maxPlayersPerRoom = 2;
