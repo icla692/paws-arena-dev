@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionSfx: {fileID: 8300000, guid: e530a4afca793ae4d963a7212e9e7b18, type: 3}
   area: 1
-  maxDamage: 80
+  maxDamage: 40
   doesDamageByDistance: 1
   hasPushForce: 0
   pushForce: 10
@@ -203,7 +203,7 @@ Animator:
   m_GameObject: {fileID: 7750145978208870714}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 17f8a0062916f7042a431c2e3c506abb, type: 2}
+  m_Controller: {fileID: 9100000, guid: c63b3225d6e74a2448720576d5b207e1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -21,6 +21,7 @@ public class BotManager : MonoSingleton<BotManager>
         currentBot = botComponent;
         currentBot.GetComponent<BasePlayerComponent>().onDamageTaken += AreaDamage;
         maxHP = ConfigurationManager.Instance.Config.GetPlayerTotalHealth();
+        PlayerManager.Instance.otherPlayerTransform = botComponent.transform;
         SetBotHealth(maxHP);
     }
 

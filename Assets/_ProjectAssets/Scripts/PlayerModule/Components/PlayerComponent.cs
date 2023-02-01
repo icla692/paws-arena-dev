@@ -88,6 +88,7 @@ public class PlayerComponent : MonoBehaviour
 
     private void SetupOtherPlayer()
     {
+        PlayerManager.Instance.otherPlayerTransform = transform;
         Destroy(GetComponent<Rigidbody2D>());
     }
 

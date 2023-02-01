@@ -74,6 +74,10 @@ public class PlayerThrowBehaviour : MonoBehaviour
             GameObject obj = SingleAndMultiplayerUtils.Instantiate("Bullets/" + currentWeapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
             
             projectiles.Add(obj);
+            if (!playerComponent.IsMine())
+            {
+                obj.GetComponent<BulletComponent>().isMine = false;
+            }
             if(i != currentWeapon.numberOfProjectiles / 2)
             {
                 obj.GetComponent<BulletComponent>().hasEnabledPositionTracking = false;

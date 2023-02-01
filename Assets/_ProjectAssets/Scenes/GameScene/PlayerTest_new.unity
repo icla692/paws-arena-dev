@@ -1649,7 +1649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punRoomUtils: {fileID: 0}
   mapPrefabs:
-  - {fileID: 8851946301562649407, guid: 007cd2eecf61c9b43816e11751be18e3, type: 3}
+  - {fileID: 6237716996422082004, guid: 85938879427c20e45a5215f84924fcfb, type: 3}
 --- !u!1 &1085779010
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,6 +2380,7 @@ MonoBehaviour:
   player1SpawnSquare: {fileID: 1257185825}
   player2SpawnSquare: {fileID: 1927723283}
   otherPlayerHealth: 2147483647
+  otherPlayerTransform: {fileID: 0}
 --- !u!1 &1658865576
 GameObject:
   m_ObjectHideFlags: 0

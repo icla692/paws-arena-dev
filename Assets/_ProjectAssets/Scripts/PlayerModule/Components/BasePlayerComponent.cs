@@ -115,7 +115,14 @@ public class BasePlayerComponent : MonoBehaviour
         }
         else
         {
-            return true;
+            if (GetComponent<PlayerComponent>() != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 

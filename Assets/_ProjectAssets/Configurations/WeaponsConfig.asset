@@ -36,7 +36,7 @@ MonoBehaviour:
   - launcherPrefab: {fileID: 214707043324590199, guid: 6379b6f2766b9d04ab6aa0b0fbd55099, type: 3}
     bulletPrefab: {fileID: 4174453076262886263, guid: 0ea1add238907d743b176cf563f25b72, type: 3}
     numberOfProjectiles: 1
-    waitBeforeTurnEnd: 7
+    waitBeforeTurnEnd: 8
     numberOfDamageDealers: 1
   - launcherPrefab: {fileID: 7791233325958276384, guid: 1d81ab45b2efd2d42bc31c35089ef51e, type: 3}
     bulletPrefab: {fileID: 4174453076262886263, guid: 9a3231087f5de9048b7b9b0f4f03826e, type: 3}

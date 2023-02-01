@@ -12,6 +12,8 @@ public class BulletComponent : MonoBehaviour
 
     [HideInInspector]
     public bool hasEnabledPositionTracking = true;
+    [HideInInspector]
+    public bool isMine = true;
 
     private bool isTouched = false;
     protected Rigidbody2D rb;
@@ -20,7 +22,7 @@ public class BulletComponent : MonoBehaviour
 
     private Transform thisT;
 
-    private void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         photonView = GetComponent<PhotonView>();

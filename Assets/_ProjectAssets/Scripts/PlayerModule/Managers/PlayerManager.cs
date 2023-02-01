@@ -14,10 +14,13 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     [SerializeField]
     private GameObject player2SpawnSquare;
 
-    private PlayerComponent myPlayer;
+    [HideInInspector]
+    public PlayerComponent myPlayer;
     private int myPlayerHealth;
     [HideInInspector]
     public int otherPlayerHealth = int.MaxValue;
+    [HideInInspector]
+    public Transform otherPlayerTransform;
 
     private int maxHP;
 
