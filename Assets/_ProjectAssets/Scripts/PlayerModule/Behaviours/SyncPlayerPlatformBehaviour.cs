@@ -11,12 +11,18 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
     [SerializeField]
     private PlayerCustomization playerCustomization;
 
+    [HideInInspector]
+    public bool isBot = false;
+    [HideInInspector]
+    public string botUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?type=thumbnail&tokenid=hvtag-6ykor-uwiaa-aaaaa-cqace-eaqca-aaabd-a";
+    
     private PhotonView photonView;
 
-    private void Start()
+    private async void Start()
     {
         photonView = GetComponent<PhotonView>();
-        if (photonView.IsMine)
+
+        if (photonView.IsMine && !isBot)
         {
             transform.position = SyncPlatformsBehaviour.Instance.myPos;
 
@@ -30,7 +36,19 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
         else
         {
             transform.position = SyncPlatformsBehaviour.Instance.theirPos;
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-0.81f, 0.81f, 0.81f);
+        }
+
+        if (isBot)
+        {
+            NFT nft = new NFT()
+            {
+                imageUrl = botUrl
+            };
+
+            await nft.GrabImage();
+
+            playerCustomization.SetTransientCat(nft.imageUrl, nft.ids);
         }
     }
 

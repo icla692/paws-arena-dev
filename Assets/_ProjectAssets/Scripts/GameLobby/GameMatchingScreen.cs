@@ -17,6 +17,7 @@ public class GameMatchingScreen : MonoBehaviour
 {
     [Header("Managers")]
     public PUNRoomUtils punRoomUtils;
+    public SyncPlatformsBehaviour syncPlatformsBehaviour;
 
     [Header("Internals")]
     public GameObject notices;
@@ -79,6 +80,26 @@ public class GameMatchingScreen : MonoBehaviour
             }
         }
 
+        StartCoroutine(BringBotAfterSeconds(UnityEngine.Random.Range(30, 45)));
+
+    }
+
+    private IEnumerator BringBotAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            BringBot();
+        }
+    }
+
+    [ContextMenu("Bring Bot")]
+    public void BringBot()
+    {
+        PhotonNetwork.CurrentRoom.MaxPlayers = 1;
+        OccupySeat(seats[1], "Bot Name");
+        syncPlatformsBehaviour.InstantiateBot();
+        StartSinglePlayerGame();
     }
 
     private void OccupySeat(SeatGameobject seat, string nickName)
@@ -133,20 +154,31 @@ public class GameMatchingScreen : MonoBehaviour
         GetComponent<PhotonView>().RPC("StartGameRoutine", RpcTarget.All);
     }
 
+    public void StartSinglePlayerGame()
+    {
+        PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = false;
+        GetComponent<PhotonView>().RPC("StartSinglePlayerGameRoutine", RpcTarget.All);
+    }
+
 
     [PunRPC]
     public void StartGameRoutine()
     {
-        StartCountdown();
+        StartCountdown("GameScene");
+    }
+    [PunRPC]
+    public void StartSinglePlayerGameRoutine()
+    {
+        StartCountdown("PlayerTest_new");
     }
 
-    private void StartCountdown()
+    private void StartCountdown(string sceneName)
     {
         countdown.StartCountDown(() =>
         {
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
             {
-                PhotonNetwork.LoadLevel("GameScene");
+                PhotonNetwork.LoadLevel(sceneName);
             }
         });
     }

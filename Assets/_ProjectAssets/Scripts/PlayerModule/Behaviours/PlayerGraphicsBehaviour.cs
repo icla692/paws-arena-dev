@@ -45,20 +45,18 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
             _photonView = null;
         }
 
-        StringBuilder ids = new StringBuilder();
-        foreach (string id in GameState.selectedNFT.ids)
-        {
-            ids.Append(id);
-            ids.Append(",");
-        }
+        //StringBuilder ids = new StringBuilder();
+        //foreach (string id in GameState.selectedNFT.ids)
+        //{
+        //    ids.Append(id);
+        //    ids.Append(",");
+        //}
 
-        if (!isMultiplayer || _photonView.IsMine)
+        if ((!isMultiplayer || _photonView.IsMine) && transform.parent.GetComponent<BotPlayerComponent>() == null)
         {
             string serializedConfig = JsonUtility.ToJson(KittiesCustomizationService.GetCustomization(GameState.selectedNFT.imageUrl).GetSerializableObject());
             SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "SetCatNFT", RpcTarget.All, GameState.selectedNFT.imageUrl, serializedConfig);
         }
-
-
     }
 
     [PunRPC]
@@ -66,6 +64,17 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     {
         KittyCustomization customization = JsonUtility.FromJson<KittyCustomization.KittyCustomizationSerializable>(serializedConfig).GetNonSerializable();
         playerCustomization.SetTransientCat(url, customization);
+    }
+
+    public async void SetCustomCatNFT(string url)
+    {
+        NFT nft = new NFT()
+        {
+            imageUrl = url
+        };
+
+        await nft.GrabImage();
+        playerCustomization.SetTransientCat(url, nft.ids);
     }
 
     public void RegisterPlayerState(PlayerState playerState)

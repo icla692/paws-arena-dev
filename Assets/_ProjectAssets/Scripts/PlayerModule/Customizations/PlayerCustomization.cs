@@ -239,6 +239,27 @@ public class PlayerCustomization : MonoBehaviour
         return config;
     }
 
+    public void SetTransientCat(string url, List<string> ids)
+    {
+        this.url = url;
+
+        playerEquipmentConfig = new Dictionary<EquipmentType, Equipment>();
+        var equipmentDefaultConfig = new Dictionary<EquipmentType, Equipment>();
+
+        foreach (string id in ids)
+        {
+            EquipmentType equipmentType = GetEquipmentTypeById(id);
+
+            if (equipmentType == EquipmentType.NONE) continue;
+
+            equipmentDefaultConfig.Add(equipmentType, new Equipment()
+            {
+                id = id
+            });
+        }
+
+        ApplyConfig(equipmentDefaultConfig);
+    }
 
     public void SetTransientCat(string url, KittyCustomization customization)
     {
@@ -254,6 +275,7 @@ public class PlayerCustomization : MonoBehaviour
             ApplyConfig(customization.originalConfig);
         }
     }
+
 
     public void ResetToOriginal()
     {

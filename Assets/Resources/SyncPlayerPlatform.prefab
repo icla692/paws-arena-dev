@@ -325,6 +325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCustomization: {fileID: 1652268005445013935}
+  isBot: 0
+  botUrl: https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?type=thumbnail&tokenid=hvtag-6ykor-uwiaa-aaaaa-cqace-eaqca-aaabd-a
 --- !u!1001 &7527362240045894417
 PrefabInstance:
   m_ObjectHideFlags: 0

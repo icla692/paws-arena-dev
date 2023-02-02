@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SyncPlatformsBehaviour : MonoSingleton<SyncPlatformsBehaviour>
 {
+    public string nftUrl;
     public GameObject syncPlayerPlatformPrefab;
     public Vector3 myPos = new Vector3(-1.847f, -.116f, 0);
     public Vector3 theirPos = new Vector3(9.47f, -.116f, 0);
@@ -13,5 +14,11 @@ public class SyncPlatformsBehaviour : MonoSingleton<SyncPlatformsBehaviour>
     void Start()
     {
         var go = PhotonNetwork.Instantiate(syncPlayerPlatformPrefab.name, myPos, Quaternion.identity);
+    }
+
+    public void InstantiateBot()
+    {
+        var go = GameObject.Instantiate(syncPlayerPlatformPrefab, theirPos, Quaternion.identity);
+        go.GetComponent<SyncPlayerPlatformBehaviour>().isBot = true;
     }
 }
