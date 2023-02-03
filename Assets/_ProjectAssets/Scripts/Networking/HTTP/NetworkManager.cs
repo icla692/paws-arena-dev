@@ -16,7 +16,7 @@ public class NetworkManager : MonoBehaviour
         www.SetRequestHeader("Content-Type", "application/json");
         if (isAuthenticated)
         {
-            //www.SetRequestHeader("Authorization", "Bearer " + GameState.currentPlayer?.token);
+            www.SetRequestHeader("principalId", GameState.principalId);
         }
         await www.SendWebRequest();
 
@@ -45,7 +45,8 @@ public class NetworkManager : MonoBehaviour
         www.SetRequestHeader("Content-Type", "application/json");
         if (isAuthenticated)
         {
-            // www.SetRequestHeader("Authorization", "Bearer " + GameState.currentPlayer?.token);
+            www.SetRequestHeader("principalId", GameState.principalId);
+
         }
         await www.SendWebRequest();
 

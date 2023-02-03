@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class LeaderboardEntity
+public class LeaderboardGetResponseEntity
 {
     [SerializeField]
     public List<PlayerStatsEntity> leaderboard;

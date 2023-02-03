@@ -6,8 +6,8 @@ using UnityEngine;
 public class LeaderboardData : MonoBehaviour
 {
     [HideInInspector]
-    public LeaderboardEntity leaderboard = null;
-    public async UniTask<LeaderboardEntity> GetLeaderboard()
+    public LeaderboardGetResponseEntity leaderboard = null;
+    public async UniTask<LeaderboardGetResponseEntity> GetLeaderboard()
     {
         if (leaderboard != null && leaderboard.leaderboard.Count > 0)
         {
@@ -23,7 +23,7 @@ public class LeaderboardData : MonoBehaviour
 
         if (string.IsNullOrEmpty(resp)) return null;
 
-        leaderboard = JsonUtility.FromJson<LeaderboardEntity>(resp);
+        leaderboard = JsonUtility.FromJson<LeaderboardGetResponseEntity>(resp);
 
         Debug.Log($"[HTTP] Grabbed {leaderboard.leaderboard.Count} players...");
         return leaderboard;

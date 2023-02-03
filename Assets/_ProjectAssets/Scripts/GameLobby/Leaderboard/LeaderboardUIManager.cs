@@ -27,7 +27,7 @@ public class LeaderboardUIManager : MonoBehaviour
 
     private async void PopulateLeaderboard()
     {
-        LeaderboardEntity data = await leaderboardData.GetLeaderboard();
+        LeaderboardGetResponseEntity data = await leaderboardData.GetLeaderboard();
 
         foreach(PlayerStatsEntity playerStats in data.leaderboard)
         {

@@ -7,6 +7,7 @@ namespace Anura.ConfigurationModule.Managers
 {
     public class ConfigurationManager : MonoSingleton<ConfigurationManager>
     {
+        [SerializeField, Expandable] private GameConfig gameConfig;
         [SerializeField, Expandable] private Config config;
         [SerializeField, Expandable] private SFXConfig sfx;
         [SerializeField, Expandable] private ShapeList shapes;
@@ -20,6 +21,7 @@ namespace Anura.ConfigurationModule.Managers
             shapes.Init();
         }
 
+        public GameConfig GameConfig => gameConfig;
         public Config Config => config;
 
         public SFXConfig SFXConfig => sfx;
