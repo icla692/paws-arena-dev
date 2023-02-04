@@ -3,23 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AfterGameCharacter : MonoBehaviour
+namespace com.colorfulcoding.AfterGame
 {
-    public Animator animator;
-
-    void Start()
+    public class AfterGameCharacter : MonoBehaviour
     {
-        StartCoroutine(CharacterAnimationCoroutine());
-        Debug.Log("State: " + GameState.gameResolveState);
-    }
+        public Animator animator;
 
-    private IEnumerator CharacterAnimationCoroutine()
-    {
-        int checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
-        yield return new WaitForSeconds(1.5f);
-        if(checkIfIWon < 0)
+        void Start()
         {
-            animator.SetBool("isDead", true);
+            StartCoroutine(CharacterAnimationCoroutine());
+            Debug.Log("State: " + GameState.gameResolveState);
+        }
+
+        private IEnumerator CharacterAnimationCoroutine()
+        {
+            int checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
+            yield return new WaitForSeconds(1.5f);
+            if (checkIfIWon < 0)
+            {
+                animator.SetBool("isDead", true);
+            }
         }
     }
 }

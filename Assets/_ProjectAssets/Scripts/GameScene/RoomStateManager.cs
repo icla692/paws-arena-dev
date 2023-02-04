@@ -1,5 +1,6 @@
 using Anura.ConfigurationModule.Managers;
 using Anura.Templates.MonoSingleton;
+using com.colorfulcoding.GameScene;
 using Photon.Pun;
 using System;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public static event Action<IRoomState> OnStateUpdated;
 
     public PUNGameRoomManager photonManager;
+    public HttpNetworkCommunication httpCommunication;
     [Header("Player")]
     public GameObject playerPrefab;
     public GameObject playerUIPrefab;

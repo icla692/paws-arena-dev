@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AfterGameManager : MonoSingleton<AfterGameManager>
+namespace com.colorfulcoding.AfterGame
 {
-    private void Start()
+    public class AfterGameManager : MonoSingleton<AfterGameManager>
     {
-        Debug.Log("State: " + GameState.gameResolveState);
+        private void Start()
+        {
+            Debug.Log("State: " + GameState.gameResolveState);
+        }
     }
 }

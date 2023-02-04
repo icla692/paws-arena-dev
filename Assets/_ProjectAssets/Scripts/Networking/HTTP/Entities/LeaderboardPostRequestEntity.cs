@@ -28,7 +28,7 @@ public class LeaderboardPostRequestEntity
     [SerializeField]
     public string kittyUrl;
     [SerializeField]
-    public MatchStatus winner;
+    public GameResult winner;
     [SerializeField]
     public int hp;
     [SerializeField]

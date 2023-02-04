@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +24,11 @@ public class LeaderboardData : MonoBehaviour
 
         if (string.IsNullOrEmpty(resp)) return null;
 
+
+        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+        {
+            Debug.Log(resp);
+        }
         leaderboard = JsonUtility.FromJson<LeaderboardGetResponseEntity>(resp);
 
         Debug.Log($"[HTTP] Grabbed {leaderboard.leaderboard.Count} players...");

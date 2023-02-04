@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,10 +18,13 @@ public class KittiesCustomizationService
         if (PlayerPrefs.HasKey(CONFIGURATIONS_KEY))
         {
             string configurationsJson = PlayerPrefs.GetString(CONFIGURATIONS_KEY);
-            Debug.Log("Loading " + configurationsJson);
 
             config = KittiesCustomizations.GetFromJson(configurationsJson);
-            Debug.Log("Got " + config.customizationByCatUrl.Count + " configurations");
+            if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+            {
+                Debug.Log("Loading " + configurationsJson);
+                Debug.Log("Got " + config.customizationByCatUrl.Count + " configurations");
+            }
         }
     }
 

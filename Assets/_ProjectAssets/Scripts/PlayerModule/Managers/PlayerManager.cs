@@ -16,7 +16,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     [HideInInspector]
     public PlayerComponent myPlayer;
-    private int myPlayerHealth;
+    [HideInInspector]
+    public int myPlayerHealth;
     [HideInInspector]
     public int otherPlayerHealth = int.MaxValue;
     [HideInInspector]

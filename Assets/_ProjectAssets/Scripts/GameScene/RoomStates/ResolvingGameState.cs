@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,13 +16,15 @@ public class ResolvingGameState : IRoomState
     public void Init(RoomStateManager context)
     {
         this.context = context;
-        context.StartCoroutine(EndingCoroutine());
+        EndingCoroutine();
     }
 
-    private IEnumerator EndingCoroutine()
+    private async void EndingCoroutine()
     {
         GameState.gameResolveState = this.state;
-        yield return new WaitForSeconds(3f);
+
+        await context.httpCommunication.RegisterEndOfTheMatch(PlayerManager.Instance.myPlayerHealth, state);
+        await UniTask.Delay(TimeSpan.FromSeconds(3));
         context.LoadAfterGameScene(state);
     }
 

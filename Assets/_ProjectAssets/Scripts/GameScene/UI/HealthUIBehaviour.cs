@@ -30,7 +30,10 @@ public class HealthUIBehaviour : MonoBehaviour
 
         if (!isInit) return;
 
-        Debug.Log("New HP: " + currentHealth);
+        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+        {
+            Debug.Log("New HP: " + currentHealth);
+        }
         float startingX = healthBar.sizeDelta.x;
         LeanTween.value(startingX, healthBarTotalWidth * (currentHealth * 1.0f / totalhealth), 1f).setEaseInOutCirc().setOnUpdate(val =>
         {
