@@ -23,7 +23,11 @@ public class PlayerPlatformBehaviour : MonoBehaviour
             imageUrl = imageUrl
         };
 
+        playerCustomization.wrapper.SetActive(false);
+
         await nft.GrabImage();
+
+        playerCustomization.wrapper.SetActive(true);
         playerCustomization.SetCat(nft.imageUrl, nft.ids);
     }
 

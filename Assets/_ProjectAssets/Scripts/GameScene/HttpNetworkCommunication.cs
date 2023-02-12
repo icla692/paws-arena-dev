@@ -62,8 +62,10 @@ namespace com.colorfulcoding.GameScene
 
             await NetworkManager.POSTRequest("/leaderboard/match", reqJson, (resp) =>
             {
+                LeaderboardPostResponseEntity response = JsonUtility.FromJson<LeaderboardPostResponseEntity>(resp);
                 Debug.Log(resp);
-                Debug.Log("[HTTP]Match ending registered!");
+                Debug.Log($"[HTTP]Match ending registered! You won {response.oldPoints + response.points} points.");
+                GameState.pointsChange = response;
             }, (err, code) =>
             {
                 Debug.LogWarning($"[HTTP]Error registering the match ending; {code}: {err}");

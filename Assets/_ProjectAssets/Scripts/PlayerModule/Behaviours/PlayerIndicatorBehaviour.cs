@@ -36,14 +36,17 @@ public class PlayerIndicatorBehaviour : MonoBehaviour
     private PhotonView photonView;
     private Config config => ConfigurationManager.Instance.Config;
     private Vector2 lastMousePosition;
-    private float maxRadius;
+    private float maxRadius = -1;
 
     private bool isHoldingSelect = false;
 
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
-        maxRadius = config.GetCircleShootRadius();
+        if (maxRadius == -1)
+        {
+            maxRadius = lineDirectionIndicator.GetPosition(1).x;
+        }
 
         lineDirectionIndicator.SetPosition(1, new Vector3(maxRadius, 0, 1));
         SetPowerLineLength(1.0f);

@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
@@ -8,15 +9,23 @@ using UnityEngine.Networking;
 
 public class NetworkManager : MonoBehaviour
 {
-    private static string SERVER_URL = "https://localhost:7226";
+    private static string url;
+
+    private void Start()
+    {
+        NetworkManager.url = ConfigurationManager.Instance.GameConfig.isDev ? ConfigurationManager.Instance.GameConfig.devUrl : ConfigurationManager.Instance.GameConfig.prodUrl;
+    }
     public static async UniTask<string> GETRequestCoroutine(string relativePath, Action<long, string> OnError, bool isAuthenticated = false)
     {
-        UnityWebRequest www = new UnityWebRequest(SERVER_URL + relativePath, "GET");
+        UnityWebRequest www = new UnityWebRequest(url + relativePath, "GET");
         www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         www.SetRequestHeader("Content-Type", "application/json");
+        www.SetRequestHeader("Access-Control-Allow-Origin", "*");
         if (isAuthenticated)
         {
             www.SetRequestHeader("principalId", GameState.principalId);
+            www.SetRequestHeader("Authorization", "Basic aWNraXR0aWVzXzE5MDk5MjAzOjJXWi1FM31Xb3dwaGxzIzQyMyNAMSVncnI=");
+
         }
         await www.SendWebRequest();
 
@@ -34,7 +43,7 @@ public class NetworkManager : MonoBehaviour
 
     public static async UniTask POSTRequest(string relativePath, string json, Action<string> OnSuccess, Action<long, string> OnError, bool isAuthenticated = false)
     {
-        UnityWebRequest www = new UnityWebRequest(SERVER_URL + relativePath, "POST");
+        UnityWebRequest www = new UnityWebRequest(url + relativePath, "POST");
         if (json != null && json != "")
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
@@ -43,9 +52,11 @@ public class NetworkManager : MonoBehaviour
 
         www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         www.SetRequestHeader("Content-Type", "application/json");
+        www.SetRequestHeader("Access-Control-Allow-Origin", "*");
         if (isAuthenticated)
         {
             www.SetRequestHeader("principalId", GameState.principalId);
+            www.SetRequestHeader("Authorization", "Basic aWNraXR0aWVzXzE5MDk5MjAzOjJXWi1FM31Xb3dwaGxzIzQyMyNAMSVncnI=");
 
         }
         await www.SendWebRequest();

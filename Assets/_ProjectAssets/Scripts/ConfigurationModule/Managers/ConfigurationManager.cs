@@ -18,7 +18,10 @@ namespace Anura.ConfigurationModule.Managers
         protected override void Awake()
         {
             base.Awake();
-            shapes.Init();
+            if (shapes != null)
+            {
+                shapes.Init();
+            }
         }
 
         public GameConfig GameConfig => gameConfig;

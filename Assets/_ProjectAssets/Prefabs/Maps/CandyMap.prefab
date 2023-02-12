@@ -27,9 +27,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3601543287348099858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.99, y: 15.22, z: 0}
-  m_LocalScale: {x: 1.8598595, y: 1.8598595, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 31.18, y: 15.28, z: 0}
+  m_LocalScale: {x: 1.742, y: 1.742, z: 0.93662995}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4353723580168587581}
   m_RootOrder: 0
@@ -283,7 +283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4353723578636837848}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.35, y: 0, z: 0}
+  m_LocalPosition: {x: 4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -306,8 +306,8 @@ MonoBehaviour:
   <ChunkCountY>k__BackingField: 1
   chunkTemplate: {fileID: 1203567635039567098, guid: 75b628c577fa5cd40a74b2173d98e33a, type: 3}
   <OriginalTexture>k__BackingField: {fileID: 2800000, guid: 8a53840c113942744ad6c18de0895468, type: 3}
-  <PPU>k__BackingField: 36
-  filterMode: 0
+  <PPU>k__BackingField: 38
+  filterMode: 1
   <SortingLayerID>k__BackingField: 0
   isInit: 0
 --- !u!1 &4353723578837345911
@@ -336,7 +336,7 @@ Transform:
   m_GameObject: {fileID: 4353723578837345911}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.15, y: 0.93, z: 0}
-  m_LocalScale: {x: 1.9305443, y: 1.9305443, z: 0.19305444}
+  m_LocalScale: {x: 1.742, y: 1.742, z: 1.742}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4353723579383747109}
@@ -452,7 +452,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4353723579898766269}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.35, y: 0, z: 0}
+  m_LocalPosition: {x: 4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -475,7 +475,7 @@ MonoBehaviour:
   <ChunkCountY>k__BackingField: 32
   chunkTemplate: {fileID: 3810740569203461728, guid: 3eabd84b596421147ae7ffa783b510e1, type: 3}
   <OriginalTexture>k__BackingField: {fileID: 2800000, guid: 8a53840c113942744ad6c18de0895468, type: 3}
-  <PPU>k__BackingField: 36
+  <PPU>k__BackingField: 38
   filterMode: 0
   <SortingLayerID>k__BackingField: 0
   isInit: 0
@@ -504,9 +504,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4353723579991453890}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.73, y: 1.25, z: 0.5}
-  m_LocalScale: {x: 1.85148, y: 1.85148, z: 1.85148}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 1.93, y: 0.45, z: 0.5}
+  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4353723579383747109}
   m_RootOrder: 1

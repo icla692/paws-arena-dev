@@ -5,4 +5,8 @@ using UnityEngine;
 public class GameConfig : ScriptableObject
 {
     public bool enableDevLogs = false;
+
+    public bool isDev = true;
+    public string devUrl = "https://localhost:7226";
+    public string prodUrl = "https://localhost:7226";
 }

@@ -18,25 +18,36 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
     
     private PhotonView photonView;
 
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+        if (!photonView.IsMine || isBot)
+        {
+            transform.position = SyncPlatformsBehaviour.Instance.theirPos;
+            transform.localScale = new Vector3(-0.81f, 0.81f, 0.81f);
+        }
+        else
+        {
+            transform.position = SyncPlatformsBehaviour.Instance.myPos;
+        }
+
+        if (isBot)
+        {
+            playerCustomization.wrapper.SetActive(false);
+        }
+    }
     private async void Start()
     {
         photonView = GetComponent<PhotonView>();
 
         if (photonView.IsMine && !isBot)
         {
-            transform.position = SyncPlatformsBehaviour.Instance.myPos;
-
             var config = playerCustomization.SetCat(GameState.selectedNFT.imageUrl, GameState.selectedNFT.ids);
             string serializedConfig = JsonUtility.ToJson(config.GetSerializableObject());
 
             photonView.RPC("SetCatStyle", RpcTarget.Others, GameState.selectedNFT.imageUrl, serializedConfig);
 
             PUNRoomUtils.onPlayerJoined += OnPlayerJoined;
-        }
-        else
-        {
-            transform.position = SyncPlatformsBehaviour.Instance.theirPos;
-            transform.localScale = new Vector3(-0.81f, 0.81f, 0.81f);
         }
 
         if (isBot)
@@ -47,7 +58,7 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
             };
 
             await nft.GrabImage();
-
+            playerCustomization.wrapper.SetActive(true);
             playerCustomization.SetTransientCat(nft.imageUrl, nft.ids);
         }
     }

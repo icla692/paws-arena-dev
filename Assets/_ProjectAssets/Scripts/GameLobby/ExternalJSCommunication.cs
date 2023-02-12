@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Anura.Templates.MonoSingleton;
 using Cysharp.Threading.Tasks;
 using System;
@@ -28,11 +29,25 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
     [DllImport("__Internal")]
     private static extern void ConnectWallet();
 
-    public async void TryConnectWallet()
+    public void TryConnectWallet()
     {
+
+        if (ConfigurationManager.Instance.GameConfig.isDev)
+        {
+            MockConnectWallet();
+            return;
+        }
+
 #if UNITY_WEBGL && !UNITY_EDITOR
             ConnectWallet();
 #else
+        MockConnectWallet();
+#endif
+    }
+
+
+    private async void MockConnectWallet()
+    {
         await UniTask.Delay(1000);
         WalletConnected();
 
@@ -63,7 +78,6 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
         GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/or3jr-dqkor-uwiaa-aaaaa-cqace-eaqca-aabec-a" });
 
         onNFTsReceived?.Invoke();
-#endif
     }
 
     [ContextMenu("Connect Wallet")]
@@ -72,6 +86,10 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
         onWalletConnected?.Invoke();
     }
 
+    public void ProvidePrincipalId(string principalId)
+    {
+        GameState.principalId = principalId;
+    }
     public void ProvideNFTs(string nftsString)
     {
         GameState.nfts.Clear();

@@ -15,7 +15,7 @@ public class MapsManager : MonoSingleton<MapsManager>
     public void CreateMap()
     {
         isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
-        int mapIdx = isMultiplayer ? (int)punRoomUtils.GetRoomCustomProperty("mapIdx") : 0;
+        int mapIdx = isMultiplayer ? (int)punRoomUtils.GetRoomCustomProperty("mapIdx") : Random.Range(0, mapPrefabs.Count);
 
         var go = GameObject.Instantiate(mapPrefabs[mapIdx], Vector3.zero, Quaternion.identity, transform);
         List<BasicPaintableLayer> paintables =  go.GetComponentsInChildren<BasicPaintableLayer>().ToList();

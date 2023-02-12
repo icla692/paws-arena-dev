@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerStatsEntity
+public class LeaderboardPostResponseEntity
 {
     [SerializeField]
-    public string principalId;
-    [SerializeField]
-    public string nickname;
-    [SerializeField]
     public int points;
+    [SerializeField]
+    public int oldPoints;
 }

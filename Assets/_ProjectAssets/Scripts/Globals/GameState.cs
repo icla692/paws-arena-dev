@@ -18,6 +18,7 @@ public class GameState
 
     //Inter-scene needed data
     public static GameResolveState gameResolveState = GameResolveState.DRAW;
+    internal static LeaderboardPostResponseEntity pointsChange;
 
     static GameState(){
         nfts = new List<NFT>();

@@ -1,48 +1,71 @@
+using Cysharp.Threading.Tasks;
 using Photon.Pun;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerNicknameButton : MonoBehaviour
 {
     public event Action<string> OnPlayerNameUpdated;
-    const string playerNamePrefKey = "PlayerName";
 
     [SerializeField]
     private TMPro.TextMeshProUGUI nicknameText;
     [SerializeField]
     private InputModal inputModal;
 
-    private void Start()
+    private async void Start()
     {
-        if (PlayerPrefs.HasKey(playerNamePrefKey))
+        string nickname = await TryGetNickname(()=> { });
+
+        if (!string.IsNullOrEmpty(nickname))
         {
-            nicknameText.text = PlayerPrefs.GetString(playerNamePrefKey); ;
-        }else
+            SetPlayerName(nickname);
+        }
+        else
         {
-            nicknameText.text = "ICKITTY";
+            nicknameText.text = "";
             EnableEdit(false);
         }
 
         OnPlayerNameUpdated?.Invoke(nicknameText.text);
-        GameState.nickname = GameState.nickname = PhotonNetwork.NickName = nicknameText.text;
+        GameState.nickname = PhotonNetwork.NickName = nicknameText.text;
     }
 
     public void EnableEdit(bool isCancelable)
     {
         inputModal.Show("Nickname", "Nickname", isCancelable, (nickname) =>
         {
-            SetPlayerName(nickname);
+            SendNewNicknameToServer(nickname);
         });
+    }
+
+    private async UniTask<string> TryGetNickname(Action onError)
+    {
+        string resp = await NetworkManager.GETRequestCoroutine("/user/nickname",
+        (code, err) =>
+        {
+            Debug.LogWarning($"Failed getting nickname {err} : {code}");
+            onError?.Invoke();
+        }, true);
+
+        Debug.Log($"Got nickname from server: {resp}");
+        return resp;
+    }
+
+    private async void SendNewNicknameToServer(string nickname)
+    {
+        await NetworkManager.POSTRequest("/user/nickname", $"\"{nickname}\"", (resp) =>
+        {
+            Debug.Log($"Saved nickname {nickname}");
+            SetPlayerName(nickname);
+        }, (code, err) =>
+        {
+            Debug.LogWarning($"Failed saving nickname {err} : {code}");
+        }, true);
     }
 
     public void SetPlayerName(string value)
     {
         PhotonNetwork.NickName = nicknameText.text = value;
-        PlayerPrefs.SetString(playerNamePrefKey, value);
         OnPlayerNameUpdated?.Invoke(value);
     }
 }

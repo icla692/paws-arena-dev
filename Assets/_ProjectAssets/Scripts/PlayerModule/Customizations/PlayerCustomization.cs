@@ -56,6 +56,11 @@ public class PlayerCustomization : MonoBehaviour
     private bool inGame = false;
 
     [SerializeField]
+    public GameObject wrapper;
+
+    [Space]
+
+    [SerializeField]
     private GameObject backpack;
     [SerializeField]
     private GameObject rEar;

@@ -10,7 +10,8 @@ public class IndicatorInputCircleBehaviour : MonoBehaviour, IPointerUpHandler
 {
     public event Action<float, float> onIndicatorPlaced;
     public LayerMask indicatorLayer;
-    
+    public float startOffset = 0.2f;
+
     private float radius;
 
     private void Start()
@@ -28,8 +29,9 @@ public class IndicatorInputCircleBehaviour : MonoBehaviour, IPointerUpHandler
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(pointerPos);
         Vector2 myPos = transform.position;
         float angle = Vector2.SignedAngle(new Vector2(1, 0), mouseWorldPos - myPos);
-        float power = (mouseWorldPos - myPos).magnitude / radius;
+        float power = ((mouseWorldPos - myPos).magnitude / radius);
         power = Math.Clamp(power, 0, 1);
+        power = power * (1 + startOffset) - startOffset;
         CheckPointerClick(angle, power);
     }
 

@@ -6,6 +6,6 @@ public class NicknameText : MonoBehaviour
 {
     private void OnEnable()
     {
-        GetComponent<TMPro.TextMeshProUGUI>().text = PlayerPrefs.GetString("PlayerName");
+        GetComponent<TMPro.TextMeshProUGUI>().text = GameState.nickname;
     }
 }

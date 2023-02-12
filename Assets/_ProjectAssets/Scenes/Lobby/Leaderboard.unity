@@ -333,6 +333,10 @@ MonoBehaviour:
   firstPlayer: {fileID: 1121368227}
   secondPlayer: {fileID: 1967609678}
   thirdPlayer: {fileID: 1962634842}
+  stars:
+  - {fileID: 372124888, guid: fbf11eb2733880a4aa798fc06316732f, type: 3}
+  - {fileID: 152009717, guid: fbf11eb2733880a4aa798fc06316732f, type: 3}
+  - {fileID: -1097540772, guid: fbf11eb2733880a4aa798fc06316732f, type: 3}
 --- !u!1 &196334654
 GameObject:
   m_ObjectHideFlags: 0
