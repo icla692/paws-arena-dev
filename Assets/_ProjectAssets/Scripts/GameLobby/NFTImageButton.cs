@@ -20,6 +20,7 @@ public class NFTImageButton : MonoBehaviour
     {
         selectedGraphics.SetActive(false);
         rawImage.texture = emptyTex;
+        rawImage.color = Color.clear;
         GetComponent<Button>().interactable = false;
     }
 
@@ -28,19 +29,20 @@ public class NFTImageButton : MonoBehaviour
         rawImage.texture = loadingTex;
     }
 
-    public void SetSelectedState()
-    {
-        selectedGraphics.SetActive(true);
-    }
-
     public void SetTexture(Texture2D tex)
     {
         rawImage.texture = tex;
+        rawImage.color = Color.white;
         GetComponent<Button>().interactable = true;
     }
 
     public void Select()
     {
         selectedGraphics.SetActive(true);
+    }
+
+    public void Deselect()
+    {
+        selectedGraphics.SetActive(false);
     }
 }

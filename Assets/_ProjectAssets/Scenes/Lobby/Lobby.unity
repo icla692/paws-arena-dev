@@ -4430,6 +4430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nicknameText: {fileID: 1402297694}
   inputModal: {fileID: 660007579}
+  screenLoadingManager: {fileID: 607796542}
 --- !u!1 &504190038
 GameObject:
   m_ObjectHideFlags: 0
@@ -5329,6 +5330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 607796541}
+  - component: {fileID: 607796542}
   m_Layer: 5
   m_Name: NFTSelectionScreen
   m_TagString: Untagged
@@ -5359,6 +5361,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &607796542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607796540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37664b9bd65270b40a37785f0df89ae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingScreen: {fileID: 964960448}
+  enterArenaButton: {fileID: 1381142838}
 --- !u!1 &619932048
 GameObject:
   m_ObjectHideFlags: 0
@@ -15580,8 +15596,7 @@ MonoBehaviour:
   playerPlatformPrefab: {fileID: 9122209185718362659, guid: 3ddbb28528722d14da313ecf3c217c44, type: 3}
   nftButtonPrefab: {fileID: 4135986911533133119, guid: 46c5edbde698c0346a8efe08017403b3, type: 3}
   nftButtonsParent: {fileID: 1694092204}
-  enterArenaButton: {fileID: 1381142838}
-  loadingScreen: {fileID: 964960448}
+  screenLoadingManager: {fileID: 607796542}
 --- !u!1 &1690297588
 GameObject:
   m_ObjectHideFlags: 0

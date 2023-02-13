@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
@@ -138,8 +139,11 @@ public class NFTImageLoader
         }
 
         string rawText = www.downloadHandler.text;
-        Debug.Log("URL: " + URL);
-        Debug.Log("Success: " + rawText);
+        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+        {
+            Debug.Log("URL: " + URL);
+            Debug.Log("Success: " + rawText);
+        }
 
         return rawText;
     }

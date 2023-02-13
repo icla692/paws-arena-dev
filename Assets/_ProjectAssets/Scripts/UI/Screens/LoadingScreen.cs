@@ -17,4 +17,9 @@ public class LoadingScreen : MonoBehaviour
     {
         wrapper.SetActive(false);
     }
+
+    public bool IsActivated()
+    {
+        return wrapper.activeSelf;
+    }
 }

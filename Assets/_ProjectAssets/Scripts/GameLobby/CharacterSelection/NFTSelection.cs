@@ -16,9 +16,7 @@ public class NFTSelection : MonoBehaviour
     public GameObject nftButtonPrefab;
     public Transform nftButtonsParent;
 
-    public GameObject enterArenaButton;
-
-    public LoadingScreen loadingScreen;
+    public NFTSelection_LoadingManager screenLoadingManager;
 
     private List<GameObject> nftButtons = new List<GameObject>();
     private GameObject playerPlatform;
@@ -74,9 +72,7 @@ public class NFTSelection : MonoBehaviour
     }
     private async UniTask PopulateGridAsync()
     {
-        enterArenaButton.GetComponent<Button>().interactable = false;
-
-        loadingScreen.Activate("Loading NFTs...");
+        screenLoadingManager.AddLoadingReason("Loading NFTs...");
         foreach(GameObject but in nftButtons)
         {
             Destroy(but);
@@ -112,9 +108,7 @@ public class NFTSelection : MonoBehaviour
         }
         await UniTask.WhenAll(tasks.ToArray());
 
-        loadingScreen.Deactivate();
-
-        enterArenaButton.GetComponent<Button>().interactable = true;
+        screenLoadingManager.StopLoadingReason("Loading NFTs...");
 
         //Attach to images
         idx = 0;
@@ -130,6 +124,8 @@ public class NFTSelection : MonoBehaviour
             });
             idx++;
         }
+
+        SetSelectedNFTGraphics();
     }
 
     private void SelectNFT(int idx)
@@ -142,8 +138,26 @@ public class NFTSelection : MonoBehaviour
         Debug.Log("Selected " + currentNFTs[idx].imageUrl);
 
         GameState.SetSelectedNFT(currentNFTs[idx]);
-        nftButtons[idx].GetComponent<NFTImageButton>().Select();
+
         playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformParent);
         playerPlatform.transform.localPosition = Vector3.zero;
+
+        SetSelectedNFTGraphics();
+    }
+
+    private void SetSelectedNFTGraphics()
+    {
+        NFT selectedNFT = GameState.selectedNFT;
+        for (int i = 0; i < nftButtons.Count; i++)
+        {
+            if (selectedNFT != null && currentNFTs[i].imageUrl == selectedNFT.imageUrl)
+            {
+                nftButtons[i].GetComponent<NFTImageButton>().Select();
+            }
+            else
+            {
+                nftButtons[i].GetComponent<NFTImageButton>().Deselect();
+            }
+        }
     }
 }

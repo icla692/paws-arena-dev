@@ -11,23 +11,27 @@ public class PlayerNicknameButton : MonoBehaviour
     private TMPro.TextMeshProUGUI nicknameText;
     [SerializeField]
     private InputModal inputModal;
+    [SerializeField]
+    private NFTSelection_LoadingManager screenLoadingManager;
+
 
     private async void Start()
     {
+        screenLoadingManager.AddLoadingReason("Grabbing account information...");
         string nickname = await TryGetNickname(()=> { });
 
-        if (!string.IsNullOrEmpty(nickname))
+        nicknameText.text = "";
+        if (!string.IsNullOrEmpty(nickname.Trim()))
         {
             SetPlayerName(nickname);
         }
         else
         {
-            nicknameText.text = "";
             EnableEdit(false);
         }
 
+        screenLoadingManager.StopLoadingReason("Grabbing account information...");
         OnPlayerNameUpdated?.Invoke(nicknameText.text);
-        GameState.nickname = PhotonNetwork.NickName = nicknameText.text;
     }
 
     public void EnableEdit(bool isCancelable)
@@ -65,7 +69,7 @@ public class PlayerNicknameButton : MonoBehaviour
 
     public void SetPlayerName(string value)
     {
-        PhotonNetwork.NickName = nicknameText.text = value;
+        GameState.nickname = PhotonNetwork.NickName = nicknameText.text = value;
         OnPlayerNameUpdated?.Invoke(value);
     }
 }

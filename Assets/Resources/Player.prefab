@@ -994,7 +994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a26999e394ef6d4f8e610c5b5882db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageDealPrefab: {fileID: 7028970255462701160, guid: d52912169a0a9c446ab242cf94253196, type: 3}
+  damageDealPrefab: {fileID: 9059958245954301650, guid: d52912169a0a9c446ab242cf94253196, type: 3}
   basePlayerComponent: {fileID: 7658601518159057736}
 --- !u!1001 &4944939853469224801
 PrefabInstance:
@@ -1133,6 +1133,10 @@ PrefabInstance:
     - target: {fileID: 975193665343492859, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: m_Bounds.m_Center.y
       value: 1.0056466
+      objectReference: {fileID: 0}
+    - target: {fileID: 975193665343492859, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
+      propertyPath: m_Bounds.m_Extent.x
+      value: 0.6102092
       objectReference: {fileID: 0}
     - target: {fileID: 975193665343492859, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: m_Bounds.m_Extent.y

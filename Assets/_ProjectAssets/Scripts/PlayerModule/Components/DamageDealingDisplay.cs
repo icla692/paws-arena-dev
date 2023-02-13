@@ -20,8 +20,8 @@ public class DamageDealingDisplay : MonoBehaviour
 
     private void OnDamageTaken(int damage)
     {
-        var go = GameObject.Instantiate(damageDealPrefab, Vector3.zero, Quaternion.identity, transform);
-        go.GetComponent<RectTransform>().anchoredPosition = new Vector2(UnityEngine.Random.Range(-2.0f, 2.0f), 0);
-        go.GetComponent<DamageDealingText>().Init(damage);
+        var go = GameObject.Instantiate(damageDealPrefab, transform.position, Quaternion.identity, null);
+        go.transform.GetChild(0).position = new Vector2(UnityEngine.Random.Range(-2.0f, 2.0f), 0);
+        go.transform.GetChild(0).GetComponent<DamageDealingText>().Init(damage);
     }
 }
