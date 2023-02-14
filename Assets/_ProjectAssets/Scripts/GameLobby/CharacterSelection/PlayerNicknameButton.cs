@@ -57,14 +57,22 @@ public class PlayerNicknameButton : MonoBehaviour
 
     private async void SendNewNicknameToServer(string nickname)
     {
-        await NetworkManager.POSTRequest("/user/nickname", $"\"{nickname}\"", (resp) =>
+        try
         {
-            Debug.Log($"Saved nickname {nickname}");
-            SetPlayerName(nickname);
-        }, (code, err) =>
+            await NetworkManager.POSTRequest("/user/nickname", $"\"{nickname}\"", (resp) =>
+            {
+                Debug.Log($"Saved nickname {nickname}");
+                SetPlayerName(nickname);
+                inputModal.Hide();
+            }, (code, err) =>
+            {
+                Debug.LogWarning($"Failed saving nickname {err} : {code}");
+            }, true);
+        }catch(UnityWebRequestException err)
         {
-            Debug.LogWarning($"Failed saving nickname {err} : {code}");
-        }, true);
+            Debug.LogWarning($"Problem setting nickname {err.ResponseCode} : {err.Text}");
+            inputModal.SetError(err.Text);
+        }
     }
 
     public void SetPlayerName(string value)

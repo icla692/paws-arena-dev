@@ -17,6 +17,7 @@ public class NFTSelection_LoadingManager : MonoBehaviour
     {
         if (loadingReasons == null)
         {
+            Debug.Log("reinit...");
             loadingReasons = new List<string>();
         }
 

@@ -1274,10 +1274,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c6166ccad4a5e8429db9641d6335264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nftUrl: 
+  punRoomUtils: {fileID: 99993738}
   syncPlayerPlatformPrefab: {fileID: 9122209185718362659, guid: 3f631740f087cba4381debb0a059a5d8, type: 3}
-  myPos: {x: -0.92, y: -0.35, z: 0}
-  theirPos: {x: 0.92, y: -0.35, z: 0}
+  player1Pose:
+    pos: {x: -0.92, y: -0.35, z: 0}
+    scale: {x: 0.81, y: 0.81, z: 0.81}
+  player2Pose:
+    pos: {x: 0.92, y: -0.35, z: 0}
+    scale: {x: -0.81, y: 0.81, z: 0.81}
 --- !u!4 &1429538793
 Transform:
   m_ObjectHideFlags: 0

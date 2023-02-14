@@ -130,6 +130,7 @@ MonoBehaviour:
   shotSfx: {fileID: 8300000, guid: 5a1881f3ca4dfc84093dddb74605faaa, type: 3}
   explosionPrefab: {fileID: 6659103733848000421, guid: cedd3afdb550a524287d3a3e85f9f327, type: 3}
   hasEnabledPositionTracking: 1
+  isMine: 0
   splitNumber: 3
   bulletPrefab: {fileID: 4174453076262886263, guid: bf45d24987bd4be4dbe639f84ddbc680, type: 3}
 --- !u!95 &3827242495871218951

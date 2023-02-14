@@ -20,22 +20,9 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        photonView = GetComponent<PhotonView>();
-        if (!photonView.IsMine || isBot)
-        {
-            transform.position = SyncPlatformsBehaviour.Instance.theirPos;
-            transform.localScale = new Vector3(-0.81f, 0.81f, 0.81f);
-        }
-        else
-        {
-            transform.position = SyncPlatformsBehaviour.Instance.myPos;
-        }
-
-        if (isBot)
-        {
-            playerCustomization.wrapper.SetActive(false);
-        }
+        transform.position = new Vector3(-100, 0, 0);
     }
+
     private async void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -49,6 +36,15 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
 
             PUNRoomUtils.onPlayerJoined += OnPlayerJoined;
         }
+
+        if (isBot)
+        {
+            playerCustomization.wrapper.SetActive(false);
+        }
+
+        PlatformPose pose = SyncPlatformsBehaviour.Instance.GetMySeatPosition(photonView, isBot);
+        transform.position = pose.pos;
+        transform.localScale = pose.scale;
 
         if (isBot)
         {

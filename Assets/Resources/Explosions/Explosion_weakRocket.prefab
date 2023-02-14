@@ -106,6 +106,7 @@ MonoBehaviour:
   hasPushForce: 1
   pushForce: 10
   bulletCount: 1
+  affectsTerrain: 1
 --- !u!1 &7750145978208870714
 GameObject:
   m_ObjectHideFlags: 0

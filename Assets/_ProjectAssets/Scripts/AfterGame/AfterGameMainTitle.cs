@@ -15,7 +15,8 @@ namespace com.colorfulcoding.AfterGame
         public GameObject drawTitle;
         public Image bg;
 
-        public TMPro.TextMeshProUGUI totalCoinsValue;
+        public TextMeshProUGUI totalCoinsValue;
+        public TextMeshProUGUI deltaPoints;
         public Color winColor;
         public Color loseColor;
         public Color drawColor;
@@ -52,10 +53,11 @@ namespace com.colorfulcoding.AfterGame
 
             if (GameState.pointsChange.points != 0)
             {
-                LeanTween.value(gameObject, GameState.pointsChange.oldPoints, GameState.pointsChange.oldPoints + GameState.pointsChange.points, 2f).setOnUpdate((float val) =>
+                LeanTween.value(gameObject, 0, GameState.pointsChange.points, 2f).setOnUpdate((float val) =>
                 {
-                    totalCoinsValue.text = "" + Math.Floor(val);
-                });
+                    totalCoinsValue.text = "" + Math.Floor(GameState.pointsChange.oldPoints + val);
+                    deltaPoints.text = "+" + Math.Floor(val);
+                }).setEaseInOutCirc().setDelay(1f);
             }
         }
     }

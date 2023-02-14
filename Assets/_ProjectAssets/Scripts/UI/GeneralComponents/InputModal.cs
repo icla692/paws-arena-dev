@@ -13,6 +13,8 @@ public class InputModal : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_InputField input;
     [SerializeField]
+    private TMPro.TextMeshProUGUI errors;
+    [SerializeField]
     private Button confirmButton;
     [SerializeField]
     private Button cancelButton;
@@ -22,13 +24,14 @@ public class InputModal : MonoBehaviour
     public void Show(string description, string placeholder, bool isCancellable, Action<string> OnStringSet)
     {
         wrapper.SetActive(true);
+        errors.text = "";
+
         this.description.text = description;
         this.input.placeholder.GetComponent<TMPro.TextMeshProUGUI>().text = placeholder;
 
         this.cancelButton.gameObject.SetActive(isCancellable);
 
         this.cancelButton.onClick.AddListener(Hide);
-        this.confirmButton.onClick.AddListener(Hide);
         this.confirmButton.onClick.AddListener(Apply);
 
         input.text = "";
@@ -53,6 +56,11 @@ public class InputModal : MonoBehaviour
     private void OnValueChanged(string value)
     {
         confirmButton.interactable = !string.IsNullOrEmpty(value);
+    }
+
+    public void SetError(string text)
+    {
+        errors.text = text;
     }
 
 

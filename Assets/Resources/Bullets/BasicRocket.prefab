@@ -129,6 +129,7 @@ MonoBehaviour:
   shotSfx: {fileID: 8300000, guid: 5a1881f3ca4dfc84093dddb74605faaa, type: 3}
   explosionPrefab: {fileID: 6659103733848000421, guid: 0b909414dc0832d469101ebf4cae13f4, type: 3}
   hasEnabledPositionTracking: 1
+  isMine: 0
 --- !u!1 &8145637975098712303
 GameObject:
   m_ObjectHideFlags: 0
