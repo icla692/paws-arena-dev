@@ -61,7 +61,9 @@ public class DummyBehaviour : MonoBehaviour
     private void OnAreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
     {
         Vector3 dummyPos = dummyWrapper.transform.position;
-        float dmgDistance = Vector3.Distance(dummyPos, position);
+
+        var closestPoint = dummyWrapper.GetComponent<BoxCollider2D>().ClosestPoint(position);
+        float dmgDistance = Vector3.Distance(closestPoint, position);
         if (dmgDistance > area)
         {
             onDummyMiss?.Invoke(bulletCount);

@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
@@ -23,7 +24,16 @@ public class ResolvingGameState : IRoomState
     {
         GameState.gameResolveState = this.state;
 
-        await context.httpCommunication.RegisterEndOfTheMatch(PlayerManager.Instance.myPlayerHealth, state);
+        if (ConfigurationManager.Instance.Config.GetGameType() != Anura.ConfigurationModule.ScriptableObjects.GameType.TUTORIAL)
+        {
+            try
+            {
+                await context.httpCommunication.RegisterEndOfTheMatch(PlayerManager.Instance.myPlayerHealth, state);
+            }catch(UnityWebRequestException ex)
+            {
+                Debug.LogWarning($"Failed registering match {ex.ResponseCode}:{ex.Text}");
+            }
+        }
         await UniTask.Delay(TimeSpan.FromSeconds(3));
         context.LoadAfterGameScene(state);
     }

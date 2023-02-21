@@ -138,6 +138,7 @@ public class GameMatchingScreen : MonoBehaviour
         int otherSeat = (mySeat + 1) % 2;
         notices.SetActive(false);
         FreeSeat(seats[otherSeat]);
+        MakeRoomVisible();
     }
 
     public void TryExitRoom()
@@ -158,6 +159,11 @@ public class GameMatchingScreen : MonoBehaviour
     {
         PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = false;
         GetComponent<PhotonView>().RPC("StartSinglePlayerGameRoutine", RpcTarget.All);
+    }
+
+    private void MakeRoomVisible()
+    {
+        PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = true;
     }
 
 

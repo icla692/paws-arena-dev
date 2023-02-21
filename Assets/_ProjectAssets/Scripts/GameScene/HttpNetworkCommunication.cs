@@ -33,13 +33,20 @@ namespace com.colorfulcoding.GameScene
                 Debug.Log(reqJson);
             }
 
-            await NetworkManager.POSTRequest("/leaderboard/match", reqJson, (resp) =>
+            try
             {
-                Debug.Log("[HTTP]Match start registered!");
-            }, (err, code) =>
+                await NetworkManager.POSTRequest("/leaderboard/match", reqJson, (resp) =>
+                {
+                    Debug.Log("[HTTP]Match start registered!");
+                }, (err, code) =>
+                {
+                    Debug.LogWarning($"[HTTP]Error registering the match {code}: {err}");
+                }, true);
+            }catch(UnityWebRequestException ex)
             {
-                Debug.LogWarning($"[HTTP]Error registering the match {code}: {err}");
-            }, true);
+                Debug.LogWarning($"[HTTP]Error registering the match {ex.ResponseCode}: {ex.Text}");
+                RoomStateManager.Instance.OnPlayerLeft();
+            }
         }
 
         public async UniTask RegisterEndOfTheMatch(int hp, GameResolveState state)

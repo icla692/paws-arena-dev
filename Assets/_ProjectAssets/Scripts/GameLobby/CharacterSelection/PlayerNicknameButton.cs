@@ -44,15 +44,23 @@ public class PlayerNicknameButton : MonoBehaviour
 
     private async UniTask<string> TryGetNickname(Action onError)
     {
-        string resp = await NetworkManager.GETRequestCoroutine("/user/nickname",
-        (code, err) =>
+        try
         {
-            Debug.LogWarning($"Failed getting nickname {err} : {code}");
-            onError?.Invoke();
-        }, true);
+            string resp = await NetworkManager.GETRequestCoroutine("/user/nickname",
+            (code, err) =>
+            {
+                Debug.LogWarning($"Failed getting nickname {err} : {code}");
+                onError?.Invoke();
+            }, true);
 
-        Debug.Log($"Got nickname from server: {resp}");
-        return resp;
+            Debug.Log($"Got nickname from server: {resp}");
+            return resp;
+        }
+        catch (UnityWebRequestException ex)
+        {
+            Debug.LogWarning($"Failed getting nickname form server {ex.ResponseCode} : {ex.Text}");
+            return "";
+        }
     }
 
     private async void SendNewNicknameToServer(string nickname)
@@ -71,7 +79,14 @@ public class PlayerNicknameButton : MonoBehaviour
         }catch(UnityWebRequestException err)
         {
             Debug.LogWarning($"Problem setting nickname {err.ResponseCode} : {err.Text}");
-            inputModal.SetError(err.Text);
+            if(err.ResponseCode == 0)
+            {
+                inputModal.SetError("We cannot reach the server :(");
+            }
+            else
+            {
+                inputModal.SetError(err.Text);
+            }
         }
     }
 

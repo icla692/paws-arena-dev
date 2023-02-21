@@ -39,7 +39,7 @@ public class TurnTimerBehaviour : MonoBehaviour
 
         IRoomState state = RoomStateManager.Instance.currentState;
 
-        if (state is MyTurnState || state is OtherPlayerTurnState)
+        if (state is MyTurnState || state is OtherPlayerTurnState || state is BotTurnState)
         {
             UpdateTimer(turnTime, () => { roomStateManager.SetState(new ProjectileLaunchedState()); });
         }
@@ -47,10 +47,7 @@ public class TurnTimerBehaviour : MonoBehaviour
 
     private void OnStateUpdated(IRoomState state)
     {
-        if (state is MyTurnState)
-        {
-            startTime = Time.time;
-        }else if(state is OtherPlayerTurnState)
+        if (state is MyTurnState || state is OtherPlayerTurnState || state is BotTurnState)
         {
             startTime = Time.time;
         }else

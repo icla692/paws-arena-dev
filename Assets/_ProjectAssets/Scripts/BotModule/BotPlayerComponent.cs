@@ -80,12 +80,12 @@ public class BotPlayerComponent : MonoBehaviour
 
         if (roomState is BotTurnState)
         {
-            playerActions.Enable();
+            //playerActions.Enable();
             botAI.Play();
         }
         else
         {
-            playerActions.Disable();
+            //playerActions.Disable();
             botAI.Wait();
         }
     }

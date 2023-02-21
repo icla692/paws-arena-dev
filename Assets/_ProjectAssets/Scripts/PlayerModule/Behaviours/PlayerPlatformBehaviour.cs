@@ -13,6 +13,10 @@ public class PlayerPlatformBehaviour : MonoBehaviour
         {
             playerCustomization.SetCat(GameState.selectedNFT.imageUrl, GameState.selectedNFT.ids);
         }
+        else
+        {
+            playerCustomization.wrapper.SetActive(false);
+        }
     }
 
 

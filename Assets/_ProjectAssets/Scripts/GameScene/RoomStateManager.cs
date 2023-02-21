@@ -116,7 +116,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
             (lastPlayerRound == 1 && !PhotonNetwork.LocalPlayer.IsMasterClient);
     }
 
-    private void OnPlayerLeft()
+    public void OnPlayerLeft()
     {
         if(currentState is ResolvingGameState)
         {

@@ -10,6 +10,22 @@ public class Countdown : MonoBehaviour
 
     private TextMeshProUGUI _text;
 
+    private bool isCanceled = false;
+    private void OnEnable()
+    {
+        PUNRoomUtils.onPlayerLeft += CancelCountdown;
+    }
+
+    private void OnDisable()
+    {
+        PUNRoomUtils.onPlayerLeft -= CancelCountdown;
+    }
+
+    private void CancelCountdown()
+    {
+        isCanceled = true;
+    }
+
     public void StartCountDown(Action callback)
     {
         _text = GetComponent<TextMeshProUGUI>();
@@ -18,7 +34,7 @@ public class Countdown : MonoBehaviour
 
     private IEnumerator CountdownAnimation(int seconds, Action callback)
     {
-        while(seconds > 0)
+        while(seconds > 0 && !isCanceled)
         {
             _text.text = "" + seconds;
             SFXManager.Instance.PlayOneShot(sfx);
@@ -26,6 +42,15 @@ public class Countdown : MonoBehaviour
             seconds--;
         }
 
-        callback?.Invoke();
+        if (isCanceled)
+        {
+            isCanceled = false;
+            _text.text = "";
+        }
+        else
+        {
+            callback?.Invoke();
+        }
+
     }
 }
