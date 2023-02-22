@@ -21,7 +21,6 @@ public class EquipScreen : MonoBehaviour
     public ButtonHoverable mouthBtn;
     public ButtonHoverable bodyBtn;
     public ButtonHoverable tailBtn;
-    public ButtonHoverable legsBtn;
 
     private GameObject playerPlatform;
     private ButtonHoverable selectedBtn;
@@ -76,14 +75,12 @@ public class EquipScreen : MonoBehaviour
     }
     public void PopulateTail()
     {
-        Populate(EquipmentType.TAIL, equipmentsConfig.tail, tailBtn);
-    }
-    public void PopulateLegs()
-    {
-        Populate(EquipmentType.LEGS, equipmentsConfig.legs, legsBtn);
+        Populate(EquipmentType.TAIL, equipmentsConfig.tailsOverlay, tailBtn);
+        Populate(EquipmentType.TAIL, equipmentsConfig.tailsFloating, tailBtn, false);
+        Populate(EquipmentType.TAIL, equipmentsConfig.tailsAnimated, tailBtn, false);
     }
 
-    private void Populate(EquipmentType eqType, List<Sprite> elements, ButtonHoverable targetBtn)
+    private void Populate(EquipmentType eqType, object elements, ButtonHoverable targetBtn, bool shouldClean = true)
     {
         currentType = eqType;
 
@@ -93,10 +90,13 @@ public class EquipScreen : MonoBehaviour
         selectedBtn = targetBtn;
         selectedBtn.Select();
 
-        foreach (Transform t in content)
+        if (shouldClean)
         {
-            Destroy(t.gameObject);
-            equipments.Clear();
+            foreach (Transform t in content)
+            {
+                Destroy(t.gameObject);
+                equipments.Clear();
+            }
         }
 
         Equipment equippedItem = null;
@@ -105,15 +105,26 @@ public class EquipScreen : MonoBehaviour
             equippedItem = playerCustomization.playerEquipmentConfig[eqType];
         }
 
-        foreach(Sprite el in elements)
+        if (elements is List<Sprite> spriteEls)
+        {
+            Populate(equippedItem, spriteEls);
+        }else if(elements is List<SpriteIdPair> spriteIdEls)
+        {
+            Populate(equippedItem, spriteIdEls);
+        }
+
+    }
+
+    private void Populate(Equipment equippedItem, List<Sprite> elements)
+    {
+        foreach (Sprite el in elements)
         {
             var go = GameObject.Instantiate(nftPrefab, content);
             var nftImageSprite = go.GetComponent<NFTImageSprite>();
             nftImageSprite.mainImage.sprite = el;
             equipments.Add(nftImageSprite);
 
-            if(equippedItem != null && equippedItem is SpriteEquipment spriteItem && 
-                el == spriteItem.sprite)
+            if (equippedItem != null && equippedItem is SpriteEquipment spriteItem && el == spriteItem.sprite)
             {
                 Debug.Log("Found match for " + spriteItem.sprite.name);
                 nftImageSprite.Select();
@@ -121,18 +132,47 @@ public class EquipScreen : MonoBehaviour
             }
 
             int idx = equipments.Count - 1;
-            equipments[idx].onClick += ()=> OnEquipmentSelected(idx);
+            equipments[idx].onClick += () => OnEquipmentSelected(idx);
         }
     }
 
-    private void OnEquipmentSelected(int idx)
+    private void Populate(Equipment equippedItem, List<SpriteIdPair> elements)
+    {
+        foreach (SpriteIdPair el in elements)
+        {
+            var go = GameObject.Instantiate(nftPrefab, content);
+            var nftImageSprite = go.GetComponent<NFTImageSprite>();
+            nftImageSprite.mainImage.sprite = el.thumbnail;
+            equipments.Add(nftImageSprite);
+
+            //if (equippedItem != null && equippedItem is GameObjectEquipment goItem && el == spriteItem.sprite)
+            //{
+            //    Debug.Log("Found match for " + spriteItem.sprite.name);
+            //    nftImageSprite.Select();
+            //    selectedEquipment = nftImageSprite;
+            //}
+
+            int idx = equipments.Count - 1;
+            equipments[idx].onClick += () => OnEquipmentSelected(idx, el);
+        }
+    }
+
+    private void OnEquipmentSelected(int idx, SpriteIdPair idPair = null)
     {
         selectedEquipment?.Deselect();
         selectedEquipment = equipments[idx];
         selectedEquipment.Select();
+
         if (equipments[idx].mainImage.sprite.name != "none")
         {
-            playerCustomization.SetEquipmentBySprite(currentType, equipments[idx].mainImage.sprite);
+            if (idPair != null)
+            {
+                playerCustomization.SetTail(idPair.id);
+            }
+            else
+            {
+                playerCustomization.SetEquipmentBySprite(currentType, equipments[idx].mainImage.sprite);
+            }
         }
         else
         {

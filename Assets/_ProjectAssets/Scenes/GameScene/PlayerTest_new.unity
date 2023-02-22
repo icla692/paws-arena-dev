@@ -274,7 +274,7 @@ MonoBehaviour:
   botAccuracyPowerMarginMax: 0.15
   configurationOverrides:
     stepLength: -1
-    maxTravelSteps: 3
+    maxTravelSteps: -1
     approachEnemy: -1
     locationWeaponEvaluationMode: 0
     weightBestShotDistance: -1
@@ -634,7 +634,7 @@ MonoBehaviour:
   preset: {fileID: 1001354715}
   configuration:
     stepLength: 0.9
-    maxTravelSteps: 10
+    maxTravelSteps: 20
     approachEnemy: 3
     locationWeaponEvaluationMode: 1
     weightBestShotDistance: 200
@@ -1445,7 +1445,7 @@ MonoBehaviour:
   botAccuracyPowerMarginMax: 0.15
   configurationOverrides:
     stepLength: -1
-    maxTravelSteps: 4
+    maxTravelSteps: -1
     approachEnemy: -1
     locationWeaponEvaluationMode: 0
     weightBestShotDistance: -1
@@ -1913,7 +1913,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punRoomUtils: {fileID: 0}
   mapPrefabs:
+  - {fileID: 6237716996422082004, guid: 85938879427c20e45a5215f84924fcfb, type: 3}
+  - {fileID: 8851946301562649407, guid: 5651460385c62e44787aabfebe5b81ac, type: 3}
+  - {fileID: 8851946301562649407, guid: 5d199f410088f5b4fbc724390e2fafea, type: 3}
   - {fileID: 8851946301562649407, guid: 0715efe54eb9bb040ad3e77e866c163b, type: 3}
+  - {fileID: 8851946301562649407, guid: cd4c9e523dfe175438b31701e4febf86, type: 3}
+  - {fileID: 8851946301562649407, guid: 007cd2eecf61c9b43816e11751be18e3, type: 3}
+  - {fileID: 8851946301562649407, guid: 6abf85706c9bda84e83f9d985eb63596, type: 3}
 --- !u!1 &1103986341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,7 +1970,7 @@ MonoBehaviour:
   botAccuracyPowerMarginMax: 0.15
   configurationOverrides:
     stepLength: -1
-    maxTravelSteps: 8
+    maxTravelSteps: -1
     approachEnemy: -1
     locationWeaponEvaluationMode: 1
     weightBestShotDistance: -1
@@ -2143,7 +2149,7 @@ MonoBehaviour:
   botAccuracyPowerMarginMax: 0.15
   configurationOverrides:
     stepLength: -1
-    maxTravelSteps: 5
+    maxTravelSteps: -1
     approachEnemy: -1
     locationWeaponEvaluationMode: 1
     weightBestShotDistance: -1
@@ -3155,7 +3161,7 @@ MonoBehaviour:
   botAccuracyPowerMarginMax: 0.15
   configurationOverrides:
     stepLength: -1
-    maxTravelSteps: 10
+    maxTravelSteps: -1
     approachEnemy: -1
     locationWeaponEvaluationMode: 1
     weightBestShotDistance: -1

@@ -786,9 +786,9 @@ MonoBehaviour:
   - id: back14
     sprite: {fileID: 1326332524, guid: 29219b864c72b1a47a403dc367e238b9, type: 3}
   - id: back25
-    sprite: {fileID: -1022427553, guid: 29219b864c72b1a47a403dc367e238b9, type: 3}
-  - id: back26
     sprite: {fileID: -1077858439, guid: 29219b864c72b1a47a403dc367e238b9, type: 3}
+  - id: back26
+    sprite: {fileID: -1022427553, guid: 29219b864c72b1a47a403dc367e238b9, type: 3}
   - id: back22
     sprite: {fileID: 875236983, guid: 29219b864c72b1a47a403dc367e238b9, type: 3}
   - id: back16
@@ -824,13 +824,13 @@ MonoBehaviour:
   - id: back4
     sprite: {fileID: -216489184, guid: f3addc440da2d5b47bfc997c4d713cde, type: 3}
   - id: back5
-    sprite: {fileID: 1793541247, guid: f3addc440da2d5b47bfc997c4d713cde, type: 3}
-  - id: back6
     sprite: {fileID: -1427172176, guid: f3addc440da2d5b47bfc997c4d713cde, type: 3}
-  - id: back7
+  - id: back6
     sprite: {fileID: -1818675732, guid: f3addc440da2d5b47bfc997c4d713cde, type: 3}
-  - id: back8
+  - id: back7
     sprite: {fileID: -1489942582, guid: f3addc440da2d5b47bfc997c4d713cde, type: 3}
+  - id: back8
+    sprite: {fileID: 1793541247, guid: f3addc440da2d5b47bfc997c4d713cde, type: 3}
   - id: back9
     sprite: {fileID: 2059268688, guid: f3addc440da2d5b47bfc997c4d713cde, type: 3}
   - id: back10
@@ -899,10 +899,6 @@ MonoBehaviour:
     sprite: {fileID: 2132505761, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
   - id: hat6
     sprite: {fileID: -1326742173, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
-  - id: hat35
-    sprite: {fileID: -1889102223, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
-  - id: hat36
-    sprite: {fileID: 2100136905, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
   - id: hat18
     sprite: {fileID: 2117340155, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
   - id: hat12
@@ -919,7 +915,7 @@ MonoBehaviour:
   - id: hat10
     sprite: {fileID: 1326935763, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat22
-    sprite: {fileID: 267407761, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
+    sprite: {fileID: -77595547, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat27
     sprite: {fileID: 663334265, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat32
@@ -931,8 +927,6 @@ MonoBehaviour:
   - id: hat9
     sprite: {fileID: -1956461573, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat28
-    sprite: {fileID: -1842338692, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
-  - id: hat11
     sprite: {fileID: -1600146629, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat22
     sprite: {fileID: -77595547, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
@@ -944,6 +938,8 @@ MonoBehaviour:
     sprite: {fileID: -707013611, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat13
     sprite: {fileID: 1600589697, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
+  - id: hat33
+    sprite: {fileID: 267407761, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   hatsBetweenEarsEquipment:
   - id: hat2
     sprite: {fileID: -1347619341, guid: 6857fe23dba87c54a9ab0c8bf431ca4c, type: 3}
@@ -1041,11 +1037,13 @@ MonoBehaviour:
   - id: mouth3
     sprite: {fileID: -1477379779, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
   - id: mouth1
-    sprite: {fileID: -897265152, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
-  - id: mouth12
     sprite: {fileID: -1183200575, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
+  - id: mouth12
+    sprite: {fileID: -897265152, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
   - id: mouth13
     sprite: {fileID: -659008090, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
+  - id: mouth14
+    sprite: {fileID: 668439670, guid: c5da20267a1bf4843a8c813fc841f78b, type: 3}
   - id: none
     sprite: {fileID: 0}
   overlayTailRenderer: {fileID: 6830836683680579046}
@@ -1056,6 +1054,8 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 726dbbcbb6e69c24089bc89bdc9033e9, type: 3}
   - id: tail17
     sprite: {fileID: 21300000, guid: bde67a3d66291d342a0beac629e28ad6, type: 3}
+  - id: none
+    sprite: {fileID: 0}
   tailAnimatedObjectsEquipment:
   - id: tail13
     target: {fileID: 0}
@@ -1070,7 +1070,7 @@ MonoBehaviour:
   - id: tail1
     sprite: {fileID: 1024838030, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
   - id: tail2
-    sprite: {fileID: 687837729, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+    sprite: {fileID: -1284751672, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
   - id: tail3
     sprite: {fileID: -347057580, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
   - id: tail4
@@ -1085,6 +1085,8 @@ MonoBehaviour:
     sprite: {fileID: -2075815695, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
   - id: tail14
     sprite: {fileID: 1485698738, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  - id: none
+    sprite: {fileID: 0}
   groundFrontTransform: {fileID: 2396240541805243297}
   groundFrontSpriteRenderer: {fileID: 436819567781837478}
   groundFrontEquipment:
@@ -1106,7 +1108,7 @@ MonoBehaviour:
     sprite: {fileID: 1867702965, guid: a9d68f3fb5c2bb64498bebf492eacb3e, type: 3}
   - id: groundfront15
     sprite: {fileID: -522128301, guid: a9d68f3fb5c2bb64498bebf492eacb3e, type: 3}
-  - id: groundfront20
+  - id: groundfront19
     sprite: {fileID: -436175730, guid: a9d68f3fb5c2bb64498bebf492eacb3e, type: 3}
   - id: groundfront17
     sprite: {fileID: 753849934, guid: a9d68f3fb5c2bb64498bebf492eacb3e, type: 3}
@@ -1140,6 +1142,8 @@ MonoBehaviour:
     sprite: {fileID: -942530297, guid: 65124d07f452a1b46861fbedcdcde455, type: 3}
   - id: groundfront1
     sprite: {fileID: 2017375310, guid: 65124d07f452a1b46861fbedcdcde455, type: 3}
+  - id: groundfront16
+    sprite: {fileID: 353837667, guid: 65124d07f452a1b46861fbedcdcde455, type: 3}
   groundBackTransform: {fileID: 1944812094525316717}
   groundBackSpriteRenderer: {fileID: 6650270707812142709}
   groundBackEquipment:

@@ -285,6 +285,7 @@ public class PlayerCustomization : MonoBehaviour
     public void ResetToOriginal()
     {
         KittiesCustomizationService.RemoveCustomizations(url);
+        RemoveAllEquipment();
         var config = KittiesCustomizationService.GetCustomization(url);
         ApplyConfig(config.originalConfig);
     }
@@ -424,6 +425,20 @@ public class PlayerCustomization : MonoBehaviour
         return EquipmentType.NONE;
     }
 
+    public void RemoveAllEquipment()
+    {
+        List<EquipmentType> types = new List<EquipmentType>();
+        types.Add(EquipmentType.EYEWEAR);
+        types.Add(EquipmentType.HAT);
+        types.Add(EquipmentType.MOUTH);
+        types.Add(EquipmentType.BODY);
+
+        foreach (EquipmentType type in types)
+        {
+            SetEquipmentBySprite(type, null);
+        }
+    }
+
     public void SetEquipmentBySprite(EquipmentType equipmentType, Sprite equipmentSprite)
     {
         switch (equipmentType)
@@ -486,6 +501,14 @@ public class PlayerCustomization : MonoBehaviour
                 }
             case EquipmentType.TAIL:
                 {
+                    if (equipmentSprite == null)
+                    {
+                        SetTail("none");
+                        break;
+                    }
+                    
+                    FindBySprite(equipmentSprite, overlayTailEquipment, id => SetTail(id));
+                    FindBySprite(equipmentSprite, tailStaticObjectsEquipment, id => SetTail(id));
                     break;
                 }
             case EquipmentType.LEGS:
@@ -557,11 +580,11 @@ public class PlayerCustomization : MonoBehaviour
         }
     }
 
-
-    private void SetTail(string id, bool updateConfig = true)
+    public void SetTail(string id, bool updateConfig = true)
     {
         int idx = overlayTailEquipment.FindIndex(el => el.id == id);
-        if(idx >= 0)
+        overlayTailRenderer.sprite = null;
+        if (idx >= 0)
         {
             SpriteEquipment eq = SetSingleSpriteElement(id, overlayTailEquipment, overlayTailRenderer);
 
@@ -569,8 +592,12 @@ public class PlayerCustomization : MonoBehaviour
             {
                 AddOrUpdateEquipment(EquipmentType.TAIL, eq);
             }
+        }
 
-            return;
+
+        for (int i = 0; i < tailAnimatedObjectsEquipment.Count; i++)
+        {
+            tailAnimatedObjectsEquipment[i].target.SetActive(false);
         }
 
         idx = tailAnimatedObjectsEquipment.FindIndex(el => el.id == id);
@@ -582,11 +609,11 @@ public class PlayerCustomization : MonoBehaviour
             {
                 AddOrUpdateEquipment(EquipmentType.TAIL, eq);
             }
-            return;
         }
 
         idx = tailStaticObjectsEquipment.FindIndex(el => el.id == id);
-        if(idx > 0)
+        staticTailObjectRenderer.sprite = null;
+        if (idx >= 0)
         {
             SpriteEquipment eq = SetSingleSpriteElement(id, tailStaticObjectsEquipment, staticTailObjectRenderer);
 
@@ -594,7 +621,6 @@ public class PlayerCustomization : MonoBehaviour
             {
                 AddOrUpdateEquipment(EquipmentType.TAIL, eq);
             }
-            return;
         }
     }
 

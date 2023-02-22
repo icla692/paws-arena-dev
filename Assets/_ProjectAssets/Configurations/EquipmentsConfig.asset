@@ -111,5 +111,27 @@ MonoBehaviour:
   - {fileID: -463409238, guid: 179a704625ff4f446b9ffef155cb4d30, type: 3}
   - {fileID: 114281807, guid: 179a704625ff4f446b9ffef155cb4d30, type: 3}
   - {fileID: -56959623, guid: 179a704625ff4f446b9ffef155cb4d30, type: 3}
-  tail: []
-  legs: []
+  tailsOverlay:
+  - {fileID: 21300000, guid: 372b64445bbce18478b08cdd300fbb2a, type: 3}
+  - {fileID: 21300000, guid: 3645e931f794db444a9cb25abd4b133b, type: 3}
+  - {fileID: 21300000, guid: 726dbbcbb6e69c24089bc89bdc9033e9, type: 3}
+  - {fileID: 21300000, guid: bde67a3d66291d342a0beac629e28ad6, type: 3}
+  tailsFloating:
+  - {fileID: 1485698738, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  - {fileID: 1431045676, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  - {fileID: -1190621807, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  - {fileID: -2075815695, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  - {fileID: 687837729, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  - {fileID: -1284751672, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  - {fileID: -347057580, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  - {fileID: 949322556, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  - {fileID: 1024838030, guid: b53d75c713271c04a9af17d56d9186ab, type: 3}
+  tailsAnimated:
+  - id: tail11
+    thumbnail: {fileID: -83437668, guid: 4bbe467c49b01df4597ec66b9ef05323, type: 3}
+  - id: tail9
+    thumbnail: {fileID: -734492980, guid: 550d8ed27675b2845ab6d64ebff32a24, type: 3}
+  - id: tail12
+    thumbnail: {fileID: -980794828, guid: 77803e719096bea42b4f2bdf5db56d4f, type: 3}
+  - id: tail13
+    thumbnail: {fileID: -332910090, guid: b411dff63e3f85147937815bff21dbdb, type: 3}
