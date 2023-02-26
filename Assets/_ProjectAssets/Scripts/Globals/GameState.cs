@@ -16,7 +16,16 @@ public class GameState
     //Settings
     public static GameSettings gameSettings;
 
-    //Inter-scene needed data
+    /***Inter-scene needed data ***/
+    //Finding Match => In-game
+    public static BotInformation botInfo = new BotInformation()
+    {
+        nickname = "Nick",
+        l = 3
+    };
+
+
+    //In-Game => After Game
     public static GameResolveState gameResolveState = GameResolveState.DRAW;
     internal static LeaderboardPostResponseEntity pointsChange;
 

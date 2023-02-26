@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Anura.ConfigurationModule.Managers;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,6 +49,10 @@ public class BotPreset : MonoBehaviour
 
     public void Setup(BotConfiguration configuration, ref List<WeaponData> weaponData)
     {
+        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+        {
+            Debug.Log("[BOT] Setting up " + gameObject.name + "...");
+        }
         if (configurationOverrides != null)
         {
             foreach (var field in typeof(BotConfiguration).GetFields())

@@ -23,7 +23,7 @@ MonoBehaviour:
   indicatorSpeed: 50
   bulletSpeed: {x: 1, y: 20}
   factorRotationRocket: 4
-  circleShootRadius: 5.5
+  circleShootRadius: 5.25
   numberOfLines: 30
   chatLineHeight: 45
   offsetHeightRefreshChat: 120

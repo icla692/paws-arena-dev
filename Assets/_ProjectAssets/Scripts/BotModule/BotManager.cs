@@ -5,7 +5,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using static BotAIAim;
+
+[System.Serializable]
+public class IntPresetPair
+{
+    [SerializeField]
+    public int levelNumber;
+    [SerializeField]
+    public BotPreset preset;
+}
 
 [Serializable]
 public class BotConfiguration
@@ -142,6 +152,8 @@ public class BotManager : MonoSingleton<BotManager>
     public event Action<int> onHealthUpdated;
 
     [SerializeField] private BotPreset preset;
+    [SerializeField] private List<IntPresetPair> presets;
+
     [SerializeField] private BotConfiguration configuration;
 
     [Header("Dependencies")]
@@ -165,6 +177,11 @@ public class BotManager : MonoSingleton<BotManager>
     protected override void Awake()
     {
         base.Awake();
+        if (GameState.botInfo != null)
+        {
+            preset = presets.Find(p => p.levelNumber == GameState.botInfo.l).preset;
+        }
+
         if (preset) preset.Setup(configuration, ref weaponsData);
     }
 

@@ -169,7 +169,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     public void SendRetreatRPC()
     {
-        int isMaster = !isMultiplayer? 1 : (PhotonNetwork.LocalPlayer.IsMasterClient ? 0 : 1);
+        int isMaster = !isMultiplayer? 0 : (PhotonNetwork.LocalPlayer.IsMasterClient ? 0 : 1);
         SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "Retreat", RpcTarget.MasterClient, isMaster);
     }
 

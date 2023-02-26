@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -94,10 +95,20 @@ public class GameMatchingScreen : MonoBehaviour
     }
 
     [ContextMenu("Bring Bot")]
-    public void BringBot()
+    public async void BringBot()
     {
+        var resp = await NetworkManager.GETRequestCoroutine("/user/player2", (code, err) => { }, true);
+
+        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+        {
+            Debug.Log("[HTTP][Player2]" + resp);
+        }
+
+        BotInformation botInformation = JsonUtility.FromJson<BotInformation>(resp);
+
+        GameState.botInfo = botInformation;
         PhotonNetwork.CurrentRoom.MaxPlayers = 1;
-        OccupySeat(seats[1], "Bot Name");
+        OccupySeat(seats[1], botInformation.nickname);
         syncPlatformsBehaviour.InstantiateBot();
         StartSinglePlayerGame();
     }

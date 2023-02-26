@@ -43,7 +43,7 @@ public class PlayerDataCustomView : MonoBehaviour
         else
         {
             npcBar = this; 
-            SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetNickname", RpcTarget.All, "");
+            SingleAndMultiplayerUtils.RpcOrLocal(this, photonview, true, "SetNickname", RpcTarget.All, GameState.botInfo.nickname);
         }
         Init();
     }

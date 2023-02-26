@@ -632,9 +632,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preset: {fileID: 1001354715}
+  presets:
+  - levelNumber: 1
+    preset: {fileID: 149005682}
+  - levelNumber: 2
+    preset: {fileID: 766444271}
+  - levelNumber: 3
+    preset: {fileID: 1336872204}
+  - levelNumber: 4
+    preset: {fileID: 1103986343}
+  - levelNumber: 5
+    preset: {fileID: 2116885973}
   configuration:
     stepLength: 0.9
-    maxTravelSteps: 20
+    maxTravelSteps: 15
     approachEnemy: 3
     locationWeaponEvaluationMode: 1
     weightBestShotDistance: 200
@@ -1135,7 +1146,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570977872}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.97, y: 13.619999, z: 0}
+  m_LocalPosition: {x: 3.8, y: 13.619999, z: 0}
   m_LocalScale: {x: 1.14, y: 37.71, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

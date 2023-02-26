@@ -27,6 +27,16 @@ public class AirplaneManager : MonoSingleton<AirplaneManager>
     private bool routineActive = false;
     private bool shouldDropBomb = false;
 
+    private void Start()
+    {
+        ApplySettings();
+    }
+
+    private void ApplySettings()
+    {
+        audioSource.volume = GameState.gameSettings.soundFXVolume * GameState.gameSettings.masterVolume;
+    }
+
     private void FixedUpdate()
     {
         if (!routineActive) return;
