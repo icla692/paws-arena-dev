@@ -441,14 +441,17 @@ public class BotAI : MonoBehaviour
 
         api.Shoot();
 
-        if (BotManager.Instance.debugBotAI)
+        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
         {
-            Debug.Log("BotAI: Shooting::weapon: " + chosenWeapon);
-            Debug.Log("BotAI: Shooting::distance: " + chosenLocation.locationSims[chosenWeapon].distanceToEnemy);
-            Debug.Log("BotAI: Shooting::angle: " + targetAngle);
-            Debug.Log("BotAI: Shooting::power: " + targetPower);
-            Debug.Log("BotAI: Shooting::score: " + chosenLocation.locationSims[chosenWeapon].score);
-            Debug.Log("BotAI: Shooting::accuracy penalty: " + accPenalty);
+            if (BotManager.Instance.debugBotAI)
+            {
+                Debug.Log("BotAI: Shooting::weapon: " + chosenWeapon);
+                Debug.Log("BotAI: Shooting::distance: " + chosenLocation.locationSims[chosenWeapon].distanceToEnemy);
+                Debug.Log("BotAI: Shooting::angle: " + targetAngle);
+                Debug.Log("BotAI: Shooting::power: " + targetPower);
+                Debug.Log("BotAI: Shooting::score: " + chosenLocation.locationSims[chosenWeapon].score);
+                Debug.Log("BotAI: Shooting::accuracy penalty: " + accPenalty);
+            }
         }
 
         if (chosenWeapon == Weapon.Split)

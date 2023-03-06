@@ -87,7 +87,10 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
             currentState.OnExit();
         }
 
-        Debug.Log("Setting state " + state);
+        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+        {
+            Debug.Log("Setting state " + state);
+        }
 
         currentState = state;
         currentState.Init(this);
@@ -221,7 +224,6 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
             }
             else
             {
-                Debug.Log("Bot turn!");
                 SetState(new BotTurnState());
             }
             return;

@@ -137,17 +137,18 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
     {
         if (dir > 0 && !isFacingRight)
         {
-            Flip();
+            SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "Flip", RpcTarget.All);
         }
         else if (dir < 0 && isFacingRight)
         {
-            Flip();
+            SingleAndMultiplayerUtils.RpcOrLocal(this, _photonView, true, "Flip", RpcTarget.All);
         }
 
         animator.SetBool("isMoving", dir != 0);
     }
 
-    private void Flip()
+    [PunRPC]
+    public void Flip()
     {
         // Switch the way the player is labelled as facing.
         isFacingRight = !isFacingRight;
@@ -174,6 +175,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
         onCatFlipped?.Invoke();
     }
+
 
     public void OnHealthUpdated(int health)
     {

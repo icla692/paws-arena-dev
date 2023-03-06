@@ -21,7 +21,8 @@ public class RoundCounterBehaviour : MonoBehaviour
 
     private void OnStateUpdated(IRoomState state)
     {
-        if((state is MyTurnState && PhotonNetwork.LocalPlayer.IsMasterClient) || 
+        if((state is MyTurnState && ConfigurationManager.Instance.Config.GetGameType() == Anura.ConfigurationModule.ScriptableObjects.GameType.SINGLEPLAYER) ||
+            (state is MyTurnState && PhotonNetwork.LocalPlayer.IsMasterClient) || 
             (state is OtherPlayerTurnState && !PhotonNetwork.LocalPlayer.IsMasterClient))
         {
             int round = RoomStateManager.Instance.roundNumber;

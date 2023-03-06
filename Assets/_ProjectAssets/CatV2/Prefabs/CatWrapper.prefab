@@ -699,6 +699,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1652268006294160500}
   - component: {fileID: 9122209186494864062}
+  - component: {fileID: 7374545299293571473}
   - component: {fileID: 9122209186494864064}
   m_Layer: 0
   m_Name: CatWrapper
@@ -771,6 +772,8 @@ MonoBehaviour:
     color: {r: 0.8235294, g: 0.29803923, b: 0.8392157, a: 1}
   - id: kittycolor7
     color: {r: 0.6156863, g: 0.28235295, b: 0.9529412, a: 1}
+  - id: kittycolor8
+    color: {r: 1, g: 1, b: 1, a: 1}
   eyesEquipment:
   - id: eyes1
     target: {fileID: 4746047893583650793}
@@ -1054,6 +1057,8 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 726dbbcbb6e69c24089bc89bdc9033e9, type: 3}
   - id: tail17
     sprite: {fileID: 21300000, guid: bde67a3d66291d342a0beac629e28ad6, type: 3}
+  - id: tail8
+    sprite: {fileID: 21300000, guid: be159725b6fe143409f99795cf7478bc, type: 3}
   - id: none
     sprite: {fileID: 0}
   tailAnimatedObjectsEquipment:
@@ -1224,6 +1229,51 @@ MonoBehaviour:
     sprite: {fileID: 652933786, guid: 47ef4ea9af360bc478b1471b659872a3, type: 3}
   - id: ground2
     sprite: {fileID: 1500544045, guid: 47ef4ea9af360bc478b1471b659872a3, type: 3}
+--- !u!114 &7374545299293571473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652268006294160501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147241ac1ab4e6c46bea078f9d43711c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 4746047892155831472}
+  - {fileID: 4746047892977652158}
+  - {fileID: 4746047893266288451}
+  - {fileID: 4746047892684937688}
+  - {fileID: 4746047893277858980}
+  - {fileID: 4746047893121310391}
+  - {fileID: 4746047892173527104}
+  - {fileID: 4746047894014811000}
+  - {fileID: 4746047893215436165}
+  spritesConfig:
+  - id: kittycolor0
+    sprites:
+    - {fileID: 21300000, guid: f6f7b8876b0c6fc41aafb5c27358e705, type: 3}
+    - {fileID: 21300000, guid: b335f537af1c546408c8c61928f7aba6, type: 3}
+    - {fileID: 21300000, guid: a525bdbbd93697b48aec056a361d9eb4, type: 3}
+    - {fileID: 21300000, guid: f7018341f488ae1438a407df1ff07024, type: 3}
+    - {fileID: 21300000, guid: ba97874fc7d3db242b345818e6d447f9, type: 3}
+    - {fileID: 21300000, guid: 83e44255182b54a49bffacfe1545e7ad, type: 3}
+    - {fileID: 21300000, guid: da76a2f8911cc51409e9617ec3a3113c, type: 3}
+    - {fileID: 21300000, guid: d3713a816b803d54bb13bbecdf83950c, type: 3}
+    - {fileID: 21300000, guid: 5244ae63fc988074d9e21bd6379281e1, type: 3}
+  - id: kittycolor8
+    sprites:
+    - {fileID: 21300000, guid: b8c9556d9f59c0047afc435bd0d155f7, type: 3}
+    - {fileID: 21300000, guid: d3807fbe0337aa64b9aaaa7f25357570, type: 3}
+    - {fileID: 21300000, guid: 69be23b4927aede4282cec2d33cfc9fc, type: 3}
+    - {fileID: 21300000, guid: 19cd5e31850d81a40871d94a2dbc1c87, type: 3}
+    - {fileID: 21300000, guid: cc0bb27ecbb2c124bb9d40cf5545eb3d, type: 3}
+    - {fileID: 21300000, guid: 0906c0a9c0e2da44cb0dffe58504719f, type: 3}
+    - {fileID: 21300000, guid: 4d4f56c64a9f9ad4687876501b201426, type: 3}
+    - {fileID: 21300000, guid: 2b93d29d79120c145b86d18b385207ac, type: 3}
+    - {fileID: 21300000, guid: a0a4ac58522fc1742b173bc9eb28ee55, type: 3}
 --- !u!114 &9122209186494864064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4763,8 +4813,8 @@ MonoBehaviour:
   - {fileID: 5796923582077329016}
   - {fileID: 4080594979295201521}
   m_Bounds:
-    m_Center: {x: -0.64138126, y: 1.2794869, z: 0.18}
-    m_Extent: {x: 0.87450194, y: 1.4301126, z: 0.000000007450581}
+    m_Center: {x: -0.50903594, y: 1.2794863, z: 0.18}
+    m_Extent: {x: 1.0068457, y: 1.4301122, z: 0.000000007450581}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0

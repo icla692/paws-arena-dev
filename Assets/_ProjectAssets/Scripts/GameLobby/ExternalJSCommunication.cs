@@ -32,7 +32,7 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
     public void TryConnectWallet()
     {
 
-        if (ConfigurationManager.Instance.GameConfig.isDev)
+        if (ConfigurationManager.Instance.GameConfig.env == GameEnvironment.DEV)
         {
             MockConnectWallet();
             return;

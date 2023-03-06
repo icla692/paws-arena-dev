@@ -13,7 +13,24 @@ public class NetworkManager : MonoBehaviour
 
     private void Start()
     {
-        NetworkManager.url = ConfigurationManager.Instance.GameConfig.isDev ? ConfigurationManager.Instance.GameConfig.devUrl : ConfigurationManager.Instance.GameConfig.prodUrl;
+        switch (ConfigurationManager.Instance.GameConfig.env)
+        {
+            case GameEnvironment.DEV:
+                {
+                    url = ConfigurationManager.Instance.GameConfig.devUrl;
+                    break;
+                }
+            case GameEnvironment.STAGING:
+                {
+                    url = ConfigurationManager.Instance.GameConfig.stagingUrl;
+                    break;
+                }
+            case GameEnvironment.PROD:
+                {
+                    url = ConfigurationManager.Instance.GameConfig.prodUrl;
+                    break;
+                }
+        }
     }
     public static async UniTask<string> GETRequestCoroutine(string relativePath, Action<long, string> OnError, bool isAuthenticated = false)
     {

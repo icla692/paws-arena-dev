@@ -140,8 +140,11 @@ public class BotAIAim
         simulating = false;
         if (BotManager.Instance.debugBotAI)
         {
-            Debug.Log("BotAIAim: Aiming calculations lasted " + (Time.time - simulationStartTime) + " seconds and " + 
-                debugFrameCount + " frames.");
+            if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+            {
+                Debug.Log("BotAIAim: Aiming calculations lasted " + (Time.time - simulationStartTime) + " seconds and " +
+                    debugFrameCount + " frames.");
+            }
         }
     }
 

@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class BotPlayerComponent : MonoBehaviour
 {
-    [Label("NFT URL")]
-    [SerializeField]
-    private string nftUrl;
     [SerializeField]
     private BasePlayerComponent basePlayerComponent;
     [SerializeField]
@@ -52,7 +49,7 @@ public class BotPlayerComponent : MonoBehaviour
         playerMotionBehaviour.RegisterPlayerState(basePlayerComponent.state);
 
         playerGraphicsBehaviour.RegisterBasePlayerState(basePlayerComponent.state);
-        playerGraphicsBehaviour.SetCustomCatNFT(nftUrl);
+        playerGraphicsBehaviour.SetCustomCatNFT(GameState.botInfo.kittyUrl);
 
         BotManager.Instance.onHealthUpdated += playerGraphicsBehaviour.OnHealthUpdated;
 

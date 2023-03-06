@@ -51,7 +51,7 @@ public class GameMatchingScreen : MonoBehaviour
         {
             punRoomUtils.AddPlayerCustomProperty("seat", "0");
 
-            int mapIdx = UnityEngine.Random.Range(0, 2);
+            int mapIdx = UnityEngine.Random.Range(0, 7);
             Debug.Log("Selected map " + mapIdx);
             punRoomUtils.AddRoomCustomProperty("mapIdx", mapIdx);
 

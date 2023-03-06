@@ -542,6 +542,15 @@ public class PlayerCustomization : MonoBehaviour
 
     public void SetKittyColor(string colorId, bool updateConfig = true)
     {
+        if(colorId == "kittycolor8")
+        {
+            GetComponent<PlayerBodyCustomization>().SetRainbowBody();
+        }
+        else
+        {
+            GetComponent<PlayerBodyCustomization>().SetDefaultBody();
+        }
+
         ColorEquipment equipment = SetColor(colorId, kittyColorEquipment, colorMultiplyElements);
         if (updateConfig && equipment != null)
         {

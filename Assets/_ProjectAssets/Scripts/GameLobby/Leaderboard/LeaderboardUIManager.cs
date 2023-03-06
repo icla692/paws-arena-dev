@@ -38,26 +38,42 @@ public class LeaderboardUIManager : MonoBehaviour
         {
             GameObject go = Instantiate(leaderboardLinePrefab, leaderboardContent);
             go.GetComponent<LeaderboardLineBehaviour>().SetPrincipalId(playerStats.principalId);
-            go.transform.Find("HorizontalLayout/Nickname").GetComponent<TMPro.TextMeshProUGUI>().text = playerStats.nickname;
             go.transform.Find("HorizontalLayout/Points").GetComponent<TMPro.TextMeshProUGUI>().text = "" + playerStats.points;
+            go.transform.Find("HorizontalLayout/Nickname").GetComponent<TMPro.TextMeshProUGUI>().text = playerStats.nickname;
 
-            if (idx < stars.Count) {
-                go.transform.Find("HorizontalLayout/Icon").GetComponent<Image>().sprite = stars[idx++];
+            if (idx < stars.Count)
+            {
+                go.transform.Find("HorizontalLayout/Icon_Text").gameObject.SetActive(false);
+                go.transform.Find("HorizontalLayout/Icon").GetComponent<Image>().sprite = stars[idx];
             }
             else
             {
-                go.transform.Find("HorizontalLayout/Icon").GetComponent<Image>().sprite = null;
-                go.transform.Find("HorizontalLayout/Icon").GetComponent<Image>().color = Color.clear;
+                go.transform.Find("HorizontalLayout/Icon").gameObject.SetActive(false);
+                go.transform.Find("HorizontalLayout/Icon_Text").GetComponent<TMPro.TextMeshProUGUI>().text ="" + (idx + 1);
+                //go.transform.Find("HorizontalLayout/Icon").GetComponent<Image>().sprite = null;
+                //go.transform.Find("HorizontalLayout/Icon").GetComponent<Image>().color = Color.clear;
             }
+
+            idx++;
         }
 
-        firstPlacePoints.text = "" + data.leaderboard[0]?.points;
-        secondPlacePoints.text = "" + data.leaderboard[1]?.points;
-        thirdPlacePoints.text = "" + data.leaderboard[2]?.points;
+        if (data.leaderboard.Count >= 1)
+        {
+            firstPlacePoints.text = "" + data.leaderboard[0]?.points;
+            firstPlayer.SetCat(data.first);
+        }
 
-        firstPlayer.SetCat(data.first);
-        secondPlayer.SetCat(data.second);
-        thirdPlayer.SetCat(data.third);
+        if(data.leaderboard.Count >= 2)
+        {
+            secondPlacePoints.text = "" + data.leaderboard[1]?.points;
+            secondPlayer.SetCat(data.second);
+        }
+
+        if (data.leaderboard.Count >= 3)
+        {
+            thirdPlacePoints.text = "" + data.leaderboard[2]?.points;
+            thirdPlayer.SetCat(data.third);
+        }
     }
 
     public void GoBack()

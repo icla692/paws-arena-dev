@@ -1,3 +1,4 @@
+using Anura.ConfigurationModule.Managers;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
@@ -135,7 +136,10 @@ public class NFTSelection : MonoBehaviour
             Destroy(playerPlatform);
         }
 
-        Debug.Log("Selected " + currentNFTs[idx].imageUrl);
+        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+        {
+            Debug.Log("Selected " + currentNFTs[idx].imageUrl);
+        }
 
         GameState.SetSelectedNFT(currentNFTs[idx]);
 

@@ -13,8 +13,6 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
 
     [HideInInspector]
     public bool isBot = false;
-    [HideInInspector]
-    public string botUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?type=thumbnail&tokenid=hvtag-6ykor-uwiaa-aaaaa-cqace-eaqca-aaabd-a";
     
     private PhotonView photonView;
 
@@ -50,7 +48,7 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
         {
             NFT nft = new NFT()
             {
-                imageUrl = botUrl
+                imageUrl = GameState.botInfo.kittyUrl
             };
 
             await nft.GrabImage();

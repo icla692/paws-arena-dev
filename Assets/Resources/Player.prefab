@@ -866,7 +866,6 @@ GameObject:
   - component: {fileID: 1966776401125919830}
   - component: {fileID: 1602093763462273925}
   - component: {fileID: 5227927056094972050}
-  - component: {fileID: 4988413720905032802}
   m_Layer: 8
   m_Name: Kitty_graphics_v2
   m_TagString: Untagged
@@ -929,27 +928,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 4988413720905032802}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &4988413720905032802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6332283765192277402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 0
-  m_SynchronizeRotation: 0
-  m_SynchronizeScale: 1
-  m_UseLocal: 1
 --- !u!1 &6460448395940318018
 GameObject:
   m_ObjectHideFlags: 0
