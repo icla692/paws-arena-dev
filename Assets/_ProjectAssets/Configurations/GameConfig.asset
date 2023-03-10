@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f61a22206482d40b39317ff3bfbfe3, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  enableDevLogs: 0
+  enableDevLogs: 1
   env: 2
   devUrl: https://localhost:7226
   stagingUrl: https://webapiwithssl20230210160824.azurewebsites.net

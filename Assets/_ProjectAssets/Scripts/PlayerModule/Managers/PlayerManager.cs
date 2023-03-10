@@ -39,6 +39,12 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         myPlayer.GetComponent<BasePlayerComponent>().onDamageTaken -= OnDamageTaken;
     }
 
+    [ContextMenu("Test_Take50Damage")]
+    public void TEST_TakeDamage()
+    {
+        OnDamageTaken(50);
+    }
+
     private void OnDamageTaken(int damage)
     {
         Debug.Log($"Got damage {myPlayerHealth} - {damage} = {myPlayerHealth - damage}");

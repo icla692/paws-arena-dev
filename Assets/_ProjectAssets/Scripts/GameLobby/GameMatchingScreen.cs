@@ -81,7 +81,7 @@ public class GameMatchingScreen : MonoBehaviour
             }
         }
 
-        StartCoroutine(BringBotAfterSeconds(UnityEngine.Random.Range(30, 45)));
+        StartCoroutine(BringBotAfterSeconds(UnityEngine.Random.Range(10, 20)));
 
     }
 

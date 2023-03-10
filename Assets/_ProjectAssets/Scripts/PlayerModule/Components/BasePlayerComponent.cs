@@ -1,4 +1,5 @@
 using Anura.ConfigurationModule.Managers;
+using Anura.ConfigurationModule.ScriptableObjects;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -31,6 +32,12 @@ public class BasePlayerComponent : MonoBehaviour
 
     private void AreaDamage(Vector2 position, float area, int maxDamage, bool damageByDistance, bool hasPushForce, float pushForce, int bulletCount)
     {
+        //In Tutorial, players cannot take bullet damage
+        if(ConfigurationManager.Instance.Config.GetGameType() == GameType.TUTORIAL)
+        {
+            return;
+        }
+
         Vector3 playerPos = transform.position;
 
         var closestPoint = GetComponent<CapsuleCollider2D>().ClosestPoint(position);

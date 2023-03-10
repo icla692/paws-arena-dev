@@ -10,6 +10,7 @@ public class LeaderboardLineBehaviour : MonoBehaviour, IPointerEnterHandler, IPo
     public GameObject principalIdTooltip;
     public TMPro.TextMeshProUGUI principalIdText;
     public Image principalIdIcon;
+    public Image highlight;
 
     [Header("Icons")]
     public Sprite copySprite;
@@ -34,6 +35,11 @@ public class LeaderboardLineBehaviour : MonoBehaviour, IPointerEnterHandler, IPo
     public void SetPrincipalId(string principalId)
     {
         principalIdText.text = "Principal ID: " + principalId;
+
+        if(principalId == GameState.principalId)
+        {
+            highlight.enabled = true;
+        }
     }
 
     public void SavePrincipalIdToClipboard()

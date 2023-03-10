@@ -54,12 +54,14 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
 
         PUNRoomUtils.onPlayerLeft += OnPlayerLeft;
+        PlayerManager.Instance.onHealthUpdated += CheckDeath;
     }
 
 
     private void OnDisable()
     {
         PUNRoomUtils.onPlayerLeft -= OnPlayerLeft;
+        PlayerManager.Instance.onHealthUpdated -= CheckDeath;
     }
 
     private void OnDestroy()
@@ -162,6 +164,15 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
                     SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "StartNextRound", RpcTarget.All, (lastPlayerRound + 1) % 2, nextRound);
                 }
             }
+        }
+    }
+
+    public void CheckDeath(int newHp)
+    {
+        GameResolveState state = PlayerManager.Instance.GetWinnerByDeath();
+        if(state != GameResolveState.NO_WIN)
+        {
+            SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "StartResolveGame", RpcTarget.All, state);
         }
     }
 

@@ -728,6 +728,9 @@ public class PlayerCustomization : MonoBehaviour
 
     public void SetEyewear(string eyewearId, bool updateConfig = true)
     {
+        SetSingleSpriteElement("none", eyewearEquipment, eyewearSpriteRenderer);
+        SetSingleSpriteElement("none", closeableEyewearEquipment, closeableEyewearSpriteRenderer);
+
         SpriteEquipment eq = SetSingleSpriteElement(eyewearId, eyewearEquipment, eyewearSpriteRenderer);
         if (eq == null)
         {
