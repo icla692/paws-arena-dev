@@ -168,6 +168,20 @@ MonoBehaviour:
       m_Height: 57
     m_Scale: 1
     m_AtlasIndex: 0
+  - m_Index: 55
+    m_Metrics:
+      m_Width: 27.90625
+      m_Height: 56.25
+      m_HorizontalBearingX: 1.078125
+      m_HorizontalBearingY: 56.25
+      m_HorizontalAdvance: 34.296875
+    m_GlyphRect:
+      m_X: 370
+      m_Y: 366
+      m_Width: 28
+      m_Height: 57
+    m_Scale: 1
+    m_AtlasIndex: 0
   - m_Index: 57
     m_Metrics:
       m_Width: 48.234375
@@ -896,6 +910,20 @@ MonoBehaviour:
       m_Height: 18
     m_Scale: 1
     m_AtlasIndex: 0
+  - m_Index: 615
+    m_Metrics:
+      m_Width: 17.640625
+      m_Height: 29.609375
+      m_HorizontalBearingX: 3.15625
+      m_HorizontalBearingY: 16.921875
+      m_HorizontalAdvance: 23.9375
+    m_GlyphRect:
+      m_X: 139
+      m_Y: 345
+      m_Width: 18
+      m_Height: 30
+    m_Scale: 1
+    m_AtlasIndex: 0
   - m_Index: 616
     m_Metrics:
       m_Width: 17.640625
@@ -950,6 +978,20 @@ MonoBehaviour:
       m_Y: 165
       m_Width: 39
       m_Height: 59
+    m_Scale: 1
+    m_AtlasIndex: 0
+  - m_Index: 629
+    m_Metrics:
+      m_Width: 24.03125
+      m_Height: 82.625
+      m_HorizontalBearingX: 2.25
+      m_HorizontalBearingY: 69.484375
+      m_HorizontalAdvance: 29.4375
+    m_GlyphRect:
+      m_X: 783
+      m_Y: 191
+      m_Width: 25
+      m_Height: 84
     m_Scale: 1
     m_AtlasIndex: 0
   - m_Index: 635
@@ -1008,20 +1050,6 @@ MonoBehaviour:
       m_Height: 0
     m_Scale: 1
     m_AtlasIndex: 0
-  - m_Index: 615
-    m_Metrics:
-      m_Width: 17.640625
-      m_Height: 29.609375
-      m_HorizontalBearingX: 3.15625
-      m_HorizontalBearingY: 16.921875
-      m_HorizontalAdvance: 23.9375
-    m_GlyphRect:
-      m_X: 139
-      m_Y: 345
-      m_Width: 18
-      m_Height: 30
-    m_Scale: 1
-    m_AtlasIndex: 0
   - m_Index: 670
     m_Metrics:
       m_Width: 37.4375
@@ -1036,34 +1064,6 @@ MonoBehaviour:
       m_Height: 38
     m_Scale: 1
     m_AtlasIndex: 0
-  - m_Index: 629
-    m_Metrics:
-      m_Width: 24.03125
-      m_Height: 82.625
-      m_HorizontalBearingX: 2.25
-      m_HorizontalBearingY: 69.484375
-      m_HorizontalAdvance: 29.4375
-    m_GlyphRect:
-      m_X: 783
-      m_Y: 191
-      m_Width: 25
-      m_Height: 84
-    m_Scale: 1
-    m_AtlasIndex: 0
-  - m_Index: 55
-    m_Metrics:
-      m_Width: 27.90625
-      m_Height: 56.25
-      m_HorizontalBearingX: 1.078125
-      m_HorizontalBearingY: 56.25
-      m_HorizontalAdvance: 34.296875
-    m_GlyphRect:
-      m_X: 370
-      m_Y: 366
-      m_Width: 28
-      m_Height: 57
-    m_Scale: 1
-    m_AtlasIndex: 0
   m_CharacterTable:
   - m_ElementType: 1
     m_Unicode: 32
@@ -1076,6 +1076,18 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 39
     m_GlyphIndex: 650
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 40
+    m_GlyphIndex: 629
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 43
+    m_GlyphIndex: 670
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 44
+    m_GlyphIndex: 615
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 45
@@ -1168,6 +1180,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 73
     m_GlyphIndex: 44
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 74
+    m_GlyphIndex: 55
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 75
@@ -1340,22 +1356,6 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 8230
     m_GlyphIndex: 618
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 44
-    m_GlyphIndex: 615
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 43
-    m_GlyphIndex: 670
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 40
-    m_GlyphIndex: 629
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 74
-    m_GlyphIndex: 55
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: 5337818504616929480}
@@ -2004,7 +2004,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Changa-Bold Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-  m_ShaderKeywords: UNDERLAY_ON
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

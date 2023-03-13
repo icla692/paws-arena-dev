@@ -32,13 +32,20 @@ public class LeaderboardLineBehaviour : MonoBehaviour, IPointerEnterHandler, IPo
         principalIdTooltip.SetActive(false);
     }
 
-    public void SetPrincipalId(string principalId)
+    public void SetPrincipalId(string principalId, int idx)
     {
         principalIdText.text = "Principal ID: " + principalId;
 
-        if(principalId == GameState.principalId)
+        if (principalId == GameState.principalId)
         {
             highlight.enabled = true;
+        }
+        else
+        {
+            if (idx % 2 == 0)
+            {
+                GetComponent<Image>().color = new Color(0.16f, 0.16f, 0.16f, 0.28f);
+            }
         }
     }
 

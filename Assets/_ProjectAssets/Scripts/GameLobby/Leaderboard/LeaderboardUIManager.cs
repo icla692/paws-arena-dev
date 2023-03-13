@@ -37,7 +37,7 @@ public class LeaderboardUIManager : MonoBehaviour
         foreach(PlayerStatsEntity playerStats in data.leaderboard)
         {
             GameObject go = Instantiate(leaderboardLinePrefab, leaderboardContent);
-            go.GetComponent<LeaderboardLineBehaviour>().SetPrincipalId(playerStats.principalId);
+            go.GetComponent<LeaderboardLineBehaviour>().SetPrincipalId(playerStats.principalId, idx);
             go.transform.Find("HorizontalLayout/Points").GetComponent<TMPro.TextMeshProUGUI>().text = "" + playerStats.points;
             go.transform.Find("HorizontalLayout/Nickname").GetComponent<TMPro.TextMeshProUGUI>().text = playerStats.nickname;
 

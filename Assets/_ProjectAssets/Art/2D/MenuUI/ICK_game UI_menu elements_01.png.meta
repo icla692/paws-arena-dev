@@ -458,13 +458,13 @@ TextureImporter:
       name: ICK_game UI_menu elements_01_15
       rect:
         serializedVersion: 2
-        x: 512
-        y: 522
+        x: 514
+        y: 524
         width: 127
         height: 115
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 30, y: 45, z: 30, w: 30}
       outline: []
       physicsShape: []
       tessellationDetail: 0
