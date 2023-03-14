@@ -731,13 +731,19 @@ public class PlayerCustomization : MonoBehaviour
         SetSingleSpriteElement("none", eyewearEquipment, eyewearSpriteRenderer);
         SetSingleSpriteElement("none", closeableEyewearEquipment, closeableEyewearSpriteRenderer);
 
+        if (playerEquipmentConfig.ContainsKey(EquipmentType.EYES))
+        {
+            SetEyes(playerEquipmentConfig[EquipmentType.EYES].id, false);
+        }
+
         SpriteEquipment eq = SetSingleSpriteElement(eyewearId, eyewearEquipment, eyewearSpriteRenderer);
         if (eq == null)
         {
             eq = SetSingleSpriteElement(eyewearId, closeableEyewearEquipment, closeableEyewearSpriteRenderer);
-            if(eq == null)
+            if(eq != null && eyewearId != "none")
             {
-
+                //Closeable eyes (zombie, snoop) only work with normal eyes
+                SetEyes("eyes1", false);
             }
         }
 

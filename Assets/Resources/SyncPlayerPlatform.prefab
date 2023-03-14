@@ -594,10 +594,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1711218657, guid: 9059627fbc6ed584585c885ca5291937, type: 3}
     - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
-      propertyPath: closeableEyewearSpriteRenderer
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9122209186494864062, guid: 2ecb7b0c40e8c3640ac43d02a629fec1, type: 3}
       propertyPath: eyewearKeysMapping.Array.data[3]
       value: eyewear11
       objectReference: {fileID: 0}
