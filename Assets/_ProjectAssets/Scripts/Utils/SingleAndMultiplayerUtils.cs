@@ -22,6 +22,7 @@ public class SingleAndMultiplayerUtils
         else
         {
             GameObject myPrefab = Resources.Load(path) as GameObject;
+            Debug.Log("Trying to instantiate " + myPrefab.name);
             return GameObject.Instantiate(myPrefab, position, rotation);
         }
     }

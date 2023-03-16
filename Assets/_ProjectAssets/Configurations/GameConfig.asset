@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   enableDevLogs: 1
-  env: 2
-  devUrl: https://localhost:7226
+  env: 0
+  devUrl: https://ickitties.azurewebsites.net
   stagingUrl: https://webapiwithssl20230210160824.azurewebsites.net
   prodUrl: https://ickitties.azurewebsites.net

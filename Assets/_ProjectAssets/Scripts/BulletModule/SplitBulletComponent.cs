@@ -57,19 +57,20 @@ public class SplitBulletComponent : BulletComponent
             //rb.velocity = GetComponent<Rigidbody2D>().velocity;
         }
 
-        GetComponent<Animator>().SetTrigger("Shoot");
+        //GetComponent<Animator>().SetTrigger("Shoot");
+        StartCoroutine(AfterSplit());
     }
     public void Split(InputAction.CallbackContext args)
     {
         Split();
     }
 
-    public void AfterSplit()
+    public IEnumerator AfterSplit()
     {
+        yield return new WaitForSeconds(0.3f);
         float deviation = 10;
         for (int i = 0; i < splitNumber; i++)
         {
-
             float angle = deviation * (i - splitNumber / 2);
             Vector2 dir = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * rb.velocity.normalized;
             launchedRockets[i].transform.parent = null;

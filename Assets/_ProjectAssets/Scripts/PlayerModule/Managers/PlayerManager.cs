@@ -53,6 +53,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     public GameResolveState GetWinnerByDeath()
     {
+        bool isPlayer1 = CheckIAmPlayer1();
         if (myPlayerHealth > 0 && otherPlayerHealth > 0)
         {
             return GameResolveState.NO_WIN;
@@ -61,11 +62,27 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         {
             return GameResolveState.DRAW;
         }
-        else if ((myPlayerHealth > 0 && PhotonNetwork.LocalPlayer.IsMasterClient) || (otherPlayerHealth > 0 && !PhotonNetwork.LocalPlayer.IsMasterClient))
+        else if ((myPlayerHealth > 0 && isPlayer1) || (otherPlayerHealth > 0 && !isPlayer1))
         {
             return GameResolveState.PLAYER_1_WIN;
         }
         else return GameResolveState.PLAYER_2_WIN;
+    }
+
+    private bool CheckIAmPlayer1()
+    {
+        if(ConfigurationManager.Instance.Config.GetGameType() == Anura.ConfigurationModule.ScriptableObjects.GameType.TUTORIAL 
+            || ConfigurationManager.Instance.Config.GetGameType() == Anura.ConfigurationModule.ScriptableObjects.GameType.SINGLEPLAYER)
+        {
+            return true;
+        }
+
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public GameResolveState GetWinnerByHealth()

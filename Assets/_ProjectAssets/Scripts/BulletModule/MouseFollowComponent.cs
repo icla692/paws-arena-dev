@@ -61,6 +61,7 @@ public class MouseFollowComponent : BulletComponent
 
     private IEnumerator FollowEnemy(float seconds, Vector2 hitPose)
     {
+        ApplySettings();
         hasHitGround = true;
         followingSound.Play();
 
@@ -72,5 +73,10 @@ public class MouseFollowComponent : BulletComponent
         followingSound.Stop();
 
         base.HandleCollision(transform.position);
+    }
+
+    private void ApplySettings()
+    {
+        followingSound.volume = GameState.gameSettings.soundFXVolume * GameState.gameSettings.masterVolume;
     }
 }

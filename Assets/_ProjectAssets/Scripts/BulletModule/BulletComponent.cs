@@ -1,5 +1,6 @@
 using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
+using Smooth;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -35,9 +36,9 @@ public class BulletComponent : MonoBehaviour
         isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
         if (!isMultiplayer)
         {
-            photonView.enabled = false;
-            GetComponent<PhotonRigidbody2DView>().enabled = false;
+            Destroy(photonView);
             photonView = null;
+            GetComponent<SmoothSyncPUN2>().enabled = false;
         }
     }
 
