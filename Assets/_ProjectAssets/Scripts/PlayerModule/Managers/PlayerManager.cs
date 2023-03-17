@@ -22,7 +22,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public int otherPlayerHealth = int.MaxValue;
     [HideInInspector]
     public Transform otherPlayerTransform;
-
+    [HideInInspector]
+    public PlayerComponent OtherPlayerComponent;
     private int maxHP;
 
     public void RegisterMyPlayer(PlayerComponent playerComponent)

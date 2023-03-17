@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerComponent : MonoBehaviour
 {
+    [field: SerializeField] public Transform EmojiHolder { get; private set; }
     [SerializeField]
     private BasePlayerComponent basePlayerComponent;
     [SerializeField]
@@ -36,7 +37,8 @@ public class PlayerComponent : MonoBehaviour
             BotManager.Instance.RegisterBotEnemy(this);
         }
 
-        if (photonView != null && !photonView.IsMine) {
+        if (photonView != null && !photonView.IsMine)
+        {
             SetupOtherPlayer();
             return;
         }
@@ -90,6 +92,7 @@ public class PlayerComponent : MonoBehaviour
     private void SetupOtherPlayer()
     {
         PlayerManager.Instance.otherPlayerTransform = transform;
+        PlayerManager.Instance.OtherPlayerComponent = this;
         Destroy(GetComponent<Rigidbody2D>());
     }
 
@@ -98,7 +101,7 @@ public class PlayerComponent : MonoBehaviour
         basePlayerComponent.state.SetHasWeaponOut(-1);
         if (roomState is MyTurnState)
         {
-           playerActions.Enable(); 
+            playerActions.Enable();
         }
         else
         {
