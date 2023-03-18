@@ -326,6 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCustomization: {fileID: 1652268005445013935}
   isBot: 0
+  punRoomUtils: {fileID: 0}
 --- !u!1001 &7527362240045894417
 PrefabInstance:
   m_ObjectHideFlags: 0

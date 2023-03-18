@@ -22,7 +22,7 @@ public class DamageDealingText : MonoBehaviour
             {
                 LeanTween.scale(gameObject, Vector3.zero, .5f).setOnComplete(() =>
                 {
-                    Destroy(gameObject);
+                    Destroy(gameObject.transform.parent);
                 });
             });
         });

@@ -12,6 +12,7 @@ public class SplitBulletComponent : BulletComponent
 
     private List<GameObject> launchedRockets;
 
+    private bool hasSplit = false;
     protected override void HandleStart()
     {
         if (!isMultiplayer || photonView.IsMine)
@@ -41,6 +42,9 @@ public class SplitBulletComponent : BulletComponent
 
     public void Split()
     {
+        if (hasSplit) return;
+        hasSplit = true;
+
         launchedRockets = new List<GameObject>();
         for (int i = 0; i < splitNumber; i++)
         {

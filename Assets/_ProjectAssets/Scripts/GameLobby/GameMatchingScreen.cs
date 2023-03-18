@@ -42,20 +42,14 @@ public class GameMatchingScreen : MonoBehaviour
     {
         notices.SetActive(false);
 
-        foreach (SeatGameobject seat in seats)
-        {
-            FreeSeat(seat);
-        }
+        SetSeats();
 
+        //Setting up Room
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            punRoomUtils.AddPlayerCustomProperty("seat", "0");
-
             int mapIdx = UnityEngine.Random.Range(0, 7);
-            Debug.Log("Selected map " + mapIdx);
             punRoomUtils.AddRoomCustomProperty("mapIdx", mapIdx);
 
-            OccupySeat(seats[0], PhotonNetwork.LocalPlayer.NickName);
             if (PhotonNetwork.CurrentRoom.MaxPlayers == PhotonNetwork.CurrentRoom.PlayerCount)
             {
                 StartGame();
@@ -66,13 +60,6 @@ public class GameMatchingScreen : MonoBehaviour
             List<Player> players = punRoomUtils.GetOtherPlayers();
             if (players.Count == 1)
             {
-                int otherPlayerSeat = Int32.Parse(players[0].CustomProperties["seat"].ToString());
-                OccupySeat(seats[otherPlayerSeat], players[0].NickName);
-
-                int mySeat = (otherPlayerSeat + 1) % 2;
-                punRoomUtils.AddPlayerCustomProperty("seat", "" + mySeat);
-                OccupySeat(seats[mySeat], PhotonNetwork.LocalPlayer.NickName);
-
                 notices.SetActive(true);
             }
             else
@@ -82,6 +69,35 @@ public class GameMatchingScreen : MonoBehaviour
         }
 
         StartCoroutine(BringBotAfterSeconds(UnityEngine.Random.Range(10, 20)));
+    }
+
+    public void SetSeats()
+    {
+        foreach (SeatGameobject seat in seats)
+        {
+            FreeSeat(seat);
+        }
+
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            OccupySeat(seats[0], PhotonNetwork.LocalPlayer.NickName);
+        }
+        else
+        {
+            List<Player> players = punRoomUtils.GetOtherPlayers();
+            if (players.Count == 1)
+            {
+                int otherPlayerSeat = Int32.Parse(players[0].CustomProperties["seat"].ToString());
+                OccupySeat(seats[otherPlayerSeat], players[0].NickName);
+
+                int mySeat = (otherPlayerSeat + 1) % 2;
+                OccupySeat(seats[mySeat], PhotonNetwork.LocalPlayer.NickName);
+            }
+            else
+            {
+                Debug.LogWarning($"PUN: Inconsistency! There are {players.Count} players in room??");
+            }
+        }
 
     }
 

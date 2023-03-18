@@ -8,12 +8,15 @@ using UnityEngine;
 
 public class SyncPlayerPlatformBehaviour : MonoBehaviour
 {
+
     [SerializeField]
     private PlayerCustomization playerCustomization;
 
     [HideInInspector]
     public bool isBot = false;
-    
+    [HideInInspector]
+    public PUNRoomUtils punRoomUtils;
+
     private PhotonView photonView;
 
     private void Awake()
@@ -33,6 +36,7 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
             photonView.RPC("SetCatStyle", RpcTarget.Others, GameState.selectedNFT.imageUrl, serializedConfig);
 
             PUNRoomUtils.onPlayerJoined += OnPlayerJoined;
+            SyncPlatformsBehaviour.onPlayersChanged += Reposition;
         }
 
         if (isBot)
@@ -40,9 +44,7 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
             playerCustomization.wrapper.SetActive(false);
         }
 
-        PlatformPose pose = SyncPlatformsBehaviour.Instance.GetMySeatPosition(photonView, isBot);
-        transform.position = pose.pos;
-        transform.localScale = pose.scale;
+        Reposition();
 
         if (isBot)
         {
@@ -60,11 +62,24 @@ public class SyncPlayerPlatformBehaviour : MonoBehaviour
     private void OnDestroy()
     {
         PUNRoomUtils.onPlayerJoined -= OnPlayerJoined;
+        SyncPlatformsBehaviour.onPlayersChanged -= Reposition;
+    }
+
+    private void Reposition()
+    {
+        PlatformPose pose = SyncPlatformsBehaviour.Instance.GetMySeatPosition(photonView, isBot);
+        transform.position = pose.pos;
+        transform.localScale = pose.scale;
+
+        //Set my seat on room props
+        if ((photonView == null && !isBot) || photonView.IsMine)
+        {
+            punRoomUtils.AddPlayerCustomProperty("seat", "" + pose.seatIdx);
+        }
     }
 
     private void OnPlayerJoined(string nickname, string userId)
     {
-        Debug.Log($"!! On Player Joined !! {nickname}");
         Player player = PhotonNetwork.PlayerList.First(player => player.UserId == userId);
         string serializedConfig = JsonUtility.ToJson(KittiesCustomizationService.GetCustomization(GameState.selectedNFT.imageUrl).GetSerializableObject());
         photonView.RPC("SetCatStyle", player, GameState.selectedNFT.imageUrl, serializedConfig);
