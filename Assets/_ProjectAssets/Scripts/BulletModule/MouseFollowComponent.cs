@@ -28,9 +28,7 @@ public class MouseFollowComponent : BulletComponent
     {
         if (Mathf.Abs(transform.localRotation.eulerAngles.z) > 0)
         {
-            Debug.Log($"from: " + transform.rotation.eulerAngles.z);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 0)), rotationCorrectionSpeed * Time.deltaTime);
-            Debug.Log($"to: " + transform.rotation.eulerAngles.z);
         }
         
         //var clampedRot = Mathf.Clamp(transform.localRotation.z, -30, 30);

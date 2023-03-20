@@ -71,7 +71,7 @@ public class SplitBulletComponent : BulletComponent
 
     public IEnumerator AfterSplit()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         float deviation = 10;
         for (int i = 0; i < splitNumber; i++)
         {
