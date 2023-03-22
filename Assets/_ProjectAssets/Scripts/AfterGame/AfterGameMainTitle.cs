@@ -26,6 +26,17 @@ namespace com.colorfulcoding.AfterGame
         public Color standWinColor;
         public Color standLoseColor;
         public Color standDrawColor;
+
+        [SerializeField] LuckyWheelUI luckyWheelUI;
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                luckyWheelUI.Setup();
+            }
+        }
+
         void Start()
         {
             int checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
@@ -57,7 +68,7 @@ namespace com.colorfulcoding.AfterGame
                 {
                     totalCoinsValue.text = "" + Math.Floor(GameState.pointsChange.oldPoints + val);
                     deltaPoints.text = "+" + Math.Floor(val);
-                }).setEaseInOutCirc().setDelay(1f);
+                }).setEaseInOutCirc().setDelay(1f).setOnComplete(luckyWheelUI.Setup);
             }
         }
     }
