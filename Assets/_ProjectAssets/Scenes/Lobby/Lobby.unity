@@ -5958,6 +5958,7 @@ GameObject:
   - component: {fileID: 728572421}
   - component: {fileID: 728572420}
   - component: {fileID: 728572419}
+  - component: {fileID: 728572422}
   m_Layer: 5
   m_Name: Cookies
   m_TagString: Untagged
@@ -6045,6 +6046,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728572417}
   m_CullTransparentMesh: 1
+--- !u!114 &728572422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728572417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 879243e3ae1dcd448924b72bfc6df496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snackAmountDisplay: {fileID: 839739578}
 --- !u!1 &740669168
 GameObject:
   m_ObjectHideFlags: 0
@@ -9051,6 +9065,7 @@ Transform:
   - {fileID: 1166118347}
   - {fileID: 1582452280}
   - {fileID: 1147664765}
+  - {fileID: 2118700509}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19969,6 +19984,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117737247}
   m_CullTransparentMesh: 1
+--- !u!1 &2118700508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2118700509}
+  - component: {fileID: 2118700510}
+  m_Layer: 0
+  m_Name: ValuablesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2118700509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118700508}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1011119103}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2118700510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118700508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841c85157205f4f478151158a1bcb3f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2141187041
 GameObject:
   m_ObjectHideFlags: 0
