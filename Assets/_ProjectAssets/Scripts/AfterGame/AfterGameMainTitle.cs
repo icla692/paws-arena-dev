@@ -29,14 +29,6 @@ namespace com.colorfulcoding.AfterGame
 
         [SerializeField] LuckyWheelUI luckyWheelUI;
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.M))
-            {
-                luckyWheelUI.Setup();
-            }
-        }
-
         void Start()
         {
             int checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
@@ -68,7 +60,13 @@ namespace com.colorfulcoding.AfterGame
                 {
                     totalCoinsValue.text = "" + Math.Floor(GameState.pointsChange.oldPoints + val);
                     deltaPoints.text = "+" + Math.Floor(val);
-                }).setEaseInOutCirc().setDelay(1f).setOnComplete(luckyWheelUI.Setup);
+                }).setEaseInOutCirc().setDelay(1f).setOnComplete(() =>
+                {
+                    if (checkIfIWon > 0)
+                    {
+                        luckyWheelUI.Setup();
+                    }
+                });
             }
         }
     }

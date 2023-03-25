@@ -7,10 +7,11 @@ public class LuckyWheelUI : MonoBehaviour
 {
     [SerializeField] GameObject playerPlatform;
     [SerializeField] LuckyWheel luckyWheel;
-    [SerializeField] Button spinButton;
+    [SerializeField] LuckyWheelClaimDisplay rewardDisplay;
     [SerializeField] Button respinButton;
     [SerializeField] Button claimButton;
 
+    [SerializeField] decimal respinPrice;
     LuckyWheelRewardSO reward;
 
     public void Setup()
@@ -22,21 +23,13 @@ public class LuckyWheelUI : MonoBehaviour
         claimButton.gameObject.SetActive(false);
 
         claimButton.onClick.AddListener(ClaimReward);
-        spinButton.onClick.AddListener(Spin);
         respinButton.onClick.AddListener(Respin);
-    }
-
-    //Called from animation event
-    void EnableSpinButton()
-    {
-        spinButton.interactable = true;
-        spinButton.gameObject.SetActive(true);
+        SpinWheel();
     }
 
     private void OnDisable()
     {
         claimButton.onClick.RemoveListener(ClaimReward);
-        spinButton.onClick.RemoveListener(Spin);
         respinButton.onClick.RemoveListener(Respin);
     }
 
@@ -66,23 +59,13 @@ public class LuckyWheelUI : MonoBehaviour
                 throw new System.Exception("Dont know how to reward reward type: " + _reward.Type);
         }
 
-        Debug.Log("Claimed reward");
-        Close();
-    }
-
-    void Spin()
-    {
-        spinButton.gameObject.SetActive(false);
-        claimButton.gameObject.SetActive(true);
-        claimButton.interactable = false;
-        SpinWheel();
+        rewardDisplay.Setup(_reward);
     }
 
     void Respin()
     {
-        respinButton.interactable = false;
         respinButton.gameObject.SetActive(false);
-        claimButton.interactable = false;
+        claimButton.gameObject.SetActive(false);
         reward = null;
         SpinWheel();
     }
@@ -95,12 +78,18 @@ public class LuckyWheelUI : MonoBehaviour
     void SetReward(LuckyWheelRewardSO _reward)
     {
         reward = _reward;
-        claimButton.interactable = true;
-        respinButton.interactable = true;
+        StartCoroutine(ShowRewardAnimationRoutine());
+    }
+
+    IEnumerator ShowRewardAnimationRoutine()
+    {
+
+        yield return new WaitForSeconds(1);
+        claimButton.gameObject.SetActive(true);
         respinButton.gameObject.SetActive(true);
     }
 
-    void Close()
+    public void Close()
     {
         playerPlatform.SetActive(true);
         gameObject.SetActive(false);
