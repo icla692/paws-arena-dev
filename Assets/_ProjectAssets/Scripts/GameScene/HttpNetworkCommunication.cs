@@ -1,6 +1,7 @@
 using Anura.ConfigurationModule.Managers;
 using Cysharp.Threading.Tasks;
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,11 +18,20 @@ namespace com.colorfulcoding.GameScene
 
         private async void RegisterStartOfTheMatch()
         {
+            try
+            {
+                if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+                {
+                    GameState.roomName = PhotonNetwork.CurrentRoom.Name;
+                }
+            }
+            catch (Exception) { }
+
             Debug.Log($"RoomId: {PhotonNetwork.CurrentRoom.Name}");
 
             LeaderboardPostRequestEntity req = new LeaderboardPostRequestEntity()
             {
-                matchId = PhotonNetwork.CurrentRoom.Name,
+                matchId = GameState.roomName,
                 kittyUrl = GameState.selectedNFT.imageUrl,
                 status = GetMatchStartStatus()
             };
@@ -51,9 +61,19 @@ namespace com.colorfulcoding.GameScene
 
         public async UniTask RegisterEndOfTheMatch(int hp, GameResolveState state)
         {
+            try
+            {
+                if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+                {
+                    GameState.roomName = PhotonNetwork.CurrentRoom.Name;
+                }
+            }
+            catch (Exception) { }
+
+
             LeaderboardPostRequestEntity req = new LeaderboardPostRequestEntity()
             {
-                matchId = PhotonNetwork.CurrentRoom.Name,
+                matchId = GameState.roomName,
                 kittyUrl = GameState.selectedNFT.imageUrl,
                 status = GetMatchEndStatus(),
                 hp = hp,

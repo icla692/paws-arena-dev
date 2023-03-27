@@ -16,6 +16,9 @@ public class GameState
     //Settings
     public static GameSettings gameSettings;
 
+    //Networking
+    public static string roomName = "";
+
     /***Inter-scene needed data ***/
     //Finding Match => In-game
     public static BotInformation botInfo = new BotInformation()

@@ -11,6 +11,8 @@ public class PUNRoomUtils : MonoBehaviourPunCallbacks
 {
     public static event Action<string, string> onPlayerJoined;
     public static event Action onPlayerLeft;
+
+
     public void TryLeaveRoom()
     {
         PhotonNetwork.LeaveRoom();

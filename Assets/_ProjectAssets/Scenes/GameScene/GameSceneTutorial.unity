@@ -3775,7 +3775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   punRoomUtils: {fileID: 0}
   mapPrefabs:
-  - {fileID: 6237716996422082004, guid: 85938879427c20e45a5215f84924fcfb, type: 3}
+  - {fileID: 3571571281949987397, guid: 7f11d6eafe59c82428844e45c24a4a44, type: 3}
 --- !u!1 &1109088291
 GameObject:
   m_ObjectHideFlags: 0

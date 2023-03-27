@@ -47,7 +47,11 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     private void OnDamageTaken(int damage)
     {
-        Debug.Log($"Got damage {myPlayerHealth} - {damage} = {myPlayerHealth - damage}");
+        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
+        {
+            Debug.Log($"Got damage {myPlayerHealth} - {damage} = {myPlayerHealth - damage}");
+        }
+
         SetMyPlayerHealth(myPlayerHealth - damage);
     }
 

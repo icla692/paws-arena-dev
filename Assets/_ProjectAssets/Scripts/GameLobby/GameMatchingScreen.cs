@@ -78,25 +78,18 @@ public class GameMatchingScreen : MonoBehaviour
             FreeSeat(seat);
         }
 
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        List<Player> players = punRoomUtils.GetOtherPlayers();
+        if (players.Count == 1)
         {
-            OccupySeat(seats[0], PhotonNetwork.LocalPlayer.NickName);
+            int otherPlayerSeat = Int32.Parse(players[0].CustomProperties["seat"].ToString());
+            OccupySeat(seats[otherPlayerSeat], players[0].NickName);
+
+            int mySeat = (otherPlayerSeat + 1) % 2;
+            OccupySeat(seats[mySeat], PhotonNetwork.LocalPlayer.NickName);
         }
         else
         {
-            List<Player> players = punRoomUtils.GetOtherPlayers();
-            if (players.Count == 1)
-            {
-                int otherPlayerSeat = Int32.Parse(players[0].CustomProperties["seat"].ToString());
-                OccupySeat(seats[otherPlayerSeat], players[0].NickName);
-
-                int mySeat = (otherPlayerSeat + 1) % 2;
-                OccupySeat(seats[mySeat], PhotonNetwork.LocalPlayer.NickName);
-            }
-            else
-            {
-                Debug.LogWarning($"PUN: Inconsistency! There are {players.Count} players in room??");
-            }
+            OccupySeat(seats[0], PhotonNetwork.LocalPlayer.NickName);
         }
 
     }
@@ -207,6 +200,7 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void StartCountdown(string sceneName)
     {
+        PhotonNetwork.Loadl
         countdown.StartCountDown(() =>
         {
             if (PhotonNetwork.LocalPlayer.IsMasterClient)

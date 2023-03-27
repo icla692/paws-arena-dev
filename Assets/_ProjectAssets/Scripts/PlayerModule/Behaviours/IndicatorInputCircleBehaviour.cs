@@ -42,7 +42,7 @@ public class IndicatorInputCircleBehaviour : MonoBehaviour, IPointerUpHandler
 
     public bool IsSelected(Vector2 pointerPos)
     {
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pointerPos), Vector2.zero, indicatorLayer);
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pointerPos), Vector2.zero, 1000, indicatorLayer);
         return (hit.collider != null && hit.collider.gameObject == gameObject);
     }
 
