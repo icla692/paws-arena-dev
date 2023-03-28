@@ -40,7 +40,7 @@ public class LobbyUIManager : MonoBehaviour
     private void OnEnable()
     {
 
-        if(GameState.selectedNFT != null)
+        if (GameState.selectedNFT != null)
         {
             OpenGameMenu();
         }
@@ -122,12 +122,17 @@ public class LobbyUIManager : MonoBehaviour
 
     public void TryConnectToRoom()
     {
+        if (!GameState.selectedNFT.CanFight)
+        {
+            RecoveryMessageDisplay.Instance.ShowMessage();
+            return;
+        }
         CloseGameMenu();
         connectingToRoom.SetActive(true);
 
         connectingToRoomText.text = "Connecting to Multiplayer Server(" + PhotonNetwork.CloudRegion + ")...";
-        
-        photonManager.OnConnectedServer += ()=>
+
+        photonManager.OnConnectedServer += () =>
         {
             connectingToRoomText.text = "Connected succeeded!";
             lobbyPhotonConnection.TryJoinRoom();

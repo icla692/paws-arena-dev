@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
@@ -11,8 +12,26 @@ public class NFT
     public string furType;
     public List<string> ids;
     public Texture2D imageTex;
-
+    DateTime recoveryEndDate;
     private XmlDocument doc;
+
+    public bool CanFight => RecoveryEndDate < DateTime.UtcNow;
+    public int MinutesUntilHealed => (int)(RecoveryEndDate - DateTime.UtcNow).TotalMinutes;
+
+    public Action UpdatedRecoveryTime;
+
+    public DateTime RecoveryEndDate
+    {
+        get
+        {
+            return recoveryEndDate;
+        }
+        set
+        {
+            recoveryEndDate = value;
+            UpdatedRecoveryTime?.Invoke();
+        }
+    }
 
     public async UniTask GrabImage()
     {
@@ -25,7 +44,7 @@ public class NFT
         {
             furType = NFTImageLoader.GetFurType(doc);
         }
-        if(ids == null)
+        if (ids == null)
         {
             ids = NFTImageLoader.GetIds(doc);
         }

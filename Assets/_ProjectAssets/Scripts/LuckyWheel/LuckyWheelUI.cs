@@ -19,7 +19,7 @@ public class LuckyWheelUI : MonoBehaviour
     public void RequestReward()
     {
         //TODO ask server for the random reward id
-        int _rewardId = 1;
+        int _rewardId = 5;
         choosenReward = LuckyWheelRewardSO.Get(_rewardId);
         if (requestedToSeeReward)
         {
@@ -92,7 +92,7 @@ public class LuckyWheelUI : MonoBehaviour
         respinButton.gameObject.SetActive(false);
         claimButton.gameObject.SetActive(false);
         choosenReward = null;
-        SpinWheel();
+        RequestReward();
     }
 
     void SpinWheel()

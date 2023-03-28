@@ -31,7 +31,7 @@ public class PlayerNicknameButton : MonoBehaviour
         }
 
         float _snacks = await TryGetSnacks(() => { });
-        ValuablesManager.Instance.SetSnacks(_snacks);
+        ValuablesManager.Instance.Snacks = _snacks;
 
         screenLoadingManager.StopLoadingReason("Grabbing account information...");
         OnPlayerNameUpdated?.Invoke(nicknameText.text);

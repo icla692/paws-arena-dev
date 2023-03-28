@@ -30,10 +30,10 @@ namespace com.colorfulcoding.AfterGame
         [SerializeField] LuckyWheelUI luckyWheelUI;
         [SerializeField] GameObject leaveButton;
 
+
         void Start()
         {
             int checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
-
             if (checkIfIWon > 0)
             {
                 leaveButton.gameObject.SetActive(false);

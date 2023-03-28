@@ -74,14 +74,14 @@ public class NFTSelection : MonoBehaviour
     private async UniTask PopulateGridAsync()
     {
         screenLoadingManager.AddLoadingReason("Loading NFTs...");
-        foreach(GameObject but in nftButtons)
+        foreach (GameObject but in nftButtons)
         {
             Destroy(but);
         }
 
         nftButtons.Clear();
 
-        foreach(NFT nfts in currentNFTs)
+        foreach (NFT nfts in currentNFTs)
         {
             Destroy(nfts.imageTex);
             nfts.imageTex = null;
@@ -102,7 +102,7 @@ public class NFTSelection : MonoBehaviour
             idx++;
         }
 
-        for(int i= currentNFTs.Count; i<9; i++)
+        for (int i = currentNFTs.Count; i < 9; i++)
         {
             GameObject go = Instantiate(nftButtonPrefab, nftButtonsParent);
             nftButtons.Add(go);
@@ -115,11 +115,13 @@ public class NFTSelection : MonoBehaviour
         idx = 0;
         foreach (NFT nft in currentNFTs)
         {
+            nft.RecoveryEndDate = DateTime.UtcNow.AddMinutes(UnityEngine.Random.Range(-20, 20)); //TODO delete me... recovery date should be send by the server
             nftButtons[idx].GetComponent<NFTImageButton>().SetTexture(nft.imageTex);
+            nftButtons[idx].GetComponent<RecoveryHandler>().ShowRecovery(nft.RecoveryEndDate);
             nftButtons[idx].GetComponent<Button>().onClick.RemoveAllListeners();
 
             int crtIdx = idx;
-            nftButtons[idx].GetComponent<Button>().onClick.AddListener(()=>
+            nftButtons[idx].GetComponent<Button>().onClick.AddListener(() =>
             {
                 SelectNFT(crtIdx);
             });
@@ -131,7 +133,7 @@ public class NFTSelection : MonoBehaviour
 
     private void SelectNFT(int idx)
     {
-        if(playerPlatform != null)
+        if (playerPlatform != null)
         {
             Destroy(playerPlatform);
         }
