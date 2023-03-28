@@ -158,8 +158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -249.08, y: -116.36}
-  m_SizeDelta: {x: 121.69, y: 152.5}
+  m_AnchoredPosition: {x: -253, y: -110}
+  m_SizeDelta: {x: 116.93, y: 146.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6555349
 MonoBehaviour:
@@ -302,16 +302,16 @@ RectTransform:
   m_GameObject: {fileID: 50640097}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 255528840}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 223.24, y: 186.23}
-  m_SizeDelta: {x: 117.4, y: 180.49}
+  m_AnchoredPosition: {x: 222.9, y: 194.8}
+  m_SizeDelta: {x: 113.22, y: 173.54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &50640099
 MonoBehaviour:
@@ -462,6 +462,7 @@ MonoBehaviour:
   standLoseColor: {r: 1, g: 0, b: 0.08235294, a: 1}
   standDrawColor: {r: 1, g: 1, b: 1, a: 1}
   luckyWheelUI: {fileID: 1370965707}
+  leaveButton: {fileID: 1466782754}
 --- !u!1 &255528839
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +490,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 50640098}
   - {fileID: 916348537}
@@ -513,7 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a85bf77fd2cc46beaece3c82e30ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 1.5
+  shakingScale: {x: 1.1, y: 1.1, z: 1.1}
   shadowHolder: {fileID: 916348536}
   cristalHolder: {fileID: 50640098}
   rewardType: 5
@@ -764,8 +765,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.72, y: -272.58}
-  m_SizeDelta: {x: 147.79, y: 172.6}
+  m_AnchoredPosition: {x: 4, y: -267.45}
+  m_SizeDelta: {x: 135.66, y: 173.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &334751776
 MonoBehaviour:
@@ -840,8 +841,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -254.46, y: 156.8}
-  m_SizeDelta: {x: 51.88, y: 102.1}
+  m_AnchoredPosition: {x: -259.5, y: 160.82}
+  m_SizeDelta: {x: 51.36, y: 98.53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &352601297
 MonoBehaviour:
@@ -1772,7 +1773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a85bf77fd2cc46beaece3c82e30ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 1.5
+  shakingScale: {x: 1.4, y: 1.4, z: 1.4}
   shadowHolder: {fileID: 695438217}
   cristalHolder: {fileID: 334751775}
   rewardType: 0
@@ -1864,7 +1865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a85bf77fd2cc46beaece3c82e30ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 1.5
+  shakingScale: {x: 1.2, y: 1.2, z: 1.2}
   shadowHolder: {fileID: 1154346412}
   cristalHolder: {fileID: 6555348}
   rewardType: 4
@@ -1919,7 +1920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a85bf77fd2cc46beaece3c82e30ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 1.8
+  shakingScale: {x: 1.4, y: 1.4, z: 1.4}
   shadowHolder: {fileID: 1418408489}
   cristalHolder: {fileID: 779070412}
   rewardType: 2
@@ -2237,8 +2238,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 286.9, y: -66.75}
-  m_SizeDelta: {x: 49.87, y: 125.46}
+  m_AnchoredPosition: {x: 281, y: -63}
+  m_SizeDelta: {x: 47.68, y: 120.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &779070413
 MonoBehaviour:
@@ -2972,7 +2973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a85bf77fd2cc46beaece3c82e30ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 1.8
+  shakingScale: {x: 1.4, y: 1.4, z: 1.4}
   shadowHolder: {fileID: 403908510}
   cristalHolder: {fileID: 352601296}
   rewardType: 1
@@ -4332,8 +4333,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27.29, y: 277.31}
-  m_SizeDelta: {x: 75.05, y: 144.38}
+  m_AnchoredPosition: {x: 21.52, y: 276.25}
+  m_SizeDelta: {x: 76.69, y: 147.04}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1526357731
 MonoBehaviour:
@@ -5898,7 +5899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a85bf77fd2cc46beaece3c82e30ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 1.5
+  shakingScale: {x: 1.4, y: 1.4, z: 1.4}
   shadowHolder: {fileID: 1911651838}
   cristalHolder: {fileID: 1526357730}
   rewardType: 3

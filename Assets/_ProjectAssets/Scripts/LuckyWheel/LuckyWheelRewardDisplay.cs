@@ -6,7 +6,7 @@ public class LuckyWheelRewardDisplay : MonoBehaviour
     const string IDLE_ANIMATION_KEY = "Idle";
     const string SHAKING_ANIMATION_KEY = "Shaking";
 
-    [SerializeField] float scaleFactor;
+    [SerializeField] Vector3 shakingScale;
     [SerializeField] GameObject shadowHolder;
     [SerializeField] Transform cristalHolder;
     [SerializeField] LuckyWheelRewardType rewardType;
@@ -15,6 +15,15 @@ public class LuckyWheelRewardDisplay : MonoBehaviour
 
     IEnumerator shakingRoutine;
 
+    Vector3 defaultScale;
+    Vector3 defaultPostion;
+
+    private void OnEnable()
+    {
+        defaultScale = cristalHolder.localScale;
+        defaultPostion = cristalHolder.position;
+    }
+
     public void ResetDisplay()
     {
         if (shakingRoutine != null)
@@ -22,7 +31,8 @@ public class LuckyWheelRewardDisplay : MonoBehaviour
             StopCoroutine(shakingRoutine);
             shakingRoutine = null;
         }
-        cristalHolder.localScale = new Vector3(1, 1, 1);
+        cristalHolder.localScale = defaultScale;
+        cristalHolder.position = defaultPostion;
         shadowHolder.SetActive(false);
     }
 
@@ -33,7 +43,7 @@ public class LuckyWheelRewardDisplay : MonoBehaviour
 
     public void Shake()
     {
-        cristalHolder.localScale *= scaleFactor;
+        cristalHolder.localScale = shakingScale;
         shakingRoutine = ShakeInCircularShapeRoutine();
         StartCoroutine(shakingRoutine);
     }
@@ -51,18 +61,25 @@ public class LuckyWheelRewardDisplay : MonoBehaviour
 
     IEnumerator ShakeInCircularShapeRoutine()
     {
-        Vector3 originalPos = cristalHolder.position;
-
-        float shakeMagnitude = 10f;
+        Vector3 _center = cristalHolder.position;
+        float _radius = 0.1f;
+        float _angle = 0.0f;
+        float _moveSpeed = 0.1f;
+        float _timeToWait = 0.01f;
 
         while (true)
         {
-            float x = originalPos.x + Mathf.Sin(Time.time * 50) * shakeMagnitude * Time.deltaTime;
-            float y = originalPos.y + Mathf.Cos(Time.time * 50) * shakeMagnitude * Time.deltaTime;
-            float z = originalPos.z;
+            _angle += Time.deltaTime * 50.0f;
+            Vector3 offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle), 0) * _radius;
+            Vector3 _newPos = _center + offset;
 
-            cristalHolder.position = new Vector3(x, y, z);
-            yield return null;
+            while (Vector3.Distance(cristalHolder.position, _newPos) > 0.01f)
+            {
+                cristalHolder.position = Vector3.MoveTowards(cristalHolder.position, _newPos, _moveSpeed * Time.deltaTime);
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(_timeToWait);
         }
     }
 }

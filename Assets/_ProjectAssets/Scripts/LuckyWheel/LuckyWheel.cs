@@ -11,10 +11,11 @@ public class LuckyWheel : MonoBehaviour
     [SerializeField] RectTransform pointerHolder;
     [SerializeField] List<LuckyWheelRewardDisplay> rewardDisplays;
 
-    Action<LuckyWheelRewardSO> callback;
+    Action callback;
+    LuckyWheelRewardSO choosenReward;
     float speed;
 
-    public void Spin(Action<LuckyWheelRewardSO> _callback)
+    public void Spin(Action _callback, LuckyWheelRewardSO _choosenReward)
     {
         foreach (var _rewardDisplay in rewardDisplays)
         {
@@ -22,6 +23,7 @@ public class LuckyWheel : MonoBehaviour
         }
         callback = _callback;
         speed = spinSpeed;
+        choosenReward = _choosenReward;
         StartCoroutine(SpinRoutine());
     }
 
@@ -44,8 +46,7 @@ public class LuckyWheel : MonoBehaviour
         }
 
         //end spin
-        LuckyWheelRewardSO _choosenReward = LuckyWheelRewardSO.GetReward();
-        float _targetedZ = UnityEngine.Random.Range(_choosenReward.MinRotation, _choosenReward.MaxRotation);
+        float _targetedZ = UnityEngine.Random.Range(choosenReward.MinRotation, choosenReward.MaxRotation);
         float _currentZRotation = pointerHolder.eulerAngles.z;
         int _additionalFullSPins = 1;
         _targetedZ = _targetedZ - (360 * _additionalFullSPins);
@@ -80,7 +81,7 @@ public class LuckyWheel : MonoBehaviour
         //show shadows and start shaking
         foreach (var _rewardDisplay in rewardDisplays)
         {
-            if (_rewardDisplay.RewardType == _choosenReward.Type)
+            if (_rewardDisplay.RewardType == choosenReward.Type)
             {
                 _rewardDisplay.Shake();
             }
@@ -90,6 +91,6 @@ public class LuckyWheel : MonoBehaviour
             }
         }
 
-        callback?.Invoke(_choosenReward);
+        callback?.Invoke();
     }
 }

@@ -12,9 +12,33 @@ public class LuckyWheelUI : MonoBehaviour
     [SerializeField] Button claimButton;
 
     [SerializeField] decimal respinPrice;
-    LuckyWheelRewardSO reward;
+    LuckyWheelRewardSO choosenReward;
 
-    public void Setup()
+    bool requestedToSeeReward = false;
+
+    public void RequestReward()
+    {
+        //TODO ask server for the random reward id
+        int _rewardId = 1;
+        choosenReward = LuckyWheelRewardSO.Get(_rewardId);
+        if (requestedToSeeReward)
+        {
+            Setup();
+        }
+    }
+
+    public void ShowReward()
+    {
+        requestedToSeeReward = true;
+        if (choosenReward == null)
+        {
+            return;
+        }
+
+        Setup();
+    }
+
+    void Setup()
     {
         playerPlatform.SetActive(false);
         gameObject.SetActive(true);
@@ -35,7 +59,8 @@ public class LuckyWheelUI : MonoBehaviour
 
     void ClaimReward()
     {
-        Claim(reward);
+        Claim(choosenReward);
+        //TODO tell server that client claimed reward
     }
 
     void Claim(LuckyWheelRewardSO _reward)
@@ -66,24 +91,22 @@ public class LuckyWheelUI : MonoBehaviour
     {
         respinButton.gameObject.SetActive(false);
         claimButton.gameObject.SetActive(false);
-        reward = null;
+        choosenReward = null;
         SpinWheel();
     }
 
     void SpinWheel()
     {
-        luckyWheel.Spin(SetReward);
+        luckyWheel.Spin(EnableButtons, choosenReward);
     }
 
-    void SetReward(LuckyWheelRewardSO _reward)
+    void EnableButtons()
     {
-        reward = _reward;
         StartCoroutine(ShowRewardAnimationRoutine());
     }
 
     IEnumerator ShowRewardAnimationRoutine()
     {
-
         yield return new WaitForSeconds(1);
         claimButton.gameObject.SetActive(true);
         respinButton.gameObject.SetActive(true);

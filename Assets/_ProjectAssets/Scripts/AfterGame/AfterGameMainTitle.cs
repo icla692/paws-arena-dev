@@ -28,6 +28,7 @@ namespace com.colorfulcoding.AfterGame
         public Color standDrawColor;
 
         [SerializeField] LuckyWheelUI luckyWheelUI;
+        [SerializeField] GameObject leaveButton;
 
         void Start()
         {
@@ -35,6 +36,8 @@ namespace com.colorfulcoding.AfterGame
 
             if (checkIfIWon > 0)
             {
+                leaveButton.gameObject.SetActive(false);
+                luckyWheelUI.RequestReward();
                 winTitle.SetActive(true);
                 bg.GetComponent<Image>().color = winColor;
                 standGlow.color = winColor;
@@ -64,7 +67,7 @@ namespace com.colorfulcoding.AfterGame
                 {
                     if (checkIfIWon > 0)
                     {
-                        luckyWheelUI.Setup();
+                        luckyWheelUI.ShowReward();
                     }
                 });
             }
