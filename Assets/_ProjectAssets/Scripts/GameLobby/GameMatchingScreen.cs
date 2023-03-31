@@ -14,6 +14,7 @@ public class SeatGameobject
     [SerializeField]
     public TextMeshProUGUI occupierNickname;
 }
+
 public class GameMatchingScreen : MonoBehaviour
 {
     [Header("Managers")]
@@ -64,7 +65,9 @@ public class GameMatchingScreen : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"PUN: Inconsistency! There are {players.Count} players in room??");
+                Debug.LogWarning(
+                    $"PUN: Inconsistency! There are {players.Count} players in room??"
+                );
             }
         }
 
@@ -86,7 +89,6 @@ public class GameMatchingScreen : MonoBehaviour
         {
             OccupySeat(seats[isMyPlayerMaster ? 1 : 0], players[0].NickName);
         }
-
     }
 
     private IEnumerator BringBotAfterSeconds(float seconds)
@@ -101,7 +103,11 @@ public class GameMatchingScreen : MonoBehaviour
     [ContextMenu("Bring Bot")]
     public async void BringBot()
     {
-        var resp = await NetworkManager.GETRequestCoroutine("/user/player2", (code, err) => { }, true);
+        var resp = await NetworkManager.GETRequestCoroutine(
+            "/user/player2",
+            (code, err) => { },
+            true
+        );
 
         if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
         {
@@ -120,7 +126,6 @@ public class GameMatchingScreen : MonoBehaviour
     private void OccupySeat(SeatGameobject seat, string nickName)
     {
         seat.occupierNickname.text = nickName;
-
     }
 
     private void FreeSeat(SeatGameobject seat)
@@ -132,14 +137,11 @@ public class GameMatchingScreen : MonoBehaviour
     {
         int mySeat = Int32.Parse(PhotonNetwork.LocalPlayer.CustomProperties["seat"].ToString());
         int otherSeat = (mySeat + 1) % 2;
+
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
-            var keysList = new List<int>(PhotonNetwork.CurrentRoom.Players.Keys);
+            CheckPlayersAreDifferent();
 
-            if(PhotonNetwork.CurrentRoom.Players[keysList[0]].NickName == PhotonNetwork.CurrentRoom.Players[keysList[1]].NickName){
-                StartCoroutine(TryExitRoomAfterSeconds(1));
-            }
-            
             notices.SetActive(true);
 
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -151,6 +153,27 @@ public class GameMatchingScreen : MonoBehaviour
             }
         }
         OccupySeat(seats[otherSeat], opponentNickname);
+    }
+
+    private void CheckPlayersAreDifferent()
+    {
+        var keysList = new List<int>(PhotonNetwork.CurrentRoom.Players.Keys);
+
+        Debug.Log(
+            $"Comparing {PhotonNetwork.CurrentRoom.Players[keysList[0]].CustomProperties["principalId"]} with {PhotonNetwork.CurrentRoom.Players[keysList[1]].CustomProperties["principalId"]}"
+        );
+
+        if (
+            ((string)PhotonNetwork.CurrentRoom.Players[keysList[0]].CustomProperties["principalId"])
+            == (
+                (string)
+                    PhotonNetwork.CurrentRoom.Players[keysList[1]].CustomProperties["principalId"]
+            )
+        )
+        {
+            Debug.LogWarning("Same player connected twice!");
+            StartCoroutine(TryExitRoomAfterSeconds(1));
+        }
     }
 
     private void OnPlayerLeft()
@@ -193,12 +216,12 @@ public class GameMatchingScreen : MonoBehaviour
         PhotonNetwork.CurrentRoom.IsOpen = PhotonNetwork.CurrentRoom.IsVisible = true;
     }
 
-
     [PunRPC]
     public void StartGameRoutine()
     {
         StartCountdown("GameScene");
     }
+
     [PunRPC]
     public void StartSinglePlayerGameRoutine()
     {
@@ -209,10 +232,22 @@ public class GameMatchingScreen : MonoBehaviour
     {
         countdown.StartCountDown(() =>
         {
-            if (PhotonNetwork.LocalPlayer.IsMasterClient)
-            {
-                PhotonNetwork.LoadLevel(sceneName);
-            }
+            // if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            // {
+            //     PhotonNetwork.LoadLevel(sceneName);
+            // }
+
+            StartCoroutine(LoadSceneAsync(sceneName));
         });
+    }
+
+    private IEnumerator LoadSceneAsync(string sceneName)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
 }

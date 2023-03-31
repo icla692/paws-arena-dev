@@ -20,7 +20,6 @@ public class SendAlivePing : MonoBehaviour
 
     public void SendPing()
     {
-        Debug.Log($"Sending ping...");
         _photonView.RPC("SendPingToAllRPC", RpcTarget.Others);
     }
 

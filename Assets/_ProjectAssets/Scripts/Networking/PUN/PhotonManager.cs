@@ -54,6 +54,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log($"PUN: Connected to master server on region {PhotonNetwork.CloudRegion}!");
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { "principalId", GameState.principalId } });
+
         OnConnectedServer?.Invoke();
     }
 
