@@ -11,6 +11,8 @@ public class SFXManager : MonoSingleton<SFXManager>
 
     private float initialMusicSourceVolume;
     private float initialOneShotSourceVolume;
+    private float oneShotSourceBaseVolume;
+
     public IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
@@ -46,14 +48,14 @@ public class SFXManager : MonoSingleton<SFXManager>
 
         if(oneShotAudioSource != null)
         {
-            oneShotAudioSource.volume = GameState.gameSettings.soundFXVolume * GameState.gameSettings.masterVolume;
+            oneShotSourceBaseVolume = oneShotAudioSource.volume = GameState.gameSettings.soundFXVolume * GameState.gameSettings.masterVolume;
         }
     }
 
     public void PlayOneShot(AudioClip clip, float volume = 1)
     {
         StopOneShot();
-        oneShotAudioSource.volume = oneShotAudioSource.volume > 0 ? volume : 0;
+        oneShotAudioSource.volume = oneShotAudioSource.volume > 0 ? volume * oneShotSourceBaseVolume : 0;
         oneShotAudioSource.PlayOneShot(clip);
     }
 

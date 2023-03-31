@@ -17,6 +17,7 @@ public class BulletComponent : MonoBehaviour
     public bool isMine = true;
 
     private bool isTouched = false;
+    private bool isColliderInit = false;
     protected Rigidbody2D rb;
     protected PhotonView photonView;
     protected bool isMultiplayer;
@@ -58,6 +59,7 @@ public class BulletComponent : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         collider.enabled = true;
+        isColliderInit = true;
     }
 
     public void Launch(Vector3 direction, float speed)
@@ -80,7 +82,6 @@ public class BulletComponent : MonoBehaviour
 
         if (hasEnabledPositionTracking)
         {
-            bool isMine = !isMultiplayer || photonView.IsMine;
             onBulletMoved?.Invoke(isMine, transform.position);
         }
     }
@@ -98,7 +99,7 @@ public class BulletComponent : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isTouched)
+        if (!isColliderInit || isTouched)
             return;
         
         isTouched = true;

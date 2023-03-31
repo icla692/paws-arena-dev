@@ -78,18 +78,13 @@ public class GameMatchingScreen : MonoBehaviour
             FreeSeat(seat);
         }
 
+        bool isMyPlayerMaster = PhotonNetwork.LocalPlayer.IsMasterClient;
+        OccupySeat(seats[isMyPlayerMaster ? 0 : 1], PhotonNetwork.LocalPlayer.NickName);
+
         List<Player> players = punRoomUtils.GetOtherPlayers();
         if (players.Count == 1)
         {
-            int otherPlayerSeat = Int32.Parse(players[0].CustomProperties["seat"].ToString());
-            OccupySeat(seats[otherPlayerSeat], players[0].NickName);
-
-            int mySeat = (otherPlayerSeat + 1) % 2;
-            OccupySeat(seats[mySeat], PhotonNetwork.LocalPlayer.NickName);
-        }
-        else
-        {
-            OccupySeat(seats[0], PhotonNetwork.LocalPlayer.NickName);
+            OccupySeat(seats[isMyPlayerMaster ? 1 : 0], players[0].NickName);
         }
 
     }
@@ -139,6 +134,12 @@ public class GameMatchingScreen : MonoBehaviour
         int otherSeat = (mySeat + 1) % 2;
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
+            var keysList = new List<int>(PhotonNetwork.CurrentRoom.Players.Keys);
+
+            if(PhotonNetwork.CurrentRoom.Players[keysList[0]].NickName == PhotonNetwork.CurrentRoom.Players[keysList[1]].NickName){
+                StartCoroutine(TryExitRoomAfterSeconds(1));
+            }
+            
             notices.SetActive(true);
 
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -159,6 +160,12 @@ public class GameMatchingScreen : MonoBehaviour
         notices.SetActive(false);
         FreeSeat(seats[otherSeat]);
         MakeRoomVisible();
+    }
+
+    private IEnumerator TryExitRoomAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        TryExitRoom();
     }
 
     public void TryExitRoom()
@@ -200,7 +207,6 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void StartCountdown(string sceneName)
     {
-        PhotonNetwork.Loadl
         countdown.StartCountDown(() =>
         {
             if (PhotonNetwork.LocalPlayer.IsMasterClient)

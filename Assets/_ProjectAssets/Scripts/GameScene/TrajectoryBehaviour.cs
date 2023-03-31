@@ -26,6 +26,7 @@ public class TrajectoryBehaviour : MonoBehaviour
     private void AddBulletPoint(bool isMine, Vector2 newPos)
     {
         if (!isMine) return;
+
         if(Vector2.Distance(newPos, lastPosition) > step)
         {
             lastPosition = newPos;
