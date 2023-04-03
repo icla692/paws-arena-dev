@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f61a22206482d40b39317ff3bfbfe3, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  enableDevLogs: 1
-  env: 1
+  enableDevLogs: 0
+  env: 2
   devUrl: https://ickitties.azurewebsites.net
   stagingUrl: https://webapiwithssl20230210160824.azurewebsites.net
   prodUrl: https://ickitties.azurewebsites.net
+  devPhotonKey: ea89fb64-713d-4979-b25e-f61a960b4bde
+  prodPhotonKey: 3a4a871a-3614-4f4e-8c0e-43ed06d3d6ed

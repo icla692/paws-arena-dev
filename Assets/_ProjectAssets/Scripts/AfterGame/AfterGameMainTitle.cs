@@ -21,6 +21,8 @@ namespace com.colorfulcoding.AfterGame
         public Color loseColor;
         public Color drawColor;
 
+        public GameObject reasonText;
+
         [Header("Cat Stand")]
         public SpriteRenderer standGlow;
         public Color standWinColor;
@@ -28,7 +30,14 @@ namespace com.colorfulcoding.AfterGame
         public Color standDrawColor;
         void Start()
         {
-            int checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
+            int checkIfIWon;
+
+            //If unexpected error happened, we override result type
+            if(GameState.pointsChange.gameResultType == 0){
+                checkIfIWon = 0;
+            }else{
+                checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
+            }
 
             if (checkIfIWon > 0)
             {
@@ -58,6 +67,11 @@ namespace com.colorfulcoding.AfterGame
                     totalCoinsValue.text = "" + Math.Floor(GameState.pointsChange.oldPoints + val);
                     deltaPoints.text = "+" + Math.Floor(val);
                 }).setEaseInOutCirc().setDelay(1f);
+            }
+
+            if(!string.IsNullOrEmpty(GameState.pointsChange.reason)){
+                reasonText.SetActive(true);
+                reasonText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = GameState.pointsChange.reason;
             }
         }
     }

@@ -53,7 +53,7 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
 
         await UniTask.Delay(1000);
 
-        GameState.principalId = "u4s77-qtma7-sriuf-r7rzc-d2new-penyr-qhaap-z3lrx-b2u7e-d4wmv-gqe-dev";
+        GameState.principalId = "u4s77-qtma7-sriuf-r7rzc-d2new-penyr-qhaap-z3lrx-b2u7e-d4wmv-gqe-dev-dev";
 
         GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?&tokenid=hvtag-6ykor-uwiaa-aaaaa-cqace-eaqca-aaabd-a" });
         GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/jairp-5ykor-uwiaa-aaaaa-cqace-eaqca-aacdq-a" });

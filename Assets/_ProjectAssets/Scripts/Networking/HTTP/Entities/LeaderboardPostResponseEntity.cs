@@ -9,4 +9,8 @@ public class LeaderboardPostResponseEntity
     public int points;
     [SerializeField]
     public int oldPoints;
+    [SerializeField]
+    public int gameResultType = -1;
+    [SerializeField]
+    public string reason = "";
 }

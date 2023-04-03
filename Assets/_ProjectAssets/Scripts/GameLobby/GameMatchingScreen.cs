@@ -232,12 +232,13 @@ public class GameMatchingScreen : MonoBehaviour
     {
         countdown.StartCountDown(() =>
         {
-            // if (PhotonNetwork.LocalPlayer.IsMasterClient)
-            // {
-            //     PhotonNetwork.LoadLevel(sceneName);
-            // }
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                PhotonNetwork.IsMessageQueueRunning = false;
+                PhotonNetwork.LoadLevel(sceneName);
+            }
 
-            StartCoroutine(LoadSceneAsync(sceneName));
+            // StartCoroutine(LoadSceneAsync(sceneName));
         });
     }
 

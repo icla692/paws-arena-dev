@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
@@ -62,6 +63,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarning($"PUN: Disconnected from server with cause: {cause}");
+        SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)

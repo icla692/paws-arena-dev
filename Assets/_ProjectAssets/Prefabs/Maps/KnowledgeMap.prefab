@@ -67,10 +67,6 @@ PrefabInstance:
       propertyPath: <OriginalTexture>k__BackingField
       value: 
       objectReference: {fileID: 2800000, guid: 1e6f7020bcf9ce84f8b6254dcb7e1108, type: 3}
-    - target: {fileID: 4353723579991453891, guid: 85938879427c20e45a5215f84924fcfb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4353723579991453900, guid: 85938879427c20e45a5215f84924fcfb, type: 3}
       propertyPath: m_Sprite
       value: 

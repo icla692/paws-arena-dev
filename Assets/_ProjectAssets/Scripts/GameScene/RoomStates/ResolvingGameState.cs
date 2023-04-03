@@ -32,6 +32,7 @@ public class ResolvingGameState : IRoomState
             }catch(UnityWebRequestException ex)
             {
                 Debug.LogWarning($"Failed registering match {ex.ResponseCode}:{ex.Text}");
+                context.LoadAfterGameScene(state);
             }
         }
         await UniTask.Delay(TimeSpan.FromSeconds(3));
