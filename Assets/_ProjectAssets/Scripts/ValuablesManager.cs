@@ -6,11 +6,12 @@ public class ValuablesManager : MonoBehaviour
     public static ValuablesManager Instance;
 
     float snacks;
-    float milk;
+    float jugOfMilk;
+    float glassOfMilk;
 
     public Action UpdatedSnacks;
-    public Action UpdatedMilk;
-
+    public Action UpdatedJugOfMilk;
+    public Action UpdatedGlassOfMilk;
 
     private void Awake()
     {
@@ -37,16 +38,30 @@ public class ValuablesManager : MonoBehaviour
         }
     }
 
-    public float Milk
+    public float JugOfMilk
     {
         get
         {
-            return milk;
+            return jugOfMilk;
         }
         set
         {
-            milk = value;
-            UpdatedMilk?.Invoke();
+            jugOfMilk = value;
+            UpdatedJugOfMilk?.Invoke();
         }
+    }
+
+    public float GlassOfMilk
+    {
+        get
+        {
+            return glassOfMilk;
+        }
+        set
+        {
+            glassOfMilk = value;
+            UpdatedGlassOfMilk?.Invoke();
+        }
+
     }
 }
