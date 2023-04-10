@@ -173,6 +173,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
+    Android: com.com.colorfulcoding.ICKitties
     Standalone: com.com.colorfulcoding.ICKitties
   buildNumber:
     Standalone: 0

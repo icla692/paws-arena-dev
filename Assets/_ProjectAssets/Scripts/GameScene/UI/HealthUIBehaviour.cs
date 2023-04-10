@@ -51,9 +51,9 @@ public class HealthUIBehaviour : MonoBehaviour
         var parentAnchor = healthBarParent.GetComponent<RectTransform>();
         parentAnchor.anchorMin = parentAnchor.anchorMax = parentAnchor.pivot = new Vector2(1, 1);
         parentAnchor.transform.localScale = new Vector3(-1, 1, 1);
-        parentAnchor.anchoredPosition = new Vector2(-471, -58);
+        parentAnchor.anchoredPosition = new Vector2(-470, -58);
 
-        nickname.GetComponent<RectTransform>().anchoredPosition = new Vector2(81, -10);
+        nickname.GetComponent<RectTransform>().anchoredPosition = new Vector2(81, -4);
 
     }
 }

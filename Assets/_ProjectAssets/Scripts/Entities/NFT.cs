@@ -25,7 +25,7 @@ public class NFT
         {
             furType = NFTImageLoader.GetFurType(doc);
         }
-        if(ids == null)
+        if (ids == null)
         {
             ids = NFTImageLoader.GetIds(doc);
         }

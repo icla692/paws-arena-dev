@@ -34,11 +34,7 @@ public class NFTImageLoader
         {
             var id = images[i].Attributes["id"];
 
-            //if (id == null) continue;
-            if (id != null && id.Value.Contains("bg"))
-            {
-                continue;
-            }
+            if (id == null) continue;
 
             //Positioning
             int offsetX = 0, offsetY = 0;
@@ -59,14 +55,18 @@ public class NFTImageLoader
             //Generate Tex
             Texture2D tex = ImageFromBase64(images[i].Attributes["href"].Value.Split(",")[1]);
 
-            for(int x=0; x<tex.width; x++)
+            for (int x = 0; x < tex.width; x++)
             {
-                for(int y=0; y<tex.height; y++)
+                for (int y = 0; y < tex.height; y++)
                 {
-                    Color col = tex.GetPixel(x, y);
-                    if(col.a > 0)
+                    Color srcCol = tex.GetPixel(x, y);
+                    if (srcCol.a > 0)
                     {
-                        finalTex.SetPixel(offsetX + x, (1000 - tex.height) - offsetY +  y, col);
+                        int destX = offsetX + x;
+                        int destY = (1000 - tex.height) - offsetY + y;
+                        Color destCol = finalTex.GetPixel(destX, destY);
+                        Color blendedCol = Color.Lerp(destCol, srcCol, srcCol.a);
+                        finalTex.SetPixel(destX, destY, blendedCol);
                     }
                 }
             }
@@ -128,12 +128,13 @@ public class NFTImageLoader
         try
         {
             await www.SendWebRequest();
-        }catch(UnityWebRequestException e)
+        }
+        catch (UnityWebRequestException e)
         {
             Debug.LogWarning("Error on " + URL + ": " + www.downloadHandler.text);
         }
 
-        if(www.result != UnityWebRequest.Result.Success)
+        if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.LogWarning("Error on " + URL + " : " + www.error);
         }
