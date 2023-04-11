@@ -208,7 +208,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 19}
-  m_SizeDelta: {x: 1022, y: 612.48}
+  m_SizeDelta: {x: 1022, y: 408.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9888541
 MonoBehaviour:
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d49144dcc61c2c546b1691be86141524, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ef910f967b231214ba5fd2a3248ffb23, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6516,7 +6516,7 @@ RectTransform:
   m_GameObject: {fileID: 800890055}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 819452776}
@@ -18378,8 +18378,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.18, y: 14.3}
-  m_SizeDelta: {x: 816.31, y: 396.28}
+  m_AnchoredPosition: {x: -3.18, y: 31.920006}
+  m_SizeDelta: {x: 816.31, y: 218.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1880398060
 MonoBehaviour:
@@ -18402,7 +18402,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "The top 10 players in the Leaderboard will each get 1 NFT from Boxxxed
-    Animals.\r\\n\nGood luck!"
+    Animals.\r\\nGood luck!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ee1a73c6df8198f4782815d24d243c5d, type: 2}
   m_sharedMaterial: {fileID: 9131272089297647007, guid: ee1a73c6df8198f4782815d24d243c5d, type: 2}
@@ -18429,10 +18429,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43.8
-  m_fontSizeBase: 36
+  m_fontSize: 42.7
+  m_fontSizeBase: 42.7
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
