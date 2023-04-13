@@ -7808,6 +7808,55 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &932337308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 932337309}
+  - component: {fileID: 932337310}
+  m_Layer: 0
+  m_Name: FlagManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &932337309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932337308}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1011119103}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &932337310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932337308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e18950301ef7040831fc2ce9c5995e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagImageDisplay: {fileID: 2029281327}
+  flagShineDisplay: {fileID: 1843367208}
+  messageDisplay: {fileID: 1880398060}
+  imageUrl: https://webapiwithssl20230210160824.azurewebsites.net/tournament/image
+  detailsUrl: https://webapiwithssl20230210160824.azurewebsites.net/tournament
 --- !u!1 &943802666
 GameObject:
   m_ObjectHideFlags: 0
@@ -9282,6 +9331,7 @@ Transform:
   - {fileID: 1166118347}
   - {fileID: 1582452280}
   - {fileID: 1147664765}
+  - {fileID: 932337309}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18401,8 +18451,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "The top 10 players in the Leaderboard will each get 1 NFT from Boxxxed
-    Animals.\r\\nGood luck!"
+  m_text: There are no events at the moment!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ee1a73c6df8198f4782815d24d243c5d, type: 2}
   m_sharedMaterial: {fileID: 9131272089297647007, guid: ee1a73c6df8198f4782815d24d243c5d, type: 2}
@@ -19665,7 +19714,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d5c0468873f5b9247b42d0f7de46dd9c, type: 3}
+  m_Sprite: {fileID: 1610144799, guid: 44940260574ba4c4988d9489601a592e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
