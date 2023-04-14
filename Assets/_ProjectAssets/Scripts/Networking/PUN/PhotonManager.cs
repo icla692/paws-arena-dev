@@ -67,7 +67,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log("PUN: No Random Room to join. Creating room...");
         isRoomCreated = true;
 
-        string roomName = GameState.principalId + Guid.NewGuid();
+        string roomName = Guid.NewGuid().ToString();
         Debug.Log($"PUN: Creating room {roomName}");
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
         OnCreatingRoom?.Invoke();
