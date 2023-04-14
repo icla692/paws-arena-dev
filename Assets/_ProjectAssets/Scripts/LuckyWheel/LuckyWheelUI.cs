@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using Photon.Pun;
+using Newtonsoft.Json;
 
 public class LuckyWheelUI : MonoBehaviour
 {
@@ -16,10 +19,26 @@ public class LuckyWheelUI : MonoBehaviour
 
     bool requestedToSeeReward = false;
 
-    public void RequestReward()
+    public async void RequestReward()
     {
-        //TODO ask server for the random reward id
-        int _rewardId = 5;
+        int _rewardId = -1;
+        try
+        {
+            string resp = await NetworkManager.GETRequestCoroutine("/leaderboard/spin-the-wheel?matchId=" + PhotonNetwork.CurrentRoom.Name,
+            (code, err) =>
+            {
+                Debug.LogWarning($"Failed to get reward type {err} : {code}");
+            }, true);
+
+            Debug.Log($"Got reward type from server: {resp}");
+            LuckyWheelRewardResponse _response = JsonConvert.DeserializeObject<LuckyWheelRewardResponse>(resp);
+            _rewardId = _response.RewardType;
+        }
+        catch
+        {
+            Debug.LogWarning($"Failed getting reward id from server");
+            return;
+        }
         choosenReward = LuckyWheelRewardSO.Get(_rewardId);
         if (requestedToSeeReward)
         {

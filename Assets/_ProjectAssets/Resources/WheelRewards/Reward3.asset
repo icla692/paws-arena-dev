@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e42dfdf0e8c29664cb1c83c13861579f, type: 3}
   m_Name: Reward3
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 3
+  <Id>k__BackingField: 4
   <Type>k__BackingField: 4
   <Amount>k__BackingField: 1
   <Sprite>k__BackingField: {fileID: 21300000, guid: 2f0b64b6fb26e944eb707460d74f529e, type: 3}
