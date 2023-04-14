@@ -13,6 +13,7 @@ public class LuckyWheelClaimDisplay : MonoBehaviour
         closeButton.onClick.AddListener(Close);
         nameDisplay.text = _reward.Name;
         iconDisplay.sprite = _reward.Sprite;
+        iconDisplay.SetNativeSize();
         gameObject.SetActive(true);
     }
 
