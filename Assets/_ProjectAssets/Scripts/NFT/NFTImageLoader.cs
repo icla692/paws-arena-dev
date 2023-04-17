@@ -129,7 +129,7 @@ public class NFTImageLoader
         {
             await www.SendWebRequest();
         }
-        catch (UnityWebRequestException e)
+        catch
         {
             Debug.LogWarning("Error on " + URL + ": " + www.downloadHandler.text);
         }
