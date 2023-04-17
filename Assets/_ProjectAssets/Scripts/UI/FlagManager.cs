@@ -10,6 +10,7 @@ public class FlagManager : MonoBehaviour
     [SerializeField] Image flagImageDisplay;
     [SerializeField] Image flagShineDisplay;
     [SerializeField] TextMeshProUGUI messageDisplay;
+    [SerializeField] Material shiningMaterial;
     [SerializeField] string imageUrl;
     [SerializeField] string detailsUrl;
 
@@ -25,9 +26,7 @@ public class FlagManager : MonoBehaviour
         }
         else
         {
-            flagImageDisplay.sprite = flagSprite;
-            flagShineDisplay.sprite = flagSprite;
-            messageDisplay.text = message;
+            SetDetails();
         }
     }
 
@@ -46,8 +45,29 @@ public class FlagManager : MonoBehaviour
             Rect _rect = new Rect(0, 0, _texture.width, _texture.height);
             Sprite _sprite = Sprite.Create(_texture, _rect, new Vector2(0.5f, 0.5f), 100);
             flagSprite = _sprite;
-            flagImageDisplay.sprite = _sprite;
-            flagShineDisplay.sprite = _sprite;
+            SetDetails();
+        }
+    }
+
+    void SetDetails()
+    {
+        if (flagSprite != null)
+        {
+            flagImageDisplay.sprite = flagSprite;
+            flagShineDisplay.sprite = flagSprite;
+
+            Texture2D _texture = new Texture2D((int)flagSprite.rect.width, (int)flagSprite.rect.height);
+            _texture.SetPixels(flagSprite.texture.GetPixels((int)flagSprite.textureRect.x,
+                (int)flagSprite.textureRect.y,
+                (int)flagSprite.textureRect.width,
+                (int)flagSprite.textureRect.height));
+            _texture.Apply();
+
+            shiningMaterial.SetTexture("_Mask", _texture);
+        }
+        if (message != null)
+        {
+            messageDisplay.text = message;
         }
     }
 
@@ -65,7 +85,7 @@ public class FlagManager : MonoBehaviour
             var _jsonData = _request.downloadHandler.text;
             TournamentResponse _response = JsonConvert.DeserializeObject<TournamentResponse>(_jsonData);
             message = _response.Message;
-            messageDisplay.text = message;
+            SetDetails();
         }
     }
 }
