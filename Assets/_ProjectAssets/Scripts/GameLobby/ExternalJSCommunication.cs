@@ -55,27 +55,13 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
 
         GameState.principalId = "u4s77-qtma7-sriuf-r7rzc-d2new-penyr-qhaap-z3lrx-b2u7e-d4wmv-gqe-dev-dev";
 
-        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?&tokenid=hvtag-6ykor-uwiaa-aaaaa-cqace-eaqca-aaabd-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/jairp-5ykor-uwiaa-aaaaa-cqace-eaqca-aacdq-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/4gya5-nakor-uwiaa-aaaaa-cqace-eaqca-aaabu-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/jxrpt-fikor-uwiaa-aaaaa-cqace-eaqca-aaajx-q" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/hs6xe-7ikor-uwiaa-aaaaa-cqace-eaqca-aaaad-q" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/ivtko-hikor-uwiaa-aaaaa-cqace-eaqca-aaaql-q" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/xtmbl-nqkor-uwiaa-aaaaa-cqace-eaqca-aaacj-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/czfvb-oakor-uwiaa-aaaaa-cqace-eaqca-aaand-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/hs6xe-7ikor-uwiaa-aaaaa-cqace-eaqca-aaaad-q" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/ulm6p-xqkor-uwiaa-aaaaa-cqace-eaqca-aaaaa-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/umbjn-wakor-uwiaa-aaaaa-cqace-eaqca-aaaba-q" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/jjzf6-5ikor-uwiaa-aaaaa-cqace-eaqca-aadai-q" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/ymih6-7akor-uwiaa-aaaaa-cqace-eaqca-aaeow-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/u62g2-kikor-uwiaa-aaaaa-cqace-eaqca-aacuw-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/xtc2f-jqkor-uwiaa-aaaaa-cqace-eaqca-aacd3-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/ry5ro-5ikor-uwiaa-aaaaa-cqace-eaqca-aaeb3-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/or7s5-qqkor-uwiaa-aaaaa-cqace-eaqca-aaaux-q" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/w6e26-xqkor-uwiaa-aaaaa-cqace-eaqca-aadoy-q" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/urzol-uikor-uwiaa-aaaaa-cqace-eaqca-aacaq-q" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/awrxn-lykor-uwiaa-aaaaa-cqace-eaqca-aacca-a" });
-        GameState.nfts.Add(new NFT() { imageUrl = "https://images.entrepot.app/tnc/rw7qm-eiaaa-aaaak-aaiqq-cai/or3jr-dqkor-uwiaa-aaaaa-cqace-eaqca-aabec-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?tokenid=cfbp6-cikor-uwiaa-aaaaa-cqace-eaqca-aadkb-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?tokenid=v3yzq-4ykor-uwiaa-aaaaa-cqace-eaqca-aaa5u-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?tokenid=e7yl4-fqkor-uwiaa-aaaaa-cqace-eaqca-aaeeg-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?tokenid=4cp2w-bykor-uwiaa-aaaaa-cqace-eaqca-aacz4-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?tokenid=jairp-5ykor-uwiaa-aaaaa-cqace-eaqca-aacdq-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?tokenid=xtmbl-nqkor-uwiaa-aaaaa-cqace-eaqca-aaacj-a" });
+        GameState.nfts.Add(new NFT() { imageUrl = "https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?tokenid=4gya5-nakor-uwiaa-aaaaa-cqace-eaqca-aaabu-a" });
 
         onNFTsReceived?.Invoke();
     }
@@ -95,7 +81,7 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
         GameState.nfts.Clear();
 
         NFTsPayload payload = JsonUtility.FromJson<NFTsPayload>(nftsString);
-        foreach(NFTPayload nft in payload.nfts)
+        foreach (NFTPayload nft in payload.nfts)
         {
             GameState.nfts.Add(new NFT() { imageUrl = nft.url });
         }
