@@ -21,6 +21,7 @@ public class LuckyWheelUI : MonoBehaviour
 
     public async void RequestReward()
     {
+        Debug.Log("Requestiong rewrd");
         int _rewardId = -1;
         try
         {
@@ -37,8 +38,9 @@ public class LuckyWheelUI : MonoBehaviour
         catch
         {
             Debug.LogWarning($"Failed getting reward id from server");
-            return;
+            _rewardId = 1;
         }
+        Debug.Log("Got reward: " + _rewardId);
         choosenReward = LuckyWheelRewardSO.Get(_rewardId);
         if (requestedToSeeReward)
         {
@@ -59,6 +61,7 @@ public class LuckyWheelUI : MonoBehaviour
 
     void Setup()
     {
+        Debug.Log("Setting up wheel");
         playerPlatform.SetActive(false);
         gameObject.SetActive(true);
 
@@ -84,20 +87,25 @@ public class LuckyWheelUI : MonoBehaviour
 
     void Claim(LuckyWheelRewardSO _reward)
     {
-        //todo implement me claim reward
         switch (_reward.Type)
         {
             case LuckyWheelRewardType.Lime:
+                ValuablesManager.Instance.LimeCrystal++;
                 break;
             case LuckyWheelRewardType.Green:
+                ValuablesManager.Instance.GreenCrystal++;
                 break;
             case LuckyWheelRewardType.Blue:
+                ValuablesManager.Instance.BlueCrystal++;
                 break;
             case LuckyWheelRewardType.Purple:
+                ValuablesManager.Instance.PurpleCrystal++;
                 break;
             case LuckyWheelRewardType.Orange:
+                ValuablesManager.Instance.OrangeCrystal++;
                 break;
             case LuckyWheelRewardType.Gift:
+                ValuablesManager.Instance.GiftItem++;
                 break;
             default:
                 throw new System.Exception("Dont know how to reward reward type: " + _reward.Type);

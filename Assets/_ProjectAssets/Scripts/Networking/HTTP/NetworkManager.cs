@@ -35,6 +35,7 @@ public class NetworkManager : MonoBehaviour
     public static async UniTask<string> GETRequestCoroutine(string relativePath, Action<long, string> OnError, bool isAuthenticated = false)
     {
         UnityWebRequest www = new UnityWebRequest(url + relativePath, "GET");
+        Debug.Log(url + relativePath);
         www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         www.SetRequestHeader("Content-Type", "application/json");
         www.SetRequestHeader("Access-Control-Allow-Origin", "*");

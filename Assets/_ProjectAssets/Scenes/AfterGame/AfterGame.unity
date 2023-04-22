@@ -457,6 +457,7 @@ MonoBehaviour:
   winColor: {r: 0.30588236, g: 1, b: 0.61960787, a: 1}
   loseColor: {r: 0.84313726, g: 0.03529412, b: 0.1882353, a: 1}
   drawColor: {r: 0.7176471, g: 0.67058825, b: 0.5764706, a: 1}
+  reasonText: {fileID: 0}
   standGlow: {fileID: 1890641202}
   standWinColor: {r: 0.53333336, g: 1, b: 0.7607843, a: 1}
   standLoseColor: {r: 1, g: 0, b: 0.08235294, a: 1}
