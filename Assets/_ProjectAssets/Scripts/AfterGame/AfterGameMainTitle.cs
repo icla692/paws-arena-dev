@@ -28,19 +28,28 @@ namespace com.colorfulcoding.AfterGame
         public Color standWinColor;
         public Color standLoseColor;
         public Color standDrawColor;
+
+        [SerializeField] LuckyWheelUI luckyWheelUI;
+        [SerializeField] GameObject leaveButton;
+
         void Start()
         {
             int checkIfIWon;
 
             //If unexpected error happened, we override result type
-            if(GameState.pointsChange.gameResultType == 0){
+            if (GameState.pointsChange.gameResultType == 0)
+            {
                 checkIfIWon = 0;
-            }else{
+            }
+            else
+            {
                 checkIfIWon = GameResolveStateUtils.CheckIfIWon(GameState.gameResolveState);
             }
 
             if (checkIfIWon > 0)
             {
+                leaveButton.gameObject.SetActive(false);
+                luckyWheelUI.RequestReward();
                 winTitle.SetActive(true);
                 bg.GetComponent<Image>().color = winColor;
                 standGlow.color = winColor;
@@ -66,10 +75,18 @@ namespace com.colorfulcoding.AfterGame
                 {
                     totalCoinsValue.text = "" + Math.Floor(GameState.pointsChange.oldPoints + val);
                     deltaPoints.text = "+" + Math.Floor(val);
-                }).setEaseInOutCirc().setDelay(1f);
+                }).setEaseInOutCirc().setDelay(1f).setOnComplete(() =>
+                {
+                    if (checkIfIWon > 0)
+                    {
+                        luckyWheelUI.ShowReward();
+                    }
+                }
+                );
             }
 
-            if(!string.IsNullOrEmpty(GameState.pointsChange.reason)){
+            if (!string.IsNullOrEmpty(GameState.pointsChange.reason))
+            {
                 reasonText.SetActive(true);
                 reasonText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = GameState.pointsChange.reason;
             }
