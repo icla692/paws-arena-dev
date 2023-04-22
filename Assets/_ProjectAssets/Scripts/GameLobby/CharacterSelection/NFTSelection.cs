@@ -115,7 +115,9 @@ public class NFTSelection : MonoBehaviour
         idx = 0;
         foreach (NFT nft in currentNFTs)
         {
+            nft.RecoveryEndDate = DateTime.UtcNow.AddMinutes(UnityEngine.Random.Range(-20, 20)); //TODO delete me... recovery date should be send by the server
             nftButtons[idx].GetComponent<NFTImageButton>().SetTexture(nft.imageTex);
+            nftButtons[idx].GetComponent<RecoveryHandler>().ShowRecovery(nft.RecoveryEndDate);
             nftButtons[idx].GetComponent<Button>().onClick.RemoveAllListeners();
 
             int crtIdx = idx;

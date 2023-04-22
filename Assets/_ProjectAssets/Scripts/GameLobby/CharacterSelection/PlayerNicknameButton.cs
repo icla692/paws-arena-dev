@@ -18,7 +18,7 @@ public class PlayerNicknameButton : MonoBehaviour
     private async void Start()
     {
         screenLoadingManager.AddLoadingReason("Grabbing account information...");
-        string nickname = await TryGetNickname(()=> { });
+        string nickname = await TryGetNickname(() => { });
 
         nicknameText.text = "";
         if (!string.IsNullOrEmpty(nickname.Trim()))
@@ -29,6 +29,9 @@ public class PlayerNicknameButton : MonoBehaviour
         {
             EnableEdit(false);
         }
+
+        float _snacks = await TryGetSnacks(() => { });
+        ValuablesManager.Instance.Snacks = _snacks;
 
         screenLoadingManager.StopLoadingReason("Grabbing account information...");
         OnPlayerNameUpdated?.Invoke(nicknameText.text);
@@ -63,6 +66,27 @@ public class PlayerNicknameButton : MonoBehaviour
         }
     }
 
+    private async UniTask<float> TryGetSnacks(Action onError)
+    {
+        try
+        {
+            string resp = await NetworkManager.GETRequestCoroutine("/user/snacks",
+            (code, err) =>
+            {
+                Debug.LogWarning($"Failed getting snacks {err} : {code}");
+                onError?.Invoke();
+            }, true);
+
+            Debug.Log($"Got snacks from server: {resp}");
+            return float.Parse(resp);
+        }
+        catch (UnityWebRequestException ex)
+        {
+            Debug.LogWarning($"Failed getting snacks form server {ex.ResponseCode} : {ex.Text}");
+            return 0;
+        }
+    }
+
     private async void SendNewNicknameToServer(string nickname)
     {
         try
@@ -76,10 +100,11 @@ public class PlayerNicknameButton : MonoBehaviour
             {
                 Debug.LogWarning($"Failed saving nickname {err} : {code}");
             }, true);
-        }catch(UnityWebRequestException err)
+        }
+        catch (UnityWebRequestException err)
         {
             Debug.LogWarning($"Problem setting nickname {err.ResponseCode} : {err.Text}");
-            if(err.ResponseCode == 0)
+            if (err.ResponseCode == 0)
             {
                 inputModal.SetError("We cannot reach the server :(");
             }
