@@ -8,22 +8,24 @@ public class ValuablesManager : MonoBehaviour
     float snacks;
     float jugOfMilk;
     float glassOfMilk;
-    float limeCrystal;
-    float greenCrystal;
-    float blueCrystal;
-    float purpleCrystal;
-    float orangeCrystal;
-    float giftItem;
+    float commonCrystal = 100;
+    float uncommonCrystal = 3;
+    float rareCrystal = 4;
+    float epicCrystal = 4;
+    float legendaryCristal = 4;
+    float giftItem = 2;
+    CraftingProcess craftingProcess;
 
     public Action UpdatedSnacks;
     public Action UpdatedJugOfMilk;
     public Action UpdatedGlassOfMilk;
-    public Action UpdatedLimeCrystal;
-    public Action UpdatedGreenCrystal;
-    public Action UpdatedBlueCrystal;
-    public Action UpdatedPurpleCrystal;
-    public Action UpdatedOrangeCrystal;
+    public Action UpdatedCommonCrystal;
+    public Action UpdatedUncommonCrystal;
+    public Action UpdatedRareCrystal;
+    public Action UpdatedEpicCrystal;
+    public Action UpdatedLegendaryCrystal;
     public Action UpdatedGiftItem;
+    public Action UpdatedCraftingProcess;
 
     private void Awake()
     {
@@ -77,69 +79,69 @@ public class ValuablesManager : MonoBehaviour
 
     }
 
-    public float LimeCrystal
+    public float CommonCrystal
     {
         get
         {
-            return limeCrystal;
+            return commonCrystal;
         }
         set
         {
-            limeCrystal = value;
-            UpdatedLimeCrystal?.Invoke();
+            commonCrystal = value;
+            UpdatedCommonCrystal?.Invoke();
         }
     }
 
-    public float GreenCrystal
+    public float UncommonCrystal
     {
         get
         {
-            return greenCrystal;
+            return uncommonCrystal;
         }
         set
         {
-            greenCrystal = value;
-            UpdatedGreenCrystal?.Invoke();
+            uncommonCrystal = value;
+            UpdatedUncommonCrystal?.Invoke();
         }
     }
 
-    public float BlueCrystal
+    public float RareCrystal
     {
         get
         {
-            return blueCrystal;
+            return rareCrystal;
         }
         set
         {
-            blueCrystal = value;
-            UpdatedBlueCrystal?.Invoke();
+            rareCrystal = value;
+            UpdatedRareCrystal?.Invoke();
         }
     }
 
-    public float PurpleCrystal
+    public float EpicCrystal
     {
         get
         {
-            return purpleCrystal;
+            return epicCrystal;
         }
 
         set
         {
-            purpleCrystal = value;
-            UpdatedPurpleCrystal?.Invoke();
+            epicCrystal = value;
+            UpdatedEpicCrystal?.Invoke();
         }
     }
 
-    public float OrangeCrystal
+    public float LegendaryCrystal
     {
         get
         {
-            return orangeCrystal;
+            return legendaryCristal;
         }
         set
         {
-            orangeCrystal = value;
-            UpdatedOrangeCrystal?.Invoke();
+            legendaryCristal = value;
+            UpdatedLegendaryCrystal?.Invoke();
         }
     }
 
@@ -153,6 +155,19 @@ public class ValuablesManager : MonoBehaviour
         {
             giftItem = value;
             UpdatedGiftItem?.Invoke();
+        }
+    }
+
+    public CraftingProcess CraftingProcess
+    {
+        get
+        {
+            return craftingProcess;
+        }
+        set
+        {
+            craftingProcess = value;
+            UpdatedCraftingProcess?.Invoke();
         }
     }
 }

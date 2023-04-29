@@ -89,22 +89,22 @@ public class LuckyWheelUI : MonoBehaviour
     {
         switch (_reward.Type)
         {
-            case LuckyWheelRewardType.Lime:
-                ValuablesManager.Instance.LimeCrystal++;
+            case ItemType.Common:
+                ValuablesManager.Instance.CommonCrystal++;
                 break;
-            case LuckyWheelRewardType.Green:
-                ValuablesManager.Instance.GreenCrystal++;
+            case ItemType.Uncommon:
+                ValuablesManager.Instance.UncommonCrystal++;
                 break;
-            case LuckyWheelRewardType.Blue:
-                ValuablesManager.Instance.BlueCrystal++;
+            case ItemType.Rare:
+                ValuablesManager.Instance.RareCrystal++;
                 break;
-            case LuckyWheelRewardType.Purple:
-                ValuablesManager.Instance.PurpleCrystal++;
+            case ItemType.Epic:
+                ValuablesManager.Instance.EpicCrystal++;
                 break;
-            case LuckyWheelRewardType.Orange:
-                ValuablesManager.Instance.OrangeCrystal++;
+            case ItemType.Lengedary:
+                ValuablesManager.Instance.LegendaryCrystal++;
                 break;
-            case LuckyWheelRewardType.Gift:
+            case ItemType.Gift:
                 ValuablesManager.Instance.GiftItem++;
                 break;
             default:

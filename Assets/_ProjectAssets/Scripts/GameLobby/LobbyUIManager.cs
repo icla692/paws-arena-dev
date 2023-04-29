@@ -35,6 +35,7 @@ public class LobbyUIManager : MonoBehaviour
 
     [Header("Others")]
     public GameObject loadingScreen;
+    [SerializeField] CraftingSystemUI craftingSystem;
 
 
     private void OnEnable()
@@ -166,5 +167,10 @@ public class LobbyUIManager : MonoBehaviour
     {
         OpenGameMenu();
         settings.SetActive(false);
+    }
+
+    public void ShowCraftingSystem()
+    {
+        craftingSystem.Setup();
     }
 }
