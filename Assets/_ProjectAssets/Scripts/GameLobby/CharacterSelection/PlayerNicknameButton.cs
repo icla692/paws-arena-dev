@@ -17,8 +17,8 @@ public class PlayerNicknameButton : MonoBehaviour
 
     private async void Start()
     {
-        screenLoadingManager.AddLoadingReason("Grabbing account information...");
-        string nickname = await TryGetNickname(()=> { });
+        //screenLoadingManager.AddLoadingReason("Grabbing account information...");
+        string nickname = await TryGetNickname(() => { });
 
         nicknameText.text = "";
         if (!string.IsNullOrEmpty(nickname.Trim()))
@@ -30,7 +30,7 @@ public class PlayerNicknameButton : MonoBehaviour
             EnableEdit(false);
         }
 
-        screenLoadingManager.StopLoadingReason("Grabbing account information...");
+        //screenLoadingManager.StopLoadingReason("Grabbing account information...");
         OnPlayerNameUpdated?.Invoke(nicknameText.text);
     }
 
@@ -76,10 +76,11 @@ public class PlayerNicknameButton : MonoBehaviour
             {
                 Debug.LogWarning($"Failed saving nickname {err} : {code}");
             }, true);
-        }catch(UnityWebRequestException err)
+        }
+        catch (UnityWebRequestException err)
         {
             Debug.LogWarning($"Problem setting nickname {err.ResponseCode} : {err.Text}");
-            if(err.ResponseCode == 0)
+            if (err.ResponseCode == 0)
             {
                 inputModal.SetError("We cannot reach the server :(");
             }
