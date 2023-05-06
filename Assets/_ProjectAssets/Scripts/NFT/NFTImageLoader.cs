@@ -76,6 +76,68 @@ public class NFTImageLoader
         return finalTex;
     }
 
+    public static Texture2D LoadNFTLocal(XmlDocument doc)
+    {
+        var nsMan = new XmlNamespaceManager(doc.NameTable);
+        nsMan.AddNamespace("ns", "http://www.w3.org/2000/svg");
+
+        var images = doc.ChildNodes[0].SelectNodes("//ns:image", nsMan);
+
+        Texture2D finalTex = new Texture2D(1000, 1000);
+
+        for (int i = 0; i < images.Count; i++)
+        {
+            var id = images[i].Attributes["id"];
+
+            if (id == null) continue;
+
+            //Positioning
+            int offsetX = 0, offsetY = 0;
+
+            XmlNode xNode = images[i].Attributes["x"];
+            if (xNode != null)
+            {
+                int.TryParse(images[i].Attributes["x"].Value, out offsetX);
+            }
+
+            XmlNode yNode = images[i].Attributes["y"];
+            if (yNode != null)
+            {
+                int.TryParse(images[i].Attributes["y"].Value, out offsetY);
+            }
+
+            //Load Tex
+            Sprite sprite = Resources.Load<Sprite>("KittiesParts/" + id.Value);
+            if (sprite == null)
+            {
+                Debug.LogErrorFormat("Sprite not found for ID '{0}'", id.Value);
+                continue;
+            }
+
+            //Generate Tex
+            Texture2D tex = sprite.texture;
+
+            for (int x = 0; x < tex.width; x++)
+            {
+                for (int y = 0; y < tex.height; y++)
+                {
+                    Color srcCol = tex.GetPixel(x, y);
+                    if (srcCol.a > 0)
+                    {
+                        int destX = offsetX + x;
+                        int destY = (1000 - tex.height) - offsetY + y;
+                        Color destCol = finalTex.GetPixel(destX, destY);
+                        Color blendedCol = Color.Lerp(destCol, srcCol, srcCol.a);
+                        finalTex.SetPixel(destX, destY, blendedCol);
+                    }
+                }
+            }
+            finalTex.Apply();
+        }
+
+        return finalTex;
+    }
+
     private static Texture2D ImageFromBase64(string base64String)
     {
         Texture2D tex = new Texture2D(2, 2);

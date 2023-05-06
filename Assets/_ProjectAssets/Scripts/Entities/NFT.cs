@@ -19,7 +19,8 @@ public class NFT
         doc = await NFTImageLoader.LoadSVGXML(imageUrl);
         if (imageTex == null)
         {
-            imageTex = NFTImageLoader.LoadNFT(doc);
+            //imageTex = NFTImageLoader.LoadNFT(doc);
+            imageTex = NFTImageLoader.LoadNFTLocal(doc);
         }
         if (furType == null)
         {
