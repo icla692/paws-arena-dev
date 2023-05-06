@@ -5,7 +5,6 @@ public class CraftingSystemUI : MonoBehaviour
 {
     [SerializeField] CraftingUI craftingUI;
     [SerializeField] DisenchantUI disenchantUI;
-
     [SerializeField] Button closeButton;
     public void Setup()
     {

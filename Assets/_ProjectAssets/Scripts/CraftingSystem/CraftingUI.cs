@@ -33,6 +33,10 @@ public class CraftingUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI botAmountDisplay;
     [SerializeField] Button botCraftItemButton;
 
+    [Space]
+    [Space]
+    [SerializeField] EquipmentsConfig equipments;
+    [SerializeField] CraftedItemDisplay itemDisplay;
     CraftingRecepieSO showingRecepie;
 
     public void Setup()
@@ -241,7 +245,7 @@ public class CraftingUI : MonoBehaviour
 
     void CraftItem()
     {
-        //todo craft item
+        ShowItem();
         Debug.Log("Should craft item :)");
         switch (showingRecepie.Inggrdiant)
         {
@@ -263,6 +267,15 @@ public class CraftingUI : MonoBehaviour
             default:
                 throw new Exception("Don't know how to craft item for: " + showingRecepie.Inggrdiant);
         }
+    }
+
+    async void ShowItem()
+    {
+        //todo ask server for the item
+        //todo delete this random item generator
+        Sprite _rewardItem = equipments.eyes[UnityEngine.Random.Range(0, equipments.eyes.Count)];
+        itemDisplay.Setup(_rewardItem);
+        //todo add item to items list
     }
 
     private void Update()
