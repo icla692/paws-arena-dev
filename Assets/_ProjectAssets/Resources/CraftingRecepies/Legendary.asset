@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b352bee00db4d7244b47a7ad9f3809a0, type: 3}
   m_Name: Legendary
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 3
-  <Inggrdiant>k__BackingField: 4
-  <AmountNeeded>k__BackingField: 5
-  <IngridiantColor>k__BackingField: '#5c26dd'
-  <IngridiantSprite>k__BackingField: {fileID: 21300000, guid: 2f0b64b6fb26e944eb707460d74f529e, type: 3}
+  <Id>k__BackingField: 5
+  <Inggrdiant>k__BackingField: 5
+  <AmountNeeded>k__BackingField: 0
+  <IngridiantColor>k__BackingField: '#f15d2b'
+  <IngridiantSprite>k__BackingField: {fileID: 0}
   <EndProduct>k__BackingField: 5
   <EndProductColor>k__BackingField: '#f15d2b'
-  <FusionTime>k__BackingField: 5
-  <EndProductSprite>k__BackingField: {fileID: 21300000, guid: c72e20a746929c64da1e0dc31e729be0, type: 3}
+  <FusionTime>k__BackingField: 0
+  <EndProductSprite>k__BackingField: {fileID: 0}
+  <TopOfferBackground>k__BackingField: {fileID: 21300000, guid: f011869f7d93c8a4a97a7b9708997a58, type: 3}
+  <BottomOfferBackground>k__BackingField: {fileID: 21300000, guid: da89d46e5be5c3943842e0cc4667ebc2, type: 3}
+  <BotAmountNeeded>k__BackingField: 3

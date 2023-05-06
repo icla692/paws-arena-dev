@@ -15,6 +15,9 @@ public class CraftingRecepieSO : ScriptableObject
     [field: SerializeField] public string EndProductColor { get; private set; }
     [field: SerializeField] public float FusionTime { get; private set; }
     [field: SerializeField] public Sprite EndProductSprite { get; private set; }
+    [field: SerializeField] public Sprite TopOfferBackground { get; private set; }
+    [field: SerializeField] public Sprite BottomOfferBackground { get; private set; }
+    [field: SerializeField] public int BotAmountNeeded { get; private set; }
 
     static List<CraftingRecepieSO> allRecepies;
 

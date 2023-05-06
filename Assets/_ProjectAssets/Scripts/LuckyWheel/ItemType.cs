@@ -8,5 +8,6 @@ public enum ItemType
     Uncommon = 2,
     Rare = 3,
     Epic = 4,
-    Lengedary = 5
+    Lengedary = 5,
+    Item
 }

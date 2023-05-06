@@ -10,23 +10,28 @@ public class CraftingUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI blueAmountDisplay;
     [SerializeField] TextMeshProUGUI purpleAmountDisplay;
     [SerializeField] TextMeshProUGUI orangeAmountDisplay;
-    [SerializeField] TextMeshProUGUI giftText;
 
     [SerializeField] Button commonButton;
     [SerializeField] Button uncommonButton;
     [SerializeField] Button rareButton;
     [SerializeField] Button epicButton;
     [SerializeField] Button legendaryButton;
-    [SerializeField] Button craftItemButton;
-    [SerializeField] TextMeshProUGUI itemAmountDisplay;
 
     //top frame
+    [SerializeField] GameObject topHolder;
     [SerializeField] Image ingridiantImage;
     [SerializeField] TextMeshProUGUI craftText;
     [SerializeField] TextMeshProUGUI craftAmountDisplay;
     [SerializeField] Image endResultImage;
     [SerializeField] Button craftCrystalButton;
     [SerializeField] TextMeshProUGUI craftButtonText;
+    [SerializeField] Image shardBackground;
+
+    //bot frame
+    [SerializeField] Image botFrameImage;
+    [SerializeField] TextMeshProUGUI botFrameText;
+    [SerializeField] TextMeshProUGUI botAmountDisplay;
+    [SerializeField] Button botCraftItemButton;
 
     CraftingRecepieSO showingRecepie;
 
@@ -43,8 +48,9 @@ public class CraftingUI : MonoBehaviour
         uncommonButton.onClick.AddListener(() => ShowRecepie(ItemType.Uncommon));
         rareButton.onClick.AddListener(() => ShowRecepie(ItemType.Rare));
         epicButton.onClick.AddListener(() => ShowRecepie(ItemType.Epic));
+        legendaryButton.onClick.AddListener(() => ShowRecepie(ItemType.Lengedary));
         craftCrystalButton.onClick.AddListener(CraftCrystal);
-        craftItemButton.onClick.AddListener(CraftItem);
+        botCraftItemButton.onClick.AddListener(CraftItem);
 
         ShowRecepie(ItemType.Common);
         ShowCristals();
@@ -65,7 +71,8 @@ public class CraftingUI : MonoBehaviour
         uncommonButton.onClick.RemoveAllListeners();
         rareButton.onClick.RemoveAllListeners();
         epicButton.onClick.RemoveAllListeners();
-        craftItemButton.onClick.RemoveListener(CraftItem);
+        legendaryButton.onClick.RemoveAllListeners();
+        botCraftItemButton.onClick.RemoveListener(CraftItem);
     }
 
     void ShowCristals()
@@ -75,28 +82,23 @@ public class CraftingUI : MonoBehaviour
         blueAmountDisplay.text = ValuablesManager.Instance.RareCrystal.ToString();
         purpleAmountDisplay.text = ValuablesManager.Instance.EpicCrystal.ToString();
         orangeAmountDisplay.text = ValuablesManager.Instance.LegendaryCrystal.ToString();
-        ShowBotFrame();
-    }
-
-    void ShowBotFrame()
-    {
-        CraftingRecepieSO _giftRecepie = CraftingRecepieSO.Get(ItemType.Lengedary);
-        giftText.text = $"Combine {_giftRecepie.AmountNeeded} <color={_giftRecepie.IngridiantColor}>{_giftRecepie.Inggrdiant}</color> shards\nto get 1 <color={_giftRecepie.EndProductColor}>Legendary</color> item";
-        if (ValuablesManager.Instance.LegendaryCrystal >= _giftRecepie.AmountNeeded)
-        {
-            itemAmountDisplay.text = $"<color=#00ff00>{ValuablesManager.Instance.LegendaryCrystal}</color>/<color={showingRecepie.EndProductColor}>{showingRecepie.AmountNeeded}</color>";
-            craftItemButton.interactable = true;
-        }
-        else
-        {
-            itemAmountDisplay.text = $"<color=#ff0000>{ValuablesManager.Instance.LegendaryCrystal}</color>/<color={showingRecepie.EndProductColor}>{showingRecepie.AmountNeeded}</color>";
-            craftItemButton.interactable = false;
-        }
+        ShowRecepie(showingRecepie.Inggrdiant);
     }
 
     void ShowRecepie(ItemType _ingridiant)
     {
         showingRecepie = CraftingRecepieSO.Get(_ingridiant);
+
+        if (_ingridiant == ItemType.Lengedary)
+        {
+            ShowBotFrame(_ingridiant);
+            topHolder.SetActive(false);
+            return;
+        }
+        else
+        {
+            topHolder.SetActive(true);
+        }
 
         ingridiantImage.sprite = showingRecepie.IngridiantSprite;
         craftText.text = $"Get 1 <color={showingRecepie.EndProductColor}>{showingRecepie.EndProduct}</color> sahrd by\ncombining {showingRecepie.AmountNeeded} <color={showingRecepie.IngridiantColor}>{showingRecepie.Inggrdiant}</color> shards";
@@ -139,11 +141,53 @@ public class CraftingUI : MonoBehaviour
         ingridiantImage.SetNativeSize();
         endResultImage.SetNativeSize();
         craftButtonText.text = "Craft";
+        shardBackground.sprite = showingRecepie.TopOfferBackground;
 
         if (ValuablesManager.Instance.CraftingProcess != null)
         {
             craftCrystalButton.interactable = false;
         }
+
+        ShowBotFrame(_ingridiant);
+    }
+
+    void ShowBotFrame(ItemType _ingridiant)
+    {
+        Debug.Log(_ingridiant);
+        CraftingRecepieSO _recepie = CraftingRecepieSO.Get(_ingridiant);
+        botFrameText.text = $"Combine {_recepie.BotAmountNeeded} <color={_recepie.IngridiantColor}>{_recepie.Inggrdiant}</color> shards\nto get 1 <color={_recepie.IngridiantColor}>{_recepie.Inggrdiant}</color> item";
+        float _amountGot = 0;
+        switch (_ingridiant)
+        {
+            case ItemType.Common:
+                _amountGot = ValuablesManager.Instance.CommonCrystal;
+                break;
+            case ItemType.Uncommon:
+                _amountGot = ValuablesManager.Instance.UncommonCrystal;
+                break;
+            case ItemType.Rare:
+                _amountGot = ValuablesManager.Instance.RareCrystal;
+                break;
+            case ItemType.Epic:
+                _amountGot = ValuablesManager.Instance.EpicCrystal;
+                break;
+            case ItemType.Lengedary:
+                _amountGot = ValuablesManager.Instance.LegendaryCrystal;
+                break;
+            default:
+                throw new Exception("Don't know how to show bot frame for item: " + _ingridiant);
+        }
+        botAmountDisplay.text = $"<color={_recepie.IngridiantColor}>{_amountGot}</color>/<color={showingRecepie.IngridiantColor}>{showingRecepie.BotAmountNeeded}</color>";
+        if (_amountGot >= _recepie.BotAmountNeeded)
+        {
+            botCraftItemButton.interactable = true;
+        }
+        else
+        {
+            botCraftItemButton.interactable = false;
+        }
+
+        botFrameImage.sprite = _recepie.BottomOfferBackground;
     }
 
     void CraftCrystal()
@@ -198,6 +242,27 @@ public class CraftingUI : MonoBehaviour
     void CraftItem()
     {
         //todo craft item
+        Debug.Log("Should craft item :)");
+        switch (showingRecepie.Inggrdiant)
+        {
+            case ItemType.Common:
+                ValuablesManager.Instance.CommonCrystal -= showingRecepie.BotAmountNeeded;
+                break;
+            case ItemType.Uncommon:
+                ValuablesManager.Instance.UncommonCrystal -= showingRecepie.BotAmountNeeded;
+                break;
+            case ItemType.Rare:
+                ValuablesManager.Instance.RareCrystal -= showingRecepie.BotAmountNeeded;
+                break;
+            case ItemType.Epic:
+                ValuablesManager.Instance.EpicCrystal -= showingRecepie.BotAmountNeeded;
+                break;
+            case ItemType.Lengedary:
+                ValuablesManager.Instance.LegendaryCrystal -= showingRecepie.BotAmountNeeded;
+                break;
+            default:
+                throw new Exception("Don't know how to craft item for: " + showingRecepie.Inggrdiant);
+        }
     }
 
     private void Update()
