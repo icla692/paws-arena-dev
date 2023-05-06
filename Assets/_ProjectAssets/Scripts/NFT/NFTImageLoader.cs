@@ -83,30 +83,15 @@ public class NFTImageLoader
 
         var images = doc.ChildNodes[0].SelectNodes("//ns:image", nsMan);
 
-        Texture2D finalTex = new Texture2D(1000, 1000);
+        // Create the final texture
+        Texture2D finalTex = new Texture2D(1000, 1000, TextureFormat.ARGB32, false);
 
-        for (int i = 0; i < images.Count; i++)
+        // Set the pixels of each sprite onto the final texture
+        foreach (XmlNode image in images)
         {
-            var id = images[i].Attributes["id"];
-
+            var id = image.Attributes["id"];
             if (id == null) continue;
 
-            //Positioning
-            int offsetX = 0, offsetY = 0;
-
-            XmlNode xNode = images[i].Attributes["x"];
-            if (xNode != null)
-            {
-                int.TryParse(images[i].Attributes["x"].Value, out offsetX);
-            }
-
-            XmlNode yNode = images[i].Attributes["y"];
-            if (yNode != null)
-            {
-                int.TryParse(images[i].Attributes["y"].Value, out offsetY);
-            }
-
-            //Load Tex
             Sprite sprite = Resources.Load<Sprite>("KittiesParts/" + id.Value);
             if (sprite == null)
             {
@@ -114,29 +99,26 @@ public class NFTImageLoader
                 continue;
             }
 
-            //Generate Tex
             Texture2D tex = sprite.texture;
 
-            for (int x = 0; x < tex.width; x++)
+            Color[] pixels = tex.GetPixels();
+            Debug.Log(pixels.Length);
+            Color[] finalPixels = finalTex.GetPixels();
+            for (int i = 0; i < pixels.Length; i++)
             {
-                for (int y = 0; y < tex.height; y++)
-                {
-                    Color srcCol = tex.GetPixel(x, y);
-                    if (srcCol.a > 0)
-                    {
-                        int destX = offsetX + x;
-                        int destY = (1000 - tex.height) - offsetY + y;
-                        Color destCol = finalTex.GetPixel(destX, destY);
-                        Color blendedCol = Color.Lerp(destCol, srcCol, srcCol.a);
-                        finalTex.SetPixel(destX, destY, blendedCol);
-                    }
-                }
+                Color c = pixels[i];
+                finalPixels[i] = Color.Lerp(finalPixels[i], c, c.a);
             }
-            finalTex.Apply();
+            finalTex.SetPixels(finalPixels);
         }
+
+        // Apply the changes to the final texture
+        finalTex.Apply();
 
         return finalTex;
     }
+
+
 
     private static Texture2D ImageFromBase64(string base64String)
     {
