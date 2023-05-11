@@ -84,7 +84,7 @@ public class NFTImageLoader
         var images = doc.ChildNodes[0].SelectNodes("//ns:image", nsMan);
 
         // Create the final texture
-        Texture2D finalTex = new Texture2D(1000, 1000, TextureFormat.ARGB32, false);
+        Texture2D finalTex = new Texture2D(96, 96, TextureFormat.ARGB32, false);
 
         // Set the pixels of each sprite onto the final texture
         foreach (XmlNode image in images)
@@ -102,7 +102,6 @@ public class NFTImageLoader
             Texture2D tex = sprite.texture;
 
             Color[] pixels = tex.GetPixels();
-            Debug.Log(pixels.Length);
             Color[] finalPixels = finalTex.GetPixels();
             for (int i = 0; i < pixels.Length; i++)
             {

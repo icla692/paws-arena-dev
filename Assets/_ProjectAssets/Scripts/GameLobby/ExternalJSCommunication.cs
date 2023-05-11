@@ -95,7 +95,7 @@ public class ExternalJSCommunication : MonoSingleton<ExternalJSCommunication>
         GameState.nfts.Clear();
 
         NFTsPayload payload = JsonUtility.FromJson<NFTsPayload>(nftsString);
-        foreach(NFTPayload nft in payload.nfts)
+        foreach (NFTPayload nft in payload.nfts)
         {
             GameState.nfts.Add(new NFT() { imageUrl = nft.url });
         }
