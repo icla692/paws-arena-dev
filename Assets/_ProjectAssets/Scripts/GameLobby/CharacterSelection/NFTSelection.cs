@@ -65,6 +65,7 @@ public class NFTSelection : MonoBehaviour
     {
         currentPage = idx;
         await PopulateGridAsync();
+
     }
 
     private List<NFT> GetNFTs(int pageNr, int pageSize)
@@ -74,6 +75,7 @@ public class NFTSelection : MonoBehaviour
     private async UniTask PopulateGridAsync()
     {
         screenLoadingManager.AddLoadingReason("Loading NFTs...");
+
         foreach (GameObject but in nftButtons)
         {
             Destroy(but);
@@ -87,48 +89,32 @@ public class NFTSelection : MonoBehaviour
             nfts.imageTex = null;
         }
 
-
         currentNFTs = GetNFTs(currentPage, pageSize);
 
-        //Grab all images from internet
-        List<UniTask> tasks = new List<UniTask>();
-        int idx = 0;
-        foreach (NFT nft in currentNFTs)
+        for (int i = 0; i < currentNFTs.Count; i++)
         {
+            NFT nft = currentNFTs[i];
             GameObject go = Instantiate(nftButtonPrefab, nftButtonsParent);
             nftButtons.Add(go);
             go.GetComponent<NFTImageButton>().SetLoadingState();
-            tasks.Add(nft.GrabImage());
-            idx++;
+            await nft.GrabImage();
+            LoadedNft(nft, i);
         }
-
-        for (int i = currentNFTs.Count; i < 9; i++)
-        {
-            GameObject go = Instantiate(nftButtonPrefab, nftButtonsParent);
-            nftButtons.Add(go);
-        }
-        await UniTask.WhenAll(tasks.ToArray());
 
         screenLoadingManager.StopLoadingReason("Loading NFTs...");
-
-        //Attach to images
-        idx = 0;
-        foreach (NFT nft in currentNFTs)
-        {
-            nft.RecoveryEndDate = DateTime.UtcNow.AddMinutes(UnityEngine.Random.Range(-20, 20)); //TODO delete me... recovery date should be send by the server
-            nftButtons[idx].GetComponent<NFTImageButton>().SetTexture(nft.imageTex);
-            nftButtons[idx].GetComponent<RecoveryHandler>().ShowRecovery(nft.RecoveryEndDate);
-            nftButtons[idx].GetComponent<Button>().onClick.RemoveAllListeners();
-
-            int crtIdx = idx;
-            nftButtons[idx].GetComponent<Button>().onClick.AddListener(() =>
-            {
-                SelectNFT(crtIdx);
-            });
-            idx++;
-        }
-
         SetSelectedNFTGraphics();
+    }
+
+    private void Update()
+    {
+
+    }
+
+    private void LoadedNft(NFT nft, int index)
+    {
+        nftButtons[index].GetComponent<NFTImageButton>().SetTexture(nft.imageTex);
+        nftButtons[index].GetComponent<Button>().onClick.RemoveAllListeners();
+        nftButtons[index].GetComponent<Button>().onClick.AddListener(() => { SelectNFT(index); });
     }
 
     private void SelectNFT(int idx)
@@ -156,6 +142,14 @@ public class NFTSelection : MonoBehaviour
         NFT selectedNFT = GameState.selectedNFT;
         for (int i = 0; i < nftButtons.Count; i++)
         {
+            if (i >= currentNFTs.Count)
+            {
+                break;
+            }
+            if (currentNFTs[i] == null)
+            {
+                break;
+            }
             if (selectedNFT != null && currentNFTs[i].imageUrl == selectedNFT.imageUrl)
             {
                 nftButtons[i].GetComponent<NFTImageButton>().Select();

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class MarketplaceHandler : MonoBehaviour
 {
-    const string MARKETPLACE_URL_KEY = "https://entrepot.app/marketplace/ickitties";
+    const string MARKETPLACE_URL_KEY = "https://toniq.io/marketplace/ickitties";
     Button button;
 
     private void Awake()

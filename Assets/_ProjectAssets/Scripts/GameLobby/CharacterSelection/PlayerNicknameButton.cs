@@ -17,7 +17,7 @@ public class PlayerNicknameButton : MonoBehaviour
 
     private async void Start()
     {
-        screenLoadingManager.AddLoadingReason("Grabbing account information...");
+        //screenLoadingManager.AddLoadingReason("Grabbing account information...");
         string nickname = await TryGetNickname(() => { });
 
         nicknameText.text = "";
@@ -30,10 +30,7 @@ public class PlayerNicknameButton : MonoBehaviour
             EnableEdit(false);
         }
 
-        float _snacks = await TryGetSnacks(() => { });
-        ValuablesManager.Instance.Snacks = _snacks;
-
-        screenLoadingManager.StopLoadingReason("Grabbing account information...");
+        //screenLoadingManager.StopLoadingReason("Grabbing account information...");
         OnPlayerNameUpdated?.Invoke(nicknameText.text);
     }
 
@@ -63,27 +60,6 @@ public class PlayerNicknameButton : MonoBehaviour
         {
             Debug.LogWarning($"Failed getting nickname form server {ex.ResponseCode} : {ex.Text}");
             return "";
-        }
-    }
-
-    private async UniTask<float> TryGetSnacks(Action onError)
-    {
-        try
-        {
-            string resp = await NetworkManager.GETRequestCoroutine("/user/snacks",
-            (code, err) =>
-            {
-                Debug.LogWarning($"Failed getting snacks {err} : {code}");
-                onError?.Invoke();
-            }, true);
-
-            Debug.Log($"Got snacks from server: {resp}");
-            return float.Parse(resp);
-        }
-        catch (UnityWebRequestException ex)
-        {
-            Debug.LogWarning($"Failed getting snacks form server {ex.ResponseCode} : {ex.Text}");
-            return 0;
         }
     }
 

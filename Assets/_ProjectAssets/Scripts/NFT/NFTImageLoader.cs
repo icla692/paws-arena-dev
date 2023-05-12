@@ -76,6 +76,49 @@ public class NFTImageLoader
         return finalTex;
     }
 
+    public static Texture2D LoadNFTLocal(XmlDocument doc)
+    {
+        var nsMan = new XmlNamespaceManager(doc.NameTable);
+        nsMan.AddNamespace("ns", "http://www.w3.org/2000/svg");
+
+        var images = doc.ChildNodes[0].SelectNodes("//ns:image", nsMan);
+
+        // Create the final texture
+        Texture2D finalTex = new Texture2D(96, 96, TextureFormat.ARGB32, false);
+
+        // Set the pixels of each sprite onto the final texture
+        foreach (XmlNode image in images)
+        {
+            var id = image.Attributes["id"];
+            if (id == null) continue;
+
+            Sprite sprite = Resources.Load<Sprite>("KittiesParts/" + id.Value);
+            if (sprite == null)
+            {
+                Debug.LogErrorFormat("Sprite not found for ID '{0}'", id.Value);
+                continue;
+            }
+
+            Texture2D tex = sprite.texture;
+
+            Color[] pixels = tex.GetPixels();
+            Color[] finalPixels = finalTex.GetPixels();
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                Color c = pixels[i];
+                finalPixels[i] = Color.Lerp(finalPixels[i], c, c.a);
+            }
+            finalTex.SetPixels(finalPixels);
+        }
+
+        // Apply the changes to the final texture
+        finalTex.Apply();
+
+        return finalTex;
+    }
+
+
+
     private static Texture2D ImageFromBase64(string base64String)
     {
         Texture2D tex = new Texture2D(2, 2);
