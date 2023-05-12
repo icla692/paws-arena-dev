@@ -75,7 +75,6 @@ public class NFTSelection : MonoBehaviour
     private async UniTask PopulateGridAsync()
     {
         screenLoadingManager.AddLoadingReason("Loading NFTs...");
-
         foreach (GameObject but in nftButtons)
         {
             Destroy(but);
@@ -89,19 +88,47 @@ public class NFTSelection : MonoBehaviour
             nfts.imageTex = null;
         }
 
+
         currentNFTs = GetNFTs(currentPage, pageSize);
 
-        for (int i = 0; i < currentNFTs.Count; i++)
+        //Grab all images from internet
+        List<UniTask> tasks = new List<UniTask>();
+        int idx = 0;
+        foreach (NFT nft in currentNFTs)
         {
-            NFT nft = currentNFTs[i];
             GameObject go = Instantiate(nftButtonPrefab, nftButtonsParent);
             nftButtons.Add(go);
             go.GetComponent<NFTImageButton>().SetLoadingState();
-            await nft.GrabImage();
-            LoadedNft(nft, i);
+            tasks.Add(nft.GrabImage());
+            idx++;
         }
 
+        for (int i = currentNFTs.Count; i < 9; i++)
+        {
+            GameObject go = Instantiate(nftButtonPrefab, nftButtonsParent);
+            nftButtons.Add(go);
+        }
+        await UniTask.WhenAll(tasks.ToArray());
+
         screenLoadingManager.StopLoadingReason("Loading NFTs...");
+
+        //Attach to images
+        idx = 0;
+        foreach (NFT nft in currentNFTs)
+        {
+            nft.RecoveryEndDate = DateTime.UtcNow.AddMinutes(UnityEngine.Random.Range(-20, 20)); //TODO delete me... recovery date should be send by the server
+            nftButtons[idx].GetComponent<NFTImageButton>().SetTexture(nft.imageTex);
+            nftButtons[idx].GetComponent<RecoveryHandler>().ShowRecovery(nft.RecoveryEndDate);
+            nftButtons[idx].GetComponent<Button>().onClick.RemoveAllListeners();
+
+            int crtIdx = idx;
+            nftButtons[idx].GetComponent<Button>().onClick.AddListener(() =>
+            {
+                SelectNFT(crtIdx);
+            });
+            idx++;
+        }
+
         SetSelectedNFTGraphics();
     }
 
