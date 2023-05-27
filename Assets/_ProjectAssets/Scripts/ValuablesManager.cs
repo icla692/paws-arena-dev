@@ -14,6 +14,7 @@ public class ValuablesManager : MonoBehaviour
     float epicCrystal = 4;
     float legendaryCristal = 4;
     float giftItem = 2;
+    int experience;
     CraftingProcess craftingProcess;
 
     public Action UpdatedSnacks;
@@ -168,6 +169,18 @@ public class ValuablesManager : MonoBehaviour
         {
             craftingProcess = value;
             UpdatedCraftingProcess?.Invoke();
+        }
+    }
+
+    public int Experience
+    {
+        get
+        {
+            return experience;
+        }
+        set
+        {
+            experience = value;
         }
     }
 }
