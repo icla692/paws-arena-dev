@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ValuablesManager : MonoBehaviour
@@ -14,8 +15,9 @@ public class ValuablesManager : MonoBehaviour
     float epicCrystal = 4;
     float legendaryCristal = 4;
     float giftItem = 2;
-    int experience;
     CraftingProcess craftingProcess;
+    SeasonData seasonData;
+
 
     public Action UpdatedSnacks;
     public Action UpdatedJugOfMilk;
@@ -38,6 +40,13 @@ public class ValuablesManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        seasonData = new SeasonData();
+        seasonData.Experience = 3900;
+        seasonData.HasPass = true;
     }
 
     public float Snacks
@@ -172,15 +181,15 @@ public class ValuablesManager : MonoBehaviour
         }
     }
 
-    public int Experience
+    public SeasonData SeasonData
     {
         get
         {
-            return experience;
+            return seasonData;
         }
         set
         {
-            experience = value;
+            seasonData = value;
         }
     }
 }
