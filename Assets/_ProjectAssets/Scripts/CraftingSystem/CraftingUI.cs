@@ -157,7 +157,6 @@ public class CraftingUI : MonoBehaviour
 
     void ShowBotFrame(ItemType _ingridiant)
     {
-        Debug.Log(_ingridiant);
         CraftingRecepieSO _recepie = CraftingRecepieSO.Get(_ingridiant);
         botFrameText.text = $"Combine {_recepie.BotAmountNeeded} <color={_recepie.IngridiantColor}>{_recepie.Inggrdiant}</color> shards\nto get 1 <color={_recepie.IngridiantColor}>{_recepie.Inggrdiant}</color> item";
         float _amountGot = 0;
@@ -246,6 +245,7 @@ public class CraftingUI : MonoBehaviour
     void CraftItem()
     {
         ShowItem();
+        //todo craft item
         Debug.Log("Should craft item :)");
         switch (showingRecepie.Inggrdiant)
         {

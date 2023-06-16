@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] Button showLevels;
     [SerializeField] Image levelProgressDisplay;
+    [SerializeField] TextMeshProUGUI levelDisplay;
     [Space()]
     [SerializeField] RecoveryHandler mainRecoveryHandler;
     [SerializeField] LevelsPanel levelsPanel;
@@ -43,5 +45,6 @@ public class MainMenuUI : MonoBehaviour
     void ShowLevelProgress()
     {
         levelProgressDisplay.fillAmount = (float)ValuablesManager.Instance.SeasonData.ExperienceOnCurrentLevel / ValuablesManager.Instance.SeasonData.Scaler;
+        levelDisplay.text = ValuablesManager.Instance.SeasonData.Level.ToString();
     }
 }

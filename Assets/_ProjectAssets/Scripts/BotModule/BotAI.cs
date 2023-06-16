@@ -95,7 +95,6 @@ public class BotAI : MonoBehaviour
         string s = "";
         for (int i = 0; i < list.Count; i++)
             s += list[i].ToString() + " ";
-        Debug.Log(s);
     }
     #endregion
 
@@ -194,10 +193,8 @@ public class BotAI : MonoBehaviour
 
             yield return StartCoroutine(Move());
         }
+
         while (repeatMoveTo && TimeLeft > Configuration.ActionTimeTotal);
-        if (BotManager.Instance.debugBotAI && TimeLeft < Configuration.ActionTimeTotal) 
-            Debug.Log("BotAI: Not enough time left for the remaining actions! Required: " + 
-                Configuration.ActionTimeTotal + " Time left: " + TimeLeft);
 
         yield return StartCoroutine(Shoot());
 
@@ -440,19 +437,6 @@ public class BotAI : MonoBehaviour
         yield return new WaitForSeconds(GetRandomizedHumanityTime(Configuration.shootingTime));
 
         api.Shoot();
-
-        if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
-        {
-            if (BotManager.Instance.debugBotAI)
-            {
-                Debug.Log("BotAI: Shooting::weapon: " + chosenWeapon);
-                Debug.Log("BotAI: Shooting::distance: " + chosenLocation.locationSims[chosenWeapon].distanceToEnemy);
-                Debug.Log("BotAI: Shooting::angle: " + targetAngle);
-                Debug.Log("BotAI: Shooting::power: " + targetPower);
-                Debug.Log("BotAI: Shooting::score: " + chosenLocation.locationSims[chosenWeapon].score);
-                Debug.Log("BotAI: Shooting::accuracy penalty: " + accPenalty);
-            }
-        }
 
         if (chosenWeapon == Weapon.Split)
         {

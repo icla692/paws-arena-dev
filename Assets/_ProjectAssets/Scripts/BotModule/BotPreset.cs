@@ -51,7 +51,6 @@ public class BotPreset : MonoBehaviour
     {
         if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
         {
-            Debug.Log("[BOT] Setting up " + gameObject.name + "...");
         }
         if (configurationOverrides != null)
         {

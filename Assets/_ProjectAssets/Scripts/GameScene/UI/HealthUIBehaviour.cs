@@ -56,4 +56,9 @@ public class HealthUIBehaviour : MonoBehaviour
         nickname.GetComponent<RectTransform>().anchoredPosition = new Vector2(81, -4);
 
     }
+
+    public void SetTag()
+    {
+        healthBarFilling.gameObject.tag = "MyExpBar";
+    }
 }

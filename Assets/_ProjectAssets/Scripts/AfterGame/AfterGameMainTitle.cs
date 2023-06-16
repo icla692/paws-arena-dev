@@ -48,7 +48,6 @@ namespace com.colorfulcoding.AfterGame
 
             if (checkIfIWon > 0)
             {
-                Debug.Log("Win detected");
                 leaveButton.gameObject.SetActive(false);
                 luckyWheelUI.RequestReward();
                 winTitle.SetActive(true);
@@ -80,7 +79,6 @@ namespace com.colorfulcoding.AfterGame
                 {
                     if (checkIfIWon > 0)
                     {
-                        Debug.Log("Should show reward now");
                         luckyWheelUI.ShowReward();
                     }
                 }

@@ -12,7 +12,6 @@ namespace com.colorfulcoding.AfterGame
         void Start()
         {
             StartCoroutine(CharacterAnimationCoroutine());
-            Debug.Log("State: " + GameState.gameResolveState);
         }
 
         private IEnumerator CharacterAnimationCoroutine()

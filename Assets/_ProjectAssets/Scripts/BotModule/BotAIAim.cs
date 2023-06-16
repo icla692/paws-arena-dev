@@ -85,9 +85,7 @@ public class BotAIAim
             }
             else
             {
-                Debug.Log("BotAIAim: Configuration error in BotManager.Instance.weaponsData, the weapon " + Weapon.Flare +
-                    " is missing a custom field named " + WEAPONDATA_EXTRA_FLARE_SECONDARY_RADIUS +
-                    ". This field should be filled in with the radius float value of the collider of the airplane projectiles.");
+               
             }
         }        
     }
@@ -138,14 +136,7 @@ public class BotAIAim
         }
 
         simulating = false;
-        if (BotManager.Instance.debugBotAI)
-        {
-            if (ConfigurationManager.Instance.GameConfig.enableDevLogs)
-            {
-                Debug.Log("BotAIAim: Aiming calculations lasted " + (Time.time - simulationStartTime) + " seconds and " +
-                    debugFrameCount + " frames.");
-            }
-        }
+       
     }
 
     private bool StopLocationSimulation(Dictionary<Weapon, bool> stop)
@@ -198,7 +189,6 @@ public class BotAIAim
                     if (BotManager.Instance.debugBotAI)
                     {
                         int progress =(int)((float)locationIndex / simulatedLocations.Count * 100);
-                        Debug.Log("BotAIAim: Thinking time exceeded. Progress was at " + progress + "%.");
                     }
                     yield break;
                 }

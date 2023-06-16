@@ -978,6 +978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageDealPrefab: {fileID: 9059958245954301650, guid: d52912169a0a9c446ab242cf94253196, type: 3}
   basePlayerComponent: {fileID: 7658601518159057736}
+  experiencePrefab: {fileID: 6369172230668695298, guid: 3cd05753dbf47b34fadc1db8f8f0c5f9, type: 3}
 --- !u!1001 &4944939853469224801
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -69,6 +69,11 @@ public class PlayerDataCustomView : MonoBehaviour
             GetComponent<RectTransform>().anchoredPosition = new Vector2(-220, GetComponent<RectTransform>().anchoredPosition.y); 
         }
 
+        if(isMyPlayer)
+        {
+            healthUIBehaviour.SetTag();
+        }
+
     }
 
     private void OnHealthUpdated(int val)

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Managers
   - Bullet
+  - MyExpBar
   layers:
   - Default
   - TransparentFX

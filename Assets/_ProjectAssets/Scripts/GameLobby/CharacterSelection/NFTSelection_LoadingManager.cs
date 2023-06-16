@@ -17,15 +17,12 @@ public class NFTSelection_LoadingManager : MonoBehaviour
     {
         if (loadingReasons == null)
         {
-            Debug.Log("reinit...");
             loadingReasons = new List<string>();
         }
 
 
         enterArenaButton.SetActive(false);
         loadingReasons.Add(reason);
-
-        Debug.Log($"Starting {reason}, got {loadingReasons.Count} more elements waiting...");
 
         if (!loadingScreen.IsActivated())
         {
@@ -37,7 +34,6 @@ public class NFTSelection_LoadingManager : MonoBehaviour
     {
         loadingReasons.Remove(reason);
 
-        Debug.Log($"Finished {reason}, got {loadingReasons.Count} more elements waiting...");
         if (loadingReasons.Count > 0)
         {
             loadingScreen.Activate(loadingReasons[0]);

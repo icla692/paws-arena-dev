@@ -123,6 +123,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5061650519729598705, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
+      propertyPath: experiencePrefab
+      value: 
+      objectReference: {fileID: 6369172230668695298, guid: 3cd05753dbf47b34fadc1db8f8f0c5f9, type: 3}
     - target: {fileID: 5227927056094972050, guid: 5e51eb25aed27f546b65a1207b944ac9, type: 3}
       propertyPath: sceneViewId
       value: 0
@@ -194,7 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3008ad1aa3321434db2d1db230d8cb15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nftUrl: https://rw7qm-eiaaa-aaaak-aaiqq-cai.raw.ic0.app/?type=thumbnail&tokenid=hvtag-6ykor-uwiaa-aaaaa-cqace-eaqca-aaabd-a
   basePlayerComponent: {fileID: 8475244123665925896}
   playerGraphicsBehaviour: {fileID: 715241018659295173}
 --- !u!114 &8475244123665925896 stripped

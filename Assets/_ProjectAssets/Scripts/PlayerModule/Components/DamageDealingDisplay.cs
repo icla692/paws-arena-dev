@@ -1,18 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Anura.ConfigurationModule.Managers;
+using Photon.Pun;
 
 public class DamageDealingDisplay : MonoBehaviour
 {
     public GameObject damageDealPrefab;
     public BasePlayerComponent basePlayerComponent;
-
+    [SerializeField] GameObject experiencePrefab;
+    bool isBotPlayer;
+    PhotonView photonView;
     Vector3 damageOffset = new Vector3(0, 1, 0);
     int amountOfShowingDamageTexts = 0;
 
     private void OnEnable()
     {
+        isBotPlayer = GetComponentInParent<BotPlayerComponent>();
+        if (ConfigurationManager.Instance.Config.GetIsMultiplayer())
+        {
+            photonView = GetComponent<PhotonView>();
+        }
+
         basePlayerComponent.onDamageTaken += OnDamageTaken;
         DamageDealingText.Finished += DeduceAmountOfTexts;
     }
@@ -35,5 +42,33 @@ public class DamageDealingDisplay : MonoBehaviour
         go.transform.localPosition += (amountOfShowingDamageTexts * damageOffset);
         go.transform.GetChild(0).position = new Vector2(UnityEngine.Random.Range(-2.0f, 2.0f), 0);
         go.transform.GetChild(0).GetComponent<DamageDealingText>().Init(damage);
+        SpawnExperience(damage);
+    }
+
+    void SpawnExperience(int _damageTaken)
+    {
+
+        if (photonView!=null)
+        {
+            if (photonView.IsMine)
+            {
+                return;
+            }
+        }
+        else
+        {
+            if (!isBotPlayer)
+            {
+                return;
+            }
+        }
+
+
+        ValuablesManager.Instance.SeasonData.Experience += _damageTaken;
+        for (int i = 0; i < _damageTaken; i+=5)
+        {
+            GameObject _experience = Instantiate(experiencePrefab);
+            _experience.transform.position = transform.position;
+        }
     }
 }

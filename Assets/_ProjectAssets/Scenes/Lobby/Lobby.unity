@@ -17559,7 +17559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6423317689327118694, guid: 2944bbf448e22644fa5dc582cbcdf47d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 181.308
+      value: 181.30798
       objectReference: {fileID: 0}
     - target: {fileID: 6423317689327118694, guid: 2944bbf448e22644fa5dc582cbcdf47d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -30587,6 +30587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showLevels: {fileID: 1599569504}
   levelProgressDisplay: {fileID: 339980700}
+  levelDisplay: {fileID: 1006632051}
   mainRecoveryHandler: {fileID: 740669173}
   levelsPanel: {fileID: 1327314818}
 --- !u!1 &1882217498
@@ -40559,7 +40560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6423317689327118694, guid: 2944bbf448e22644fa5dc582cbcdf47d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 177.08
+      value: 177.08002
       objectReference: {fileID: 0}
     - target: {fileID: 6423317689327118694, guid: 2944bbf448e22644fa5dc582cbcdf47d, type: 3}
       propertyPath: m_AnchoredPosition.y

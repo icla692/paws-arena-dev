@@ -230,7 +230,6 @@ public class BotManager : MonoSingleton<BotManager>
 
     public void AreaDamage(int damage)
     {
-        Debug.Log($"Got damage {damage} / {botHP}");
         SetBotHealth(botHP - damage);
     }
 
