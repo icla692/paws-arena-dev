@@ -19,6 +19,7 @@ public class PlayerData
     int experience;
     int level;
     int experienceOnCurrentLevel;
+    int experienceForNextLevel;
     List<ClaimedReward> claimedLevelRewards = new List<ClaimedReward>();
     List<RecoveryEntrie> recoveringKitties = new List<RecoveryEntrie>();
 
@@ -39,7 +40,6 @@ public class PlayerData
 
     public PlayerData()
     {
-      
     }
 
     public float Snacks
@@ -190,18 +190,28 @@ public class PlayerData
 
     void CalculateLevel()
     {
-        int _experience = Experience;
-        int _level = 0;
+        float _experience = Experience;
+        int _level = 1;
+        float _expForNextLevel = DataManager.Instance.GameData.LevelBaseExp;
 
-        while (_experience >= DataManager.Instance.GameData.Scaler)
+        if (_experience<DataManager.Instance.GameData.LevelBaseExp)
         {
-            _level++;
-            _experience -= DataManager.Instance.GameData.Scaler;
+            experienceOnCurrentLevel = (int)_experience;
+            _expForNextLevel = DataManager.Instance.GameData.LevelBaseExp;
+        }
+        else
+        {
+            while (_experience>=_expForNextLevel)
+            {
+                _level++;
+                _experience -= _expForNextLevel;
+                _expForNextLevel =_expForNextLevel+(_expForNextLevel * ((float)DataManager.Instance.GameData.LevelBaseScaler/100));
+            }
         }
 
-        experienceOnCurrentLevel = _experience;
+        experienceForNextLevel = (int)_expForNextLevel;
+        experienceOnCurrentLevel = (int)_experience;
         level = _level;
-
     }
 
     [JsonIgnore] public int Level
@@ -231,6 +241,7 @@ public class PlayerData
     }
 
     [JsonIgnore] public int ExperienceOnCurrentLevel => experienceOnCurrentLevel;
+    [JsonIgnore] public int ExperienceForNextLevel => experienceForNextLevel;
 
     public bool HasPass
     {

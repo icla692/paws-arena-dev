@@ -6,7 +6,8 @@ public class GameData
 {
     int seasonNumber;
     DateTime seasonEnds;
-    int scaler;
+    int levelBaseExp;
+    int levelBaseScaler;
     int respinPrice;
     int glassOfMilkPrice;
     int jugOfMilkPrice;
@@ -37,15 +38,27 @@ public class GameData
         }
     }
 
-    public int Scaler
+    public int LevelBaseExp
     {
         get
         {
-            return scaler;
+            return levelBaseExp;
         }
         set
         {
-            scaler = value;
+            levelBaseExp = value;
+        }
+    }
+
+    public int LevelBaseScaler
+    {
+        get
+        {
+            return levelBaseScaler;
+        }
+        set
+        {
+            levelBaseScaler = value;
         }
     }
 

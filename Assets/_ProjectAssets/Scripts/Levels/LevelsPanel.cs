@@ -131,7 +131,34 @@ public class LevelsPanel : MonoBehaviour
             levelsBackgroundDisplay[i].sprite = i < _progressLevel ? reachedLevelBackground : notReachedLevelBackground;
         }
         _progressLevel = Mathf.Clamp(_progressLevel, 0, 5);
-        progressDispaly.fillAmount = _progressLevel * 0.25f;
+        if (DataManager.Instance.PlayerData.Level<firstRewardLevel)
+        {
+            progressDispaly.fillAmount = 0;
+        }
+        else if (DataManager.Instance.PlayerData.Level==firstRewardLevel)
+        {
+            progressDispaly.fillAmount = 0.15f;
+        }
+        else if (DataManager.Instance.PlayerData.Level == firstRewardLevel+1)
+        {
+            progressDispaly.fillAmount = 0.25f;
+        }
+        else if (DataManager.Instance.PlayerData.Level == firstRewardLevel+2)
+        {
+            progressDispaly.fillAmount = 0.50f;
+        }
+        else if (DataManager.Instance.PlayerData.Level == firstRewardLevel+3)
+        {
+            progressDispaly.fillAmount = 0.75f;
+        }
+        else if (DataManager.Instance.PlayerData.Level == firstRewardLevel+4)
+        {
+            progressDispaly.fillAmount = 0.90f;
+        }
+        else
+        {
+            progressDispaly.fillAmount = 1;
+        }
     }
 
     private void Update()

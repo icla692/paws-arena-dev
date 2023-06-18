@@ -44,7 +44,7 @@ public class MainMenuUI : MonoBehaviour
 
     void ShowLevelProgress()
     {
-        levelProgressDisplay.fillAmount = (float)DataManager.Instance.PlayerData.ExperienceOnCurrentLevel / DataManager.Instance.GameData.Scaler;
+        levelProgressDisplay.fillAmount = (float)DataManager.Instance.PlayerData.ExperienceOnCurrentLevel / DataManager.Instance.PlayerData.ExperienceForNextLevel;
         levelDisplay.text = DataManager.Instance.PlayerData.Level.ToString();
     }
 }

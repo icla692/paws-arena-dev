@@ -48,7 +48,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     private void OnDestroy()
     {
-        float _minutesItWillTakeToRecover= myPlayerHealth/(maxHP/RecoveryHandler.RecoveryInMinutes);
+        float _minutesItWillTakeToRecover =((float)RecoveryHandler.RecoveryInMinutes / maxHP) * (maxHP - myPlayerHealth);
         DateTime _recoveryEnds = DateTime.UtcNow.AddMinutes(_minutesItWillTakeToRecover);
         GameState.selectedNFT.RecoveryEndDate = _recoveryEnds;
         RecoveryEntrie _recoveryEntry = new RecoveryEntrie()
