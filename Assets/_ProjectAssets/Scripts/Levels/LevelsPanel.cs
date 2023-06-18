@@ -40,7 +40,7 @@ public class LevelsPanel : MonoBehaviour
         showNext.onClick.AddListener(ShowNext);
         claimAllButton.onClick.AddListener(ClaimAll);
 
-        ValuablesManager.Instance.UpdatedSnacks += SetupDisplays;
+        DataManager.Instance.PlayerData.UpdatedSnacks += SetupDisplays;
 
         SetupDisplays();
     }
@@ -52,15 +52,15 @@ public class LevelsPanel : MonoBehaviour
         showNext.onClick.RemoveListener(ShowNext);
         claimAllButton.onClick.RemoveListener(ClaimAll);
 
-        ValuablesManager.Instance.UpdatedSnacks -= SetupDisplays;
+        DataManager.Instance.PlayerData.UpdatedSnacks -= SetupDisplays;
     }
 
     void SetupDisplays()
     {
-        snackDisplay.text = ValuablesManager.Instance.Snacks.ToString();
-        levelDisplay.text = ValuablesManager.Instance.SeasonData.Level.ToString();
-        seasonNumberDisplay.text = "Season "+ValuablesManager.Instance.SeasonData.SeasonNumber;
-        ShowSeasonEndDIsplay();
+        snackDisplay.text = DataManager.Instance.PlayerData.Snacks.ToString();
+        levelDisplay.text = DataManager.Instance.PlayerData.Level.ToString();
+        seasonNumberDisplay.text = "Season "+DataManager.Instance.GameData.SeasonNumber;
+        ShowSeasonEndDiplay();
         //todo set value for cristals
         Debug.Log("Set value for cristals");
     }
@@ -125,7 +125,7 @@ public class LevelsPanel : MonoBehaviour
 
     void ShowLevelProgress()
     {
-        int _progressLevel = ValuablesManager.Instance.SeasonData.Level - firstRewardLevel;
+        int _progressLevel = DataManager.Instance.PlayerData.Level - firstRewardLevel;
         for (int i = 0; i < levelsBackgroundDisplay.Length; i++)
         {
             levelsBackgroundDisplay[i].sprite = i < _progressLevel ? reachedLevelBackground : notReachedLevelBackground;
@@ -136,33 +136,33 @@ public class LevelsPanel : MonoBehaviour
 
     private void Update()
     {
-        ShowSeasonEndDIsplay();
+        ShowSeasonEndDiplay();
     }
 
-    void ShowSeasonEndDIsplay()
+    void ShowSeasonEndDiplay()
     {
-        if (DateTime.UtcNow>ValuablesManager.Instance.SeasonData.SeasonEnds)
+        if (DataManager.Instance.GameData.HasSeasonEnded)
         {
             seasonEndDisplay.text = "Ended";
         }
         else
         {
-            TimeSpan _seasonEndsIn = ValuablesManager.Instance.SeasonData.SeasonEnds - DateTime.UtcNow;
+            TimeSpan _seasonEndsIn = DataManager.Instance.GameData.SeasonEnds - DateTime.UtcNow;
             if (_seasonEndsIn.TotalDays>1)
             {
-                seasonEndDisplay.text = $"Season ends: {_seasonEndsIn.TotalDays}days";
+                seasonEndDisplay.text = $"Season ends: {(int)_seasonEndsIn.TotalDays}days";
             }
             else if (_seasonEndsIn.Hours>1)
             {
-                seasonEndDisplay.text = $"Season ends: {_seasonEndsIn.TotalDays}hours";
+                seasonEndDisplay.text = $"Season ends: {(int)_seasonEndsIn.TotalDays}hours";
             }
             else if (_seasonEndsIn.Minutes>1)
             {
-                seasonEndDisplay.text = $"Season ends: {_seasonEndsIn.Minutes}minutes";
+                seasonEndDisplay.text = $"Season ends: {(int)_seasonEndsIn.Minutes}minutes";
             }
             else
             {
-                seasonEndDisplay.text = $"Season ends: {_seasonEndsIn.Seconds}secounds";
+                seasonEndDisplay.text = $"Season ends: {(int)_seasonEndsIn.Seconds}secounds";
             }
         }
     }

@@ -105,11 +105,11 @@ public class RecoveryDropDown : MonoBehaviour
         buyButton.onClick.AddListener(BuyMilk);
         healButton.onClick.AddListener(Heal);
 
-        jugOfMilkDisplay.text = ValuablesManager.Instance.JugOfMilk.ToString();
-        jugOfMilkDisplay.color = ValuablesManager.Instance.JugOfMilk == 0 ? zeroAmountColor : normalAmountColor;
+        jugOfMilkDisplay.text = DataManager.Instance.PlayerData.JugOfMilk.ToString();
+        jugOfMilkDisplay.color = DataManager.Instance.PlayerData.JugOfMilk == 0 ? zeroAmountColor : normalAmountColor;
 
-        glassOfMilkDisplay.text = ValuablesManager.Instance.GlassOfMilk.ToString();
-        glassOfMilkDisplay.color = ValuablesManager.Instance.GlassOfMilk == 0 ? zeroAmountColor : normalAmountColor;
+        glassOfMilkDisplay.text = DataManager.Instance.PlayerData.GlassOfMilk.ToString();
+        glassOfMilkDisplay.color = DataManager.Instance.PlayerData.GlassOfMilk == 0 ? zeroAmountColor : normalAmountColor;
     }
 
     public void Heal()
@@ -122,9 +122,9 @@ public class RecoveryDropDown : MonoBehaviour
 
         if (recoveryOption == RecoveryOption.JugOfMilk)
         {
-            if (ValuablesManager.Instance.JugOfMilk > 0)
+            if (DataManager.Instance.PlayerData.JugOfMilk > 0)
             {
-                ValuablesManager.Instance.JugOfMilk--;
+                DataManager.Instance.PlayerData.JugOfMilk--;
                 GameState.selectedNFT.RecoveryEndDate = DateTime.UtcNow;
                 //TODO tell server that player used jug of milk to recover kittie
             }
@@ -135,9 +135,9 @@ public class RecoveryDropDown : MonoBehaviour
         }
         else
         {
-            if (ValuablesManager.Instance.GlassOfMilk > 0)
+            if (DataManager.Instance.PlayerData.GlassOfMilk > 0)
             {
-                ValuablesManager.Instance.GlassOfMilk--;
+                DataManager.Instance.PlayerData.GlassOfMilk--;
                 GameState.selectedNFT.RecoveryEndDate = GameState.selectedNFT.RecoveryEndDate.AddMinutes(15);
                 //TODO tell server that player used glass of milk to recover kittie
             }

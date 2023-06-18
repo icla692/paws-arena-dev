@@ -14,9 +14,9 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnEnable()
     {
-        mainRecoveryHandler.ShowRecovery(GameState.selectedNFT.RecoveryEndDate);
+        mainRecoveryHandler.ShowRecovery(GameState.selectedNFT.RecoveryEndDate,GameState.selectedNFT.imageUrl);
         GameState.selectedNFT.UpdatedRecoveryTime += CheckIfShouldStopRecovering;
-        ValuablesManager.Instance.SeasonData.UpdatedExp += ShowLevelProgress;
+        DataManager.Instance.PlayerData.UpdatedExp += ShowLevelProgress;
         showLevels.onClick.AddListener(ShowLevels);
 
         ShowLevelProgress();
@@ -25,7 +25,7 @@ public class MainMenuUI : MonoBehaviour
     private void OnDisable()
     {
         GameState.selectedNFT.UpdatedRecoveryTime -= CheckIfShouldStopRecovering;
-        ValuablesManager.Instance.SeasonData.UpdatedExp -= ShowLevelProgress;
+        DataManager.Instance.PlayerData.UpdatedExp -= ShowLevelProgress;
         showLevels.onClick.RemoveListener(ShowLevels);
     }
 
@@ -44,7 +44,7 @@ public class MainMenuUI : MonoBehaviour
 
     void ShowLevelProgress()
     {
-        levelProgressDisplay.fillAmount = (float)ValuablesManager.Instance.SeasonData.ExperienceOnCurrentLevel / ValuablesManager.Instance.SeasonData.Scaler;
-        levelDisplay.text = ValuablesManager.Instance.SeasonData.Level.ToString();
+        levelProgressDisplay.fillAmount = (float)DataManager.Instance.PlayerData.ExperienceOnCurrentLevel / DataManager.Instance.GameData.Scaler;
+        levelDisplay.text = DataManager.Instance.PlayerData.Level.ToString();
     }
 }

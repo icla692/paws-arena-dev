@@ -26,8 +26,6 @@ namespace com.colorfulcoding.GameScene
             }
             catch (Exception) { }
 
-            Debug.Log($"RoomId: {PhotonNetwork.CurrentRoom.Name}");
-
             LeaderboardPostRequestEntity req = new LeaderboardPostRequestEntity()
             {
                 matchId = GameState.roomName,
@@ -49,7 +47,6 @@ namespace com.colorfulcoding.GameScene
                     reqJson,
                     (resp) =>
                     {
-                        Debug.Log("[HTTP]Match start registered!");
                     },
                     (err, code) =>
                     {

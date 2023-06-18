@@ -41,11 +41,11 @@ public class CraftingUI : MonoBehaviour
 
     public void Setup()
     {
-        ValuablesManager.Instance.UpdatedCommonCrystal += ShowCristals;
-        ValuablesManager.Instance.UpdatedUncommonCrystal += ShowCristals;
-        ValuablesManager.Instance.UpdatedRareCrystal += ShowCristals;
-        ValuablesManager.Instance.UpdatedEpicCrystal += ShowCristals;
-        ValuablesManager.Instance.UpdatedLegendaryCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedCommonCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedUncommonCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedRareCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedEpicCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedLegendaryCrystal += ShowCristals;
         CraftingProcess.Finished += FinishedCrafting;
 
         commonButton.onClick.AddListener(() => ShowRecepie(ItemType.Common));
@@ -63,11 +63,11 @@ public class CraftingUI : MonoBehaviour
 
     private void OnDisable()
     {
-        ValuablesManager.Instance.UpdatedCommonCrystal -= ShowCristals;
-        ValuablesManager.Instance.UpdatedUncommonCrystal -= ShowCristals;
-        ValuablesManager.Instance.UpdatedRareCrystal -= ShowCristals;
-        ValuablesManager.Instance.UpdatedEpicCrystal -= ShowCristals;
-        ValuablesManager.Instance.UpdatedLegendaryCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedCommonCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedUncommonCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedRareCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedEpicCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.UpdatedLegendaryCrystal -= ShowCristals;
         CraftingProcess.Finished -= FinishedCrafting;
 
         craftCrystalButton.onClick.RemoveListener(CraftCrystal);
@@ -81,11 +81,11 @@ public class CraftingUI : MonoBehaviour
 
     void ShowCristals()
     {
-        limeAmountDisplay.text = ValuablesManager.Instance.CommonCrystal.ToString();
-        greenAmountDisplay.text = ValuablesManager.Instance.UncommonCrystal.ToString();
-        blueAmountDisplay.text = ValuablesManager.Instance.RareCrystal.ToString();
-        purpleAmountDisplay.text = ValuablesManager.Instance.EpicCrystal.ToString();
-        orangeAmountDisplay.text = ValuablesManager.Instance.LegendaryCrystal.ToString();
+        limeAmountDisplay.text = DataManager.Instance.PlayerData.CommonCrystal.ToString();
+        greenAmountDisplay.text = DataManager.Instance.PlayerData.UncommonCrystal.ToString();
+        blueAmountDisplay.text = DataManager.Instance.PlayerData.RareCrystal.ToString();
+        purpleAmountDisplay.text = DataManager.Instance.PlayerData.EpicCrystal.ToString();
+        orangeAmountDisplay.text = DataManager.Instance.PlayerData.LegendaryCrystal.ToString();
         ShowRecepie(showingRecepie.Inggrdiant);
     }
 
@@ -110,22 +110,22 @@ public class CraftingUI : MonoBehaviour
         switch (showingRecepie.Inggrdiant)
         {
             case ItemType.Gift:
-                _amountOfIngridiants = ValuablesManager.Instance.GiftItem;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.GiftItem;
                 break;
             case ItemType.Common:
-                _amountOfIngridiants = ValuablesManager.Instance.CommonCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.CommonCrystal;
                 break;
             case ItemType.Uncommon:
-                _amountOfIngridiants = ValuablesManager.Instance.UncommonCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.UncommonCrystal;
                 break;
             case ItemType.Rare:
-                _amountOfIngridiants = ValuablesManager.Instance.RareCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.RareCrystal;
                 break;
             case ItemType.Epic:
-                _amountOfIngridiants = ValuablesManager.Instance.EpicCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.EpicCrystal;
                 break;
             case ItemType.Lengedary:
-                _amountOfIngridiants = ValuablesManager.Instance.LegendaryCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.LegendaryCrystal;
                 break;
             default:
                 throw new System.Exception("Dont know how to check if player can craft: " + showingRecepie.Inggrdiant);
@@ -147,7 +147,7 @@ public class CraftingUI : MonoBehaviour
         craftButtonText.text = "Craft";
         shardBackground.sprite = showingRecepie.TopOfferBackground;
 
-        if (ValuablesManager.Instance.CraftingProcess != null)
+        if (DataManager.Instance.PlayerData.CraftingProcess != null)
         {
             craftCrystalButton.interactable = false;
         }
@@ -163,19 +163,19 @@ public class CraftingUI : MonoBehaviour
         switch (_ingridiant)
         {
             case ItemType.Common:
-                _amountGot = ValuablesManager.Instance.CommonCrystal;
+                _amountGot = DataManager.Instance.PlayerData.CommonCrystal;
                 break;
             case ItemType.Uncommon:
-                _amountGot = ValuablesManager.Instance.UncommonCrystal;
+                _amountGot = DataManager.Instance.PlayerData.UncommonCrystal;
                 break;
             case ItemType.Rare:
-                _amountGot = ValuablesManager.Instance.RareCrystal;
+                _amountGot = DataManager.Instance.PlayerData.RareCrystal;
                 break;
             case ItemType.Epic:
-                _amountGot = ValuablesManager.Instance.EpicCrystal;
+                _amountGot = DataManager.Instance.PlayerData.EpicCrystal;
                 break;
             case ItemType.Lengedary:
-                _amountGot = ValuablesManager.Instance.LegendaryCrystal;
+                _amountGot = DataManager.Instance.PlayerData.LegendaryCrystal;
                 break;
             default:
                 throw new Exception("Don't know how to show bot frame for item: " + _ingridiant);
@@ -201,27 +201,27 @@ public class CraftingUI : MonoBehaviour
         _craftingProcess.DateStarted = DateTime.UtcNow;
         _craftingProcess.Ingridiant = showingRecepie.Inggrdiant;
 
-        ValuablesManager.Instance.CraftingProcess = _craftingProcess;
+        DataManager.Instance.PlayerData.CraftingProcess = _craftingProcess;
 
         switch (showingRecepie.Inggrdiant)
         {
             case ItemType.Gift:
-                ValuablesManager.Instance.GiftItem -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.GiftItem -= showingRecepie.AmountNeeded;
                 break;
             case ItemType.Common:
-                ValuablesManager.Instance.CommonCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.CommonCrystal -= showingRecepie.AmountNeeded;
                 break;
             case ItemType.Uncommon:
-                ValuablesManager.Instance.UncommonCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.UncommonCrystal -= showingRecepie.AmountNeeded;
                 break;
             case ItemType.Rare:
-                ValuablesManager.Instance.RareCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.RareCrystal -= showingRecepie.AmountNeeded;
                 break;
             case ItemType.Epic:
-                ValuablesManager.Instance.EpicCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.EpicCrystal -= showingRecepie.AmountNeeded;
                 break;
             case ItemType.Lengedary:
-                ValuablesManager.Instance.LegendaryCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.LegendaryCrystal -= showingRecepie.AmountNeeded;
                 break;
             default:
                 throw new System.Exception("Don't know how to start crafting process for ingridiant: " + showingRecepie.Inggrdiant);
@@ -250,19 +250,19 @@ public class CraftingUI : MonoBehaviour
         switch (showingRecepie.Inggrdiant)
         {
             case ItemType.Common:
-                ValuablesManager.Instance.CommonCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.CommonCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             case ItemType.Uncommon:
-                ValuablesManager.Instance.UncommonCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.UncommonCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             case ItemType.Rare:
-                ValuablesManager.Instance.RareCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.RareCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             case ItemType.Epic:
-                ValuablesManager.Instance.EpicCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.EpicCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             case ItemType.Lengedary:
-                ValuablesManager.Instance.LegendaryCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.LegendaryCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             default:
                 throw new Exception("Don't know how to craft item for: " + showingRecepie.Inggrdiant);
@@ -280,9 +280,9 @@ public class CraftingUI : MonoBehaviour
 
     private void Update()
     {
-        if (ValuablesManager.Instance.CraftingProcess != null)
+        if (DataManager.Instance.PlayerData.CraftingProcess != null)
         {
-            craftButtonText.text = ValuablesManager.Instance.CraftingProcess.GetFinishTime();
+            craftButtonText.text = DataManager.Instance.PlayerData.CraftingProcess.GetFinishTime();
         }
     }
 }

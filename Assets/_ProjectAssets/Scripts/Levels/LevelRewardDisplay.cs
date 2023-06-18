@@ -34,16 +34,16 @@ public class LevelRewardDisplay : MonoBehaviour
         claimImage.sprite = _reward.IsPremium ? premiumClaim : normalClaim;
         rewardDisplay.gameObject.SetActive(true);
         rewardDisplay.sprite = _reward.Sprite;
-        if (ValuablesManager.Instance.SeasonData.HasClaimed(_reward, level))
+        if (DataManager.Instance.PlayerData.HasClaimed(_reward, level))
         {
             claimedObject.SetActive(true);
         }
         else
         {
-            if (level <= ValuablesManager.Instance.SeasonData.Level)
+            if (level <= DataManager.Instance.PlayerData.Level)
             {
                 claimButton.onClick.AddListener(ClaimReward);
-                if (_reward.IsPremium && !ValuablesManager.Instance.SeasonData.HasPass)
+                if (_reward.IsPremium && !DataManager.Instance.PlayerData.HasPass)
                 {
                     lockedImage.gameObject.SetActive(true);
                     claimButton.interactable = false;
@@ -79,7 +79,7 @@ public class LevelRewardDisplay : MonoBehaviour
             IsPremium = reward.IsPremium,
             Level = level,
         };
-        ValuablesManager.Instance.SeasonData.AddCollectedLevelReward(_claimedReward);
+        DataManager.Instance.PlayerData.AddCollectedLevelReward(_claimedReward);
         SetupEmpty();
         Setup(reward,level);
 

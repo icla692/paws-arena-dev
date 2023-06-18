@@ -9,6 +9,6 @@ public class LevelSnackReward : LevelRewardBase
 
     public override void Claim()
     {
-        ValuablesManager.Instance.Snacks += Amount;
+        DataManager.Instance.PlayerData.Snacks += Amount;
     }
 }

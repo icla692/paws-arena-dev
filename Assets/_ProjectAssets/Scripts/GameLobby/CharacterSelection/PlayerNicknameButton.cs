@@ -53,7 +53,6 @@ public class PlayerNicknameButton : MonoBehaviour
                 onError?.Invoke();
             }, true);
 
-            Debug.Log($"Got nickname from server: {resp}");
             return resp;
         }
         catch (UnityWebRequestException ex)

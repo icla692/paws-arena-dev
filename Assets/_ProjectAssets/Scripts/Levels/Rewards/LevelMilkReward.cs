@@ -9,6 +9,6 @@ public class LevelMilkReward : LevelRewardBase
 
     public override void Claim()
     {
-        ValuablesManager.Instance.JugOfMilk += amount;
+        DataManager.Instance.PlayerData.JugOfMilk += amount;
     }
 }

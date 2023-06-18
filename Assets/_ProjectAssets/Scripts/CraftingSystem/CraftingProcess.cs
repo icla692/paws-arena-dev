@@ -1,12 +1,14 @@
 using Newtonsoft.Json;
 using System;
 
+[Serializable]
 public class CraftingProcess
 {
     public ItemType Ingridiant;
     public DateTime DateStarted;
 
     [JsonIgnore] public static Action Finished;
+
     public string GetFinishTime()
     {
         CraftingRecepieSO _recepie = CraftingRecepieSO.Get(Ingridiant);
@@ -39,26 +41,26 @@ public class CraftingProcess
         //todo validate with server
         //if server validated
         CraftingRecepieSO _recepie = CraftingRecepieSO.Get(Ingridiant);
-        ValuablesManager.Instance.CraftingProcess = null;
+        DataManager.Instance.PlayerData.CraftingProcess = null;
         switch (_recepie.EndProduct)
         {
             case ItemType.Gift:
-                ValuablesManager.Instance.GiftItem++;
+                DataManager.Instance.PlayerData.GiftItem++;
                 break;
             case ItemType.Common:
-                ValuablesManager.Instance.CommonCrystal++;
+                DataManager.Instance.PlayerData.CommonCrystal++;
                 break;
             case ItemType.Uncommon:
-                ValuablesManager.Instance.UncommonCrystal++;
+                DataManager.Instance.PlayerData.UncommonCrystal++;
                 break;
             case ItemType.Rare:
-                ValuablesManager.Instance.RareCrystal++;
+                DataManager.Instance.PlayerData.RareCrystal++;
                 break;
             case ItemType.Epic:
-                ValuablesManager.Instance.EpicCrystal++;
+                DataManager.Instance.PlayerData.EpicCrystal++;
                 break;
             case ItemType.Lengedary:
-                ValuablesManager.Instance.LegendaryCrystal++;
+                DataManager.Instance.PlayerData.LegendaryCrystal++;
                 break;
             default:
                 throw new Exception("Don't know how to handle end resultat in recepie for :" + _recepie.EndProduct);

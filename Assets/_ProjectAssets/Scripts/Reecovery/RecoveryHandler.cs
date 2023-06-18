@@ -5,15 +5,19 @@ using UnityEngine.UI;
 
 public class RecoveryHandler : MonoBehaviour
 {
-    [SerializeField] GameObject recoveryHolder;
+    [SerializeField] GameObject recoveryHolder; //used for kitties in selection menu
     [SerializeField] Image recoveryFillAmount;
 
     IEnumerator recoveryRoutine;
+    public static int RecoveryInMinutes = 30;
+    string kittyImageUrl;
 
-    public void ShowRecovery(DateTime _endDate)
+    public void ShowRecovery(DateTime _endDate,string _kittyImageUrl)
     {
+        kittyImageUrl = _kittyImageUrl;
         if (_endDate < DateTime.UtcNow)
         {
+            DataManager.Instance.PlayerData.RemoveRecoveringKittie(_kittyImageUrl);
             return;
         }
         if (recoveryHolder != null)
@@ -34,11 +38,12 @@ public class RecoveryHandler : MonoBehaviour
         StopCoroutine(recoveryRoutine);
         recoveryRoutine = null;
         recoveryFillAmount.fillAmount = 1;
+        DataManager.Instance.PlayerData.RemoveRecoveringKittie(kittyImageUrl);
     }
 
     IEnumerator RecoveryRoutine(DateTime _endDate)
     {
-        double _totalSecoundsForRecovery = 60 * 30; // recovery should take 30minutes
+        double _totalSecoundsForRecovery = 60 * RecoveryInMinutes;
         double _secoundsPassed;
         float _fillAmount = 0;
         DateTime _startDate = _endDate.AddSeconds(-_totalSecoundsForRecovery);
@@ -57,6 +62,7 @@ public class RecoveryHandler : MonoBehaviour
     {
         if (recoveryHolder != null)
         {
+            DataManager.Instance.PlayerData.RemoveRecoveringKittie(kittyImageUrl);
             recoveryHolder.SetActive(false);
         }
     }

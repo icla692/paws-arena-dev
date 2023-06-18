@@ -1,10 +1,8 @@
 using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NFT
 {
@@ -12,8 +10,8 @@ public class NFT
     public string furType;
     public List<string> ids;
     public Texture2D imageTex;
-    DateTime recoveryEndDate;
     private XmlDocument doc;
+    DateTime recoveryEndDate;
 
     public bool CanFight => RecoveryEndDate < DateTime.UtcNow;
     public int MinutesUntilHealed => (int)(RecoveryEndDate - DateTime.UtcNow).TotalMinutes;

@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using Photon.Pun;
 using Newtonsoft.Json;
+using TMPro;
 
 public class LuckyWheelUI : MonoBehaviour
 {
@@ -13,15 +12,15 @@ public class LuckyWheelUI : MonoBehaviour
     [SerializeField] LuckyWheelClaimDisplay rewardDisplay;
     [SerializeField] Button respinButton;
     [SerializeField] Button claimButton;
-
-    [SerializeField] decimal respinPrice;
+    [SerializeField] GameObject insuficiantSnacksForRespin;
+    [SerializeField] TextMeshProUGUI insuficiantSnacksText;
     LuckyWheelRewardSO choosenReward;
 
     bool requestedToSeeReward = false;
+    int currentRespinPrice;
 
     public async void RequestReward()
     {
-        Debug.Log("Requestiong rewrd");
         int _rewardId = -1;
         try
         {
@@ -31,16 +30,13 @@ public class LuckyWheelUI : MonoBehaviour
                 Debug.LogWarning($"Failed to get reward type {err} : {code}");
             }, true);
 
-            Debug.Log($"Got reward type from server: {resp}");
             LuckyWheelRewardResponse _response = JsonConvert.DeserializeObject<LuckyWheelRewardResponse>(resp);
             _rewardId = _response.RewardType;
         }
         catch
         {
-            Debug.LogWarning($"Failed getting reward id from server");
             _rewardId = 1;
         }
-        Debug.Log("Got reward: " + _rewardId);
         choosenReward = LuckyWheelRewardSO.Get(_rewardId);
         if (requestedToSeeReward)
         {
@@ -61,7 +57,6 @@ public class LuckyWheelUI : MonoBehaviour
 
     void Setup()
     {
-        Debug.Log("Setting up wheel");
         playerPlatform.SetActive(false);
         gameObject.SetActive(true);
 
@@ -70,6 +65,7 @@ public class LuckyWheelUI : MonoBehaviour
 
         claimButton.onClick.AddListener(ClaimReward);
         respinButton.onClick.AddListener(Respin);
+        currentRespinPrice = DataManager.Instance.GameData.RespinPrice;
         SpinWheel();
     }
 
@@ -82,7 +78,6 @@ public class LuckyWheelUI : MonoBehaviour
     void ClaimReward()
     {
         Claim(choosenReward);
-        //TODO tell server that client claimed reward
     }
 
     void Claim(LuckyWheelRewardSO _reward)
@@ -90,22 +85,22 @@ public class LuckyWheelUI : MonoBehaviour
         switch (_reward.Type)
         {
             case ItemType.Common:
-                ValuablesManager.Instance.CommonCrystal++;
+                DataManager.Instance.PlayerData.CommonCrystal++;
                 break;
             case ItemType.Uncommon:
-                ValuablesManager.Instance.UncommonCrystal++;
+                DataManager.Instance.PlayerData.UncommonCrystal++;
                 break;
             case ItemType.Rare:
-                ValuablesManager.Instance.RareCrystal++;
+                DataManager.Instance.PlayerData.RareCrystal++;
                 break;
             case ItemType.Epic:
-                ValuablesManager.Instance.EpicCrystal++;
+                DataManager.Instance.PlayerData.EpicCrystal++;
                 break;
             case ItemType.Lengedary:
-                ValuablesManager.Instance.LegendaryCrystal++;
+                DataManager.Instance.PlayerData.LegendaryCrystal++;
                 break;
             case ItemType.Gift:
-                ValuablesManager.Instance.GiftItem++;
+                DataManager.Instance.PlayerData.GiftItem++;
                 break;
             default:
                 throw new System.Exception("Dont know how to reward reward type: " + _reward.Type);
@@ -116,9 +111,18 @@ public class LuckyWheelUI : MonoBehaviour
 
     void Respin()
     {
+        if (DataManager.Instance.PlayerData.Snacks< currentRespinPrice)
+        {
+            insuficiantSnacksForRespin.SetActive(true);
+            insuficiantSnacksText.text = $"You don't have enaught Snacks.\n(takes {currentRespinPrice} for respin)";
+            return;
+        }
+
+        DataManager.Instance.PlayerData.Snacks -= currentRespinPrice;
         respinButton.gameObject.SetActive(false);
         claimButton.gameObject.SetActive(false);
         choosenReward = null;
+        currentRespinPrice *= 2;
         RequestReward();
     }
 

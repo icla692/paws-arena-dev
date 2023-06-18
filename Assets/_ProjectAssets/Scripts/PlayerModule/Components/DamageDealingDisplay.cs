@@ -11,6 +11,7 @@ public class DamageDealingDisplay : MonoBehaviour
     PhotonView photonView;
     Vector3 damageOffset = new Vector3(0, 1, 0);
     int amountOfShowingDamageTexts = 0;
+    static int totallDamageDealth;
 
     private void OnEnable()
     {
@@ -47,6 +48,10 @@ public class DamageDealingDisplay : MonoBehaviour
 
     void SpawnExperience(int _damageTaken)
     {
+        if (DataManager.Instance.GameData.HasSeasonEnded)
+        {
+            return;
+        }
 
         if (photonView!=null)
         {
@@ -63,12 +68,36 @@ public class DamageDealingDisplay : MonoBehaviour
             }
         }
 
-
-        ValuablesManager.Instance.SeasonData.Experience += _damageTaken;
-        for (int i = 0; i < _damageTaken; i+=5)
+        totallDamageDealth += _damageTaken;
+        for (int i = 0; i < _damageTaken; i += 5)
         {
             GameObject _experience = Instantiate(experiencePrefab);
             _experience.transform.position = transform.position;
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (DataManager.Instance.GameData.HasSeasonEnded)
+        {
+            return;
+        }
+
+        if (photonView != null)
+        {
+            if (photonView.IsMine)
+            {
+                return;
+            }
+        }
+        else
+        {
+            if (!isBotPlayer)
+            {
+                return;
+            }
+        }
+
+        DataManager.Instance.PlayerData.Experience += totallDamageDealth;
     }
 }

@@ -12,6 +12,8 @@ public class ConnectingToServer : MonoBehaviour
     public GameObject connectButton;
     public GameObject logText;
 
+    [SerializeField] GameObject loginFailed;
+
     private void OnDisable()
     {
         ExternalJSCommunication.Instance.onWalletConnected -= OnWalletConnected;
@@ -40,6 +42,19 @@ public class ConnectingToServer : MonoBehaviour
     {
         ExternalJSCommunication.Instance.onNFTsReceived -= OnNFTsReceived;
         GameState.walletId = "asd";
-        lobbyUIManager.OpenNFTSelectionScreen();
+        FirebaseManager.Instance.TryLoginAndGetData(GameState.principalId,OnLoginFinished);
+    }
+
+    void OnLoginFinished(bool _result)
+    {
+        if (_result)
+        {
+            DataManager.Instance.SubscribeHandlers();
+            lobbyUIManager.OpenNFTSelectionScreen();
+        }
+        else
+        {
+            loginFailed.SetActive(true);
+        }
     }
 }

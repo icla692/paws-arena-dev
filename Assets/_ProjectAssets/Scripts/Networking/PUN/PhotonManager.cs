@@ -54,7 +54,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log($"PUN: Connected to master server on region {PhotonNetwork.CloudRegion}!");
         PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { "principalId", GameState.principalId } });
 
         OnConnectedServer?.Invoke();
@@ -62,17 +61,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogWarning($"PUN: Disconnected from server with cause: {cause}");
         SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("PUN: No Random Room to join. Creating room...");
         isRoomCreated = true;
 
         string roomName = Guid.NewGuid().ToString();
-        Debug.Log($"PUN: Creating room {roomName}");
         PhotonNetwork.CreateRoom(roomName, new RoomOptions{ MaxPlayers = maxPlayersPerRoom });
         GameState.roomName = roomName;
         OnCreatingRoom?.Invoke();
@@ -88,7 +84,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Connected to room succesfully!");
         if (isRoomCreated)
         {
             if (!isSinglePlayer)
