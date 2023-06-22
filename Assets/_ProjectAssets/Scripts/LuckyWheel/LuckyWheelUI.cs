@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,11 +63,15 @@ public class LuckyWheelUI : MonoBehaviour
 
         respinButton.gameObject.SetActive(false);
         claimButton.gameObject.SetActive(false);
-
-        claimButton.onClick.AddListener(ClaimReward);
-        respinButton.onClick.AddListener(Respin);
+        
         currentRespinPrice = DataManager.Instance.GameData.RespinPrice;
         SpinWheel();
+    }
+
+    private void OnEnable()
+    {
+        claimButton.onClick.AddListener(ClaimReward);
+        respinButton.onClick.AddListener(Respin);
     }
 
     private void OnDisable()

@@ -29,6 +29,7 @@ public class LuckyWheel : MonoBehaviour
 
     IEnumerator SpinRoutine()
     {
+        pointerHolder.eulerAngles = Vector3.zero;
         float _spinDuration = UnityEngine.Random.Range(3, 5f); // to get more randomnes
         float _timePassed = 0;
 
