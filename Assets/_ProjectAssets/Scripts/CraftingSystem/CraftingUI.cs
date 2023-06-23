@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
+using Random = System.Random;
 
 public class CraftingUI : MonoBehaviour
 {
@@ -273,8 +275,8 @@ public class CraftingUI : MonoBehaviour
     {
         //todo ask server for the item
         //todo delete this random item generator
-        Sprite _rewardItem = equipments.eyes[UnityEngine.Random.Range(0, equipments.eyes.Count)];
-        itemDisplay.Setup(_rewardItem);
+        // Sprite _rewardItem = equipments.eyes[UnityEngine.Random.Range(0, equipments.eyes.Count)];
+        // itemDisplay.Setup(_rewardItem);
         //todo add item to items list
     }
 

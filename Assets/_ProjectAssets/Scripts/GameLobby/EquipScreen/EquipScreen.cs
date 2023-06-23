@@ -59,25 +59,25 @@ public class EquipScreen : MonoBehaviour
 
     public void PopulateEyes()
     {
-        Populate(EquipmentType.EYEWEAR, equipmentsConfig.eyes, eyeBtn);
+        Populate(EquipmentType.EYEWEAR, equipmentsConfig.Eyes, eyeBtn);
     }
     public void PopulateHead()
     {
-        Populate(EquipmentType.HAT, equipmentsConfig.head, headBtn);
+        Populate(EquipmentType.HAT, equipmentsConfig.Head, headBtn);
     }
     public void PopulateMouth()
     {
-        Populate(EquipmentType.MOUTH, equipmentsConfig.mouth, mouthBtn);
+        Populate(EquipmentType.MOUTH, equipmentsConfig.Mouth, mouthBtn);
     }
     public void PopulateBody()
     {
-        Populate(EquipmentType.BODY, equipmentsConfig.body, bodyBtn);
+        Populate(EquipmentType.BODY, equipmentsConfig.Body, bodyBtn);
     }
     public void PopulateTail()
     {
-        Populate(EquipmentType.TAIL, equipmentsConfig.tailsOverlay, tailBtn);
-        Populate(EquipmentType.TAIL, equipmentsConfig.tailsFloating, tailBtn, false);
-        Populate(EquipmentType.TAIL, equipmentsConfig.tailsAnimated, tailBtn, false);
+        Populate(EquipmentType.TAIL, equipmentsConfig.TailsOverlay, tailBtn);
+        Populate(EquipmentType.TAIL, equipmentsConfig.TailsFloating, tailBtn, false);
+        Populate(EquipmentType.TAIL, equipmentsConfig.TailsAnimated, tailBtn, false);
     }
 
     private void Populate(EquipmentType eqType, object elements, ButtonHoverable targetBtn, bool shouldClean = true)
@@ -104,45 +104,20 @@ public class EquipScreen : MonoBehaviour
         {
             equippedItem = playerCustomization.playerEquipmentConfig[eqType];
         }
-
-        if (elements is List<Sprite> spriteEls)
-        {
-            Populate(equippedItem, spriteEls);
-        }else if(elements is List<SpriteIdPair> spriteIdEls)
+        if(elements is List<EquipmentData> spriteIdEls)
         {
             Populate(equippedItem, spriteIdEls);
         }
 
     }
 
-    private void Populate(Equipment equippedItem, List<Sprite> elements)
+    private void Populate(Equipment equippedItem, List<EquipmentData> elements)
     {
-        foreach (Sprite el in elements)
+        foreach (EquipmentData el in elements)
         {
             var go = GameObject.Instantiate(nftPrefab, content);
             var nftImageSprite = go.GetComponent<NFTImageSprite>();
-            nftImageSprite.mainImage.sprite = el;
-            equipments.Add(nftImageSprite);
-
-            if (equippedItem != null && equippedItem is SpriteEquipment spriteItem && el == spriteItem.sprite)
-            {
-                Debug.Log("Found match for " + spriteItem.sprite.name);
-                nftImageSprite.Select();
-                selectedEquipment = nftImageSprite;
-            }
-
-            int idx = equipments.Count - 1;
-            equipments[idx].onClick += () => OnEquipmentSelected(idx);
-        }
-    }
-
-    private void Populate(Equipment equippedItem, List<SpriteIdPair> elements)
-    {
-        foreach (SpriteIdPair el in elements)
-        {
-            var go = GameObject.Instantiate(nftPrefab, content);
-            var nftImageSprite = go.GetComponent<NFTImageSprite>();
-            nftImageSprite.mainImage.sprite = el.thumbnail;
+            nftImageSprite.mainImage.sprite = el.Thumbnail;
             equipments.Add(nftImageSprite);
 
             //if (equippedItem != null && equippedItem is GameObjectEquipment goItem && el == spriteItem.sprite)
@@ -157,7 +132,7 @@ public class EquipScreen : MonoBehaviour
         }
     }
 
-    private void OnEquipmentSelected(int idx, SpriteIdPair idPair = null)
+    private void OnEquipmentSelected(int idx, EquipmentData idPair = null)
     {
         selectedEquipment?.Deselect();
         selectedEquipment = equipments[idx];
@@ -167,7 +142,7 @@ public class EquipScreen : MonoBehaviour
         {
             if (idPair != null)
             {
-                playerCustomization.SetTail(idPair.id);
+                playerCustomization.SetTail(idPair.Id);
             }
             else
             {
