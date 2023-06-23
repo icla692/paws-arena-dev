@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 30069357}
   - component: {fileID: 30069356}
   - component: {fileID: 30069355}
+  - component: {fileID: 30069358}
   m_Layer: 5
   m_Name: Shards
   m_TagString: Untagged
@@ -466,6 +467,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30069353}
   m_CullTransparentMesh: 1
+--- !u!114 &30069358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30069353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c83833c29763af4d8f7d6e6976ada27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  display: {fileID: 1089379301}
 --- !u!1 &42974730
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,6 +883,7 @@ GameObject:
   - component: {fileID: 108994109}
   - component: {fileID: 108994108}
   - component: {fileID: 108994107}
+  - component: {fileID: 108994110}
   m_Layer: 5
   m_Name: Shards
   m_TagString: Untagged
@@ -956,6 +971,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108994105}
   m_CullTransparentMesh: 1
+--- !u!114 &108994110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108994105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c83833c29763af4d8f7d6e6976ada27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  display: {fileID: 1105587756}
 --- !u!1 &116300585
 GameObject:
   m_ObjectHideFlags: 0
@@ -22715,8 +22743,6 @@ MonoBehaviour:
   glassOfMilkDisplay: {fileID: 1826089573}
   normalAmountColor: {r: 0.9339623, g: 0.9339623, b: 0.9339623, a: 1}
   zeroAmountColor: {r: 0.9150943, g: 0.02071909, b: 0.02071909, a: 1}
-  glassOfMilkPrice: 10
-  jugOfMilkPrice: 20
   glassOfMilkPriceDisplay: {fileID: 1903544252}
   jugOfMilkPriceDisplay: {fileID: 1526667382}
 --- !u!114 &1447683061

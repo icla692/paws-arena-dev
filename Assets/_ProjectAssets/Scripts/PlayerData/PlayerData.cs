@@ -304,4 +304,7 @@ public class PlayerData
         recoveringKitties.Remove(_entry);
         UpdatedRecoveringKitties?.Invoke();
     }
+
+    [JsonIgnore]
+    public float TotalCrystalsAmount => commonCrystal + uncommonCrystal + rareCrystal + epicCrystal + legendaryCristal;
 }
