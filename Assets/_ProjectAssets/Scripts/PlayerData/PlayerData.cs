@@ -22,6 +22,7 @@ public class PlayerData
     int experienceForNextLevel;
     List<ClaimedReward> claimedLevelRewards = new List<ClaimedReward>();
     List<RecoveryEntrie> recoveringKitties = new List<RecoveryEntrie>();
+    private List<int> ownedEquiptables = new List<int>() {0,25,60,74,95 };
 
     [JsonIgnore] public Action UpdatedSnacks;
     [JsonIgnore] public Action UpdatedJugOfMilk;
@@ -37,6 +38,7 @@ public class PlayerData
     [JsonIgnore] public Action UpdatedHasPass;
     [JsonIgnore] public Action UpdatedExp;
     [JsonIgnore] public Action UpdatedRecoveringKitties;
+    [JsonIgnore] public Action UpdatedEquiptables;
 
     public PlayerData()
     {
@@ -307,4 +309,27 @@ public class PlayerData
 
     [JsonIgnore]
     public float TotalCrystalsAmount => commonCrystal + uncommonCrystal + rareCrystal + epicCrystal + legendaryCristal;
+
+    public List<int> OwnedEquiptables
+    {
+        get
+        {
+            return ownedEquiptables;
+        }
+        set
+        {
+            ownedEquiptables = value;
+        }
+    }
+
+    public void AddOwnedEquipment(int _id)
+    {
+        if (ownedEquiptables.Contains(_id))
+        {
+            return;
+        }
+        
+        ownedEquiptables.Add(_id);
+        UpdatedEquiptables?.Invoke();
+    }
 }

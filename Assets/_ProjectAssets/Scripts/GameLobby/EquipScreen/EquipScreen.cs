@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -104,31 +105,35 @@ public class EquipScreen : MonoBehaviour
         {
             equippedItem = playerCustomization.playerEquipmentConfig[eqType];
         }
-        if(elements is List<EquipmentData> spriteIdEls)
+
+        if (elements is List<EquipmentData> spriteEls)
         {
-            Populate(equippedItem, spriteIdEls);
+            Populate(equippedItem, spriteEls);
         }
-
     }
-
+    
     private void Populate(Equipment equippedItem, List<EquipmentData> elements)
     {
         foreach (EquipmentData el in elements)
         {
+            if (!DataManager.Instance.PlayerData.OwnedEquiptables.Contains((Convert.ToInt32(el.Id))))
+            {
+                continue;
+            }
             var go = GameObject.Instantiate(nftPrefab, content);
             var nftImageSprite = go.GetComponent<NFTImageSprite>();
             nftImageSprite.mainImage.sprite = el.Thumbnail;
             equipments.Add(nftImageSprite);
 
-            //if (equippedItem != null && equippedItem is GameObjectEquipment goItem && el == spriteItem.sprite)
-            //{
-            //    Debug.Log("Found match for " + spriteItem.sprite.name);
-            //    nftImageSprite.Select();
-            //    selectedEquipment = nftImageSprite;
-            //}
+            if (equippedItem != null && equippedItem is SpriteEquipment spriteItem && el.Thumbnail == spriteItem.sprite)
+            {
+                Debug.Log("Found match for " + spriteItem.sprite.name);
+                nftImageSprite.Select();
+                selectedEquipment = nftImageSprite;
+            }
 
             int idx = equipments.Count - 1;
-            equipments[idx].onClick += () => OnEquipmentSelected(idx, el);
+            equipments[idx].onClick += () => OnEquipmentSelected(idx);
         }
     }
 

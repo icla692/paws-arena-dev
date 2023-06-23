@@ -21,6 +21,7 @@ public class DataManager : MonoBehaviour
     const string CLAIMED_LEVELS = "ClaimedLevelRewards";
     const string HAS_PASS = "HasPass";
     const string RECOVERING_KITTIES = "RecoveringKitties";
+    private const string OWNED_EQUIPTABLES = "AddOwnedEquipment";
 
     bool hasSubscribed = false;
 
@@ -69,6 +70,7 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedHasPass += SaveHasPass;
         PlayerData.UpdatedExp += SaveExp;
         PlayerData.UpdatedRecoveringKitties += SaveRecoveringKittes;
+        PlayerData.UpdatedEquiptables += SaveEquiptables;
     }
 
     private void OnDestroy()
@@ -91,6 +93,7 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedHasPass -= SaveHasPass;
         PlayerData.UpdatedExp -= SaveExp;
         PlayerData.UpdatedRecoveringKitties -= SaveRecoveringKittes;
+        PlayerData.UpdatedEquiptables -= SaveEquiptables;
     }
 
     void SaveSnacks()
@@ -161,5 +164,10 @@ public class DataManager : MonoBehaviour
     void SaveRecoveringKittes()
     {
         FirebaseManager.Instance.SaveValue(RECOVERING_KITTIES, JsonConvert.SerializeObject(PlayerData.RecoveringKitties));
+    }
+
+    void SaveEquiptables()
+    {
+        FirebaseManager.Instance.SaveValue(OWNED_EQUIPTABLES, JsonConvert.SerializeObject(PlayerData.OwnedEquiptables));
     }
 }
