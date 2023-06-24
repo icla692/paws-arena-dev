@@ -147,7 +147,7 @@ public class EquipScreen : MonoBehaviour
         {
             if (idPair != null)
             {
-                playerCustomization.SetTail(idPair.Id);
+                playerCustomization.SetTail(idPair.Id.ToString());
             }
             else
             {

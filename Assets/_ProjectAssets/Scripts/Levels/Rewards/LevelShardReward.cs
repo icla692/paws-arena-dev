@@ -13,19 +13,19 @@ public class LevelShardReward : LevelRewardBase
         switch (Type)
         {
             case LevelRewardType.CommonShard:
-                DataManager.Instance.PlayerData.CommonCrystal += Amount;
+                DataManager.Instance.PlayerData.Crystals.CommonCrystal += Amount;
                 break;
             case LevelRewardType.UncommonShard:
-                DataManager.Instance.PlayerData.UncommonCrystal += Amount;
+                DataManager.Instance.PlayerData.Crystals.UncommonCrystal += Amount;
                 break;
             case LevelRewardType.RareShard:
-                DataManager.Instance.PlayerData.RareCrystal += Amount;
+                DataManager.Instance.PlayerData.Crystals.RareCrystal += Amount;
                 break;
             case LevelRewardType.EpicShard:
-                DataManager.Instance.PlayerData.EpicCrystal += Amount;
+                DataManager.Instance.PlayerData.Crystals.EpicCrystal += Amount;
                 break;
             case LevelRewardType.LengedaryShard:
-                DataManager.Instance.PlayerData.LegendaryCrystal += Amount;
+                DataManager.Instance.PlayerData.Crystals.LegendaryCrystal += Amount;
                 break;
             default:
                 break;

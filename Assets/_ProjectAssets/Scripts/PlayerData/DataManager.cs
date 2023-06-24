@@ -10,18 +10,18 @@ public class DataManager : MonoBehaviour
     const string SNACKS = "Snacks";
     const string JUG_OF_MILK = "JugOfMilk";
     const string GLASS_OF_MILK = "GlassOfMilk";
-    const string COMMON_CRISTAL = "CommonCrystal";
-    const string UNCOMMON_CRISTAL = "UncommonCrystal";
-    const string RARE_CRISTAL = "RareCrystal";
-    const string EPIC_CRISTAL = "EpicCrystal";
-    const string LEGENDARY_CRISTAL = "LegendaryCrystal";
-    const string GIFT_ITEM = "GiftItem";
+    const string COMMON_CRISTAL = "Crystals/CommonCrystal";
+    const string UNCOMMON_CRISTAL = "Crystals/UncommonCrystal";
+    const string RARE_CRISTAL = "Crystals/RareCrystal";
+    const string EPIC_CRISTAL = "Crystals/EpicCrystal";
+    const string LEGENDARY_CRISTAL = "Crystals/LegendaryCrystal";
     const string CRAFTING_PROCESS = "CraftingProcess";
     const string EXPERIENCE = "Experience";
     const string CLAIMED_LEVELS = "ClaimedLevelRewards";
     const string HAS_PASS = "HasPass";
     const string RECOVERING_KITTIES = "RecoveringKitties";
-    private const string OWNED_EQUIPTABLES = "AddOwnedEquipment";
+    private const string OWNED_EQUIPTABLES = "OwnedEquiptables";
+    private const string SEASON_NUMBER = "SeasonNumber";
 
     bool hasSubscribed = false;
 
@@ -41,6 +41,18 @@ public class DataManager : MonoBehaviour
     public void SetPlayerData(string _data)
     {
         PlayerData = JsonConvert.DeserializeObject<PlayerData>(_data);
+        if (PlayerData.SeasonNumber!=GameData.SeasonNumber)
+        {
+            PlayerData.SeasonNumber = GameData.SeasonNumber;
+            PlayerData.Experience = 0;
+            PlayerData.ClaimedLevelRewards.Clear();
+            PlayerData.HasPass = false;
+            SaveClaimedLevels();
+            SaveExp();
+            SaveHasPass();
+            SaveSeasonNumber();
+        }
+        
     }
 
     public void CreatePlayerDataEmpty()
@@ -59,18 +71,18 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedSnacks += SaveSnacks;
         PlayerData.UpdatedJugOfMilk += SaveJugOfMilk;
         PlayerData.UpdatedGlassOfMilk += SaveGlassOfMilk;
-        PlayerData.UpdatedCommonCrystal += SaveCommonCristal;
-        PlayerData.UpdatedUncommonCrystal += SaveUncommonCristal;
-        PlayerData.UpdatedRareCrystal += SaveRareCristal;
-        PlayerData.UpdatedEpicCrystal += SaveEpicCristal;
-        PlayerData.UpdatedLegendaryCrystal += SaveLegendaryCristal;
-        PlayerData.UpdatedGiftItem += SaveGiftItem;
+        PlayerData.Crystals.UpdatedCommonCrystal += SaveCommonCristal;
+        PlayerData.Crystals.UpdatedUncommonCrystal += SaveUncommonCristal;
+        PlayerData.Crystals.UpdatedRareCrystal += SaveRareCristal;
+        PlayerData.Crystals.UpdatedEpicCrystal += SaveEpicCristal;
+        PlayerData.Crystals.UpdatedLegendaryCrystal += SaveLegendaryCristal;
         PlayerData.UpdatedCraftingProcess += SaveCraftingProcess;
         PlayerData.UpdatedClaimedLevels += SaveClaimedLevels;
         PlayerData.UpdatedHasPass += SaveHasPass;
         PlayerData.UpdatedExp += SaveExp;
         PlayerData.UpdatedRecoveringKitties += SaveRecoveringKittes;
         PlayerData.UpdatedEquiptables += SaveEquiptables;
+        PlayerData.UpdatedSeasonNumber += SaveSeasonNumber;
     }
 
     private void OnDestroy()
@@ -82,18 +94,18 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedSnacks -= SaveSnacks;
         PlayerData.UpdatedJugOfMilk -= SaveJugOfMilk;
         PlayerData.UpdatedGlassOfMilk -= SaveGlassOfMilk;
-        PlayerData.UpdatedCommonCrystal -= SaveCommonCristal;
-        PlayerData.UpdatedUncommonCrystal -= SaveUncommonCristal;
-        PlayerData.UpdatedRareCrystal -= SaveRareCristal;
-        PlayerData.UpdatedEpicCrystal -= SaveEpicCristal;
-        PlayerData.UpdatedLegendaryCrystal -= SaveLegendaryCristal;
-        PlayerData.UpdatedGiftItem -= SaveGiftItem;
+        PlayerData.Crystals.UpdatedCommonCrystal -= SaveCommonCristal;
+        PlayerData.Crystals.UpdatedUncommonCrystal -= SaveUncommonCristal;
+        PlayerData.Crystals.UpdatedRareCrystal -= SaveRareCristal;
+        PlayerData.Crystals.UpdatedEpicCrystal -= SaveEpicCristal;
+        PlayerData.Crystals.UpdatedLegendaryCrystal -= SaveLegendaryCristal;
         PlayerData.UpdatedCraftingProcess -= SaveCraftingProcess;
         PlayerData.UpdatedClaimedLevels -= SaveClaimedLevels;
         PlayerData.UpdatedHasPass -= SaveHasPass;
         PlayerData.UpdatedExp -= SaveExp;
         PlayerData.UpdatedRecoveringKitties -= SaveRecoveringKittes;
         PlayerData.UpdatedEquiptables -= SaveEquiptables;
+        PlayerData.UpdatedSeasonNumber -= SaveSeasonNumber;
     }
 
     void SaveSnacks()
@@ -113,32 +125,27 @@ public class DataManager : MonoBehaviour
 
     void SaveCommonCristal()
     {
-        FirebaseManager.Instance.SaveValue(COMMON_CRISTAL, PlayerData.CommonCrystal);
+        FirebaseManager.Instance.SaveValue(COMMON_CRISTAL, PlayerData.Crystals.CommonCrystal);
     }
 
     void SaveUncommonCristal()
     {
-        FirebaseManager.Instance.SaveValue(UNCOMMON_CRISTAL, PlayerData.UncommonCrystal);
+        FirebaseManager.Instance.SaveValue(UNCOMMON_CRISTAL, PlayerData.Crystals.UncommonCrystal);
     }
 
     void SaveRareCristal()
     {
-        FirebaseManager.Instance.SaveValue(RARE_CRISTAL, PlayerData.RareCrystal);
+        FirebaseManager.Instance.SaveValue(RARE_CRISTAL, PlayerData.Crystals.RareCrystal);
     }
 
     void SaveEpicCristal()
     {
-        FirebaseManager.Instance.SaveValue(EPIC_CRISTAL, PlayerData.EpicCrystal);
+        FirebaseManager.Instance.SaveValue(EPIC_CRISTAL, PlayerData.Crystals.EpicCrystal);
     }
 
     void SaveLegendaryCristal()
     {
-        FirebaseManager.Instance.SaveValue(LEGENDARY_CRISTAL, PlayerData.LegendaryCrystal);
-    }
-
-    void SaveGiftItem()
-    {
-        FirebaseManager.Instance.SaveValue(GIFT_ITEM, PlayerData.GiftItem);
+        FirebaseManager.Instance.SaveValue(LEGENDARY_CRISTAL, PlayerData.Crystals.LegendaryCrystal);
     }
 
     void SaveCraftingProcess()
@@ -169,5 +176,10 @@ public class DataManager : MonoBehaviour
     void SaveEquiptables()
     {
         FirebaseManager.Instance.SaveValue(OWNED_EQUIPTABLES, JsonConvert.SerializeObject(PlayerData.OwnedEquiptables));
+    }
+
+    void SaveSeasonNumber()
+    {
+        FirebaseManager.Instance.SaveValue(SEASON_NUMBER,PlayerData.SeasonNumber);
     }
 }

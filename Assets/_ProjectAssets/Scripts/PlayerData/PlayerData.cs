@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class PlayerData 
@@ -8,12 +9,7 @@ public class PlayerData
     float snacks=0;
     float jugOfMilk=0;
     float glassOfMilk=0;
-    float commonCrystal = 0;
-    float uncommonCrystal = 0;
-    float rareCrystal = 0;
-    float epicCrystal = 0;
-    float legendaryCristal = 0;
-    float giftItem = 0;
+    private CrystalsData crystals = new CrystalsData();
     CraftingProcess craftingProcess;
     bool hasPass;
     int experience;
@@ -23,22 +19,18 @@ public class PlayerData
     List<ClaimedReward> claimedLevelRewards = new List<ClaimedReward>();
     List<RecoveryEntrie> recoveringKitties = new List<RecoveryEntrie>();
     private List<int> ownedEquiptables = new List<int>() {0,25,60,74,95 };
+    private int seasonNumber;
 
     [JsonIgnore] public Action UpdatedSnacks;
     [JsonIgnore] public Action UpdatedJugOfMilk;
     [JsonIgnore] public Action UpdatedGlassOfMilk;
-    [JsonIgnore] public Action UpdatedCommonCrystal;
-    [JsonIgnore] public Action UpdatedUncommonCrystal;
-    [JsonIgnore] public Action UpdatedRareCrystal;
-    [JsonIgnore] public Action UpdatedEpicCrystal;
-    [JsonIgnore] public Action UpdatedLegendaryCrystal;
-    [JsonIgnore] public Action UpdatedGiftItem;
     [JsonIgnore] public Action UpdatedCraftingProcess;
     [JsonIgnore] public Action UpdatedClaimedLevels;
     [JsonIgnore] public Action UpdatedHasPass;
     [JsonIgnore] public Action UpdatedExp;
     [JsonIgnore] public Action UpdatedRecoveringKitties;
     [JsonIgnore] public Action UpdatedEquiptables;
+    [JsonIgnore] public Action UpdatedSeasonNumber;
 
     public PlayerData()
     {
@@ -84,85 +76,12 @@ public class PlayerData
 
     }
 
-    public float CommonCrystal
+    public CrystalsData Crystals
     {
-        get
-        {
-            return commonCrystal;
-        }
-        set
-        {
-            commonCrystal = value;
-            UpdatedCommonCrystal?.Invoke();
-        }
+        get => crystals;
+        set => crystals=value;
     }
-
-    public float UncommonCrystal
-    {
-        get
-        {
-            return uncommonCrystal;
-        }
-        set
-        {
-            uncommonCrystal = value;
-            UpdatedUncommonCrystal?.Invoke();
-        }
-    }
-
-    public float RareCrystal
-    {
-        get
-        {
-            return rareCrystal;
-        }
-        set
-        {
-            rareCrystal = value;
-            UpdatedRareCrystal?.Invoke();
-        }
-    }
-
-    public float EpicCrystal
-    {
-        get
-        {
-            return epicCrystal;
-        }
-
-        set
-        {
-            epicCrystal = value;
-            UpdatedEpicCrystal?.Invoke();
-        }
-    }
-
-    public float LegendaryCrystal
-    {
-        get
-        {
-            return legendaryCristal;
-        }
-        set
-        {
-            legendaryCristal = value;
-            UpdatedLegendaryCrystal?.Invoke();
-        }
-    }
-
-    public float GiftItem
-    {
-        get
-        {
-            return giftItem;
-        }
-        set
-        {
-            giftItem = value;
-            UpdatedGiftItem?.Invoke();
-        }
-    }
-
+    
     public CraftingProcess CraftingProcess
     {
         get
@@ -306,10 +225,7 @@ public class PlayerData
         recoveringKitties.Remove(_entry);
         UpdatedRecoveringKitties?.Invoke();
     }
-
-    [JsonIgnore]
-    public float TotalCrystalsAmount => commonCrystal + uncommonCrystal + rareCrystal + epicCrystal + legendaryCristal;
-
+    
     public List<int> OwnedEquiptables
     {
         get
@@ -331,5 +247,26 @@ public class PlayerData
         
         ownedEquiptables.Add(_id);
         UpdatedEquiptables?.Invoke();
+    }
+
+    public void RemoveOwnedEquipment(int _id)
+    {
+        if (!ownedEquiptables.Contains(_id))
+        {
+            return;
+        }
+        
+        ownedEquiptables.Remove(_id);
+        UpdatedEquiptables?.Invoke();
+    }
+
+    public int SeasonNumber
+    {
+        get => seasonNumber;
+        set
+        {
+            seasonNumber = value; 
+            UpdatedSeasonNumber?.Invoke();
+        }
     }
 }

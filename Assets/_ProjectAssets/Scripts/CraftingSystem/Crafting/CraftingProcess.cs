@@ -44,23 +44,20 @@ public class CraftingProcess
         DataManager.Instance.PlayerData.CraftingProcess = null;
         switch (_recepie.EndProduct)
         {
-            case ItemType.Gift:
-                DataManager.Instance.PlayerData.GiftItem++;
-                break;
             case ItemType.Common:
-                DataManager.Instance.PlayerData.CommonCrystal++;
+                DataManager.Instance.PlayerData.Crystals.CommonCrystal++;
                 break;
             case ItemType.Uncommon:
-                DataManager.Instance.PlayerData.UncommonCrystal++;
+                DataManager.Instance.PlayerData.Crystals.UncommonCrystal++;
                 break;
             case ItemType.Rare:
-                DataManager.Instance.PlayerData.RareCrystal++;
+                DataManager.Instance.PlayerData.Crystals.RareCrystal++;
                 break;
             case ItemType.Epic:
-                DataManager.Instance.PlayerData.EpicCrystal++;
+                DataManager.Instance.PlayerData.Crystals.EpicCrystal++;
                 break;
             case ItemType.Lengedary:
-                DataManager.Instance.PlayerData.LegendaryCrystal++;
+                DataManager.Instance.PlayerData.Crystals.LegendaryCrystal++;
                 break;
             default:
                 throw new Exception("Don't know how to handle end resultat in recepie for :" + _recepie.EndProduct);

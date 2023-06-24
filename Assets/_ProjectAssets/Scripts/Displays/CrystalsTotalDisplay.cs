@@ -7,26 +7,26 @@ public class CrystalsTotalDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        DataManager.Instance.PlayerData.UpdatedCommonCrystal += Show;
-        DataManager.Instance.PlayerData.UpdatedUncommonCrystal += Show;
-        DataManager.Instance.PlayerData.UpdatedRareCrystal += Show;
-        DataManager.Instance.PlayerData.UpdatedLegendaryCrystal += Show;
-        DataManager.Instance.PlayerData.UpdatedEpicCrystal += Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedCommonCrystal += Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedUncommonCrystal += Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedRareCrystal += Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedLegendaryCrystal += Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedEpicCrystal += Show;
 
         Show();
     }
 
     private void OnDisable()
     {
-        DataManager.Instance.PlayerData.UpdatedCommonCrystal -= Show;
-        DataManager.Instance.PlayerData.UpdatedUncommonCrystal -= Show;
-        DataManager.Instance.PlayerData.UpdatedRareCrystal -= Show;
-        DataManager.Instance.PlayerData.UpdatedLegendaryCrystal -= Show;
-        DataManager.Instance.PlayerData.UpdatedEpicCrystal -= Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedCommonCrystal -= Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedUncommonCrystal -= Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedRareCrystal -= Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedLegendaryCrystal -= Show;
+        DataManager.Instance.PlayerData.Crystals.UpdatedEpicCrystal -= Show;
     }
 
     void Show()
     {
-        display.text = DataManager.Instance.PlayerData.TotalCrystalsAmount.ToString();
+        display.text = DataManager.Instance.PlayerData.Crystals.TotalCrystalsAmount.ToString();
     }
 }

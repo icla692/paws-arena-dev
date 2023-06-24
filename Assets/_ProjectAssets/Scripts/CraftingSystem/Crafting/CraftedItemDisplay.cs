@@ -8,12 +8,12 @@ public class CraftedItemDisplay : MonoBehaviour
     [SerializeField] Image iconDisplay;
     [SerializeField] TextMeshProUGUI nameDisplay;
 
-    public void Setup(Sprite _sprite)
+    public void Setup(EquipmentData _equipmentData)
     {
         closeButton.onClick.AddListener(Close);
 
-        nameDisplay.text = _sprite.name;
-        iconDisplay.sprite = _sprite;
+        nameDisplay.text = _equipmentData.Thumbnail.name;
+        iconDisplay.sprite = _equipmentData.Thumbnail;
         iconDisplay.SetNativeSize();
         gameObject.SetActive(true);
     }

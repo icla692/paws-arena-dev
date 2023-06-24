@@ -11,8 +11,17 @@ public class LuckyWheelClaimDisplay : MonoBehaviour
     public void Setup(LuckyWheelRewardSO _reward)
     {
         closeButton.onClick.AddListener(Close);
-        nameDisplay.text = _reward.Name;
-        iconDisplay.sprite = _reward.Sprite;
+        if (LuckyWheelUI.EquipmentData==null)
+        {
+            nameDisplay.text = _reward.Name;
+            iconDisplay.sprite = _reward.Sprite;   
+        }
+        else
+        {
+            nameDisplay.text = LuckyWheelUI.EquipmentData.Thumbnail.name;
+            iconDisplay.sprite = LuckyWheelUI.EquipmentData.Thumbnail;
+            LuckyWheelUI.EquipmentData = null;
+        }
         iconDisplay.SetNativeSize();
         gameObject.SetActive(true);
     }

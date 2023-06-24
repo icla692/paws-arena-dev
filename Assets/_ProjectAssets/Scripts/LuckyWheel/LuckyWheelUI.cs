@@ -15,7 +15,9 @@ public class LuckyWheelUI : MonoBehaviour
     [SerializeField] Button claimButton;
     [SerializeField] GameObject insuficiantSnacksForRespin;
     [SerializeField] TextMeshProUGUI insuficiantSnacksText;
+    [SerializeField] private EquipmentsConfig equipments;
     LuckyWheelRewardSO choosenReward;
+    public static EquipmentData EquipmentData = null;
 
     bool requestedToSeeReward = false;
     int currentRespinPrice;
@@ -90,22 +92,23 @@ public class LuckyWheelUI : MonoBehaviour
         switch (_reward.Type)
         {
             case ItemType.Common:
-                DataManager.Instance.PlayerData.CommonCrystal++;
+                DataManager.Instance.PlayerData.Crystals.CommonCrystal++;
                 break;
             case ItemType.Uncommon:
-                DataManager.Instance.PlayerData.UncommonCrystal++;
+                DataManager.Instance.PlayerData.Crystals.UncommonCrystal++;
                 break;
             case ItemType.Rare:
-                DataManager.Instance.PlayerData.RareCrystal++;
+                DataManager.Instance.PlayerData.Crystals.RareCrystal++;
                 break;
             case ItemType.Epic:
-                DataManager.Instance.PlayerData.EpicCrystal++;
+                DataManager.Instance.PlayerData.Crystals.EpicCrystal++;
                 break;
             case ItemType.Lengedary:
-                DataManager.Instance.PlayerData.LegendaryCrystal++;
+                DataManager.Instance.PlayerData.Crystals.LegendaryCrystal++;
                 break;
             case ItemType.Gift:
-                DataManager.Instance.PlayerData.GiftItem++;
+                EquipmentData = equipments.CraftItem();
+                DataManager.Instance.PlayerData.AddOwnedEquipment(EquipmentData.Id);
                 break;
             default:
                 throw new System.Exception("Dont know how to reward reward type: " + _reward.Type);

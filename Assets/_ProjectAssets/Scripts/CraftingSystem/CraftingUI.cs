@@ -40,14 +40,14 @@ public class CraftingUI : MonoBehaviour
     [SerializeField] EquipmentsConfig equipments;
     [SerializeField] CraftedItemDisplay itemDisplay;
     CraftingRecepieSO showingRecepie;
-
+    
     public void Setup()
     {
-        DataManager.Instance.PlayerData.UpdatedCommonCrystal += ShowCristals;
-        DataManager.Instance.PlayerData.UpdatedUncommonCrystal += ShowCristals;
-        DataManager.Instance.PlayerData.UpdatedRareCrystal += ShowCristals;
-        DataManager.Instance.PlayerData.UpdatedEpicCrystal += ShowCristals;
-        DataManager.Instance.PlayerData.UpdatedLegendaryCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedCommonCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedUncommonCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedRareCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedEpicCrystal += ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedLegendaryCrystal += ShowCristals;
         CraftingProcess.Finished += FinishedCrafting;
 
         commonButton.onClick.AddListener(() => ShowRecepie(ItemType.Common));
@@ -65,11 +65,11 @@ public class CraftingUI : MonoBehaviour
 
     private void OnDisable()
     {
-        DataManager.Instance.PlayerData.UpdatedCommonCrystal -= ShowCristals;
-        DataManager.Instance.PlayerData.UpdatedUncommonCrystal -= ShowCristals;
-        DataManager.Instance.PlayerData.UpdatedRareCrystal -= ShowCristals;
-        DataManager.Instance.PlayerData.UpdatedEpicCrystal -= ShowCristals;
-        DataManager.Instance.PlayerData.UpdatedLegendaryCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedCommonCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedUncommonCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedRareCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedEpicCrystal -= ShowCristals;
+        DataManager.Instance.PlayerData.Crystals.UpdatedLegendaryCrystal -= ShowCristals;
         CraftingProcess.Finished -= FinishedCrafting;
 
         craftCrystalButton.onClick.RemoveListener(CraftCrystal);
@@ -83,11 +83,11 @@ public class CraftingUI : MonoBehaviour
 
     void ShowCristals()
     {
-        limeAmountDisplay.text = DataManager.Instance.PlayerData.CommonCrystal.ToString();
-        greenAmountDisplay.text = DataManager.Instance.PlayerData.UncommonCrystal.ToString();
-        blueAmountDisplay.text = DataManager.Instance.PlayerData.RareCrystal.ToString();
-        purpleAmountDisplay.text = DataManager.Instance.PlayerData.EpicCrystal.ToString();
-        orangeAmountDisplay.text = DataManager.Instance.PlayerData.LegendaryCrystal.ToString();
+        limeAmountDisplay.text = DataManager.Instance.PlayerData.Crystals.CommonCrystal.ToString();
+        greenAmountDisplay.text = DataManager.Instance.PlayerData.Crystals.UncommonCrystal.ToString();
+        blueAmountDisplay.text = DataManager.Instance.PlayerData.Crystals.RareCrystal.ToString();
+        purpleAmountDisplay.text = DataManager.Instance.PlayerData.Crystals.EpicCrystal.ToString();
+        orangeAmountDisplay.text = DataManager.Instance.PlayerData.Crystals.LegendaryCrystal.ToString();
         ShowRecepie(showingRecepie.Inggrdiant);
     }
 
@@ -111,23 +111,20 @@ public class CraftingUI : MonoBehaviour
         float _amountOfIngridiants;
         switch (showingRecepie.Inggrdiant)
         {
-            case ItemType.Gift:
-                _amountOfIngridiants = DataManager.Instance.PlayerData.GiftItem;
-                break;
             case ItemType.Common:
-                _amountOfIngridiants = DataManager.Instance.PlayerData.CommonCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.Crystals.CommonCrystal;
                 break;
             case ItemType.Uncommon:
-                _amountOfIngridiants = DataManager.Instance.PlayerData.UncommonCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.Crystals.UncommonCrystal;
                 break;
             case ItemType.Rare:
-                _amountOfIngridiants = DataManager.Instance.PlayerData.RareCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.Crystals.RareCrystal;
                 break;
             case ItemType.Epic:
-                _amountOfIngridiants = DataManager.Instance.PlayerData.EpicCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.Crystals.EpicCrystal;
                 break;
             case ItemType.Lengedary:
-                _amountOfIngridiants = DataManager.Instance.PlayerData.LegendaryCrystal;
+                _amountOfIngridiants = DataManager.Instance.PlayerData.Crystals.LegendaryCrystal;
                 break;
             default:
                 throw new System.Exception("Dont know how to check if player can craft: " + showingRecepie.Inggrdiant);
@@ -165,19 +162,19 @@ public class CraftingUI : MonoBehaviour
         switch (_ingridiant)
         {
             case ItemType.Common:
-                _amountGot = DataManager.Instance.PlayerData.CommonCrystal;
+                _amountGot = DataManager.Instance.PlayerData.Crystals.CommonCrystal;
                 break;
             case ItemType.Uncommon:
-                _amountGot = DataManager.Instance.PlayerData.UncommonCrystal;
+                _amountGot = DataManager.Instance.PlayerData.Crystals.UncommonCrystal;
                 break;
             case ItemType.Rare:
-                _amountGot = DataManager.Instance.PlayerData.RareCrystal;
+                _amountGot = DataManager.Instance.PlayerData.Crystals.RareCrystal;
                 break;
             case ItemType.Epic:
-                _amountGot = DataManager.Instance.PlayerData.EpicCrystal;
+                _amountGot = DataManager.Instance.PlayerData.Crystals.EpicCrystal;
                 break;
             case ItemType.Lengedary:
-                _amountGot = DataManager.Instance.PlayerData.LegendaryCrystal;
+                _amountGot = DataManager.Instance.PlayerData.Crystals.LegendaryCrystal;
                 break;
             default:
                 throw new Exception("Don't know how to show bot frame for item: " + _ingridiant);
@@ -207,23 +204,20 @@ public class CraftingUI : MonoBehaviour
 
         switch (showingRecepie.Inggrdiant)
         {
-            case ItemType.Gift:
-                DataManager.Instance.PlayerData.GiftItem -= showingRecepie.AmountNeeded;
-                break;
             case ItemType.Common:
-                DataManager.Instance.PlayerData.CommonCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.CommonCrystal -= showingRecepie.AmountNeeded;
                 break;
             case ItemType.Uncommon:
-                DataManager.Instance.PlayerData.UncommonCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.UncommonCrystal -= showingRecepie.AmountNeeded;
                 break;
             case ItemType.Rare:
-                DataManager.Instance.PlayerData.RareCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.RareCrystal -= showingRecepie.AmountNeeded;
                 break;
             case ItemType.Epic:
-                DataManager.Instance.PlayerData.EpicCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.EpicCrystal -= showingRecepie.AmountNeeded;
                 break;
             case ItemType.Lengedary:
-                DataManager.Instance.PlayerData.LegendaryCrystal -= showingRecepie.AmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.LegendaryCrystal -= showingRecepie.AmountNeeded;
                 break;
             default:
                 throw new System.Exception("Don't know how to start crafting process for ingridiant: " + showingRecepie.Inggrdiant);
@@ -246,38 +240,34 @@ public class CraftingUI : MonoBehaviour
 
     void CraftItem()
     {
-        ShowItem();
-        //todo craft item
-        Debug.Log("Should craft item :)");
+        EquipmentData _equipmentData = equipments.CraftItem(showingRecepie);
+        ShowItem(_equipmentData);
+        DataManager.Instance.PlayerData.AddOwnedEquipment(_equipmentData.Id);
         switch (showingRecepie.Inggrdiant)
         {
             case ItemType.Common:
-                DataManager.Instance.PlayerData.CommonCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.CommonCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             case ItemType.Uncommon:
-                DataManager.Instance.PlayerData.UncommonCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.UncommonCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             case ItemType.Rare:
-                DataManager.Instance.PlayerData.RareCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.RareCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             case ItemType.Epic:
-                DataManager.Instance.PlayerData.EpicCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.EpicCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             case ItemType.Lengedary:
-                DataManager.Instance.PlayerData.LegendaryCrystal -= showingRecepie.BotAmountNeeded;
+                DataManager.Instance.PlayerData.Crystals.LegendaryCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             default:
                 throw new Exception("Don't know how to craft item for: " + showingRecepie.Inggrdiant);
         }
     }
 
-    async void ShowItem()
+    async void ShowItem(EquipmentData _equipmentData)
     {
-        //todo ask server for the item
-        //todo delete this random item generator
-        // Sprite _rewardItem = equipments.eyes[UnityEngine.Random.Range(0, equipments.eyes.Count)];
-        // itemDisplay.Setup(_rewardItem);
-        //todo add item to items list
+        itemDisplay.Setup(_equipmentData);
     }
 
     private void Update()

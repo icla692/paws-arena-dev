@@ -38,7 +38,7 @@ public class LevelRewardDisplay : MonoBehaviour
         {
             claimedObject.SetActive(true);
         }
-        else
+        else if(DateTime.UtcNow<DataManager.Instance.GameData.SeasonEnds)
         {
             if (level <= DataManager.Instance.PlayerData.Level)
             {
