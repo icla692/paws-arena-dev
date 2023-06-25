@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class GameData
@@ -11,6 +12,7 @@ public class GameData
     int respinPrice;
     int glassOfMilkPrice;
     int jugOfMilkPrice;
+    private List<LevelReward> seasonRewards;
 
     public bool HasSeasonEnded => DateTime.UtcNow > SeasonEnds;
 
@@ -96,5 +98,11 @@ public class GameData
         {
             jugOfMilkPrice = value;
         }
+    }
+
+    public List<LevelReward> SeasonRewards
+    {
+        get => seasonRewards;
+        set => seasonRewards = value;
     }
 }

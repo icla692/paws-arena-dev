@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
-    [SerializeField] Button showLevels;
     [SerializeField] Image levelProgressDisplay;
     [SerializeField] TextMeshProUGUI levelDisplay;
     [Space()]
@@ -17,7 +16,6 @@ public class MainMenuUI : MonoBehaviour
         mainRecoveryHandler.ShowRecovery(GameState.selectedNFT.RecoveryEndDate,GameState.selectedNFT.imageUrl);
         GameState.selectedNFT.UpdatedRecoveryTime += CheckIfShouldStopRecovering;
         DataManager.Instance.PlayerData.UpdatedExp += ShowLevelProgress;
-        showLevels.onClick.AddListener(ShowLevels);
 
         ShowLevelProgress();
     }
@@ -26,7 +24,6 @@ public class MainMenuUI : MonoBehaviour
     {
         GameState.selectedNFT.UpdatedRecoveryTime -= CheckIfShouldStopRecovering;
         DataManager.Instance.PlayerData.UpdatedExp -= ShowLevelProgress;
-        showLevels.onClick.RemoveListener(ShowLevels);
     }
 
     void CheckIfShouldStopRecovering()
@@ -37,10 +34,7 @@ public class MainMenuUI : MonoBehaviour
         }
     }
 
-    void ShowLevels()
-    {
-        levelsPanel.Setup();
-    }
+
 
     void ShowLevelProgress()
     {

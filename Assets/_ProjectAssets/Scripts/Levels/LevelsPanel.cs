@@ -7,7 +7,6 @@ using System.Collections;
 
 public class LevelsPanel : MonoBehaviour
 {
-    [SerializeField] List<LevelReward> rewards;
     [SerializeField] LevelRewardDisplay[] normalLevelHolders;
     [SerializeField] LevelRewardDisplay[] premiumLevelHolders;
     [SerializeField] TextMeshProUGUI[] levelsDisplay;
@@ -26,6 +25,7 @@ public class LevelsPanel : MonoBehaviour
     [SerializeField] Button claimAllButton;
 
     int firstRewardLevel = 1;
+    private int maxLevel;
 
     public void Setup()
     {
@@ -43,6 +43,14 @@ public class LevelsPanel : MonoBehaviour
         DataManager.Instance.PlayerData.UpdatedSnacks += SetupDisplays;
 
         SetupDisplays();
+
+        foreach (var _reward in DataManager.Instance.GameData.SeasonRewards)
+        {
+            if (_reward.Level>maxLevel)
+            {
+                maxLevel = _reward.Level;
+            }
+        }
     }
 
     private void OnDisable()
@@ -61,8 +69,6 @@ public class LevelsPanel : MonoBehaviour
         levelDisplay.text = DataManager.Instance.PlayerData.Level.ToString();
         seasonNumberDisplay.text = "Season "+DataManager.Instance.GameData.SeasonNumber;
         ShowSeasonEndDiplay();
-        //todo set value for cristals
-        Debug.Log("Set value for cristals");
     }
 
     void Close()
@@ -83,7 +89,7 @@ public class LevelsPanel : MonoBehaviour
     void ShowNext()
     {
         firstRewardLevel++;
-        if (firstRewardLevel >= rewards.Count - 5)
+        if (firstRewardLevel >= maxLevel - 3)
         {
             firstRewardLevel -= 1;
         }
@@ -100,7 +106,7 @@ public class LevelsPanel : MonoBehaviour
             levelsDisplay[j].text = i.ToString();
 
             List <LevelReward> _rewardsOnLevel = new List<LevelReward>();
-            foreach (var _reward in rewards)
+            foreach (var _reward in DataManager.Instance.GameData.SeasonRewards)
             {
                 if (_reward.Level==i)
                 {
@@ -110,13 +116,13 @@ public class LevelsPanel : MonoBehaviour
 
             foreach (var _reward in _rewardsOnLevel)
             {
-                if (_reward.Reward.IsPremium)
+                if (_reward.IsPremium)
                 {
-                    premiumLevelHolders[j].Setup(_reward.Reward,_reward.Level);
+                    premiumLevelHolders[j].Setup(_reward,_reward.Level);
                 }
                 else
                 {
-                    normalLevelHolders[j].Setup(_reward.Reward,_reward.Level);
+                    normalLevelHolders[j].Setup(_reward,_reward.Level);
                 }
             }
         }

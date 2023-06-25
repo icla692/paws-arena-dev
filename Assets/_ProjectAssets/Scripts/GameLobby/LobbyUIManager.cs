@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LobbyUIManager : MonoBehaviour
 {
@@ -36,11 +37,13 @@ public class LobbyUIManager : MonoBehaviour
     [Header("Others")]
     public GameObject loadingScreen;
     [SerializeField] CraftingSystemUI craftingSystem;
+    [SerializeField] private Image fightImage;
+    [SerializeField] private Sprite normalFightSprite;
+    [SerializeField] private Sprite injuredFightSprite;
 
 
     private void OnEnable()
     {
-
         if (GameState.selectedNFT != null)
         {
             OpenGameMenu();
@@ -125,7 +128,7 @@ public class LobbyUIManager : MonoBehaviour
     {
         if (!GameState.selectedNFT.CanFight)
         {
-            RecoveryMessageDisplay.Instance.ShowMessage();
+            OpenNFTSelectionScreen();
             return;
         }
         CloseGameMenu();
@@ -172,5 +175,22 @@ public class LobbyUIManager : MonoBehaviour
     public void ShowCraftingSystem()
     {
         craftingSystem.Setup();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(FightButtonGraphics());
+    }
+
+    IEnumerator FightButtonGraphics()
+    {
+        while (gameObject.activeSelf)
+        {
+            if (GameState.selectedNFT!=null)
+            {
+                fightImage.sprite = GameState.selectedNFT.CanFight ? normalFightSprite : injuredFightSprite;
+            }
+            yield return new WaitForSeconds(2);
+        }
     }
 }

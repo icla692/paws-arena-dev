@@ -177,7 +177,7 @@ public class PlayerData
         }
     }
 
-    public bool HasClaimed(LevelRewardBase _reward, int _level)
+    public bool HasClaimed(LevelReward _reward, int _level)
     {
         foreach (var _claimedReward in claimedLevelRewards)
         {

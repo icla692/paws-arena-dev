@@ -16,6 +16,8 @@ public class NFT
     public bool CanFight => RecoveryEndDate < DateTime.UtcNow;
     public int MinutesUntilHealed => (int)(RecoveryEndDate - DateTime.UtcNow).TotalMinutes;
 
+    public TimeSpan TimeUntilHealed => RecoveryEndDate - DateTime.UtcNow;
+
     public Action UpdatedRecoveryTime;
 
     public DateTime RecoveryEndDate

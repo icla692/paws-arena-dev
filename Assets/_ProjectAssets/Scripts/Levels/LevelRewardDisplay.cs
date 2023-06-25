@@ -5,7 +5,7 @@ using System;
 
 public class LevelRewardDisplay : MonoBehaviour
 {
-    public static Action<LevelRewardBase> OnClaimed;
+    public static Action<LevelReward, Sprite> OnClaimed;
     [SerializeField] Image rewardDisplay;
     [SerializeField] Image background;
     [SerializeField] Sprite normalBackground;
@@ -20,20 +20,28 @@ public class LevelRewardDisplay : MonoBehaviour
     [SerializeField] GameObject shadowPanel;
     [SerializeField] bool isPremium;
 
-    LevelRewardBase reward;
+    [SerializeField] private EquipmentsConfig equipments;
+    [Space][Header("Sprites")]
+    [SerializeField] private Sprite[] shards;
+    [SerializeField] private Sprite snacks;
+    [SerializeField] private Sprite jugOfMilk;
+    [SerializeField] private Sprite glassOfMilk;
+    
+
+    LevelReward reward;
     int level;
     bool canClaim;
 
     public bool CanClaim => canClaim;
 
-    public void Setup(LevelRewardBase _reward, int _level)
+    public void Setup(LevelReward _reward, int _level)
     {
         reward = _reward;
         level = _level;
         background.sprite = _reward.IsPremium ? premiumBackground : normalBackground;
         claimImage.sprite = _reward.IsPremium ? premiumClaim : normalClaim;
         rewardDisplay.gameObject.SetActive(true);
-        rewardDisplay.sprite = _reward.Sprite;
+        rewardDisplay.sprite = GetSpriteForReward(_reward);
         if (DataManager.Instance.PlayerData.HasClaimed(_reward, level))
         {
             claimedObject.SetActive(true);
@@ -70,10 +78,42 @@ public class LevelRewardDisplay : MonoBehaviour
         }
     }
 
+    Sprite GetSpriteForReward(LevelReward _reward)
+    {
+        switch (_reward.Type)
+        {
+            case LevelRewardType.CommonShard:
+                return shards[0];
+            case LevelRewardType.UncommonShard:
+                return shards[1];
+            case LevelRewardType.RareShard:
+                return shards[2];
+            case LevelRewardType.EpicShard:
+                return shards[3];
+            case LevelRewardType.LegendaryShard:
+                return shards[4];
+            case LevelRewardType.Snack:
+                return snacks;
+            case LevelRewardType.JugOfMilk:
+                return jugOfMilk;
+            case LevelRewardType.GlassOfMilk:
+                return glassOfMilk;
+            case LevelRewardType.Item:
+                return equipments.GetEquipmentData(_reward.Parameter1).Thumbnail;
+            case LevelRewardType.Emote:
+                break;
+            case LevelRewardType.WeaponSkin:
+                break;
+            default:
+                throw new Exception("Cant find sprite for reward type: " + _reward.Type);
+        }
+        return null;
+    }
+
    public void ClaimReward()
     {
         reward.Claim();
-        OnClaimed?.Invoke(reward);
+        OnClaimed?.Invoke(reward,GetSpriteForReward(reward));
         ClaimedReward _claimedReward = new ClaimedReward()
         {
             IsPremium = reward.IsPremium,

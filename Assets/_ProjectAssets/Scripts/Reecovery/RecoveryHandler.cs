@@ -18,6 +18,7 @@ public class RecoveryHandler : MonoBehaviour
         if (_endDate < DateTime.UtcNow)
         {
             DataManager.Instance.PlayerData.RemoveRecoveringKittie(_kittyImageUrl);
+            recoveryFillAmount.fillAmount = 1;
             return;
         }
         if (recoveryHolder != null)

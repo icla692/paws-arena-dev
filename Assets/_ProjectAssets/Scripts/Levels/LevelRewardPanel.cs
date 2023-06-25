@@ -24,10 +24,10 @@ public class LevelRewardPanel : MonoBehaviour
     }
 
 
-    public void Setup(LevelRewardBase _reward)
+    public void Setup(LevelReward _reward, Sprite _sprite)
     {
         nameDisplay.text = _reward.Name;
-        iconDisplay.sprite = _reward.Sprite;
+        iconDisplay.sprite = _sprite;
         iconDisplay.SetNativeSize();
         holder.SetActive(true);
     }

@@ -111,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.57, y: 5.75}
+  m_AnchoredPosition: {x: 1.5700073, y: 5.75}
   m_SizeDelta: {x: -47.4, y: -60.87}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2093730327053464914
@@ -187,7 +187,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -29.4, y: -35.4}
+  m_AnchoredPosition: {x: -29.400024, y: -35.399994}
   m_SizeDelta: {x: 36.25, y: 36.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6423317688610646240
@@ -264,7 +264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.7, y: -3.6}
+  m_AnchoredPosition: {x: -0.7, y: -3.5999756}
   m_SizeDelta: {x: 126.64, y: 68.45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6423317689127883331
@@ -455,6 +455,16 @@ MonoBehaviour:
   claimedObject: {fileID: 382876855539079875}
   shadowPanel: {fileID: 7135757833098234528}
   isPremium: 0
+  equipments: {fileID: 11400000, guid: b1c54d560f2953b40ad580080dc5b0e8, type: 2}
+  shards:
+  - {fileID: 21300000, guid: fdfd26e2833239f43ad34bb1c214edf0, type: 3}
+  - {fileID: 21300000, guid: dfc9ddef2a3a70446a2403f0e594c951, type: 3}
+  - {fileID: 21300000, guid: 43dad446296fbdf41aef93f669bf7721, type: 3}
+  - {fileID: 21300000, guid: 2f0b64b6fb26e944eb707460d74f529e, type: 3}
+  - {fileID: 21300000, guid: c72e20a746929c64da1e0dc31e729be0, type: 3}
+  snacks: {fileID: 1890360438, guid: 44940260574ba4c4988d9489601a592e, type: 3}
+  jugOfMilk: {fileID: 21300000, guid: d8767927beb3c1946bcf5cc014a51898, type: 3}
+  glassOfMilk: {fileID: 21300000, guid: 8eb374f05f4e1024c8a95802d609a05b, type: 3}
 --- !u!1 &7135757833098234528
 GameObject:
   m_ObjectHideFlags: 0
