@@ -14,6 +14,7 @@ public class PlayerComponent : MonoBehaviour
     private PlayerMotionBehaviour playerMotionBehaviour;
     private bool isMultiplayer;
     private PhotonView photonView;
+    [field: SerializeField] public Transform EmojiHolder { get; private set; }
 
 
     private void Awake()
@@ -90,6 +91,7 @@ public class PlayerComponent : MonoBehaviour
     private void SetupOtherPlayer()
     {
         PlayerManager.Instance.otherPlayerTransform = transform;
+        PlayerManager.Instance.OtherPlayerComponent = this;
         Destroy(GetComponent<Rigidbody2D>());
     }
 

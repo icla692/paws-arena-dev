@@ -15,7 +15,9 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     private GameObject player2SpawnSquare;
 
     [HideInInspector]
-    public PlayerComponent myPlayer;
+    public PlayerComponent myPlayer; 
+    [HideInInspector]
+    public PlayerComponent OtherPlayerComponent;
     [HideInInspector]
     public int myPlayerHealth;
     [HideInInspector]
@@ -24,6 +26,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public Transform otherPlayerTransform;
 
     private int maxHP;
+    
 
     public void RegisterMyPlayer(PlayerComponent playerComponent)
     {

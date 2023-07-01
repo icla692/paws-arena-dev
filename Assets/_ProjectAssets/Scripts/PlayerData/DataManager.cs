@@ -22,6 +22,7 @@ public class DataManager : MonoBehaviour
     const string RECOVERING_KITTIES = "RecoveringKitties";
     private const string OWNED_EQUIPTABLES = "OwnedEquiptables";
     private const string SEASON_NUMBER = "SeasonNumber";
+    private const string OWNED_EMOJIS= "OwnedEmojis";
 
     bool hasSubscribed = false;
 
@@ -83,6 +84,7 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedRecoveringKitties += SaveRecoveringKittes;
         PlayerData.UpdatedEquiptables += SaveEquiptables;
         PlayerData.UpdatedSeasonNumber += SaveSeasonNumber;
+        PlayerData.UpdatedOwnedEmojis += SaveOwnedEmojis;
     }
 
     private void OnDestroy()
@@ -106,6 +108,7 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedRecoveringKitties -= SaveRecoveringKittes;
         PlayerData.UpdatedEquiptables -= SaveEquiptables;
         PlayerData.UpdatedSeasonNumber -= SaveSeasonNumber;
+        PlayerData.UpdatedOwnedEmojis -= SaveOwnedEmojis;
     }
 
     void SaveSnacks()
@@ -181,5 +184,10 @@ public class DataManager : MonoBehaviour
     void SaveSeasonNumber()
     {
         FirebaseManager.Instance.SaveValue(SEASON_NUMBER,PlayerData.SeasonNumber);
+    }
+
+    void SaveOwnedEmojis()
+    {
+        FirebaseManager.Instance.SaveValue(OWNED_EMOJIS, JsonConvert.SerializeObject(PlayerData.OwnedEmojis));
     }
 }

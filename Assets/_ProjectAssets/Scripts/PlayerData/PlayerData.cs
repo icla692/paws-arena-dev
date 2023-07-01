@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -20,6 +21,7 @@ public class PlayerData
     List<RecoveryEntrie> recoveringKitties = new List<RecoveryEntrie>();
     private List<int> ownedEquiptables = new List<int>() {0,25,60,74,95 };
     private int seasonNumber;
+    private List<int> ownedEmojis = new List<int>() { 0 };
 
     [JsonIgnore] public Action UpdatedSnacks;
     [JsonIgnore] public Action UpdatedJugOfMilk;
@@ -31,6 +33,7 @@ public class PlayerData
     [JsonIgnore] public Action UpdatedRecoveringKitties;
     [JsonIgnore] public Action UpdatedEquiptables;
     [JsonIgnore] public Action UpdatedSeasonNumber;
+    [JsonIgnore] public Action UpdatedOwnedEmojis;
 
     public PlayerData()
     {
@@ -268,5 +271,27 @@ public class PlayerData
             seasonNumber = value; 
             UpdatedSeasonNumber?.Invoke();
         }
+    }
+
+    public List<int> OwnedEmojis
+    {
+        get => ownedEmojis;
+        set
+        {
+            ownedEmojis = value;
+            ownedEmojis.Sort();
+        }
+    }
+
+    public void AddOwnedEmoji(int _id)
+    {
+        if (ownedEmojis.Contains(_id))
+        {
+            return;
+        }
+        
+        ownedEmojis.Add(_id);
+        ownedEmojis.Sort();
+        UpdatedOwnedEmojis?.Invoke();
     }
 }
