@@ -42,7 +42,7 @@ public class LevelReward
                 DataManager.Instance.PlayerData.AddOwnedEquipment(Parameter1);
                 break;
             case LevelRewardType.Emote:
-                Debug.Log("Implement claim functionality for emote rewards");
+                DataManager.Instance.PlayerData.AddOwnedEmoji(Parameter1);
                 break;
             default:
                 throw new Exception("Dont know how to claim level reward of type: " + Type);

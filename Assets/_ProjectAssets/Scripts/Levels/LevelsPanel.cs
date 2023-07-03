@@ -12,7 +12,6 @@ public class LevelsPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] levelsDisplay;
     [SerializeField] Image[] levelsBackgroundDisplay;
     [SerializeField] TextMeshProUGUI snackDisplay;
-    [SerializeField] TextMeshProUGUI cristalsDisplay;
     [SerializeField] TextMeshProUGUI levelDisplay;
     [SerializeField] TextMeshProUGUI seasonNumberDisplay;
     [SerializeField] TextMeshProUGUI seasonEndDisplay;

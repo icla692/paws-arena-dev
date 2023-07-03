@@ -138,7 +138,7 @@ public class RecoveryDropDown : MonoBehaviour
             if (DataManager.Instance.PlayerData.GlassOfMilk > 0)
             {
                 DataManager.Instance.PlayerData.GlassOfMilk--;
-                GameState.selectedNFT.RecoveryEndDate = GameState.selectedNFT.RecoveryEndDate.AddMinutes(15);
+                GameState.selectedNFT.RecoveryEndDate = GameState.selectedNFT.RecoveryEndDate.AddMinutes(-15);
                 //TODO tell server that player used glass of milk to recover kittie
             }
             else

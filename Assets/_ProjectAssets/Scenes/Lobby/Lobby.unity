@@ -21261,7 +21261,6 @@ MonoBehaviour:
   - {fileID: 1361275561}
   - {fileID: 1673087875}
   snackDisplay: {fileID: 352988588}
-  cristalsDisplay: {fileID: 1105587756}
   levelDisplay: {fileID: 1778186371}
   seasonNumberDisplay: {fileID: 1046589407}
   seasonEndDisplay: {fileID: 950054869}
@@ -28411,7 +28410,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Jug of Milk
+  m_text: Bottle of Milk
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ee1a73c6df8198f4782815d24d243c5d, type: 2}
   m_sharedMaterial: {fileID: 9131272089297647007, guid: ee1a73c6df8198f4782815d24d243c5d, type: 2}
