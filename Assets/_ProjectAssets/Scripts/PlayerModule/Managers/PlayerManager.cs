@@ -26,6 +26,8 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     public Transform otherPlayerTransform;
 
     private int maxHP;
+
+    public static int HealthAtEnd;
     
 
     public void RegisterMyPlayer(PlayerComponent playerComponent)
@@ -51,6 +53,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 
     private void OnDestroy()
     {
+        HealthAtEnd = myPlayerHealth;
         float _minutesItWillTakeToRecover =((float)RecoveryHandler.RecoveryInMinutes / maxHP) * (maxHP - myPlayerHealth);
         DateTime _recoveryEnds = DateTime.UtcNow.AddMinutes(_minutesItWillTakeToRecover);
         GameState.selectedNFT.RecoveryEndDate = _recoveryEnds;

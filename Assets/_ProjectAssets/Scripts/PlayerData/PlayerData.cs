@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -22,6 +23,7 @@ public class PlayerData
     private List<int> ownedEquiptables = new List<int>() {0,25,60,74,95 };
     private int seasonNumber;
     private List<int> ownedEmojis = new List<int>() { 0 };
+    private Challenges challenges = new Challenges();
 
     [JsonIgnore] public Action UpdatedSnacks;
     [JsonIgnore] public Action UpdatedJugOfMilk;
@@ -293,5 +295,11 @@ public class PlayerData
         ownedEmojis.Add(_id);
         ownedEmojis.Sort();
         UpdatedOwnedEmojis?.Invoke();
+    }
+
+    public Challenges Challenges
+    {
+        get => challenges;
+        set => challenges = value;
     }
 }

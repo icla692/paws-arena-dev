@@ -48,7 +48,7 @@ public class CraftingUI : MonoBehaviour
         DataManager.Instance.PlayerData.Crystals.UpdatedRareCrystal += ShowCristals;
         DataManager.Instance.PlayerData.Crystals.UpdatedEpicCrystal += ShowCristals;
         DataManager.Instance.PlayerData.Crystals.UpdatedLegendaryCrystal += ShowCristals;
-        CraftingProcess.Finished += FinishedCrafting;
+        CraftingProcess.OnFinishedCrafting += FinishedCrafting;
 
         commonButton.onClick.AddListener(() => ShowRecepie(ItemType.Common));
         uncommonButton.onClick.AddListener(() => ShowRecepie(ItemType.Uncommon));
@@ -70,7 +70,7 @@ public class CraftingUI : MonoBehaviour
         DataManager.Instance.PlayerData.Crystals.UpdatedRareCrystal -= ShowCristals;
         DataManager.Instance.PlayerData.Crystals.UpdatedEpicCrystal -= ShowCristals;
         DataManager.Instance.PlayerData.Crystals.UpdatedLegendaryCrystal -= ShowCristals;
-        CraftingProcess.Finished -= FinishedCrafting;
+        CraftingProcess.OnFinishedCrafting -= FinishedCrafting;
 
         craftCrystalButton.onClick.RemoveListener(CraftCrystal);
         commonButton.onClick.RemoveAllListeners();
@@ -236,6 +236,7 @@ public class CraftingUI : MonoBehaviour
         ShowCristals();
         ShowRecepie(showingRecepie.Inggrdiant);
         craftButtonText.text = "Craft";
+        EventsManager.OnCraftedCrystal?.Invoke();
     }
 
     void CraftItem()
@@ -263,6 +264,7 @@ public class CraftingUI : MonoBehaviour
             default:
                 throw new Exception("Don't know how to craft item for: " + showingRecepie.Inggrdiant);
         }
+        EventsManager.OnCraftedItem?.Invoke();
     }
 
     async void ShowItem(EquipmentData _equipmentData)

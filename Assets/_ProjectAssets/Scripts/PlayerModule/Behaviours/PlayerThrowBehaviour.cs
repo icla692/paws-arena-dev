@@ -71,6 +71,30 @@ public class PlayerThrowBehaviour : MonoBehaviour
         isEnabled = false;
 
         int weaponIdx = playerComponent.state.weaponIdx;
+        if (weaponIdx==0)
+        {
+            EventsManager.OnUsedRocket?.Invoke();
+        }
+        else if (weaponIdx==1)
+        {
+            EventsManager.OnUsedCannon?.Invoke();
+        }
+        else if (weaponIdx==2)
+        {
+            EventsManager.OnUsedTripleRocket?.Invoke();
+        }
+        else if (weaponIdx==3)
+        {
+            EventsManager.OnUsedAirplane?.Invoke();
+        }
+        else if (weaponIdx==4)
+        {
+            EventsManager.OnUsedMouse?.Invoke();
+        }
+        else if (weaponIdx==5)
+        {
+            EventsManager.OnUsedArrow?.Invoke();
+        }
         currentWeapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
 
         projectiles = new List<GameObject>();

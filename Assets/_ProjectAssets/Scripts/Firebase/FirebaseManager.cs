@@ -129,6 +129,20 @@ public class FirebaseManager : MonoBehaviour
     public void SaveValue<T>(string _path, T _value)
     {
         string _valueString = "{\"" + _path + "\":" + _value + "}";
+        StartCoroutine(Patch(userDataLink + ".json", _valueString, (_result) =>
+        {
+
+        }, (_result) =>
+        {
+            Debug.Log(_valueString);
+            Debug.Log("Failed to update data, please try again later");
+            Debug.Log(_result);
+        }));
+    }
+    
+    public void UpdateValue<T>(string _path, T _value)
+    {
+        string _valueString = "{\"" + _path + "\":" + _value + "}";
 
         StartCoroutine(Patch(userDataLink + ".json", _valueString, (_result) =>
         {
@@ -136,6 +150,7 @@ public class FirebaseManager : MonoBehaviour
         }, (_result) =>
         {
             Debug.Log("Failed to update data, please try again later");
+            Debug.Log(_result);
         }));
     }
 

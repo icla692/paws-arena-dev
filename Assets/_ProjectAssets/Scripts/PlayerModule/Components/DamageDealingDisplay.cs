@@ -99,5 +99,7 @@ public class DamageDealingDisplay : MonoBehaviour
         }
 
         DataManager.Instance.PlayerData.Experience += totallDamageDealth;
+        EventsManager.OnGotExperience?.Invoke(totallDamageDealth);
+        EventsManager.OnDealtDamageToOpponent?.Invoke(totallDamageDealth);
     }
 }

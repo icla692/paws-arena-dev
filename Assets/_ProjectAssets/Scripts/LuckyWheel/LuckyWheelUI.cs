@@ -16,6 +16,7 @@ public class LuckyWheelUI : MonoBehaviour
     [SerializeField] GameObject insuficiantSnacksForRespin;
     [SerializeField] TextMeshProUGUI insuficiantSnacksText;
     [SerializeField] private EquipmentsConfig equipments;
+    [SerializeField] private bool CloseOnClaim;
     LuckyWheelRewardSO choosenReward;
     public static EquipmentData EquipmentData = null;
 
@@ -60,7 +61,10 @@ public class LuckyWheelUI : MonoBehaviour
 
     void Setup()
     {
-        playerPlatform.SetActive(false);
+        if (playerPlatform!=null)
+        {
+            playerPlatform.SetActive(false);
+        }
         gameObject.SetActive(true);
 
         respinButton.gameObject.SetActive(false);
@@ -114,7 +118,15 @@ public class LuckyWheelUI : MonoBehaviour
                 throw new System.Exception("Dont know how to reward reward type: " + _reward.Type);
         }
 
-        rewardDisplay.Setup(_reward);
+        rewardDisplay.Setup(_reward,CloseAfterClaim);
+    }
+
+    void CloseAfterClaim()
+    {
+        if (CloseOnClaim)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     void Respin()

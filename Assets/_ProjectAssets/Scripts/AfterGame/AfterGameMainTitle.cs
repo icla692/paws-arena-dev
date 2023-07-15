@@ -35,6 +35,7 @@ namespace com.colorfulcoding.AfterGame
         void Start()
         {
             int checkIfIWon;
+            EventsManager.OnPlayedMatch?.Invoke();
 
             //If unexpected error happened, we override result type
             if (GameState.pointsChange.gameResultType == 0)
@@ -48,6 +49,25 @@ namespace com.colorfulcoding.AfterGame
 
             if (checkIfIWon > 0)
             {
+                if (GameState.selectedNFT.CanFight)
+                {
+                    EventsManager.OnWonGameWithFullHp?.Invoke();
+                }
+
+                if (PlayerManager.HealthAtEnd<=10)
+                {
+                    EventsManager.OnWonWithHpLessThan10?.Invoke();
+                }
+                if (PlayerManager.HealthAtEnd<=20)
+                {
+                    EventsManager.OnWonWithHpLessThan20?.Invoke();
+                }
+                if (PlayerManager.HealthAtEnd<=30)
+                {
+                    EventsManager.OnWonWithHpLessThan30?.Invoke();
+                }
+                
+                EventsManager.OnWonGame?.Invoke();
                 leaveButton.gameObject.SetActive(false);
                 luckyWheelUI.RequestReward();
                 winTitle.SetActive(true);
@@ -56,6 +76,7 @@ namespace com.colorfulcoding.AfterGame
             }
             else if (checkIfIWon < 0)
             {
+                EventsManager.OnLostGame?.Invoke();
                 loseTitle.SetActive(true);
                 bg.GetComponent<Image>().color = loseColor;
                 standGlow.color = loseColor;
@@ -68,6 +89,11 @@ namespace com.colorfulcoding.AfterGame
             }
 
             totalCoinsValue.text = "" + GameState.pointsChange.oldPoints;
+            int _earnings = GameState.pointsChange.points - GameState.pointsChange.oldPoints;
+            if (_earnings>0)
+            {
+                EventsManager.OnWonLeaderboardPoints?.Invoke(_earnings);
+            }
 
             if (GameState.pointsChange.points != 0)
             {

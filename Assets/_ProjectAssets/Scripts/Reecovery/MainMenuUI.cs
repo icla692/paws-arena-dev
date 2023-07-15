@@ -9,7 +9,6 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI levelDisplay;
     [Space()]
     [SerializeField] RecoveryHandler mainRecoveryHandler;
-    [SerializeField] LevelsPanel levelsPanel;
 
     private void OnEnable()
     {
@@ -33,7 +32,6 @@ public class MainMenuUI : MonoBehaviour
             mainRecoveryHandler.StopRecovery();
         }
     }
-
 
 
     void ShowLevelProgress()

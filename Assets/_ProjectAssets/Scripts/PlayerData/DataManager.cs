@@ -23,6 +23,9 @@ public class DataManager : MonoBehaviour
     private const string OWNED_EQUIPTABLES = "OwnedEquiptables";
     private const string SEASON_NUMBER = "SeasonNumber";
     private const string OWNED_EMOJIS= "OwnedEmojis";
+    private const string CHALLENGES= "Challenges";
+    private const string CHALLENGES_DATA= "Challenges/ChallengesData";
+    private const string GOT_LUCKY_SPIN = "Challenges/ClaimedLuckySpin";
 
     bool hasSubscribed = false;
 
@@ -85,6 +88,8 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedEquiptables += SaveEquiptables;
         PlayerData.UpdatedSeasonNumber += SaveSeasonNumber;
         PlayerData.UpdatedOwnedEmojis += SaveOwnedEmojis;
+        ChallengeData.UpdatedProgress += SaveChallengeProgress;
+        PlayerData.Challenges.UpdatedClaimedLuckySpin += SaveClaimedLuckySpin;
     }
 
     private void OnDestroy()
@@ -109,6 +114,8 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedEquiptables -= SaveEquiptables;
         PlayerData.UpdatedSeasonNumber -= SaveSeasonNumber;
         PlayerData.UpdatedOwnedEmojis -= SaveOwnedEmojis;
+        ChallengeData.UpdatedProgress -= SaveChallengeProgress;
+        PlayerData.Challenges.UpdatedClaimedLuckySpin -= SaveClaimedLuckySpin;
     }
 
     void SaveSnacks()
@@ -189,5 +196,31 @@ public class DataManager : MonoBehaviour
     void SaveOwnedEmojis()
     {
         FirebaseManager.Instance.SaveValue(OWNED_EMOJIS, JsonConvert.SerializeObject(PlayerData.OwnedEmojis));
+    }
+
+    public void SaveChallenges()
+    {
+        FirebaseManager.Instance.SaveValue(CHALLENGES,JsonConvert.SerializeObject(PlayerData.Challenges));
+    }
+
+    public void SaveChallengeProgress(int _id)
+    {
+        int _childNumber = 0;
+        ChallengeData _challengeData = null;
+        for (int i = 0; i < PlayerData.Challenges.ChallengesData.Count; i++)
+        {
+            if (PlayerData.Challenges.ChallengesData[i].Id == _id)
+            {
+                _challengeData = PlayerData.Challenges.ChallengesData[i];
+                _childNumber = i;
+            }
+        }
+        Debug.Log(CHALLENGES+"/"+_childNumber);
+        FirebaseManager.Instance.SaveValue(CHALLENGES_DATA+"/"+_childNumber,JsonConvert.SerializeObject(_challengeData));
+    }
+
+    private void SaveClaimedLuckySpin()
+    {
+        FirebaseManager.Instance.SaveValue(GOT_LUCKY_SPIN,JsonConvert.SerializeObject(PlayerData.Challenges.ClaimedLuckySpin));
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,10 +8,12 @@ public class LuckyWheelClaimDisplay : MonoBehaviour
     [SerializeField] Button closeButton;
     [SerializeField] Image iconDisplay;
     [SerializeField] TextMeshProUGUI nameDisplay;
+    private Action callBack;
 
-    public void Setup(LuckyWheelRewardSO _reward)
+    public void Setup(LuckyWheelRewardSO _reward, Action _callBack)
     {
         closeButton.onClick.AddListener(Close);
+        callBack = _callBack;
         if (LuckyWheelUI.EquipmentData==null)
         {
             nameDisplay.text = _reward.Name;
@@ -34,6 +37,15 @@ public class LuckyWheelClaimDisplay : MonoBehaviour
     void Close()
     {
         closeButton.interactable = false;
-        GameObject.FindObjectOfType<PUNRoomUtils>().TryLeaveRoom();
+        PUNRoomUtils _roomUtilities= GameObject.FindObjectOfType<PUNRoomUtils>();
+        if (_roomUtilities!=null)
+        {
+            _roomUtilities.TryLeaveRoom();
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            callBack?.Invoke();
+        }
     }
 }

@@ -7,7 +7,7 @@ public class CraftingProcess
     public ItemType Ingridiant;
     public DateTime DateStarted;
 
-    [JsonIgnore] public static Action Finished;
+    [JsonIgnore] public static Action OnFinishedCrafting;
 
     public string GetFinishTime()
     {
@@ -62,6 +62,6 @@ public class CraftingProcess
             default:
                 throw new Exception("Don't know how to handle end resultat in recepie for :" + _recepie.EndProduct);
         }
-        Finished?.Invoke();
+        OnFinishedCrafting?.Invoke();
     }
 }
