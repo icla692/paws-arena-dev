@@ -19,7 +19,7 @@ public class CraftingProcess
         if (_endTime.TotalSeconds < 0)
         {
             EndProduction();
-            return "Finished";
+            return "Craft";
         }
 
         float _secounds = _endTime.Seconds;
@@ -38,8 +38,6 @@ public class CraftingProcess
 
     void EndProduction()
     {
-        //todo validate with server
-        //if server validated
         CraftingRecepieSO _recepie = CraftingRecepieSO.Get(Ingridiant);
         DataManager.Instance.PlayerData.CraftingProcess = null;
         switch (_recepie.EndProduct)
@@ -56,7 +54,7 @@ public class CraftingProcess
             case ItemType.Epic:
                 DataManager.Instance.PlayerData.Crystals.EpicCrystal++;
                 break;
-            case ItemType.Lengedary:
+            case ItemType.Legendary:
                 DataManager.Instance.PlayerData.Crystals.LegendaryCrystal++;
                 break;
             default:

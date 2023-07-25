@@ -215,7 +215,6 @@ public class DataManager : MonoBehaviour
                 _childNumber = i;
             }
         }
-        Debug.Log(CHALLENGES+"/"+_childNumber);
         FirebaseManager.Instance.SaveValue(CHALLENGES_DATA+"/"+_childNumber,JsonConvert.SerializeObject(_challengeData));
     }
 

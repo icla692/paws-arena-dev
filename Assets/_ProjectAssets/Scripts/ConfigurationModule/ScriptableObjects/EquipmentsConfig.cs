@@ -52,7 +52,7 @@ public class EquipmentsConfig : ScriptableObject
             case ItemType.Epic:
                 _rarity = EquipmentRarity.Epic;
                 break;
-            case ItemType.Lengedary:
+            case ItemType.Legendary:
                 _rarity = EquipmentRarity.Legendary;
                 break;
             default:

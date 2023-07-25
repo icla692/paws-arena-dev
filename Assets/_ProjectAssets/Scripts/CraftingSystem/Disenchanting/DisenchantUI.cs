@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DisenchantUI : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class DisenchantUI : MonoBehaviour
     [SerializeField] private DisenchantedItemDisplay rewardDisplay;
     [SerializeField] private Button upArrow;
     [SerializeField] private Button downArrow;
+    [SerializeField] private TextMeshProUGUI rewardText;
     
     [Space] [SerializeField] private EquipmentsConfig equipments;
 
@@ -82,6 +84,30 @@ public class DisenchantUI : MonoBehaviour
         itemBackground.gameObject.SetActive(true);
         disenchantButton.gameObject.SetActive(true);
         selectedItemDisplay.gameObject.SetActive(true);
+        CraftingRecepieSO _craftingSO = null;
+        switch (_equipmentData.Rarity)
+        {
+            case EquipmentRarity.Common:
+                _craftingSO = CraftingRecepieSO.Get(ItemType.Common);
+                break;
+            case EquipmentRarity.Uncommon:
+                _craftingSO = CraftingRecepieSO.Get(ItemType.Uncommon);
+                break;
+            case EquipmentRarity.Rare:
+                _craftingSO = CraftingRecepieSO.Get(ItemType.Rare);
+                break;
+            case EquipmentRarity.Epic:
+                _craftingSO = CraftingRecepieSO.Get(ItemType.Epic);
+                break;
+            case EquipmentRarity.Legendary:
+                _craftingSO = CraftingRecepieSO.Get(ItemType.Legendary);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+        rewardText.text = $"Get 1 <color={_craftingSO.IngridiantColor}>{_equipmentData.Rarity}</color> shard by from disenchanting";
+
     }
 
     void Disenchant()

@@ -22,7 +22,7 @@ public class PlayerData
     List<RecoveryEntrie> recoveringKitties = new List<RecoveryEntrie>();
     private List<int> ownedEquiptables = new List<int>() {0,25,60,74,95 };
     private int seasonNumber;
-    private List<int> ownedEmojis = new List<int>() { 0 };
+    private List<int> ownedEmojis = new List<int>() {};
     private Challenges challenges = new Challenges();
 
     [JsonIgnore] public Action UpdatedSnacks;

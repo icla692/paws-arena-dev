@@ -27,10 +27,10 @@ public class LuckyWheel : MonoBehaviour
         StartCoroutine(SpinRoutine());
     }
 
-    IEnumerator SpinRoutine()
+   IEnumerator SpinRoutine()
     {
         pointerHolder.eulerAngles = Vector3.zero;
-        float _spinDuration = UnityEngine.Random.Range(3, 5f); // to get more randomnes
+        float _spinDuration = UnityEngine.Random.Range(3, 5f);
         float _timePassed = 0;
 
         while (_timePassed < _spinDuration)
@@ -46,7 +46,7 @@ public class LuckyWheel : MonoBehaviour
             yield return null;
         }
 
-        //end spin
+        // End spin
         float _targetedZ = UnityEngine.Random.Range(choosenReward.MinRotation, choosenReward.MaxRotation);
         float _currentZRotation = pointerHolder.eulerAngles.z;
         int _additionalFullSPins = 1;
@@ -54,6 +54,7 @@ public class LuckyWheel : MonoBehaviour
         float _distanceTraveled = 0;
         float _distanceToTravel = _targetedZ - _currentZRotation;
         float _pointAtCurve = 0;
+
         do
         {
             if (_distanceTraveled == 0)
@@ -64,6 +65,7 @@ public class LuckyWheel : MonoBehaviour
             {
                 _pointAtCurve = _distanceTraveled / _distanceToTravel;
             }
+
             float _speedModifier = endSpinCurve.Evaluate(_pointAtCurve);
             float _movingDistanceThisFrame = Mathf.MoveTowards(_currentZRotation, _targetedZ, Time.deltaTime * _speedModifier * speed);
             _movingDistanceThisFrame = _currentZRotation - _movingDistanceThisFrame;
@@ -76,10 +78,10 @@ public class LuckyWheel : MonoBehaviour
 
         } while (_pointAtCurve < 1);
 
-        //snap position just incase
+        // Snap position just in case
         pointerHolder.eulerAngles = new Vector3(pointerHolder.eulerAngles.x, pointerHolder.eulerAngles.y, _targetedZ);
 
-        //show shadows and start shaking
+        // Show shadows and start shaking
         foreach (var _rewardDisplay in rewardDisplays)
         {
             if (_rewardDisplay.RewardType == choosenReward.Type)

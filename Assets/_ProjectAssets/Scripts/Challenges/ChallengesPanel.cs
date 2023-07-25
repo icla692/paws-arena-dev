@@ -64,7 +64,7 @@ public class ChallengesPanel : MonoBehaviour
             _output += _timeLeft.Minutes < 10 ? "0" + _timeLeft.Minutes : _timeLeft.Minutes;
             _output += "m ";
             _output += _timeLeft.Seconds < 10 ? "0" + _timeLeft.Seconds : _timeLeft.Seconds;
-            _output += "s";
+            _output += "s Remaining";
             timerDisplay.text = _output;
             yield return new WaitForSeconds(1);
         }

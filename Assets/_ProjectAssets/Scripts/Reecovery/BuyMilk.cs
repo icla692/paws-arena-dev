@@ -30,6 +30,9 @@ public class BuyMilk : MonoBehaviour
         DataManager.Instance.PlayerData.UpdatedJugOfMilk += ShowJugOfMilk;
         DataManager.Instance.PlayerData.UpdatedGlassOfMilk += ShowGlassOfMilk;
 
+        glassOfMilkPriceDisplay.text = DataManager.Instance.GameData.GlassOfMilkPrice.ToString();
+        jugOfMilkPriceDisplay.text = DataManager.Instance.GameData.JugOfMilkPrice.ToString();
+
         gameObject.SetActive(true);
     }
 

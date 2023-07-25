@@ -2,8 +2,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
-using System.Collections.Generic;
-using Random = System.Random;
 
 public class CraftingUI : MonoBehaviour
 {
@@ -39,6 +37,7 @@ public class CraftingUI : MonoBehaviour
     [Space]
     [SerializeField] EquipmentsConfig equipments;
     [SerializeField] CraftedItemDisplay itemDisplay;
+    [SerializeField] private CraftFinishedDisplay craftingFinished;
     CraftingRecepieSO showingRecepie;
     
     public void Setup()
@@ -54,7 +53,7 @@ public class CraftingUI : MonoBehaviour
         uncommonButton.onClick.AddListener(() => ShowRecepie(ItemType.Uncommon));
         rareButton.onClick.AddListener(() => ShowRecepie(ItemType.Rare));
         epicButton.onClick.AddListener(() => ShowRecepie(ItemType.Epic));
-        legendaryButton.onClick.AddListener(() => ShowRecepie(ItemType.Lengedary));
+        legendaryButton.onClick.AddListener(() => ShowRecepie(ItemType.Legendary));
         craftCrystalButton.onClick.AddListener(CraftCrystal);
         botCraftItemButton.onClick.AddListener(CraftItem);
 
@@ -95,19 +94,18 @@ public class CraftingUI : MonoBehaviour
     {
         showingRecepie = CraftingRecepieSO.Get(_ingridiant);
 
-        if (_ingridiant == ItemType.Lengedary)
+        if (_ingridiant == ItemType.Legendary)
         {
             ShowBotFrame(_ingridiant);
             topHolder.SetActive(false);
             return;
         }
-        else
-        {
-            topHolder.SetActive(true);
-        }
+        
+        topHolder.SetActive(true);
+
 
         ingridiantImage.sprite = showingRecepie.IngridiantSprite;
-        craftText.text = $"Get 1 <color={showingRecepie.EndProductColor}>{showingRecepie.EndProduct}</color> sahrd by\ncombining {showingRecepie.AmountNeeded} <color={showingRecepie.IngridiantColor}>{showingRecepie.Inggrdiant}</color> shards";
+        craftText.text = $"Get 1 <color={showingRecepie.EndProductColor}>{showingRecepie.EndProduct}</color> shard by\ncombining {showingRecepie.AmountNeeded} <color={showingRecepie.IngridiantColor}>{showingRecepie.Inggrdiant}</color> shards";
         float _amountOfIngridiants;
         switch (showingRecepie.Inggrdiant)
         {
@@ -123,7 +121,7 @@ public class CraftingUI : MonoBehaviour
             case ItemType.Epic:
                 _amountOfIngridiants = DataManager.Instance.PlayerData.Crystals.EpicCrystal;
                 break;
-            case ItemType.Lengedary:
+            case ItemType.Legendary:
                 _amountOfIngridiants = DataManager.Instance.PlayerData.Crystals.LegendaryCrystal;
                 break;
             default:
@@ -173,7 +171,7 @@ public class CraftingUI : MonoBehaviour
             case ItemType.Epic:
                 _amountGot = DataManager.Instance.PlayerData.Crystals.EpicCrystal;
                 break;
-            case ItemType.Lengedary:
+            case ItemType.Legendary:
                 _amountGot = DataManager.Instance.PlayerData.Crystals.LegendaryCrystal;
                 break;
             default:
@@ -216,11 +214,11 @@ public class CraftingUI : MonoBehaviour
             case ItemType.Epic:
                 DataManager.Instance.PlayerData.Crystals.EpicCrystal -= showingRecepie.AmountNeeded;
                 break;
-            case ItemType.Lengedary:
+            case ItemType.Legendary:
                 DataManager.Instance.PlayerData.Crystals.LegendaryCrystal -= showingRecepie.AmountNeeded;
                 break;
             default:
-                throw new System.Exception("Don't know how to start crafting process for ingridiant: " + showingRecepie.Inggrdiant);
+                throw new System.Exception("Don't know how to start crafting process for ingredient: " + showingRecepie.Inggrdiant);
         }
 
         ShowRecepie(showingRecepie.Inggrdiant);
@@ -233,6 +231,7 @@ public class CraftingUI : MonoBehaviour
 
     void FinishedCrafting()
     {
+        craftingFinished.Setup($"Congratulations, you just crafted a {showingRecepie.EndProduct} shard");
         ShowCristals();
         ShowRecepie(showingRecepie.Inggrdiant);
         craftButtonText.text = "Craft";
@@ -258,7 +257,7 @@ public class CraftingUI : MonoBehaviour
             case ItemType.Epic:
                 DataManager.Instance.PlayerData.Crystals.EpicCrystal -= showingRecepie.BotAmountNeeded;
                 break;
-            case ItemType.Lengedary:
+            case ItemType.Legendary:
                 DataManager.Instance.PlayerData.Crystals.LegendaryCrystal -= showingRecepie.BotAmountNeeded;
                 break;
             default:

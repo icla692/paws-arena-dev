@@ -457,11 +457,11 @@ MonoBehaviour:
   isPremium: 0
   equipments: {fileID: 11400000, guid: b1c54d560f2953b40ad580080dc5b0e8, type: 2}
   shards:
-  - {fileID: 21300000, guid: fdfd26e2833239f43ad34bb1c214edf0, type: 3}
-  - {fileID: 21300000, guid: dfc9ddef2a3a70446a2403f0e594c951, type: 3}
-  - {fileID: 21300000, guid: 43dad446296fbdf41aef93f669bf7721, type: 3}
-  - {fileID: 21300000, guid: 2f0b64b6fb26e944eb707460d74f529e, type: 3}
-  - {fileID: 21300000, guid: c72e20a746929c64da1e0dc31e729be0, type: 3}
+  - {fileID: 21300000, guid: a328420e74036be489a81fd8304c0bde, type: 3}
+  - {fileID: 21300000, guid: 2c35e99b80a18014db9386a56195cac5, type: 3}
+  - {fileID: 21300000, guid: 8973596adb7b4544ca6a3c3e46189e41, type: 3}
+  - {fileID: 21300000, guid: f01df40dcc8b6c44c9abe081fed80db3, type: 3}
+  - {fileID: 21300000, guid: b5798a61abc64d040b32f98175de7e53, type: 3}
   snacks: {fileID: 1890360438, guid: 44940260574ba4c4988d9489601a592e, type: 3}
   jugOfMilk: {fileID: 21300000, guid: d8767927beb3c1946bcf5cc014a51898, type: 3}
   glassOfMilk: {fileID: 21300000, guid: 8eb374f05f4e1024c8a95802d609a05b, type: 3}

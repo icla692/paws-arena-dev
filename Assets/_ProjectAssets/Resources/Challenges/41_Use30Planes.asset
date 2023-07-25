@@ -18,3 +18,4 @@ MonoBehaviour:
   RewardSprite: {fileID: 21300000, guid: 905486495de344203aa370f861252035, type: 3}
   RewardAmount: 3500
   RewardType: 0
+  Category: 14

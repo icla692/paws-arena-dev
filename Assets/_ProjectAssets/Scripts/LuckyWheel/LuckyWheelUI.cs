@@ -17,6 +17,7 @@ public class LuckyWheelUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI insuficiantSnacksText;
     [SerializeField] private EquipmentsConfig equipments;
     [SerializeField] private bool CloseOnClaim;
+    [SerializeField] private BuyMilk buyMilk;
     LuckyWheelRewardSO choosenReward;
     public static EquipmentData EquipmentData = null;
 
@@ -107,7 +108,7 @@ public class LuckyWheelUI : MonoBehaviour
             case ItemType.Epic:
                 DataManager.Instance.PlayerData.Crystals.EpicCrystal++;
                 break;
-            case ItemType.Lengedary:
+            case ItemType.Legendary:
                 DataManager.Instance.PlayerData.Crystals.LegendaryCrystal++;
                 break;
             case ItemType.Gift:
@@ -135,6 +136,7 @@ public class LuckyWheelUI : MonoBehaviour
         {
             insuficiantSnacksForRespin.SetActive(true);
             insuficiantSnacksText.text = $"You don't have enaught Snacks.\n(takes {currentRespinPrice} for respin)";
+            buyMilk.Setup();
             return;
         }
 

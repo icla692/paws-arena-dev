@@ -17,6 +17,6 @@ MonoBehaviour:
   <Amount>k__BackingField: 1
   <Sprite>k__BackingField: {fileID: 21300000, guid: fdfd26e2833239f43ad34bb1c214edf0, type: 3}
   <Chances>k__BackingField: 70
-  <Name>k__BackingField: Lime shard
+  <Name>k__BackingField: Common Shard
   <MinRotation>k__BackingField: 35
   <MaxRotation>k__BackingField: 70

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChallengesManager : MonoBehaviour
@@ -61,99 +62,101 @@ public class ChallengesManager : MonoBehaviour
         }
 
         isSubscribed = true;
-        foreach (var _challengeData in DataManager.Instance.PlayerData.Challenges.ChallengesData)
+        foreach (var _challengeDataDB in DataManager.Instance.PlayerData.Challenges.ChallengesData)
         {
-            if (_challengeData.Completed)
+            if (_challengeDataDB.Completed)
             {
                 continue;
             }
-            if (_challengeData.Id==0||_challengeData.Id==1||_challengeData.Id==2)
+
+            ChallengeSO _challengeData = allChallenges.Find(_element => _element.Id == _challengeDataDB.Id);
+            if (_challengeData.Category == ChallengeCategory.WinGame)
             {
-                EventsManager.OnWonGame += _challengeData.IncreaseAmount;
+                EventsManager.OnWonGame += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==3)
+            else if (_challengeData.Category == ChallengeCategory.CraftItem)
             {
-                EventsManager.OnCraftedItem += _challengeData.IncreaseAmount;
+                EventsManager.OnCraftedItem += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==4)
+            else if (_challengeData.Category == ChallengeCategory.CraftShard)
             {
-                EventsManager.OnCraftedCrystal += _challengeData.IncreaseAmount;
+                EventsManager.OnCraftedCrystal += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==5||_challengeData.Id==6||_challengeData.Id==7)
+            else if (_challengeData.Category == ChallengeCategory.GainExperience)
             {
-                EventsManager.OnGotExperience += _challengeData.IncreaseAmount;
+                EventsManager.OnGotExperience += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==8||_challengeData.Id==9||_challengeData.Id==10)
+            else if (_challengeData.Category == ChallengeCategory.GainLeaderboardPoints)
             {
-                EventsManager.OnWonLeaderboardPoints += _challengeData.IncreaseAmount;
+                EventsManager.OnWonLeaderboardPoints += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==11||_challengeData.Id==12||_challengeData.Id==13)
+            else if (_challengeData.Category == ChallengeCategory.WinWithFullHp)
             {
-                EventsManager.OnWonGameWithFullHp += _challengeData.IncreaseAmount;
+                EventsManager.OnWonGameWithFullHp += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==14||_challengeData.Id==15||_challengeData.Id==16)
+            else if (_challengeData.Category == ChallengeCategory.LoseMatch)
             {
-                EventsManager.OnLostGame += _challengeData.IncreaseAmount;
+                EventsManager.OnLostGame += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==17||_challengeData.Id==18||_challengeData.Id==19)
+            else if (_challengeData.Category == ChallengeCategory.DealDamage)
             {
-                EventsManager.OnDealtDamageToOpponent += _challengeData.IncreaseAmount;
+                EventsManager.OnDealtDamageToOpponent += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==20||_challengeData.Id==21||_challengeData.Id==22)
+            else if (_challengeData.Category == ChallengeCategory.UseMilkBottle)
             {
-                EventsManager.OnUsedMilkBottle += _challengeData.IncreaseAmount;
+                EventsManager.OnUsedMilkBottle += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==23||_challengeData.Id==24||_challengeData.Id==25)
+            else if (_challengeData.Category == ChallengeCategory.HealYourKitty)
             {
-                EventsManager.OnHealedKitty += _challengeData.IncreaseAmount;
+                EventsManager.OnHealedKitty += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==26||_challengeData.Id==27||_challengeData.Id==28||_challengeData.Id==29)
+            else if (_challengeData.Category == ChallengeCategory.PlayMatch)
             {
-                EventsManager.OnPlayedMatch += _challengeData.IncreaseAmount;
+                EventsManager.OnPlayedMatch += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==30||_challengeData.Id==31||_challengeData.Id==32)
+            else if (_challengeData.Category == ChallengeCategory.ShootRocket)
             {
-                EventsManager.OnUsedRocket += _challengeData.IncreaseAmount;
+                EventsManager.OnUsedRocket += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==33||_challengeData.Id==34||_challengeData.Id==35)
+            else if (_challengeData.Category == ChallengeCategory.ShootCannon)
             {
-                EventsManager.OnUsedCannon += _challengeData.IncreaseAmount;
+                EventsManager.OnUsedCannon += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==36||_challengeData.Id==37||_challengeData.Id==38)
+            else if (_challengeData.Category == ChallengeCategory.ShootTripleRocket)
             {
-                EventsManager.OnUsedTripleRocket += _challengeData.IncreaseAmount;
+                EventsManager.OnUsedTripleRocket += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==39||_challengeData.Id==40||_challengeData.Id==41)
+            else if (_challengeData.Category == ChallengeCategory.ShootPlane)
             {
-                EventsManager.OnUsedAirplane += _challengeData.IncreaseAmount;
+                EventsManager.OnUsedAirplane += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==42||_challengeData.Id==43||_challengeData.Id==44)
+            else if (_challengeData.Category == ChallengeCategory.ShootMouse)
             {
-                EventsManager.OnUsedMouse += _challengeData.IncreaseAmount;
+                EventsManager.OnUsedMouse += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==45||_challengeData.Id==46||_challengeData.Id==47)
+            else if (_challengeData.Category == ChallengeCategory.ShootArrow)
             {
-                EventsManager.OnUsedArrow += _challengeData.IncreaseAmount;
+                EventsManager.OnUsedArrow += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==48||_challengeData.Id==49||_challengeData.Id==50)
+            else if (_challengeData.Category == ChallengeCategory.WinMatchesInARow)
             {
-                EventsManager.OnWonGame += _challengeData.IncreaseAmount;
-                EventsManager.OnLostGame += _challengeData.Reset;
+                EventsManager.OnWonGame += _challengeDataDB.IncreaseAmount;
+                EventsManager.OnLostGame += _challengeDataDB.Reset;
             }
-            else if (_challengeData.Id==51)
+            else if (_challengeData.Category == ChallengeCategory.WinMatchWithLessThan10Hp)
             {
-                EventsManager.OnWonWithHpLessThan10 += _challengeData.IncreaseAmount;
+                EventsManager.OnWonWithHpLessThan10 += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==52)
+            else if (_challengeData.Category == ChallengeCategory.WinMatchWithLessThan20Hp)
             {
-                EventsManager.OnWonWithHpLessThan20 += _challengeData.IncreaseAmount;
+                EventsManager.OnWonWithHpLessThan20 += _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==53)
+            else if (_challengeData.Category == ChallengeCategory.WinMatchWithLessThan30Hp)
             {
-                EventsManager.OnWonWithHpLessThan30 += _challengeData.IncreaseAmount;
+                EventsManager.OnWonWithHpLessThan30 += _challengeDataDB.IncreaseAmount;
             }
 
-            _challengeData.IsSubscribed = true;
+            _challengeDataDB.IsSubscribed = true;
         }
     }
 
@@ -165,99 +168,100 @@ public class ChallengesManager : MonoBehaviour
         }
 
         isSubscribed = false;
-        foreach (var _challengeData in DataManager.Instance.PlayerData.Challenges.ChallengesData)
+        foreach (var _challengeDataDB in DataManager.Instance.PlayerData.Challenges.ChallengesData)
         {
-            if (_challengeData.Completed)
+            if (_challengeDataDB.Completed)
             {
                 continue;
             }
-            if (_challengeData.Id==0||_challengeData.Id==1||_challengeData.Id==2)
+            ChallengeSO _challengeData = allChallenges.Find(_element => _element.Id == _challengeDataDB.Id);
+            if (_challengeData.Category == ChallengeCategory.WinGame)
             {
-                EventsManager.OnWonGame -= _challengeData.IncreaseAmount;
+                EventsManager.OnWonGame -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==3)
+            else if (_challengeData.Category == ChallengeCategory.CraftItem)
             {
-                EventsManager.OnCraftedItem -= _challengeData.IncreaseAmount;
+                EventsManager.OnCraftedItem -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==4)
+            else if (_challengeData.Category == ChallengeCategory.CraftShard)
             {
-                EventsManager.OnCraftedCrystal -= _challengeData.IncreaseAmount;
+                EventsManager.OnCraftedCrystal -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==5||_challengeData.Id==6||_challengeData.Id==7)
+            else if (_challengeData.Category == ChallengeCategory.GainExperience)
             {
-                EventsManager.OnGotExperience -= _challengeData.IncreaseAmount;
+                EventsManager.OnGotExperience -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==8||_challengeData.Id==9||_challengeData.Id==10)
+            else if (_challengeData.Category == ChallengeCategory.GainLeaderboardPoints)
             {
-                EventsManager.OnWonLeaderboardPoints -= _challengeData.IncreaseAmount;
+                EventsManager.OnWonLeaderboardPoints -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==11||_challengeData.Id==12||_challengeData.Id==13)
+            else if (_challengeData.Category == ChallengeCategory.WinWithFullHp)
             {
-                EventsManager.OnWonGameWithFullHp -= _challengeData.IncreaseAmount;
+                EventsManager.OnWonGameWithFullHp -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==14||_challengeData.Id==15||_challengeData.Id==16)
+            else if (_challengeData.Category == ChallengeCategory.LoseMatch)
             {
-                EventsManager.OnLostGame -= _challengeData.IncreaseAmount;
+                EventsManager.OnLostGame -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==17||_challengeData.Id==18||_challengeData.Id==19)
+            else if (_challengeData.Category == ChallengeCategory.DealDamage)
             {
-                EventsManager.OnDealtDamageToOpponent -= _challengeData.IncreaseAmount;
+                EventsManager.OnDealtDamageToOpponent -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==20||_challengeData.Id==21||_challengeData.Id==22)
+            else if (_challengeData.Category == ChallengeCategory.UseMilkBottle)
             {
-                EventsManager.OnUsedMilkBottle -= _challengeData.IncreaseAmount;
+                EventsManager.OnUsedMilkBottle -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==23||_challengeData.Id==24||_challengeData.Id==25)
+            else if (_challengeData.Category == ChallengeCategory.HealYourKitty)
             {
-                EventsManager.OnHealedKitty -= _challengeData.IncreaseAmount;
+                EventsManager.OnHealedKitty -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==26||_challengeData.Id==27||_challengeData.Id==28||_challengeData.Id==29)
+            else if (_challengeData.Category == ChallengeCategory.PlayMatch)
             {
-                EventsManager.OnPlayedMatch -= _challengeData.IncreaseAmount;
+                EventsManager.OnPlayedMatch -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==30||_challengeData.Id==31||_challengeData.Id==32)
+            else if (_challengeData.Category == ChallengeCategory.ShootRocket)
             {
-                EventsManager.OnUsedRocket -= _challengeData.IncreaseAmount;
+                EventsManager.OnUsedRocket -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==33||_challengeData.Id==34||_challengeData.Id==35)
+            else if (_challengeData.Category == ChallengeCategory.ShootCannon)
             {
-                EventsManager.OnUsedCannon -= _challengeData.IncreaseAmount;
+                EventsManager.OnUsedCannon -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==36||_challengeData.Id==37||_challengeData.Id==38)
+            else if (_challengeData.Category == ChallengeCategory.ShootTripleRocket)
             {
-                EventsManager.OnUsedTripleRocket -= _challengeData.IncreaseAmount;
+                EventsManager.OnUsedTripleRocket -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==39||_challengeData.Id==40||_challengeData.Id==41)
+            else if (_challengeData.Category == ChallengeCategory.ShootPlane)
             {
-                EventsManager.OnUsedAirplane -= _challengeData.IncreaseAmount;
+                EventsManager.OnUsedAirplane -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==42||_challengeData.Id==43||_challengeData.Id==44)
+            else if (_challengeData.Category == ChallengeCategory.ShootMouse)
             {
-                EventsManager.OnUsedMouse -= _challengeData.IncreaseAmount;
+                EventsManager.OnUsedMouse -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==45||_challengeData.Id==46||_challengeData.Id==47)
+            else if (_challengeData.Category == ChallengeCategory.ShootArrow)
             {
-                EventsManager.OnUsedArrow -= _challengeData.IncreaseAmount;
+                EventsManager.OnUsedArrow -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==48||_challengeData.Id==49||_challengeData.Id==50)
+            else if (_challengeData.Category == ChallengeCategory.WinMatchesInARow)
             {
-                EventsManager.OnWonGame -= _challengeData.IncreaseAmount;
-                EventsManager.OnLostGame -= _challengeData.Reset;
+                EventsManager.OnWonGame -= _challengeDataDB.IncreaseAmount;
+                EventsManager.OnLostGame -= _challengeDataDB.Reset;
             }
-            else if (_challengeData.Id==51)
+            else if (_challengeData.Category == ChallengeCategory.WinMatchWithLessThan10Hp)
             {
-                EventsManager.OnWonWithHpLessThan10 -= _challengeData.IncreaseAmount;
+                EventsManager.OnWonWithHpLessThan10 -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==52)
+            else if (_challengeData.Category == ChallengeCategory.WinMatchWithLessThan20Hp)
             {
-                EventsManager.OnWonWithHpLessThan20 -= _challengeData.IncreaseAmount;
+                EventsManager.OnWonWithHpLessThan20 -= _challengeDataDB.IncreaseAmount;
             }
-            else if (_challengeData.Id==53)
+            else if (_challengeData.Category == ChallengeCategory.WinMatchWithLessThan30Hp)
             {
-                EventsManager.OnWonWithHpLessThan30 -= _challengeData.IncreaseAmount;
+                EventsManager.OnWonWithHpLessThan30 -= _challengeDataDB.IncreaseAmount;
             }
 
-            _challengeData.IsSubscribed = false;
+            _challengeDataDB.IsSubscribed = false;
         }
     }
 
@@ -266,16 +270,39 @@ public class ChallengesManager : MonoBehaviour
         UnsubscribeEvents();
         List<ChallengeSO> _allChallenges = allChallenges.ToList().OrderBy(_element => Guid.NewGuid()).ToList();
         DataManager.Instance.PlayerData.Challenges.ChallengesData = new List<ChallengeData>();
-        for (int i = 0; i < amountOfChallenges; i++)
+
+        int _counter = -1;
+        while (DataManager.Instance.PlayerData.Challenges.ChallengesData.Count<amountOfChallenges)
         {
+            bool _skip = false;
+            _counter++;
+
+            ChallengeSO _challenge = allChallenges[_counter];
+
+            foreach (var _chData in DataManager.Instance.PlayerData.Challenges.ChallengesData)
+            {
+                ChallengeSO _challengeSO = allChallenges.Find(_element => _element.Id == _chData.Id);
+                if (_challenge.Category==_challengeSO.Category)
+                {
+                    _skip = true;
+                    break;
+                }
+            }
+
+            if (_skip)
+            {
+                continue;
+            }
+
             ChallengeData _challengeData = new ChallengeData()
             {
-                Id = _allChallenges[i].Id,
+                Id = _challenge.Id,
                 Completed = false,
                 Value = 0
             };
-            DataManager.Instance.PlayerData.Challenges.ChallengesData.Add(_challengeData);
+            DataManager.Instance.PlayerData.Challenges.ChallengesData.Add(_challengeData);    
         }
+        
 
         DateTime _nextReset = DateTime.UtcNow.AddDays(1);
 
