@@ -42,6 +42,10 @@ public class SplitBulletComponent : BulletComponent
 
     public void Split()
     {
+        if (!isMine)
+        {
+            return;
+        }
         if (hasSplit) return;
         hasSplit = true;
 

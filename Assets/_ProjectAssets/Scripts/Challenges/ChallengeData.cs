@@ -8,6 +8,7 @@ public class ChallengeData
     public int Id;
     public int Value;
     public bool Completed;
+    public bool Claimed;
 
 
     [JsonIgnore] public bool IsSubscribed;
@@ -40,7 +41,6 @@ public class ChallengeData
         if (_challenge.AmountNeeded-Value<=0)
         {
             Completed = true;
-            ChallengesManager.Instance.CompletedChallenge(this);
         }
         else
         {
@@ -51,6 +51,7 @@ public class ChallengeData
     public void Reset()
     {
         Value = 0;
+        UpdatedProgress?.Invoke(Id);
     }
     
 }

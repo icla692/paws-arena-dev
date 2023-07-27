@@ -50,7 +50,7 @@ public class LuckyWheel : MonoBehaviour
         float _targetedZ = UnityEngine.Random.Range(choosenReward.MinRotation, choosenReward.MaxRotation);
         float _currentZRotation = pointerHolder.eulerAngles.z;
         int _additionalFullSPins = 1;
-        _targetedZ = _targetedZ - (360 * _additionalFullSPins);
+        _targetedZ -= (360 * _additionalFullSPins);
         float _distanceTraveled = 0;
         float _distanceToTravel = _targetedZ - _currentZRotation;
         float _pointAtCurve = 0;

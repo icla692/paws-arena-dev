@@ -89,7 +89,8 @@ namespace com.colorfulcoding.AfterGame
             }
 
             totalCoinsValue.text = "" + GameState.pointsChange.oldPoints;
-            int _earnings = GameState.pointsChange.points - GameState.pointsChange.oldPoints;
+            int _earnings = GameState.pointsChange.points;
+
             if (_earnings>0)
             {
                 EventsManager.OnWonLeaderboardPoints?.Invoke(_earnings);

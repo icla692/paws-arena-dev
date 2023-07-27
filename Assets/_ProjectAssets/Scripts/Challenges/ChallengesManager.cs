@@ -15,6 +15,38 @@ public class ChallengesManager : MonoBehaviour
     private bool isSubscribed;
     private List<ChallengeSO> allChallenges = new List<ChallengeSO>();
 
+    private void OnEnable()
+    {
+        ChallengeDisplay.OnClaimPressed += ClaimedChallenge;
+    }
+
+    private void OnDisable()
+    {
+        ChallengeDisplay.OnClaimPressed -= ClaimedChallenge;
+    }
+    
+    public void ClaimedChallenge(ChallengeData _challengeData)
+    {
+        ChallengeSO _challengeSO = allChallenges.Find(_element => _element.Id == _challengeData.Id);
+        _challengeData.Claimed = true;
+        switch (_challengeSO.RewardType)
+        {
+            case ChallengeRewardType.SeasonExperience:
+                DataManager.Instance.PlayerData.Experience += _challengeSO.RewardAmount;
+                break;
+            case ChallengeRewardType.JugOfMilk:
+                DataManager.Instance.PlayerData.JugOfMilk += _challengeSO.RewardAmount;
+                break;
+            case ChallengeRewardType.Snacks:
+                DataManager.Instance.PlayerData.Snacks += _challengeSO.RewardAmount;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        DataManager.Instance.SaveChallenges();
+    }
+
+
     private void Awake()
     {
         if (Instance==null)
@@ -265,7 +297,7 @@ public class ChallengesManager : MonoBehaviour
         }
     }
 
-    public void GenerateNewChallenges()
+    private void GenerateNewChallenges()
     {
         UnsubscribeEvents();
         List<ChallengeSO> _allChallenges = allChallenges.ToList().OrderBy(_element => Guid.NewGuid()).ToList();
@@ -298,6 +330,7 @@ public class ChallengesManager : MonoBehaviour
             {
                 Id = _challenge.Id,
                 Completed = false,
+                Claimed = false,
                 Value = 0
             };
             DataManager.Instance.PlayerData.Challenges.ChallengesData.Add(_challengeData);    
@@ -311,27 +344,6 @@ public class ChallengesManager : MonoBehaviour
             new DateTime(_nextReset.Year, _nextReset.Month, _nextReset.Day, 0, 0, 0);
         DataManager.Instance.SaveChallenges();
     }
-
-    public void CompletedChallenge(ChallengeData _challengeData)
-    {
-        ChallengeSO _challengeSO = allChallenges.Find(_element => _element.Id == _challengeData.Id);
-        switch (_challengeSO.RewardType)
-        {
-            case ChallengeRewardType.SeasonExperience:
-                DataManager.Instance.PlayerData.Experience += _challengeSO.RewardAmount;
-                break;
-            case ChallengeRewardType.JugOfMilk:
-                DataManager.Instance.PlayerData.JugOfMilk += _challengeSO.RewardAmount;
-                break;
-            case ChallengeRewardType.Snacks:
-                DataManager.Instance.PlayerData.Snacks += _challengeSO.RewardAmount;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-        DataManager.Instance.SaveChallenges();
-    }
-
 
 
     public ChallengeSO Get(int _id)
