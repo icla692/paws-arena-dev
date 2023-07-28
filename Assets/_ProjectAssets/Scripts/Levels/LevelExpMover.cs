@@ -20,7 +20,7 @@ public class LevelExpMover : MonoBehaviour
         LeanTween.move( gameObject,
                         Camera.main.ScreenToWorldPoint(target.position), 
                         Random.Range(3,5))
-            .setEase(LeanTweenType.easeOutQuad)
+            .setEase(LeanTweenType.linear)
             .setOnComplete(() => { Destroy(gameObject); })
             .setDelay(1f);
     }

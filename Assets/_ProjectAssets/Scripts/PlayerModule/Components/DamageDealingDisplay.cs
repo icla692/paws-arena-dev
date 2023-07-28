@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using Anura.ConfigurationModule.Managers;
 using Photon.Pun;
 
 public class DamageDealingDisplay : MonoBehaviour
 {
+    public static Action<int> OnExpEarned;
     public GameObject damageDealPrefab;
     public BasePlayerComponent basePlayerComponent;
     [SerializeField] GameObject experiencePrefab;
@@ -11,7 +13,6 @@ public class DamageDealingDisplay : MonoBehaviour
     PhotonView photonView;
     Vector3 damageOffset = new Vector3(0, 1, 0);
     int amountOfShowingDamageTexts = 0;
-    static int totallDamageDealth;
 
     private void OnEnable()
     {
@@ -68,38 +69,14 @@ public class DamageDealingDisplay : MonoBehaviour
             }
         }
 
-        totallDamageDealth += _damageTaken;
+        DataManager.Instance.PlayerData.Experience += _damageTaken;
+        EventsManager.OnGotExperience?.Invoke(_damageTaken);
+        EventsManager.OnDealtDamageToOpponent?.Invoke(_damageTaken);
         for (int i = 0; i < _damageTaken; i += 5)
         {
             GameObject _experience = Instantiate(experiencePrefab);
             _experience.transform.position = transform.position;
         }
     }
-
-    private void OnDestroy()
-    {
-        if (DataManager.Instance.GameData.HasSeasonEnded)
-        {
-            return;
-        }
-
-        if (photonView != null)
-        {
-            if (photonView.IsMine)
-            {
-                return;
-            }
-        }
-        else
-        {
-            if (!isBotPlayer)
-            {
-                return;
-            }
-        }
-
-        DataManager.Instance.PlayerData.Experience += totallDamageDealth;
-        EventsManager.OnGotExperience?.Invoke(totallDamageDealth);
-        EventsManager.OnDealtDamageToOpponent?.Invoke(totallDamageDealth);
-    }
+    
 }
