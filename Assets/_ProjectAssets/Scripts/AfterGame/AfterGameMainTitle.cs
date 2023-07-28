@@ -29,9 +29,6 @@ namespace com.colorfulcoding.AfterGame
         public Color standLoseColor;
         public Color standDrawColor;
 
-        [SerializeField] LuckyWheelUI luckyWheelUI;
-        [SerializeField] GameObject leaveButton;
-
         void Start()
         {
             int checkIfIWon;
@@ -68,8 +65,6 @@ namespace com.colorfulcoding.AfterGame
                 }
                 
                 EventsManager.OnWonGame?.Invoke();
-                leaveButton.gameObject.SetActive(false);
-                luckyWheelUI.RequestReward();
                 winTitle.SetActive(true);
                 bg.GetComponent<Image>().color = winColor;
                 standGlow.color = winColor;
@@ -102,14 +97,7 @@ namespace com.colorfulcoding.AfterGame
                 {
                     totalCoinsValue.text = "" + Math.Floor(GameState.pointsChange.oldPoints + val);
                     deltaPoints.text = "+" + Math.Floor(val);
-                }).setEaseInOutCirc().setDelay(1f).setOnComplete(() =>
-                {
-                    if (checkIfIWon > 0)
-                    {
-                        luckyWheelUI.ShowReward();
-                    }
-                }
-                );
+                }).setEaseInOutCirc().setDelay(1f);
             }
 
             if (!string.IsNullOrEmpty(GameState.pointsChange.reason))

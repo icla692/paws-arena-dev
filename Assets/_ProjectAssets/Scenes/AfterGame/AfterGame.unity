@@ -234,8 +234,6 @@ MonoBehaviour:
   standWinColor: {r: 0.53333336, g: 1, b: 0.7607843, a: 1}
   standLoseColor: {r: 1, g: 0, b: 0.08235294, a: 1}
   standDrawColor: {r: 1, g: 1, b: 1, a: 1}
-  luckyWheelUI: {fileID: 1370965707}
-  leaveButton: {fileID: 1466782754}
 --- !u!1 &258123387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,17 +1780,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4324128801988241768, guid: 776983f5fb4a240209700b4c4ad5ec9c, type: 3}
   m_PrefabInstance: {fileID: 4324128802771578786}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1370965707 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4324128801988241769, guid: 776983f5fb4a240209700b4c4ad5ec9c, type: 3}
-  m_PrefabInstance: {fileID: 4324128802771578786}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46af300c027fd4b4bb9771cb3582e812, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1408492891
 GameObject:
   m_ObjectHideFlags: 0
@@ -3135,6 +3122,10 @@ PrefabInstance:
     - target: {fileID: 4324128801988241771, guid: 776983f5fb4a240209700b4c4ad5ec9c, type: 3}
       propertyPath: m_Name
       value: WheelHolder
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324128801988241771, guid: 776983f5fb4a240209700b4c4ad5ec9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 776983f5fb4a240209700b4c4ad5ec9c, type: 3}
