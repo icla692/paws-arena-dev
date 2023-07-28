@@ -36,4 +36,5 @@ public class CraftingRecepieSO : ScriptableObject
         LoadAll();
         return allRecepies.Find(element => element.Inggrdiant == _ingridiant);
     }
+    
 }
