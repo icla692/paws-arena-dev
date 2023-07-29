@@ -6,6 +6,7 @@ using TMPro;
 
 public class ChallengesPanel : MonoBehaviour
 {
+    public static  Action OnClosed;
     [SerializeField] private ChallengeDisplay[] challengeDisplays;
     [SerializeField] private Button closeButton;
     [SerializeField] private TextMeshProUGUI progressDisplay;
@@ -50,6 +51,7 @@ public class ChallengesPanel : MonoBehaviour
 
     void Close()
     {
+        OnClosed?.Invoke();
         gameObject.SetActive(false);
     }
 
