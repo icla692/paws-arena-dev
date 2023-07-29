@@ -78,7 +78,6 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
         if (isMultiplayer)
         {
             SetState(new WaitingForAllPlayersToJoinState());
-            ;
             photonView.RPC("OnPlayerSceneLoaded", RpcTarget.All);
         }
         else
@@ -113,13 +112,18 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public void SetFirstPlayerTurn()
     {
         roundNumber++;
-        if (!isMultiplayer || PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (LuckyWheelWhoPlaysFirst.DoIPlayFirst)
         {
             SetState(new MyTurnState());
         }
         else
         {
             SetState(new OtherPlayerTurnState());
+        }
+
+        if (PhotonNetwork.CurrentRoom==null || PhotonNetwork.CurrentRoom.PlayerCount==1)
+        {
+            SetState(new BotTurnState());
         }
     }
 

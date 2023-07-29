@@ -26,6 +26,8 @@ public class GameMatchingScreen : MonoBehaviour
     public List<SeatGameobject> seats;
     public Countdown countdown;
 
+    [SerializeField] private GameObject wheelHolder;
+
     private void OnEnable()
     {
         Init();
@@ -230,6 +232,7 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void StartCountdown(string sceneName)
     {
+        wheelHolder.SetActive(true);
         countdown.StartCountDown(() =>
         {
             if (PhotonNetwork.LocalPlayer.IsMasterClient)

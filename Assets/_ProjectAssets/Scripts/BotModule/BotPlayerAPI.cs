@@ -39,6 +39,11 @@ public class BotPlayerAPI : MonoSingleton<BotPlayerAPI>
         this.indicatorCircle = indicatorCircle;
 
         RoomStateManager.OnStateUpdated += OnStateUpdated;
+
+        if (!LuckyWheelWhoPlaysFirst.DoIPlayFirst)
+        {
+            wasLastTurnOfBot = true;
+        }
     }
 
     private void OnStateUpdated(IRoomState state)
@@ -115,6 +120,7 @@ public class BotPlayerAPI : MonoSingleton<BotPlayerAPI>
             {
                 playerActionsBar.Shoot();
             }
+            
             if(RoomStateManager.Instance.currentState is BotTurnState || RoomStateManager.Instance.currentState is ProjectileLaunchedState)
             {
                 onMainAction?.Invoke();

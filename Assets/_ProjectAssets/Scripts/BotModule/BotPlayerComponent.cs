@@ -36,6 +36,11 @@ public class BotPlayerComponent : MonoBehaviour
         yield return new WaitForEndOfFrame();
         SetupBot();
         SetupAI();
+        yield return new WaitForSeconds(3);
+        if (!LuckyWheelWhoPlaysFirst.DoIPlayFirst)
+        {
+            botAI.Play();
+        }
     }
 
     private void SetupBot()
