@@ -1659,7 +1659,7 @@ MonoBehaviour:
   claimButton: {fileID: 4324128801500679532}
   insuficiantSnacksForRespin: {fileID: 4324128801388795437}
   insuficiantSnacksText: {fileID: 4324128801759419953}
-  equipments: {fileID: 0}
+  equipments: {fileID: 11400000, guid: b1c54d560f2953b40ad580080dc5b0e8, type: 2}
   CloseOnClaim: 0
   buyMilk: {fileID: 3301979051762601838}
 --- !u!95 &4324128801988241774
