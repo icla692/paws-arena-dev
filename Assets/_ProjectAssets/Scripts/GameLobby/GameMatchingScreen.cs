@@ -95,7 +95,10 @@ public class GameMatchingScreen : MonoBehaviour
 
     private IEnumerator BringBotAfterSeconds(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(seconds-3);
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        yield return new WaitForSeconds(3);
         if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
             BringBot();

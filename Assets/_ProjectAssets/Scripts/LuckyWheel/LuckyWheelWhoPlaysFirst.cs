@@ -40,7 +40,7 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
         
         Spin(_targetZ,DoIPlayFirst);
 
-        if (!(PhotonNetwork.CurrentRoom==null|| PhotonNetwork.CurrentRoom.PlayerCount==1))
+        if (!(PhotonNetwork.CurrentRoom==null|| PhotonNetwork.CurrentRoom.PlayerCount==2))
         {
             photonView.RPC(nameof(Spin),RpcTarget.Others,_targetZ,!DoIPlayFirst);
         }
@@ -49,7 +49,7 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
     IEnumerator SpinRoutine(float _targetRotationZ)
     {
         pointerHolder.eulerAngles = Vector3.zero;
-        float _spinDuration = UnityEngine.Random.Range(2, 4f);
+        float _spinDuration = 2;
         float _timePassed = 0;
 
         while (_timePassed < _spinDuration)
