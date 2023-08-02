@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class LuckyWheelWhoPlaysFirst : MonoBehaviour
 {
@@ -12,6 +15,7 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
     [SerializeField] AnimationCurve endSpinCurve;
     [SerializeField] float spinSpeed;
     [SerializeField] RectTransform pointerHolder;
+    [SerializeField] private Button leaveButton;
     
     private LuckyWheelRewardSO choosenPlayer;
     private float speed;
@@ -20,7 +24,12 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
 
     private void OnEnable()
     {
+        leaveButton.gameObject.SetActive(false);
         ChooseStartingPlayer();
+    }
+
+    private void Start()
+    {
         playerPlatforms = FindObjectsOfType<SyncPlayerPlatformBehaviour>().ToList();
         foreach (var _playerPlatform in playerPlatforms)
         {
@@ -106,11 +115,11 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
     private IEnumerator EndSpin()
     {
         yield return new WaitForSeconds(1);
-        gameObject.SetActive(false);
         foreach (var _playerPlatform in playerPlatforms)
         {
             _playerPlatform.gameObject.SetActive(true);
         }
+        gameObject.SetActive(false);
     }
 
     [PunRPC]

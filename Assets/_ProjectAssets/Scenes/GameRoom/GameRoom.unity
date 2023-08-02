@@ -2452,6 +2452,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   spinSpeed: -1000
   pointerHolder: {fileID: 1010536124047416885}
+  leaveButton: {fileID: 1466782758}
 --- !u!114 &1010536123986207110
 MonoBehaviour:
   m_ObjectHideFlags: 0
