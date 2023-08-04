@@ -49,13 +49,13 @@ public class ChallengesPanel : MonoBehaviour
         closeButton.onClick.RemoveListener(Close);
     }
 
-    void Close()
+    private void Close()
     {
         OnClosed?.Invoke();
         gameObject.SetActive(false);
     }
 
-    IEnumerator ShowTimer()
+    private IEnumerator ShowTimer()
     {
         while (gameObject.activeSelf)
         {

@@ -17,7 +17,7 @@ namespace UnityEngine.UI.Extensions
         public UnityEngine.UI.Text TooltipText;
         public Vector3 ToolTipOffset;
 
-        void Awake()
+        private void Awake()
         {
             instance = this;
             if(!TooltipText) TooltipText = GetComponentInChildren<Text>();

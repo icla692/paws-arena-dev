@@ -55,7 +55,7 @@ public class EmojiPreviewDisplay : MonoBehaviour, IPointerEnterHandler, IPointer
             .setDelay(_delay);
     }
 
-    void HandleClick()
+    private void HandleClick()
     {
         OnEmojiClicked?.Invoke(emoji.Id);
     }

@@ -6,19 +6,20 @@ using System.Collections.Generic;
 public class HiddenObjectExplorer : EditorWindow
 {
     [MenuItem("Tools/HiddenObjectExplorer")]
-    static void Init()
+    private static void Init()
     {
         GetWindow<HiddenObjectExplorer>();
     }
-    List<GameObject> m_Objects = new List<GameObject>();
-    Vector2 scrollPos = Vector2.zero;
-    
-    void OnEnable()
+
+    private List<GameObject> m_Objects = new List<GameObject>();
+    private Vector2 scrollPos = Vector2.zero;
+
+    private void OnEnable()
     {
         FindObjects();
     }
-    
-    void FindObjects()
+
+    private void FindObjects()
     {
         var objs = Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[];
         m_Objects.Clear();
@@ -29,14 +30,15 @@ public class HiddenObjectExplorer : EditorWindow
                 m_Objects.Add(go);
         }
     }
-    void FindObjectsAll()
+
+    private void FindObjectsAll()
     {
         var objs = Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[];
         m_Objects.Clear();
         m_Objects.AddRange(objs);
     }
-    
-    HideFlags HideFlagsButton(string aTitle, HideFlags aFlags, HideFlags aValue)
+
+    private HideFlags HideFlagsButton(string aTitle, HideFlags aFlags, HideFlags aValue)
     {
         if(GUILayout.Toggle((aFlags & aValue) > 0, aTitle, "Button"))
             aFlags |= aValue;
@@ -44,8 +46,8 @@ public class HiddenObjectExplorer : EditorWindow
             aFlags &= ~aValue;
         return aFlags;
     }
-    
-    void OnGUI()
+
+    private void OnGUI()
     {
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("find top level"))

@@ -9,8 +9,7 @@ namespace UnityEngine.UI.Extensions
     [AddComponentMenu("UI/Extensions/Primitives/UILineTextureRenderer")]
     public class UILineTextureRenderer : UIPrimitiveBase
     {
-        [SerializeField]
-        Rect m_UVRect = new Rect(0f, 0f, 1f, 1f);
+        [SerializeField] private Rect m_UVRect = new Rect(0f, 0f, 1f, 1f);
         [SerializeField]
         private Vector2[] m_points;
 

@@ -5,9 +5,9 @@ public class RecoveryMessageDisplay : MonoBehaviour
 {
     public static RecoveryMessageDisplay Instance;
 
-    [SerializeField] GameObject recoveryMessageHolder;
-    [SerializeField] GameObject recoveryMessageBackground;
-    [SerializeField] TextMeshProUGUI recoveryText;
+    [SerializeField] private GameObject recoveryMessageHolder;
+    [SerializeField] private GameObject recoveryMessageBackground;
+    [SerializeField] private TextMeshProUGUI recoveryText;
 
     private void Awake()
     {

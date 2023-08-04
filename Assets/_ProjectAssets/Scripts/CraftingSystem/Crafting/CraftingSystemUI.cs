@@ -3,9 +3,9 @@ using UnityEngine.UI;
 
 public class CraftingSystemUI : MonoBehaviour
 {
-    [SerializeField] CraftingUI craftingUI;
-    [SerializeField] DisenchantUI disenchantUI;
-    [SerializeField] Button closeButton;
+    [SerializeField] private CraftingUI craftingUI;
+    [SerializeField] private DisenchantUI disenchantUI;
+    [SerializeField] private Button closeButton;
     public void Setup()
     {
         craftingUI.Setup();
@@ -34,7 +34,7 @@ public class CraftingSystemUI : MonoBehaviour
         disenchantUI.Setup();
     }
 
-    void Close()
+    private void Close()
     {
         craftingUI.Close();
         disenchantUI.Close();

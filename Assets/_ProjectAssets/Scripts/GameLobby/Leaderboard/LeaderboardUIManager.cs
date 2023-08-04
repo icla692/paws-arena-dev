@@ -24,7 +24,7 @@ public class LeaderboardUIManager : MonoBehaviour
     public List<Sprite> stars;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         PopulateLeaderboard();
     }

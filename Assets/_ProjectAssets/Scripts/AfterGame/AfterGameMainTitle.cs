@@ -29,10 +29,10 @@ namespace com.colorfulcoding.AfterGame
         public Color standLoseColor;
         public Color standDrawColor;
 
-        [SerializeField] LuckyWheelUI luckyWheelUI;
-        [SerializeField] GameObject leaveButton;
+        [SerializeField] private LuckyWheelUI luckyWheelUI;
+        [SerializeField] private GameObject leaveButton;
 
-        void Start()
+        private void Start()
         {
             int checkIfIWon;
             EventsManager.OnPlayedMatch?.Invoke();

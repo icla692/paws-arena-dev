@@ -327,7 +327,7 @@ namespace Smooth
         /// maxLocalTime is 2 ^ maxTimePower
         /// minTimePrecision is 2 ^ (maxTimePower - 24)
         /// </remarks>
-        const int maxTimePower = 12;
+        private const int maxTimePower = 12;
 
         /// <summary>Reset localTime back to zero when float value gets this high.</summary>
         /// <remarks>
@@ -335,14 +335,14 @@ namespace Smooth
         /// The precision from 2049-4096 is 2^(12 - 24) = 0.00024414062
         /// 120 fps is a deltaTime of .008 seconds and timeCorrectionSpeed should be around .1 so time will be adjusted by a minimum of .0008 seconds per frame, which is greater than precision.
         /// </remarks>
-        readonly float maxLocalTime = Mathf.Pow(2, maxTimePower);
+        private readonly float maxLocalTime = Mathf.Pow(2, maxTimePower);
 
         /// <summary>This is the minimum precision by which time values can be changed</summary>
         /// <remarks>
         /// Due to float precision we are limited in how small of a value we can adjust time by. Within the range of values
         /// that we allow, it is guaranteed that we can adjust time by this minTimePrecision.
         /// </remarks>
-        readonly float minTimePrecision = Mathf.Pow(2, maxTimePower - 24);
+        private readonly float minTimePrecision = Mathf.Pow(2, maxTimePower - 24);
 
         /// <summary>Used to keep track of when local time has been reset.</summary>
         /// <remarks>
@@ -408,7 +408,7 @@ namespace Smooth
         /// The last received State that was validated by the validateStateDelegate.
         /// This means the State was passed to the delegate and the method returned true.
         /// </remarks>
-        StatePUN2 latestValidatedState;
+        private StatePUN2 latestValidatedState;
 
         /// <summary> Set velocity on non-owners instead of the position. </summary>
         /// <remarks>
@@ -464,22 +464,22 @@ namespace Smooth
         /// Used via stopEasing() to 'teleport' a synced object without unwanted easing.
         /// Useful for things like spawning and snapping
         /// </summary>
-        bool dontEasePosition = false;
+        private bool dontEasePosition = false;
         /// <summary>
         /// Used via stopEasing() to 'teleport' a synced object without unwanted easing.
         /// Useful for things like spawning and snapping
         /// </summary>
-        bool dontEaseRotation= false;
+        private bool dontEaseRotation= false;
         /// <summary>
         /// Used via stopEasing() to 'teleport' a synced object without unwanted easing.
         /// Useful for things like spawning and snapping
         /// </summary>
-        bool dontEaseScale= false;
+        private bool dontEaseScale= false;
 
         /// <summary>
         /// Used to setup initial _ownerTime
         /// </summary>
-        float firstReceivedMessageZeroTime;
+        private float firstReceivedMessageZeroTime;
 
         /// <summary>Last time owner sent a State.</summary>
         [NonSerialized]
@@ -535,9 +535,9 @@ namespace Smooth
         [NonSerialized]
         public bool sendAngularVelocity;
         /// <summary>The State we lerp to on non-owned objects. We re-use the State so that we don't need to create a new one every frame.</summary>
-        StatePUN2 targetTempState;
+        private StatePUN2 targetTempState;
         /// <summary>The State we send from owned objects. We re-use the State so that we don't need to create a new one every frame.</summary>
-        NetworkStatePUN2 sendingTempState;
+        private NetworkStatePUN2 sendingTempState;
         /// <summary>The latest received velocity. Used for extrapolation.</summary>
         [NonSerialized]
         public Vector3 latestReceivedVelocity;
@@ -545,45 +545,45 @@ namespace Smooth
         [NonSerialized]
         public Vector3 latestReceivedAngularVelocity;
         /// <summary>The total time extrapolated since last interpolation. Used for extrapolationTimeLimit.</summary>
-        float timeSpentExtrapolating = 0;
+        private float timeSpentExtrapolating = 0;
         /// <summary>Whether or not the object used extrapolation last frame. Used to reset extrapolation variables.</summary>
-        bool extrapolatedLastFrame = false;
+        private bool extrapolatedLastFrame = false;
         /// <summary>Used to tell whether the object is at positional rest or not.</summary>
-        Vector3 positionLastAttemptedToSend;
+        private Vector3 positionLastAttemptedToSend;
         /// <summary>Used to tell whether the object is at positional rest or not.</summary>
-        bool changedPositionLastFrame;
+        private bool changedPositionLastFrame;
         /// <summary>Used to tell whether the object is at rotational rest or not.</summary>
-        Quaternion rotationLastAttemptedToSend;
+        private Quaternion rotationLastAttemptedToSend;
         /// <summary>Used to tell whether the object is at rotational rest or not.</summary>
-        bool changedRotationLastFrame;
+        private bool changedRotationLastFrame;
         /// <summary>Is considered at rest if at same position for this many FixedUpdate()s.</summary>
-        int atRestThresholdCount = 1;
+        private int atRestThresholdCount = 1;
         /// <summary>Resting states for position and rotation. Used for extrapolation.</summary>
-        enum RestState
+        private enum RestState
         {
             AT_REST, JUST_STARTED_MOVING, MOVING
         }
         /// <summary>Counts up for each FixedUpdate() that position is the same until the atRestThresholdCount.</summary>
-        int samePositionCount;
+        private int samePositionCount;
         /// <summary>Counts up for each FixedUpdate() that rotation is the same until the atRestThresholdCount.</summary>
-        int sameRotationCount;
+        private int sameRotationCount;
         /// <summary>The current state of the owned object's position.</summary>
-        RestState restStatePosition = RestState.MOVING;
+        private RestState restStatePosition = RestState.MOVING;
         /// <summary>The current state of the owned object's rotation.</summary>
-        RestState restStateRotation = RestState.MOVING;
+        private RestState restStateRotation = RestState.MOVING;
         /// <summary> Used to check if low FPS causes us to skip a teleport State. </summary>
-        StatePUN2 latestEndStateUsed;
+        private StatePUN2 latestEndStateUsed;
         /// <summary> Used to know if should send out a State the next time PUN is able. </summary>
-        bool shouldSendNextPUNUpdate = false;
+        private bool shouldSendNextPUNUpdate = false;
         /// <summary> Used to check if we should be sending a "JustStartedMoving" State. If we are teleporting, don't send one. </summary>
-        Vector3 latestTeleportedFromPosition;
+        private Vector3 latestTeleportedFromPosition;
         /// <summary> Used to check if we should be sending a "JustStartedMoving" State. If we are teleporting, don't send one. </summary>
-        Quaternion latestTeleportedFromRotation;
+        private Quaternion latestTeleportedFromRotation;
 
         /// <summary> Used to know when the owner has last changed. </summary>
-        float latestAuthorityChangeTime;
+        private float latestAuthorityChangeTime;
         /// <summary> Used to know when the owner has changed. Not an identifier. </summary>
-        int previousReceivedOwnerInt = 0;
+        private int previousReceivedOwnerInt = 0;
         /// <summary> Used to know when the owner has changed. Not an identifier. Only sent from Server. </summary>
         public int ownerChangeIndicator = 1;
 
@@ -633,7 +633,7 @@ namespace Smooth
         }
 
         /// <summary>Set the interpolated / extrapolated Transforms and Rigidbodies of non-owned objects.</summary>
-        void Update()
+        private void Update()
         {
             if (whenToUpdateTransform == WhenToUpdateTransform.Update)
             {
@@ -643,7 +643,7 @@ namespace Smooth
 
         /// <summary>Send the owned object's State over the network and sets the interpolated / extrapolated
         /// Transforms and Rigidbodies on non-owned objects.</summary>
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             if (whenToUpdateTransform == WhenToUpdateTransform.FixedUpdate)
             {
@@ -651,7 +651,7 @@ namespace Smooth
             }
         }
 
-        void SmoothSyncUpdate()
+        private void SmoothSyncUpdate()
         {
             localTime += Time.deltaTime;
             if (automaticallyResetTime)
@@ -756,7 +756,7 @@ namespace Smooth
         }
 
         /// <summary>Determine if and what we should send out.</summary>
-        void sendState()
+        private void sendState()
         {
             if (!photonView.IsMine) return;
 
@@ -939,9 +939,9 @@ namespace Smooth
             previousReceivedOwnerInt = ownerChangeIndicator;
         }
 
-        bool triedToExtrapolateTooFar = false;
+        private bool triedToExtrapolateTooFar = false;
         /// <summary>Use the State buffer to set interpolated or extrapolated Transforms and Rigidbodies on non-owned objects.</summary>
-        void applyInterpolationOrExtrapolation()
+        private void applyInterpolationOrExtrapolation()
         {
             if (stateCount == 0) return;
 
@@ -1186,7 +1186,7 @@ namespace Smooth
         /// Interpolate between two States from the stateBuffer in order calculate the targetState.
         /// </summary>
         /// <param name="interpolationTime">The target time</param>
-        void interpolate(float interpolationTime)
+        private void interpolate(float interpolationTime)
         {
             // Go through buffer and find correct State to start at.
             int stateIndex = 0;
@@ -1259,7 +1259,7 @@ namespace Smooth
         /// </summary>
         /// <param name="interpolationTime">The target time</param>
         /// <returns>true on extrapolation, false if hit extrapolation limits or is at rest.</returns>
-        bool extrapolate(float interpolationTime)
+        private bool extrapolate(float interpolationTime)
         {
             // Start from the latest State
             if (!extrapolatedLastFrame || targetTempState.ownerTimestamp < stateBuffer[0].ownerTimestamp)
@@ -1405,7 +1405,8 @@ namespace Smooth
 
             return true;
         }
-        void shouldTeleport(StatePUN2 start, ref StatePUN2 end, float interpolationTime, ref float t)
+
+        private void shouldTeleport(StatePUN2 start, ref StatePUN2 end, float interpolationTime, ref float t)
         {
             // If the interpolationTime is further back than the start State time and start State is a teleport, then teleport.
             if (start.ownerTimestamp > interpolationTime && start.teleport && stateCount == 2)
@@ -1547,14 +1548,14 @@ namespace Smooth
         }
 
         /// <summary>Reset flags back to defaults after sending frame.</summary>
-        void resetFlags()
+        private void resetFlags()
         {
             forceStateSend = false;
             sendAtPositionalRestMessage = false;
             sendAtRotationalRestMessage = false;
         }
         // <summary>Determines if two vectors are equal enough, and not off just due to floating point inaccuracies.
-        bool almostEqual(Vector3 v1, Vector3 v2, float precision)
+        private bool almostEqual(Vector3 v1, Vector3 v2, float precision)
         {
             bool equal = true;
 
@@ -1712,7 +1713,7 @@ namespace Smooth
         /// <summary>
         /// Add the teleport State at the correct place in the State buffer.
         /// </summary>
-        void addTeleportState(StatePUN2 teleportState)
+        private void addTeleportState(StatePUN2 teleportState)
         {
             if (teleportState != null)
             {
@@ -2133,7 +2134,7 @@ namespace Smooth
         }
         #endregion
 
-        float lastTimeAttemptedToSend = 0.0f;
+        private float lastTimeAttemptedToSend = 0.0f;
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             // When sending data.
@@ -2191,12 +2192,12 @@ namespace Smooth
         /// <summary>
         /// The last owner time received over the network
         /// </summary>
-        float _ownerTime;
+        private float _ownerTime;
 
         /// <summary>
         /// The realTimeSinceStartup when we received the last owner time.
         /// </summary>
-        float lastTimeOwnerTimeWasSet;
+        private float lastTimeOwnerTimeWasSet;
 
         /// <summary>
         /// The current estimated time on the owner.
@@ -2223,7 +2224,7 @@ namespace Smooth
         public int receivedStatesCounter;
 
         /// <summary> Adjust owner time based on latest timestamp. Handle ownership changes. </summary>
-        void adjustOwnerTime()
+        private void adjustOwnerTime()
         {
             // Don't adjust time if at rest or no state received yet.
             if (stateBuffer[0] == null || (stateBuffer[0].atPositionalRest && stateBuffer[0].atRotationalRest)) return;

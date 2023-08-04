@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ScaleUpAnimation : MonoBehaviour
 {
-    [SerializeField] float animationLength = 0.2f;
+    [SerializeField] private float animationLength = 0.2f;
 
     private void OnEnable()
     {

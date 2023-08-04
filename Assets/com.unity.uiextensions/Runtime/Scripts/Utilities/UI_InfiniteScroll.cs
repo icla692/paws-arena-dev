@@ -130,7 +130,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void DisableGridComponents()
+        private void DisableGridComponents()
         {
             if (_isVertical)
             {

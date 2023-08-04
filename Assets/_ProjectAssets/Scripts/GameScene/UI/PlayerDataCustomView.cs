@@ -26,7 +26,7 @@ public class PlayerDataCustomView : MonoBehaviour
 
     private bool isMultiplayer;
 
-    void Start()
+    private void Start()
     {
         isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
 

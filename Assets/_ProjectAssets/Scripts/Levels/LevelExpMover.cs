@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class LevelExpMover : MonoBehaviour
 {
-    Transform target;
-    Vector3 offsetRange = new Vector3(1f, 1f, 1f);
+    private Transform target;
+    private Vector3 offsetRange = new Vector3(1f, 1f, 1f);
 
     private void Awake()
     {

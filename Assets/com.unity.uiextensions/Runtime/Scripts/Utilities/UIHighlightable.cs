@@ -50,7 +50,7 @@ namespace UnityEngine.UI.Extensions
         [Tooltip("Event for when the panel is enabled / disabled, to enable disabling / enabling of child or other gameobjects")]
         public InteractableChangedEvent OnInteractableChanged;
 
-        void Awake()
+        private void Awake()
         {
             m_Graphic = GetComponent<Graphic>();
         }

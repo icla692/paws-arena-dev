@@ -58,8 +58,8 @@ namespace UnityEngine.UI.Extensions
 			_pressed = false;
 			_heldEventData = null;
 	   }
-	   
-		void Update()
+
+		private void Update()
 		{
 			if (!_pressed)
 				return;
@@ -111,7 +111,7 @@ namespace UnityEngine.UI.Extensions
 		}
 
 		//Fixed UISelectableExtension inactive bug (if gameObject becomes inactive while button is held down it never goes back to _pressed = false)
-		void OnDisable()
+		private void OnDisable()
 		{
 			_pressed = false;
 		}

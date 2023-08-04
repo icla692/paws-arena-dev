@@ -20,20 +20,15 @@ namespace UnityEngine.UI.Extensions.ColorPicker
 		public ColorChangedEvent onValueChanged = new ColorChangedEvent();
 		public HSVChangedEvent onHSVChanged = new HSVChangedEvent();
 
-		[SerializeField]
-		bool hsvSlidersOn = true;
+		[SerializeField] private bool hsvSlidersOn = true;
 
-		[SerializeField]
-		List<GameObject> hsvSliders = new List<GameObject>();
+		[SerializeField] private List<GameObject> hsvSliders = new List<GameObject>();
 
-		[SerializeField]
-		bool rgbSlidersOn = true;
+		[SerializeField] private bool rgbSlidersOn = true;
 
-		[SerializeField]
-		List<GameObject> rgbSliders = new List<GameObject>();
+		[SerializeField] private List<GameObject> rgbSliders = new List<GameObject>();
 
-		[SerializeField]
-		GameObject alphaSlider = null;
+		[SerializeField] private GameObject alphaSlider = null;
 
 		public void SetHSVSlidersOn(bool value)
 		{
@@ -57,7 +52,7 @@ namespace UnityEngine.UI.Extensions.ColorPicker
 		}
 
 
-		void Update()
+		private void Update()
 		{
 #if UNITY_EDITOR
 			SetHSVSlidersOn(hsvSlidersOn);

@@ -13,7 +13,8 @@ public class PointScrollbar : MonoBehaviour
     {
         _rectTransform = GetComponent<RectTransform>();
     }
-    void Update()
+
+    private void Update()
     {
         _rectTransform.anchoredPosition = new Vector2(0, Mathf.Clamp(maxY * (1 - scrollbar.value), maxY, 0));
     }

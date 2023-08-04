@@ -5,11 +5,11 @@ using UnityEngine;
 [SerializeField]
 public class CrystalsData
 {
-    float commonCrystal = 0;
-    float uncommonCrystal = 0;
-    float rareCrystal = 0;
-    float epicCrystal = 0;
-    float legendaryCristal = 0;
+    private float commonCrystal = 0;
+    private float uncommonCrystal = 0;
+    private float rareCrystal = 0;
+    private float epicCrystal = 0;
+    private float legendaryCristal = 0;
     
     [JsonIgnore] public Action UpdatedCommonCrystal;
     [JsonIgnore] public Action UpdatedUncommonCrystal;

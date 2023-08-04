@@ -85,7 +85,7 @@ namespace ExitGames.Client.Photon
             this.State = PhotonSocketState.Disconnected;
         }
 
-        GameObject websocketConnectionObject;
+        private GameObject websocketConnectionObject;
         public override bool Connect()
         {
             //bool baseOk = base.Connect();

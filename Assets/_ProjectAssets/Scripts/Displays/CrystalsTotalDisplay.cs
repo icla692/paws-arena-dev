@@ -25,7 +25,7 @@ public class CrystalsTotalDisplay : MonoBehaviour
         DataManager.Instance.PlayerData.Crystals.UpdatedEpicCrystal -= Show;
     }
 
-    void Show()
+    private void Show()
     {
         display.text = DataManager.Instance.PlayerData.Crystals.TotalCrystalsAmount.ToString();
     }

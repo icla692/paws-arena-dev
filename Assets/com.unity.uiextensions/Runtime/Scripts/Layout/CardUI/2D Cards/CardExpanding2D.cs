@@ -38,7 +38,7 @@ public class CardExpanding2D : MonoBehaviour
     ///I wouldn't recommend changing animationActive's value here unless you want the card to start as a page.
     private int animationActive = -1;
 
-    void Start()
+    private void Start()
     {
         rectTrans = GetComponent<RectTransform>();
 
@@ -56,7 +56,7 @@ public class CardExpanding2D : MonoBehaviour
         pageMax = new Vector2(pageCenter.x + pageSize.x * 0.5f, pageCenter.y + pageSize.y * 0.5f);
     }
 
-    void Update()
+    private void Update()
     {
         ///When animationActive == 1, the card is expanding into a page.
         if (animationActive == 1)

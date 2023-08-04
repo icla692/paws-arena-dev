@@ -18,7 +18,7 @@ public class BotPlayerComponent : MonoBehaviour
 
     private BotAI botAI;
 
-    void Awake()
+    private void Awake()
     {
         playerMotionBehaviour = GetComponent<PlayerMotionBehaviour>();
         RoomStateManager.OnStateUpdated += OnStateUpdatedForBot;

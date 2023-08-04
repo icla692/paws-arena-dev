@@ -6,8 +6,7 @@ namespace UnityEngine.UI.Extensions
     public class ShineEffect : MaskableGraphic
     {
 
-        [SerializeField]
-        float yoffset = -1;
+        [SerializeField] private float yoffset = -1;
 
         public float Yoffset
         {
@@ -22,8 +21,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        [SerializeField]
-        float width = 1;
+        [SerializeField] private float width = 1;
 
         public float Width
         {

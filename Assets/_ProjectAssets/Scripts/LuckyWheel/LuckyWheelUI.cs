@@ -8,21 +8,21 @@ using TMPro;
 
 public class LuckyWheelUI : MonoBehaviour
 {
-    [SerializeField] GameObject playerPlatform;
-    [SerializeField] LuckyWheel luckyWheel;
-    [SerializeField] LuckyWheelClaimDisplay rewardDisplay;
-    [SerializeField] Button respinButton;
-    [SerializeField] Button claimButton;
-    [SerializeField] GameObject insuficiantSnacksForRespin;
-    [SerializeField] TextMeshProUGUI insuficiantSnacksText;
+    [SerializeField] private GameObject playerPlatform;
+    [SerializeField] private LuckyWheel luckyWheel;
+    [SerializeField] private LuckyWheelClaimDisplay rewardDisplay;
+    [SerializeField] private Button respinButton;
+    [SerializeField] private Button claimButton;
+    [SerializeField] private GameObject insuficiantSnacksForRespin;
+    [SerializeField] private TextMeshProUGUI insuficiantSnacksText;
     [SerializeField] private EquipmentsConfig equipments;
     [SerializeField] private bool CloseOnClaim;
     [SerializeField] private BuyMilk buyMilk;
-    LuckyWheelRewardSO choosenReward;
+    private LuckyWheelRewardSO choosenReward;
     public static EquipmentData EquipmentData = null;
 
-    bool requestedToSeeReward = false;
-    int currentRespinPrice;
+    private bool requestedToSeeReward = false;
+    private int currentRespinPrice;
 
     public async void RequestReward()
     {
@@ -60,7 +60,7 @@ public class LuckyWheelUI : MonoBehaviour
         Setup();
     }
 
-    void Setup()
+    private void Setup()
     {
         if (playerPlatform!=null)
         {
@@ -87,12 +87,12 @@ public class LuckyWheelUI : MonoBehaviour
         respinButton.onClick.RemoveListener(Respin);
     }
 
-    void ClaimReward()
+    private void ClaimReward()
     {
         Claim(choosenReward);
     }
 
-    void Claim(LuckyWheelRewardSO _reward)
+    private void Claim(LuckyWheelRewardSO _reward)
     {
         switch (_reward.Type)
         {
@@ -122,7 +122,7 @@ public class LuckyWheelUI : MonoBehaviour
         rewardDisplay.Setup(_reward,CloseAfterClaim);
     }
 
-    void CloseAfterClaim()
+    private void CloseAfterClaim()
     {
         if (CloseOnClaim)
         {
@@ -130,7 +130,7 @@ public class LuckyWheelUI : MonoBehaviour
         }
     }
 
-    void Respin()
+    private void Respin()
     {
         if (DataManager.Instance.PlayerData.Snacks< currentRespinPrice)
         {
@@ -148,17 +148,17 @@ public class LuckyWheelUI : MonoBehaviour
         RequestReward();
     }
 
-    void SpinWheel()
+    private void SpinWheel()
     {
         luckyWheel.Spin(EnableButtons, choosenReward);
     }
 
-    void EnableButtons()
+    private void EnableButtons()
     {
         StartCoroutine(ShowRewardAnimationRoutine());
     }
 
-    IEnumerator ShowRewardAnimationRoutine()
+    private IEnumerator ShowRewardAnimationRoutine()
     {
         yield return new WaitForSeconds(1);
         claimButton.gameObject.SetActive(true);

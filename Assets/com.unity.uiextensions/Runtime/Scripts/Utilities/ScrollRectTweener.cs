@@ -10,18 +10,17 @@ namespace UnityEngine.UI.Extensions
 	[AddComponentMenu("UI/Extensions/ScrollRectTweener")]
     public class ScrollRectTweener : MonoBehaviour, IDragHandler
     {
+        private ScrollRect scrollRect;
+        private Vector2 startPos;
+        private Vector2 targetPos;
 
-        ScrollRect scrollRect;
-        Vector2 startPos;
-        Vector2 targetPos;
-
-        bool wasHorizontal;
-        bool wasVertical;
+        private bool wasHorizontal;
+        private bool wasVertical;
 
         public float moveSpeed = 5000f;
         public bool disableDragWhileTweening = false;
 
-        void Awake()
+        private void Awake()
         {
             scrollRect = GetComponent<ScrollRect>();
             wasHorizontal = scrollRect.horizontal;
@@ -53,18 +52,18 @@ namespace UnityEngine.UI.Extensions
             Scroll(normalizedPos, GetScrollDuration(normalizedPos));
         }
 
-        float GetScrollDuration(Vector2 normalizedPos)
+        private float GetScrollDuration(Vector2 normalizedPos)
         {
             Vector2 currentPos = GetCurrentPos();
             return Vector2.Distance(DeNormalize(currentPos), DeNormalize(normalizedPos)) / moveSpeed;
         }
 
-        Vector2 DeNormalize(Vector2 normalizedPos)
+        private Vector2 DeNormalize(Vector2 normalizedPos)
         {
             return new Vector2(normalizedPos.x * scrollRect.content.rect.width, normalizedPos.y * scrollRect.content.rect.height);
         }
 
-        Vector2 GetCurrentPos()
+        private Vector2 GetCurrentPos()
         {
             return new Vector2(scrollRect.horizontalNormalizedPosition, scrollRect.verticalNormalizedPosition);
         }
@@ -81,7 +80,7 @@ namespace UnityEngine.UI.Extensions
             StartCoroutine(DoMove(duration));
         }
 
-        IEnumerator DoMove(float duration)
+        private IEnumerator DoMove(float duration)
         {
 
             // Abort if movement would be too short
@@ -118,20 +117,20 @@ namespace UnityEngine.UI.Extensions
                 StopScroll();
         }
 
-        void StopScroll()
+        private void StopScroll()
         {
             StopAllCoroutines();
             if (disableDragWhileTweening)
                 RestoreScrollability();
         }
 
-        void LockScrollability()
+        private void LockScrollability()
         {
             scrollRect.horizontal = false;
             scrollRect.vertical = false;
         }
 
-        void RestoreScrollability()
+        private void RestoreScrollability()
         {
             scrollRect.horizontal = wasHorizontal;
             scrollRect.vertical = wasVertical;

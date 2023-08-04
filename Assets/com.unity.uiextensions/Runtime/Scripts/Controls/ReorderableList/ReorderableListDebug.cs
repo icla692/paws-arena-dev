@@ -7,7 +7,7 @@ namespace UnityEngine.UI.Extensions
     {
         public Text DebugLabel;
 
-        void Awake()
+        private void Awake()
         {
             foreach (var list in FindObjectsOfType<ReorderableList>())
             {

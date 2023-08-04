@@ -58,7 +58,7 @@ namespace UnityEngine.UI.Extensions
         /// </summary>
         public int DataCount { get; private set; }
 
-        GameObject cellGroupTemplate;
+        private GameObject cellGroupTemplate;
 
         /// <inheritdoc/>
         protected override void Initialize()

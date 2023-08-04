@@ -5,13 +5,13 @@ using System.Collections.Generic;
 [Serializable]
 public class GameData
 {
-    int seasonNumber;
-    DateTime seasonEnds;
-    int levelBaseExp;
-    int levelBaseScaler;
-    int respinPrice;
-    int glassOfMilkPrice;
-    int jugOfMilkPrice;
+    private int seasonNumber;
+    private DateTime seasonEnds;
+    private int levelBaseExp;
+    private int levelBaseScaler;
+    private int respinPrice;
+    private int glassOfMilkPrice;
+    private int jugOfMilkPrice;
     private List<LevelReward> seasonRewards;
 
     public bool HasSeasonEnded => DateTime.UtcNow > SeasonEnds;

@@ -118,7 +118,7 @@ namespace UnityEngine.UI.Extensions
         private DrivenRectTransformTracker m_Tracker;
 
         // Size of each step.
-        float StepSize { get { return WholeNumbers ? 1 : (MaxValue - MinValue) * 0.1f; } }
+        private float StepSize { get { return WholeNumbers ? 1 : (MaxValue - MinValue) * 0.1f; } }
 
         protected BoxSlider()
         { }
@@ -204,7 +204,7 @@ namespace UnityEngine.UI.Extensions
             base.OnDisable();
         }
 
-        void UpdateCachedReferences()
+        private void UpdateCachedReferences()
         {
 
             if (m_HandleRect)
@@ -220,12 +220,12 @@ namespace UnityEngine.UI.Extensions
         }
 
         // Set the valueUpdate the visible Image.
-        void SetX(float input)
+        private void SetX(float input)
         {
             SetX(input, true);
         }
 
-        void SetX(float input, bool sendCallback)
+        private void SetX(float input, bool sendCallback)
         {
             // Clamp the input
             float newValue = Mathf.Clamp(input, MinValue, MaxValue);
@@ -242,12 +242,12 @@ namespace UnityEngine.UI.Extensions
                 m_OnValueChanged.Invoke(newValue, ValueY);
         }
 
-        void SetY(float input)
+        private void SetY(float input)
         {
             SetY(input, true);
         }
 
-        void SetY(float input, bool sendCallback)
+        private void SetY(float input, bool sendCallback)
         {
             // Clamp the input
             float newValue = Mathf.Clamp(input, MinValue, MaxValue);
@@ -271,7 +271,7 @@ namespace UnityEngine.UI.Extensions
             UpdateVisuals();
         }
 
-        enum Axis
+        private enum Axis
         {
             Horizontal = 0,
             Vertical = 1
@@ -308,7 +308,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         // Update the slider's position based on the mouse.
-        void UpdateDrag(PointerEventData eventData, Camera cam)
+        private void UpdateDrag(PointerEventData eventData, Camera cam)
         {
             RectTransform clickRect = m_HandleContainerRect;
             if (clickRect != null && clickRect.rect.size[0] > 0)

@@ -8,11 +8,11 @@ public class DamageDealingDisplay : MonoBehaviour
     public static Action<int> OnExpEarned;
     public GameObject damageDealPrefab;
     public BasePlayerComponent basePlayerComponent;
-    [SerializeField] GameObject experiencePrefab;
-    bool isBotPlayer;
-    PhotonView photonView;
-    Vector3 damageOffset = new Vector3(0, 1, 0);
-    int amountOfShowingDamageTexts = 0;
+    [SerializeField] private GameObject experiencePrefab;
+    private bool isBotPlayer;
+    private PhotonView photonView;
+    private Vector3 damageOffset = new Vector3(0, 1, 0);
+    private int amountOfShowingDamageTexts = 0;
 
     private void OnEnable()
     {
@@ -32,7 +32,7 @@ public class DamageDealingDisplay : MonoBehaviour
         DamageDealingText.Finished -= DeduceAmountOfTexts;
     }
 
-    void DeduceAmountOfTexts()
+    private void DeduceAmountOfTexts()
     {
         amountOfShowingDamageTexts--;
     }
@@ -47,7 +47,7 @@ public class DamageDealingDisplay : MonoBehaviour
         SpawnExperience(damage);
     }
 
-    void SpawnExperience(int _damageTaken)
+    private void SpawnExperience(int _damageTaken)
     {
         if (DataManager.Instance.GameData.HasSeasonEnded)
         {

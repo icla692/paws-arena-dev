@@ -168,7 +168,7 @@ namespace UnityEngine.UI.Extensions
         public SelectionChangeEndEvent OnSelectionChangeEndEvent { get { return m_OnSelectionChangeEndEvent; } set { m_OnSelectionChangeEndEvent = value; } }
 
         // Use this for initialization
-        void Awake()
+        private void Awake()
         {
             if (_scroll_rect == null)
             {

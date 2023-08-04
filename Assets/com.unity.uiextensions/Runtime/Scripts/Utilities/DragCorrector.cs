@@ -16,7 +16,7 @@ namespace UnityEngine.UI.Extensions
         public int basePPI = 210;
         public int dragTH = 0;
 
-        void Start()
+        private void Start()
         {
             dragTH = baseTH * (int)Screen.dpi / basePPI;
 

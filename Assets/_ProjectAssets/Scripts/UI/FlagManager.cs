@@ -7,15 +7,15 @@ using Newtonsoft.Json;
 
 public class FlagManager : MonoBehaviour
 {
-    [SerializeField] Image flagImageDisplay;
-    [SerializeField] Image flagShineDisplay;
-    [SerializeField] TextMeshProUGUI messageDisplay;
-    [SerializeField] Material shiningMaterial;
-    [SerializeField] string imageUrl;
-    [SerializeField] string detailsUrl;
+    [SerializeField] private Image flagImageDisplay;
+    [SerializeField] private Image flagShineDisplay;
+    [SerializeField] private TextMeshProUGUI messageDisplay;
+    [SerializeField] private Material shiningMaterial;
+    [SerializeField] private string imageUrl;
+    [SerializeField] private string detailsUrl;
 
-    static Sprite flagSprite = null;
-    static string message;
+    private static Sprite flagSprite = null;
+    private static string message;
 
     private void Start()
     {
@@ -30,7 +30,7 @@ public class FlagManager : MonoBehaviour
         }
     }
 
-    IEnumerator GetImageFromUrl()
+    private IEnumerator GetImageFromUrl()
     {
         UnityWebRequest _request = UnityWebRequestTexture.GetTexture(imageUrl);
         yield return _request.SendWebRequest();
@@ -49,7 +49,7 @@ public class FlagManager : MonoBehaviour
         }
     }
 
-    void SetDetails()
+    private void SetDetails()
     {
         if (flagSprite != null)
         {
@@ -71,7 +71,7 @@ public class FlagManager : MonoBehaviour
         }
     }
 
-    IEnumerator GetMessage()
+    private IEnumerator GetMessage()
     {
         UnityWebRequest _request = UnityWebRequest.Get(detailsUrl);
         yield return _request.SendWebRequest();

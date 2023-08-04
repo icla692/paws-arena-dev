@@ -124,10 +124,10 @@ namespace ExitGames.Client.Photon
             }
         }
     #else
-        WebSocketSharp.WebSocket m_Socket;
-        Queue<byte[]> m_Messages = new Queue<byte[]>();
-        bool m_IsConnected = false;
-        string m_Error = null;
+        private WebSocketSharp.WebSocket m_Socket;
+        private Queue<byte[]> m_Messages = new Queue<byte[]>();
+        private bool m_IsConnected = false;
+        private string m_Error = null;
 
         public void Connect()
         {

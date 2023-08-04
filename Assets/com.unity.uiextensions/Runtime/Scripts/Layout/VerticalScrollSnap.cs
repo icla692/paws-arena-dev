@@ -14,7 +14,7 @@ namespace UnityEngine.UI.Extensions
     {
         private bool updated = true;
 
-        void Start()
+        private void Start()
         {
             _isVertical = true;
             _childAnchorPoint = new Vector2(0.5f,0);
@@ -23,7 +23,7 @@ namespace UnityEngine.UI.Extensions
             UpdateLayout();
         }
 
-        void Update()
+        private void Update()
         {
             updated = false;
 

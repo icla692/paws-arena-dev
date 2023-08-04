@@ -9,7 +9,8 @@ public class SmoothFollow : MonoBehaviour
     public float speed;
 
     private Vector3 offset;
-    void Start()
+
+    private void Start()
     {
         transform.parent = null;
         offset = transform.position - target.position;
@@ -25,7 +26,7 @@ public class SmoothFollow : MonoBehaviour
         playerGraphicsBehaviour.onCatFlipped -= Flip;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         transform.position = Vector3.Lerp(transform.position, target.position + offset, Time.deltaTime * speed);
     }

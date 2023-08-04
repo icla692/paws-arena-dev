@@ -36,7 +36,7 @@ namespace UnityEngine.UI.Extensions
             OnScrollBarUp();
         }
 
-        void OnScrollBarDown()
+        private void OnScrollBarDown()
         {
             if (ss != null)
             {
@@ -45,7 +45,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void OnScrollBarUp()
+        private void OnScrollBarUp()
         {
             ss.SetLerp(true);
             ss.ChangePage(ss.CurrentPage());

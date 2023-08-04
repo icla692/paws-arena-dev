@@ -22,7 +22,7 @@ namespace UnityEngine.UI.Extensions
         public bool defocusInput = true;
         private InputField _input;
 
-        void Awake()
+        private void Awake()
         {
             _input = GetComponent<InputField>();
             _input.onEndEdit.AddListener(OnEndEdit);

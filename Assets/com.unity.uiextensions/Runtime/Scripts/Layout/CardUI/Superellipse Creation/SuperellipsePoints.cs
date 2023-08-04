@@ -34,7 +34,7 @@ public class SuperellipsePoints : MonoBehaviour
 
     private List<Vector2> pointList = new List<Vector2>();
 
-    void Start()
+    private void Start()
     {
         RecalculateSuperellipse();
 
@@ -47,7 +47,7 @@ public class SuperellipsePoints : MonoBehaviour
         lastLoD = levelOfDetail;
     }
 
-    void Update()
+    private void Update()
     {
         if (lastXLim != xLimits || lastYLim != yLimits || lastSuper != superness || lastLoD != levelOfDetail)
         {
@@ -61,7 +61,7 @@ public class SuperellipsePoints : MonoBehaviour
         lastLoD = levelOfDetail;
     }
 
-    void RecalculateSuperellipse()
+    private void RecalculateSuperellipse()
     {
         pointList.Clear();
 
@@ -79,7 +79,7 @@ public class SuperellipsePoints : MonoBehaviour
         GetComponent<MeshCreator>().CreateMesh(pointList);
     }
 
-    float Superellipse(float a, float b, float x, float n)
+    private float Superellipse(float a, float b, float x, float n)
     {
         float alpha = Mathf.Pow((x / a), n);
         float beta = 1 - alpha;

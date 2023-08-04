@@ -7,7 +7,7 @@ public class SinusoidalMovement : MonoBehaviour
     public float frequency;
     public Vector3 amplitude;
 
-    void Update()
+    private void Update()
     {
         transform.localPosition = Mathf.Sin(Time.time * frequency) * amplitude;
     }

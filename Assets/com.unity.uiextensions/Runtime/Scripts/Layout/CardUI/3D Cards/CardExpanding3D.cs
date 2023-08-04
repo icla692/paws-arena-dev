@@ -54,7 +54,7 @@ public class CardExpanding3D : MonoBehaviour
     private Vector2 nextMin;
     private Vector2 nextMax;
 
-    void Start()
+    private void Start()
     {
         if (cardAutoSize)
         {
@@ -71,7 +71,7 @@ public class CardExpanding3D : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
 
-    void Update()
+    private void Update()
     {
         if (animationActive == 1 || animationActive == -1)
         {

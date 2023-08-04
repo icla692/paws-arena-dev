@@ -9,15 +9,15 @@ namespace UnityEngine.UI.Extensions
     [RequireComponent(typeof(RectTransform))]
     public class UIImageCrop : MonoBehaviour
     {
-        MaskableGraphic mGraphic;
-        Material mat;
-        int XCropProperty, YCropProperty;
+        private MaskableGraphic mGraphic;
+        private Material mat;
+        private int XCropProperty, YCropProperty;
         public float XCrop = 0f;
         public float YCrop = 0f;
 
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             SetMaterial();
         }

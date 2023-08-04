@@ -62,7 +62,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        Canvas GetCanvas()
+        private Canvas GetCanvas()
         {
             Transform t = transform;
             Canvas canvas = null;

@@ -17,9 +17,9 @@ namespace UnityEngine.UI.Extensions
         private Vector2 previousPointerPosition;
 
         private RectTransform thisRectTransform;
-        Vector2 sizeDelta;
+        private Vector2 sizeDelta;
 
-        void Awake()
+        private void Awake()
         {
             rectTransform = transform.parent.GetComponent<RectTransform>();
             goTransform = transform.parent;

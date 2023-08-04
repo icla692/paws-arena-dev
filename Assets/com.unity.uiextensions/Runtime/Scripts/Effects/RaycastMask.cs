@@ -36,7 +36,7 @@ namespace UnityEngine.UI.Extensions
         private Image _image;
         private Sprite _sprite;
 
-        void Start()
+        private void Start()
         {
             _image = GetComponent<Image>();
         }

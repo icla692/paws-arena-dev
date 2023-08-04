@@ -38,7 +38,7 @@ namespace UnityEngine.UI.Extensions
         ///Thankfully it doesn't matter if another script attempts to use the variable and this script isn't in the scene. 
         public static bool canUseHorizontalAxis = true;
 
-        void Start()
+        private void Start()
         {
             ///I've found that 9 is a good number for this.
             ///I wouldn't really recommend changing it, but go ahead if you want to.		
@@ -74,7 +74,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void Update()
+        private void Update()
         {
             if (canUseHorizontalAxis)
             {
@@ -113,7 +113,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         ///Stops the cards from scrolling super quickly if a button on the horizontal axis is held down.
-        IEnumerator ButtonCooldown()
+        private IEnumerator ButtonCooldown()
         {
             canUseHorizontalAxis = false;
             yield return new WaitForSeconds(buttonCooldownTime);

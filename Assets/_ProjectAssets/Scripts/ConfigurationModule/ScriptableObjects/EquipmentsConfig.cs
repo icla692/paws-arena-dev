@@ -82,7 +82,7 @@ public class EquipmentsConfig : ScriptableObject
         return GenerateRandomItem();
     }
 
-    EquipmentData GenerateRandomItem()
+    private EquipmentData GenerateRandomItem()
     {
         List<EquipmentData> _equipments;
         int _random = Random.Range(0, 7);

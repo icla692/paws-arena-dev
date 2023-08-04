@@ -56,7 +56,7 @@ namespace UnityEngine.UI.Extensions
         /// </remarks>
         protected virtual bool Scrollable => MaxScrollPosition > 0f;
 
-        Scroller cachedScroller;
+        private Scroller cachedScroller;
 
         /// <summary>
         /// スクロール位置を制御する <see cref="FancyScrollView.Scroller"/> のインスタンス.
@@ -66,16 +66,16 @@ namespace UnityEngine.UI.Extensions
         /// </remarks>
         protected Scroller Scroller => cachedScroller ?? (cachedScroller = GetComponent<Scroller>());
 
-        float ScrollLength => 1f / Mathf.Max(cellInterval, 1e-2f) - 1f;
+        private float ScrollLength => 1f / Mathf.Max(cellInterval, 1e-2f) - 1f;
 
-        float ViewportLength => ScrollLength - reuseCellMarginCount * 2f;
+        private float ViewportLength => ScrollLength - reuseCellMarginCount * 2f;
 
-        float PaddingHeadLength => (paddingHead - spacing * 0.5f) / (CellSize + spacing);
+        private float PaddingHeadLength => (paddingHead - spacing * 0.5f) / (CellSize + spacing);
 
-        float MaxScrollPosition => ItemsSource.Count
-            - ScrollLength
-            + reuseCellMarginCount * 2f
-            + (paddingHead + paddingTail - spacing) / (CellSize + spacing);
+        private float MaxScrollPosition => ItemsSource.Count
+                                           - ScrollLength
+                                           + reuseCellMarginCount * 2f
+                                           + (paddingHead + paddingTail - spacing) / (CellSize + spacing);
 
         /// <inheritdoc/>
         protected override void Initialize()
@@ -99,7 +99,7 @@ namespace UnityEngine.UI.Extensions
         /// <see cref="Scroller"/> のスクロール位置が変更された際の処理.
         /// </summary>
         /// <param name="p"><see cref="Scroller"/> のスクロール位置.</param>
-        void OnScrollerValueChanged(float p)
+        private void OnScrollerValueChanged(float p)
         {
             base.UpdatePosition(Scrollable ? ToFancyScrollViewPosition(p) : 0f);
 
@@ -120,7 +120,7 @@ namespace UnityEngine.UI.Extensions
         /// スクロール範囲を超えてスクロールされた量に基づいて, スクロールバーのサイズを縮小します.
         /// </summary>
         /// <param name="offset">スクロール範囲を超えてスクロールされた量.</param>
-        void ShrinkScrollbar(float offset)
+        private void ShrinkScrollbar(float offset)
         {
             var scale = 1f - ToFancyScrollViewPosition(offset) / (ViewportLength - PaddingHeadLength);
             UpdateScrollbarSize((ViewportLength - PaddingHeadLength) * scale);

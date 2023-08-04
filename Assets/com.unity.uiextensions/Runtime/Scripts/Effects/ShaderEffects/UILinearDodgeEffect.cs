@@ -9,10 +9,10 @@ namespace UnityEngine.UI.Extensions
     [RequireComponent(typeof(RectTransform))]
     public class UILinearDodgeEffect : MonoBehaviour
     {
-        MaskableGraphic mGraphic;
+        private MaskableGraphic mGraphic;
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             SetMaterial();
         }

@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class LuckyWheel : MonoBehaviour
 {
-    [SerializeField] AnimationCurve spinCurve;
-    [SerializeField] AnimationCurve endSpinCurve;
-    [SerializeField] float spinSpeed;
-    [SerializeField] RectTransform pointerHolder;
-    [SerializeField] List<LuckyWheelRewardDisplay> rewardDisplays;
+    [SerializeField] private AnimationCurve spinCurve;
+    [SerializeField] private AnimationCurve endSpinCurve;
+    [SerializeField] private float spinSpeed;
+    [SerializeField] private RectTransform pointerHolder;
+    [SerializeField] private List<LuckyWheelRewardDisplay> rewardDisplays;
 
-    Action callback;
-    LuckyWheelRewardSO choosenReward;
-    float speed;
+    private Action callback;
+    private LuckyWheelRewardSO choosenReward;
+    private float speed;
 
     public void Spin(Action _callback, LuckyWheelRewardSO _choosenReward)
     {
@@ -27,7 +27,7 @@ public class LuckyWheel : MonoBehaviour
         StartCoroutine(SpinRoutine());
     }
 
-   IEnumerator SpinRoutine()
+    private IEnumerator SpinRoutine()
     {
         pointerHolder.eulerAngles = Vector3.zero;
         float _spinDuration = UnityEngine.Random.Range(3, 5f);

@@ -4,9 +4,9 @@ using TMPro;
 
 public class CraftedItemDisplay : MonoBehaviour
 {
-    [SerializeField] Button closeButton;
-    [SerializeField] Image iconDisplay;
-    [SerializeField] TextMeshProUGUI nameDisplay;
+    [SerializeField] private Button closeButton;
+    [SerializeField] private Image iconDisplay;
+    [SerializeField] private TextMeshProUGUI nameDisplay;
 
     public void Setup(EquipmentData _equipmentData)
     {
@@ -23,7 +23,7 @@ public class CraftedItemDisplay : MonoBehaviour
         closeButton.onClick.RemoveListener(Close);
     }
 
-    void Close()
+    private void Close()
     {
         gameObject.SetActive(false);
     }

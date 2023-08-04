@@ -12,12 +12,12 @@ namespace UnityEngine.UI.Extensions
     {
         private Text label;
 
-        void Awake()
+        private void Awake()
         {
             label = GetComponent<Text>();
         }
 
-        void Start()
+        private void Start()
         {
             if (label != null)
             {

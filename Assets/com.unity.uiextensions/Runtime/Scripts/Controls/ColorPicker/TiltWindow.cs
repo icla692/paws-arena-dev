@@ -15,13 +15,13 @@ namespace UnityEngine.UI.Extensions
         private Vector2 m_screenPos;
 
 
-        void Start()
+        private void Start()
         {
             mTrans = transform;
             mStart = mTrans.localRotation;
         }
 
-        void Update()
+        private void Update()
         {
             Vector3 pos = m_screenPos;
 

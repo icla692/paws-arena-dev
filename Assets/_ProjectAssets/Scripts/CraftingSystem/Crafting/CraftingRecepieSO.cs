@@ -19,9 +19,9 @@ public class CraftingRecepieSO : ScriptableObject
     [field: SerializeField] public Sprite BottomOfferBackground { get; private set; }
     [field: SerializeField] public int BotAmountNeeded { get; private set; }
 
-    static List<CraftingRecepieSO> allRecepies;
+    private static List<CraftingRecepieSO> allRecepies;
 
-    static void LoadAll()
+    private static void LoadAll()
     {
         if (allRecepies != null)
         {

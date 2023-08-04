@@ -18,7 +18,7 @@ namespace UnityEngine.UI.Extensions
         private float ratio;
 
 
-        void Awake()
+        private void Awake()
         {
             rectTransform = transform.parent.GetComponent<RectTransform>();
             float originalWidth;

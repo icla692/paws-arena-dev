@@ -70,7 +70,7 @@ namespace UnityEngine.UI.Extensions
 		public SelectionEvent onSelectionChange = new SelectionEvent();
 		
 		//Ensures that the canvas that this component is attached to is set to the correct render mode. If not, it will not render the selection box properly.
-		void ValidateCanvas(){
+		private void ValidateCanvas(){
 			var canvas = gameObject.GetComponent<Canvas>();
 			
 			if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) {
@@ -92,7 +92,7 @@ namespace UnityEngine.UI.Extensions
 	 * 2) The user can filter which objects should be selectable, for example units versus menu selections
 	 *
 	 */
-		void SetSelectableGroup(IEnumerable<MonoBehaviour> behaviourCollection) {
+		private void SetSelectableGroup(IEnumerable<MonoBehaviour> behaviourCollection) {
 			
 			// If null, the selectionbox reverts to it's default behaviour
 			if (behaviourCollection == null) {
@@ -112,8 +112,8 @@ namespace UnityEngine.UI.Extensions
 			
 			selectableGroup = behaviourList.ToArray();
 		}
-		
-		void CreateBoxRect(){
+
+		private void CreateBoxRect(){
 			var selectionBoxGO = new GameObject();
 			
 			selectionBoxGO.name = "Selection Box";
@@ -127,7 +127,7 @@ namespace UnityEngine.UI.Extensions
 		//Set all of the relevant rectTransform properties to zero, 
 		//finally deactivates the boxRect gameobject since it doesn't
 		//need to be enabled when not in a selection action.
-		void ResetBoxRect(){
+		private void ResetBoxRect(){
 			
 			//Update the art and color on the off chance they've changed
 			Image image = boxRect.GetComponent<Image>();
@@ -143,9 +143,9 @@ namespace UnityEngine.UI.Extensions
 			boxRect.pivot = Vector2.zero;
 			boxRect.gameObject.SetActive(false);
 		}
-		
-		
-		void BeginSelection(){
+
+
+		private void BeginSelection(){
 			// Click somewhere in the Game View.
 			if (!UIExtensionsInputManager.GetMouseButtonDown(0))
 				return;
@@ -197,8 +197,8 @@ namespace UnityEngine.UI.Extensions
 			clickedBeforeDrag = GetSelectableAtMousePosition();
 			
 		}
-		
-		bool PointIsValidAgainstSelectionMask(Vector2 screenPoint){
+
+		private bool PointIsValidAgainstSelectionMask(Vector2 screenPoint){
 			//If there is no selection mask, any point is valid
 			if (!selectionMask) {
 				return true;
@@ -208,8 +208,8 @@ namespace UnityEngine.UI.Extensions
 			
 			return RectTransformUtility.RectangleContainsScreenPoint(selectionMask, screenPoint, screenPointCamera);
 		}
-		
-		IBoxSelectable GetSelectableAtMousePosition() {
+
+		private IBoxSelectable GetSelectableAtMousePosition() {
 			//Firstly, we cannot click on something that is not inside the selection mask (if we have one)
 			if (!PointIsValidAgainstSelectionMask(UIExtensionsInputManager.MousePosition)) {
 				return null;
@@ -251,9 +251,9 @@ namespace UnityEngine.UI.Extensions
 			
 			return null;
 		}
-		
-		
-		void DragSelection(){
+
+
+		private void DragSelection(){
 			//Return if we're not dragging or if the selection has been aborted (BoxRect disabled)
 			if (!UIExtensionsInputManager.GetMouseButton(0) || !boxRect.gameObject.activeSelf)
 				return;
@@ -301,8 +301,8 @@ namespace UnityEngine.UI.Extensions
 				clickedBeforeDrag.preSelected = true;
 			}
 		}
-		
-		void ApplySingleClickDeselection(){
+
+		private void ApplySingleClickDeselection(){
 			
 			//If we didn't touch anything with the original mouse press, we don't need to continue checking
 			if (clickedBeforeDrag == null)
@@ -316,8 +316,8 @@ namespace UnityEngine.UI.Extensions
 			}
 			
 		}
-		
-		void ApplyPreSelections(){
+
+		private void ApplyPreSelections(){
 			
 			foreach(var selectable in selectables) {
 				
@@ -329,8 +329,8 @@ namespace UnityEngine.UI.Extensions
 			}
 			
 		}
-		
-		Vector2 GetScreenPointOfSelectable(IBoxSelectable selectable) {
+
+		private Vector2 GetScreenPointOfSelectable(IBoxSelectable selectable) {
 			//Getting the screen point requires it's own function, because we have to take into consideration the selectables hierarchy.
 			
 			//Cast the transform as a rectTransform
@@ -358,7 +358,7 @@ namespace UnityEngine.UI.Extensions
 	 * 
 	 * This function solves that problem. 
 	 */
-		Camera GetScreenPointCamera(RectTransform rectTransform) {
+		private Camera GetScreenPointCamera(RectTransform rectTransform) {
 			
 			Canvas rootCanvas = null;
 			RectTransform rectCheck = rectTransform;
@@ -411,8 +411,8 @@ namespace UnityEngine.UI.Extensions
 			
 			return selectedList.ToArray();
 		}
-		
-		void EndSelection(){
+
+		private void EndSelection(){
 			//Get out if we haven't finished selecting, or if the selection has been aborted (boxRect disabled)
 			if (!UIExtensionsInputManager.GetMouseButtonUp(0) || !boxRect.gameObject.activeSelf)
 				return;
@@ -424,14 +424,14 @@ namespace UnityEngine.UI.Extensions
 			ResetBoxRect();
 			onSelectionChange.Invoke(GetAllSelected());
 		}
-		
-		void Start(){
+
+		private void Start(){
 			ValidateCanvas();
 			CreateBoxRect();
 			ResetBoxRect();
 		}
-		
-		void Update() {
+
+		private void Update() {
 			BeginSelection ();
 			DragSelection ();
 			EndSelection ();

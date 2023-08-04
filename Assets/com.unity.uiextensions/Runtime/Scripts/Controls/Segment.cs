@@ -51,7 +51,7 @@ namespace UnityEngine.UI.Extensions
             StartCoroutine(DelayedInit());
         }
 
-        IEnumerator DelayedInit()
+        private IEnumerator DelayedInit()
         {
             yield return null;
             yield return null;
@@ -156,7 +156,7 @@ namespace UnityEngine.UI.Extensions
             segmentedControl.onValueChanged.Invoke(-1);
         }
 
-        void MaintainSelection()
+        private void MaintainSelection()
         {
             if (button != segmentedControl.selectedSegment)
                 return;
@@ -195,7 +195,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void StartColorTween(Color targetColor, bool instant)
+        private void StartColorTween(Color targetColor, bool instant)
         {
             if (button.targetGraphic == null)
                 return;
@@ -203,7 +203,7 @@ namespace UnityEngine.UI.Extensions
             button.targetGraphic.CrossFadeColor(targetColor, instant ? 0f : button.colors.fadeDuration, true, true);
         }
 
-        void ChangeTextColor(Color targetColor)
+        private void ChangeTextColor(Color targetColor)
         {
             var text = GetComponentInChildren<Text>();
             if (!text)
@@ -212,7 +212,7 @@ namespace UnityEngine.UI.Extensions
             text.color = targetColor;
         }
 
-        void DoSpriteSwap(Sprite newSprite)
+        private void DoSpriteSwap(Sprite newSprite)
         {
             if (button.image == null)
                 return;
@@ -220,7 +220,7 @@ namespace UnityEngine.UI.Extensions
             button.image.overrideSprite = newSprite;
         }
 
-        void TriggerAnimation(string triggername)
+        private void TriggerAnimation(string triggername)
         {
             if (button.animator == null || !button.animator.isActiveAndEnabled || !button.animator.hasBoundPlayables || string.IsNullOrEmpty(triggername))
                 return;

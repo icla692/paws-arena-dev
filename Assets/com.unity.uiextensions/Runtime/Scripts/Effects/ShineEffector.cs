@@ -9,8 +9,7 @@ namespace UnityEngine.UI.Extensions
     {
 
         public ShineEffect effector;
-        [SerializeField, HideInInspector]
-        GameObject effectRoot;
+        [SerializeField, HideInInspector] private GameObject effectRoot;
         [Range(-1, 1)]
         public float yOffset = -1;
 
@@ -29,8 +28,10 @@ namespace UnityEngine.UI.Extensions
 
         [Range(0.1f, 1)]
         public float width = 0.5f;
-        RectTransform effectorRect;
-        void OnEnable()
+
+        private RectTransform effectorRect;
+
+        private void OnEnable()
         {
             if (effector == null)
             {
@@ -67,7 +68,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void OnValidate()
+        private void OnValidate()
         {
             effector.Yoffset = yOffset;
             effector.Width = width;
@@ -85,7 +86,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void ChangeVal(float value)
+        private void ChangeVal(float value)
         {
             effector.Yoffset = value;
             if (value <= -1 || value >= 1)
@@ -100,7 +101,8 @@ namespace UnityEngine.UI.Extensions
 
             }
         }
-        void OnDestroy()
+
+        private void OnDestroy()
         {
             if (!Application.isPlaying)
             {

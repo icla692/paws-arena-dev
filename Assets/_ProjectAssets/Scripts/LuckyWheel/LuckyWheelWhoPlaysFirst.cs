@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +10,21 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
 {
     public static bool DoIPlayFirst;
     
-    [SerializeField] AnimationCurve spinCurve;
-    [SerializeField] AnimationCurve endSpinCurve;
-    [SerializeField] float spinSpeed;
-    [SerializeField] RectTransform pointerHolder;
+    [SerializeField] private AnimationCurve spinCurve;
+    [SerializeField] private AnimationCurve endSpinCurve;
+    [SerializeField] private float spinSpeed;
+    [SerializeField] private RectTransform pointerHolder;
     [SerializeField] private Button leaveButton;
     
     private LuckyWheelRewardSO choosenPlayer;
     private float speed;
     private PhotonView photonView;
     private List<SyncPlayerPlatformBehaviour> playerPlatforms;
+
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
 
     private void OnEnable()
     {
@@ -55,7 +59,7 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
         }
     }
 
-    IEnumerator SpinRoutine(float _targetRotationZ)
+    private IEnumerator SpinRoutine(float _targetRotationZ)
     {
         pointerHolder.eulerAngles = Vector3.zero;
         float _spinDuration = 2;

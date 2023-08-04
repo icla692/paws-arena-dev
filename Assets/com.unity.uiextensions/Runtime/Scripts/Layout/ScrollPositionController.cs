@@ -9,45 +9,38 @@ namespace UnityEngine.UI.Extensions
 {
     public class ScrollPositionController : UIBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
-        [SerializeField]
-        RectTransform viewport = null;
-        [SerializeField]
-        ScrollDirection directionOfRecognize = ScrollDirection.Vertical;
-        [SerializeField]
-        MovementType movementType = MovementType.Elastic;
-        [SerializeField]
-        float elasticity = 0.1f;
-        [SerializeField]
-        float scrollSensitivity = 1f;
-        [SerializeField]
-        bool inertia = true;
+        [SerializeField] private RectTransform viewport = null;
+        [SerializeField] private ScrollDirection directionOfRecognize = ScrollDirection.Vertical;
+        [SerializeField] private MovementType movementType = MovementType.Elastic;
+        [SerializeField] private float elasticity = 0.1f;
+        [SerializeField] private float scrollSensitivity = 1f;
+        [SerializeField] private bool inertia = true;
         [SerializeField, Tooltip("Only used when inertia is enabled")]
-        float decelerationRate = 0.03f;
+        private float decelerationRate = 0.03f;
         [SerializeField, Tooltip("Only used when inertia is enabled")]
-        Snap snap = new Snap { Enable = true, VelocityThreshold = 0.5f, Duration = 0.3f };
-        [SerializeField]
-        int dataCount;
+        private Snap snap = new Snap { Enable = true, VelocityThreshold = 0.5f, Duration = 0.3f };
+        [SerializeField] private int dataCount;
 
-        readonly AutoScrollState autoScrollState = new AutoScrollState();
+        private readonly AutoScrollState autoScrollState = new AutoScrollState();
 
-        Action<float> onUpdatePosition;
-        Action<int> onItemSelected;
+        private Action<float> onUpdatePosition;
+        private Action<int> onItemSelected;
 
-        Vector2 pointerStartLocalPosition;
-        float dragStartScrollPosition;
-        float prevScrollPosition;
-        float currentScrollPosition;
+        private Vector2 pointerStartLocalPosition;
+        private float dragStartScrollPosition;
+        private float prevScrollPosition;
+        private float currentScrollPosition;
 
-        bool dragging;
-        float velocity;
+        private bool dragging;
+        private float velocity;
 
-        enum ScrollDirection
+        private enum ScrollDirection
         {
             Vertical,
             Horizontal,
         }
 
-        enum MovementType
+        private enum MovementType
         {
             Unrestricted = ScrollRect.MovementType.Unrestricted,
             Elastic = ScrollRect.MovementType.Elastic,
@@ -55,14 +48,14 @@ namespace UnityEngine.UI.Extensions
         }
 
         [Serializable]
-        struct Snap
+        private struct Snap
         {
             public bool Enable;
             public float VelocityThreshold;
             public float Duration;
         }
 
-        class AutoScrollState
+        private class AutoScrollState
         {
             public bool Enable;
             public bool Elastic;
@@ -193,14 +186,14 @@ namespace UnityEngine.UI.Extensions
             dragging = false;
         }
 
-        float GetViewportSize()
+        private float GetViewportSize()
         {
             return directionOfRecognize == ScrollDirection.Horizontal
                 ? viewport.rect.size.x
                 : viewport.rect.size.y;
         }
 
-        float CalculateOffset(float position)
+        private float CalculateOffset(float position)
         {
             if (movementType == MovementType.Unrestricted)
             {
@@ -220,7 +213,7 @@ namespace UnityEngine.UI.Extensions
             return 0f;
         }
 
-        void UpdatePosition(float position)
+        private void UpdatePosition(float position)
         {
             currentScrollPosition = position;
 
@@ -230,7 +223,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void ItemSelected(int index)
+        private void ItemSelected(int index)
         {
             if (onItemSelected != null)
             {
@@ -238,12 +231,12 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        float RubberDelta(float overStretching, float viewSize)
+        private float RubberDelta(float overStretching, float viewSize)
         {
             return (1 - (1 / ((Mathf.Abs(overStretching) * 0.55f / viewSize) + 1))) * viewSize * Mathf.Sign(overStretching);
         }
 
-        void Update()
+        private void Update()
         {
             var deltaTime = Time.unscaledDeltaTime;
             var offset = CalculateOffset(currentScrollPosition);
@@ -341,14 +334,14 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        int CalculateDestinationIndex(int index)
+        private int CalculateDestinationIndex(int index)
         {
             return movementType == MovementType.Unrestricted
                 ? CalculateClosestIndex(index)
                 : Mathf.Clamp(index, 0, dataCount - 1);
         }
 
-        int CalculateClosestIndex(int index)
+        private int CalculateClosestIndex(int index)
         {
             var diff = GetCircularPosition(index, dataCount)
                        - GetCircularPosition(currentScrollPosition, dataCount);
@@ -361,12 +354,12 @@ namespace UnityEngine.UI.Extensions
             return Mathf.RoundToInt(diff + currentScrollPosition);
         }
 
-        float GetCircularPosition(float position, int length)
+        private float GetCircularPosition(float position, int length)
         {
             return position < 0 ? length - 1 + (position + 1) % length : position % length;
         }
 
-        float EaseInOutCubic(float start, float end, float value)
+        private float EaseInOutCubic(float start, float end, float value)
         {
             value /= 0.5f;
             end -= start;

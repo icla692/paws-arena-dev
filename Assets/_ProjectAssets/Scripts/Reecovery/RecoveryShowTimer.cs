@@ -11,7 +11,7 @@ public class RecoveryShowTimer : MonoBehaviour
         StartCoroutine(Show());
     }
 
-    IEnumerator Show()
+    private IEnumerator Show()
     {
         while (gameObject.activeSelf)
         {

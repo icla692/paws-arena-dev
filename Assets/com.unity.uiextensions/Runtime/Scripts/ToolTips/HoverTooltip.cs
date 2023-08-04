@@ -18,13 +18,13 @@ namespace UnityEngine.UI.Extensions
 
         //tooltip background image
         public RectTransform bgImage;
-        Image bgImageSource;
+        private Image bgImageSource;
 
         //needed as the layout refreshes only on the first Update() call
-        bool firstUpdate;
+        private bool firstUpdate;
 
         //if the tooltip is inside a UI element
-        bool inside;
+        private bool inside;
 
         //size of the tooltip, needed to track if out of screen
         // public float width;
@@ -32,32 +32,32 @@ namespace UnityEngine.UI.Extensions
 
         //detect canvas mode so to apply different behaviors to different canvas modes, currently only RenderMode.ScreenSpaceCamera implemented
         //int canvasMode;
-        RenderMode GUIMode;
+        private RenderMode GUIMode;
 
         //the scene GUI camera
-        Camera GUICamera;
+        private Camera GUICamera;
 
         //the default tooltip object has the following pivots, so that the offset from the mouse is always proportional to the screen resolution (the y pivot)
         //Pivot(0.5,-0.5)
 
         //screen viewport corners for out of screen detection
-        Vector3 lowerLeft;
-        Vector3 upperRight;
+        private Vector3 lowerLeft;
+        private Vector3 upperRight;
 
         //scale factor of proportionality to the reference resolution (1280x720)
-        float currentYScaleFactor;
-        float currentXScaleFactor;
+        private float currentYScaleFactor;
+        private float currentXScaleFactor;
 
         //standard X and Y offsets of the new tooltip
-        float defaultYOffset;
-        float defaultXOffset;
+        private float defaultYOffset;
+        private float defaultXOffset;
 
         //real on screen sizes of the tooltip object
-        float tooltipRealHeight;
-        float tooltipRealWidth;
+        private float tooltipRealHeight;
+        private float tooltipRealWidth;
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             //in this line you need to change the string in order to get your Camera //TODO MAYBE DO IT FROM THE INSPECTOR
             GUICamera = GameObject.Find("GUICamera").GetComponent<Camera>();
@@ -267,7 +267,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             LayoutInit();
             if (inside)
@@ -280,7 +280,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         //this function is used in order to setup the size of the tooltip by cheating on the HorizontalLayoutBehavior. The resize is done in the first update.
-        void LayoutInit()
+        private void LayoutInit()
         {
             if (firstUpdate)
             {
@@ -299,7 +299,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         //init basic variables on a new tooltip set
-        void NewTooltip()
+        private void NewTooltip()
         {
             firstUpdate = true;
 

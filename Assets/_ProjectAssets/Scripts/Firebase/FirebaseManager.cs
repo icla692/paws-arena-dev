@@ -8,15 +8,17 @@ public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager Instance;
 
-    [SerializeField] FirebaseTokenManager tokenManager;
+    [SerializeField] private FirebaseTokenManager tokenManager;
 
-    const string WEB_API_KEY = "AIzaSyCFi-0SrkVoZbzv3GzxacoJBtELJdeFTt8";
+    private const string WEB_API_KEY = "AIzaSyCFi-0SrkVoZbzv3GzxacoJBtELJdeFTt8";
 
-    string userLocalId;
-    string userIdToken;
-    string projectLink = "https://pawsarena-b8133-default-rtdb.firebaseio.com/";
-    string userDataLink => $"{projectLink}/users/{userLocalId}/";
-    string gameDataLink => $"{projectLink}/gameData/";
+    private string userLocalId;
+    private string userIdToken;
+    private string projectLink = "https://pawsarena-b8133-default-rtdb.firebaseio.com/";
+    private string userDataLink => $"{projectLink}/users/{userLocalId}/";
+    private string gameDataLink => $"{projectLink}/gameData/";
+
+    public string PlayerId => userLocalId;
 
     private void Awake()
     {
@@ -54,7 +56,7 @@ public class FirebaseManager : MonoBehaviour
         }, false));
     }
 
-    string GeneratePassword(string _principalId)
+    private string GeneratePassword(string _principalId)
     {
         string _password = string.Empty;
         _password += _principalId[5];
@@ -73,7 +75,7 @@ public class FirebaseManager : MonoBehaviour
         return _password;
     }
 
-    void Register(Action<bool> _callBack,string _parms)
+    private void Register(Action<bool> _callBack,string _parms)
     {
         StartCoroutine(Post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + WEB_API_KEY, _parms, (_result) =>
         {
@@ -90,7 +92,7 @@ public class FirebaseManager : MonoBehaviour
         }));
     }
 
-    void SetStartingData(Action<bool> _callBack)
+    private void SetStartingData(Action<bool> _callBack)
     {
         string _data = JsonConvert.SerializeObject(DataManager.Instance.PlayerData);
         StartCoroutine(Put(userDataLink+"/.json", _data, (_result) =>
@@ -102,7 +104,7 @@ public class FirebaseManager : MonoBehaviour
         }));
     }
 
-    void CollectGameData(Action<bool> _callBack)
+    private void CollectGameData(Action<bool> _callBack)
     {
         StartCoroutine(Get(gameDataLink + "/.json", (_result) =>
         {
@@ -114,7 +116,7 @@ public class FirebaseManager : MonoBehaviour
         }));
     }
 
-    void CollectPlayerData(Action<bool> _callBack)
+    private void CollectPlayerData(Action<bool> _callBack)
     {
         StartCoroutine(Get(userDataLink + "/.json", (_result) =>
         {
@@ -155,7 +157,7 @@ public class FirebaseManager : MonoBehaviour
     }
 
 
-    IEnumerator Get(string uri, Action<string> onSuccess, Action<string> onError)
+    private IEnumerator Get(string uri, Action<string> onSuccess, Action<string> onError)
     {
         if (userIdToken != null)
         {
@@ -180,7 +182,7 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    IEnumerator Post(string uri, string jsonData, Action<string> onSuccess, Action<string> onError, bool _includeHeader = true)
+    private IEnumerator Post(string uri, string jsonData, Action<string> onSuccess, Action<string> onError, bool _includeHeader = true)
     {
         if (userIdToken != null)
         {
@@ -214,7 +216,7 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    IEnumerator Put(string uri, string jsonData, Action<string> onSuccess, Action<string> onError)
+    private IEnumerator Put(string uri, string jsonData, Action<string> onSuccess, Action<string> onError)
     {
         // If the userIdToken is available, append it to the URI
         if (userIdToken != null)
@@ -246,7 +248,7 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    IEnumerator Patch(string uri, string jsonData, Action<string> onSuccess, Action<string> onError)
+    private IEnumerator Patch(string uri, string jsonData, Action<string> onSuccess, Action<string> onError)
     {
         if (userIdToken != null)
         {

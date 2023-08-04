@@ -16,7 +16,7 @@ public class CameraShake : MonoBehaviour
         startingPosition = cam.transform.localPosition;
     }
 
-    void Update()
+    private void Update()
     {
         if (!isEnabled) return;
         cam.transform.position += new Vector3(Mathf.Sin(Time.time * frequency)*amplitude, Mathf.Sin(Time.time * frequency) * amplitude, 0);

@@ -15,26 +15,23 @@ namespace UnityEngine.UI.Extensions
     [AddComponentMenu("UI/Effects/Extensions/Gradient2")]
     public class Gradient2 : BaseMeshEffect
     {
-        [SerializeField]
-        Type _gradientType;
+        [SerializeField] private Type _gradientType;
 
-        [SerializeField]
-        Blend _blendMode = Blend.Multiply;
+        [SerializeField] private Blend _blendMode = Blend.Multiply;
 
         [SerializeField]
         [Tooltip("Add vertices to display complex gradients. Turn off if your shape is already very complex, like text.")]
-        bool _modifyVertices = true;
+        private bool _modifyVertices = true;
 
         [SerializeField]
         [Range(-1, 1)]
-        float _offset = 0f;
+        private float _offset = 0f;
 
         [SerializeField]
         [Range(0.1f, 10)]
-        float _zoom = 1f;
+        private float _zoom = 1f;
 
-        [SerializeField]
-        UnityEngine.Gradient _effectGradient = new UnityEngine.Gradient() { colorKeys = new GradientColorKey[] { new GradientColorKey(Color.black, 0), new GradientColorKey(Color.white, 1) } };
+        [SerializeField] private UnityEngine.Gradient _effectGradient = new UnityEngine.Gradient() { colorKeys = new GradientColorKey[] { new GradientColorKey(Color.black, 0), new GradientColorKey(Color.white, 1) } };
 
         #region Properties
         public Blend BlendMode
@@ -240,7 +237,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        Rect GetBounds(List<UIVertex> vertices)
+        private Rect GetBounds(List<UIVertex> vertices)
         {
             float left = vertices[0].position.x;
             float right = left;
@@ -262,7 +259,7 @@ namespace UnityEngine.UI.Extensions
             return new Rect(left, bottom, right - left, top - bottom);
         }
 
-        void SplitTrianglesAtGradientStops(List<UIVertex> _vertexList, Rect bounds, float zoomOffset, VertexHelper helper)
+        private void SplitTrianglesAtGradientStops(List<UIVertex> _vertexList, Rect bounds, float zoomOffset, VertexHelper helper)
         {
             List<float> stops = FindStops(zoomOffset, bounds);
             if (stops.Count > 0)
@@ -407,7 +404,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        float[] GetPositions(List<UIVertex> _vertexList, int index)
+        private float[] GetPositions(List<UIVertex> _vertexList, int index)
         {
             float[] positions = new float[3];
             if (GradientType == Type.Horizontal)
@@ -425,7 +422,7 @@ namespace UnityEngine.UI.Extensions
             return positions;
         }
 
-        List<float> FindStops(float zoomOffset, Rect bounds)
+        private List<float> FindStops(float zoomOffset, Rect bounds)
         {
             List<float> stops = new List<float>();
             var offset = Offset * (1 - zoomOffset);
@@ -470,7 +467,7 @@ namespace UnityEngine.UI.Extensions
             return stops;
         }
 
-        UIVertex CreateSplitVertex(UIVertex vertex1, UIVertex vertex2, float stop)
+        private UIVertex CreateSplitVertex(UIVertex vertex1, UIVertex vertex2, float stop)
         {
             if (GradientType == Type.Horizontal)
             {
@@ -508,7 +505,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        Color BlendColor(Color colorA, Color colorB)
+        private Color BlendColor(Color colorA, Color colorB)
         {
             switch (BlendMode)
             {

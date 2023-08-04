@@ -1,29 +1,27 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEngine;
 
 [Serializable]
 public class PlayerData
 {
-    float snacks = 0;
-    float jugOfMilk = 0;
-    float glassOfMilk = 0;
+    private float snacks = 0;
+    private float jugOfMilk = 0;
+    private float glassOfMilk = 0;
     private CrystalsData crystals = new CrystalsData();
-    CraftingProcess craftingProcess;
-    bool hasPass;
-    int experience;
-    int level;
-    int experienceOnCurrentLevel;
-    int experienceForNextLevel;
-    List<ClaimedReward> claimedLevelRewards = new List<ClaimedReward>();
-    List<RecoveryEntrie> recoveringKitties = new List<RecoveryEntrie>();
+    private CraftingProcess craftingProcess;
+    private bool hasPass;
+    private int experience;
+    private int level;
+    private int experienceOnCurrentLevel;
+    private int experienceForNextLevel;
+    private List<ClaimedReward> claimedLevelRewards = new List<ClaimedReward>();
+    private List<RecoveryEntrie> recoveringKitties = new List<RecoveryEntrie>();
     private List<int> ownedEquiptables = new List<int>() { 0, 25, 60, 74, 95 };
     private int seasonNumber;
     private List<int> ownedEmojis = new List<int>() { };
     private Challenges challenges = new Challenges();
+    private string guildId = string.Empty;
 
     [JsonIgnore] public Action UpdatedSnacks;
     [JsonIgnore] public Action UpdatedJugOfMilk;
@@ -36,6 +34,7 @@ public class PlayerData
     [JsonIgnore] public Action UpdatedEquiptables;
     [JsonIgnore] public Action UpdatedSeasonNumber;
     [JsonIgnore] public Action UpdatedOwnedEmojis;
+    [JsonIgnore] public Action UpdatedGuild;
 
     public PlayerData()
     {
@@ -269,5 +268,18 @@ public class PlayerData
         experienceOnCurrentLevel = (int)_experience;
         level = _level;
     }
+
+    public string GuildId
+    {
+        get => guildId;
+        set
+        {
+            guildId = value;
+            UpdatedGuild?.Invoke();
+        }
+    }
+
+    [JsonIgnore] public string PlayerId => FirebaseManager.Instance.PlayerId;
+    [JsonIgnore] public bool IsInGuild => !string.IsNullOrEmpty(GuildId);
 
 }

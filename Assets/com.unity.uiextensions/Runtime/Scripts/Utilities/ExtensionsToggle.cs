@@ -185,12 +185,12 @@ namespace UnityEngine.UI
             }
         }
 
-        void Set(bool value)
+        private void Set(bool value)
         {
             Set(value, true);
         }
 
-        void Set(bool value, bool sendCallback)
+        private void Set(bool value, bool sendCallback)
         {
             if (m_IsOn == value)
                 return;

@@ -38,7 +38,8 @@ namespace UnityEngine.UI.Extensions
             rotation = _rotation;
             SetAllDirty();
         }
-        void Update()
+
+        private void Update()
         {
             size = rectTransform.rect.width;
             if (rectTransform.rect.width > rectTransform.rect.height)

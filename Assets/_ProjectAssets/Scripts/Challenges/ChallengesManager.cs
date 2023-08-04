@@ -72,7 +72,7 @@ public class ChallengesManager : MonoBehaviour
         StartCoroutine(CheckForReset());
     }
 
-    IEnumerator CheckForReset()
+    private IEnumerator CheckForReset()
     {
         if (DateTime.UtcNow>DataManager.Instance.PlayerData.Challenges.NextReset)
         {
@@ -86,7 +86,7 @@ public class ChallengesManager : MonoBehaviour
         yield return new WaitForSeconds(1);
     }
 
-    void SubscribeEvents()
+    private void SubscribeEvents()
     {
         if (isSubscribed)
         {
@@ -192,7 +192,7 @@ public class ChallengesManager : MonoBehaviour
         }
     }
 
-    void UnsubscribeEvents()
+    private void UnsubscribeEvents()
     {
         if (!isSubscribed)
         {

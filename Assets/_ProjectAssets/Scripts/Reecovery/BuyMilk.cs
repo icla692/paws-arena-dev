@@ -5,18 +5,18 @@ using System.Collections;
 
 public class BuyMilk : MonoBehaviour
 {
-    [SerializeField] Button doneButton;
-    [SerializeField] Button buyJugOfMilkButton;
-    [SerializeField] Button buyGlassOfMilkButton;
+    [SerializeField] private Button doneButton;
+    [SerializeField] private Button buyJugOfMilkButton;
+    [SerializeField] private Button buyGlassOfMilkButton;
 
-    [SerializeField] TextMeshProUGUI jugOfMilkDisplay;
-    [SerializeField] TextMeshProUGUI glassOfMilkDisplay;
+    [SerializeField] private TextMeshProUGUI jugOfMilkDisplay;
+    [SerializeField] private TextMeshProUGUI glassOfMilkDisplay;
 
-    [SerializeField] Color normalAmountColor;
-    [SerializeField] Color zeroAmountColor;
+    [SerializeField] private Color normalAmountColor;
+    [SerializeField] private Color zeroAmountColor;
 
-    [SerializeField] TextMeshProUGUI glassOfMilkPriceDisplay;
-    [SerializeField] TextMeshProUGUI jugOfMilkPriceDisplay;
+    [SerializeField] private TextMeshProUGUI glassOfMilkPriceDisplay;
+    [SerializeField] private TextMeshProUGUI jugOfMilkPriceDisplay;
 
     public void Setup()
     {
@@ -46,19 +46,19 @@ public class BuyMilk : MonoBehaviour
         DataManager.Instance.PlayerData.UpdatedGlassOfMilk -= ShowGlassOfMilk;
     }
 
-    void ShowJugOfMilk()
+    private void ShowJugOfMilk()
     {
         jugOfMilkDisplay.text = DataManager.Instance.PlayerData.JugOfMilk.ToString();
         jugOfMilkDisplay.color = DataManager.Instance.PlayerData.JugOfMilk == 0 ? zeroAmountColor : normalAmountColor;
     }
 
-    void ShowGlassOfMilk()
+    private void ShowGlassOfMilk()
     {
         glassOfMilkDisplay.text = DataManager.Instance.PlayerData.GlassOfMilk.ToString();
         glassOfMilkDisplay.color = DataManager.Instance.PlayerData.GlassOfMilk == 0 ? zeroAmountColor : normalAmountColor;
     }
 
-    void BuyJugOfMilk()
+    private void BuyJugOfMilk()
     {
         StartCoroutine(BuyCooldown());
         if (DataManager.Instance.PlayerData.Snacks<DataManager.Instance.GameData.JugOfMilkPrice)
@@ -70,7 +70,7 @@ public class BuyMilk : MonoBehaviour
         DataManager.Instance.PlayerData.JugOfMilk++;
     }
 
-    void BuyGlassOfMIlk()
+    private void BuyGlassOfMIlk()
     {
         StartCoroutine(BuyCooldown());
         if (DataManager.Instance.PlayerData.Snacks< DataManager.Instance.GameData.GlassOfMilkPrice)
@@ -82,12 +82,12 @@ public class BuyMilk : MonoBehaviour
         DataManager.Instance.PlayerData.GlassOfMilk++;
     }
 
-    void Done()
+    private void Done()
     {
         gameObject.SetActive(false);
     }
 
-    IEnumerator BuyCooldown()
+    private IEnumerator BuyCooldown()
     {
         buyJugOfMilkButton.interactable = false;
         buyGlassOfMilkButton.interactable = false;

@@ -31,7 +31,7 @@ namespace UnityEngine.UI.Extensions
         public Vector3 offset;
 
 
-        void Start() {
+        private void Start() {
             //attempt to check if our canvas is overlay or not and check our "is overlay" accordingly
             Canvas ourCanvas = GetComponentInParent<Canvas>();
             if (ourCanvas && ourCanvas.renderMode == RenderMode.ScreenSpaceOverlay) {
@@ -70,7 +70,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        IEnumerator HoveredMouseFollowingLoop() {
+        private IEnumerator HoveredMouseFollowingLoop() {
             while (hovered) {
                 StartHover(UIExtensionsInputManager.MousePosition + offset);
                 yield return null;
@@ -94,12 +94,12 @@ namespace UnityEngine.UI.Extensions
             StopHover();
         }
 
-        void StartHover(Vector3 position, bool shouldCanvasUpdate = false)
+        private void StartHover(Vector3 position, bool shouldCanvasUpdate = false)
         {
             ToolTip.Instance.SetTooltip(text, position, shouldCanvasUpdate);
         }
 
-        void StopHover()
+        private void StopHover()
         {
             hovered = false;
             ToolTip.Instance.HideTooltip();

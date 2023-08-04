@@ -34,7 +34,7 @@ public class PlayerGraphicsBehaviour : MonoBehaviour
 
     private Vector3 initialWeaponRotationOffset;
 
-    void Start()
+    private void Start()
     {
         isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
 

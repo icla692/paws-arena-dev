@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 public class UserInfoDropDown : MonoBehaviour
 {
-    [SerializeField] Button seasonButton;
-    [SerializeField] Button switchKittyButton;
+    [SerializeField] private Button seasonButton;
+    [SerializeField] private Button switchKittyButton;
     [SerializeField] private LobbyUIManager lobbyUI;
     [SerializeField] private LevelsPanel levelsPanel;
 
-    float animationLength = 0.1f;
-    bool isOpen;
+    private float animationLength = 0.1f;
+    private bool isOpen;
 
     private void OnEnable()
     {

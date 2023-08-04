@@ -24,7 +24,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (transforms == null || transforms.Length < 1)
             {

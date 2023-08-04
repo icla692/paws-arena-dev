@@ -31,7 +31,7 @@ public class DisenchantUI : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    void ShowItems()
+    private void ShowItems()
     {
         foreach (var _ownedEquiptableId in DataManager.Instance.PlayerData.OwnedEquiptables)
         {
@@ -62,21 +62,21 @@ public class DisenchantUI : MonoBehaviour
         disenchantButton.onClick.RemoveListener(Disenchant);
     }
 
-    void MoveContentUp()
+    private void MoveContentUp()
     {
         Vector3 _itemsPosition = itemsHolder.transform.position;
         _itemsPosition.y -= moveAmount;
         itemsHolder.transform.position = _itemsPosition;
     }
 
-    void MoveContentDown()
+    private void MoveContentDown()
     {
         Vector3 _itemsPosition = itemsHolder.transform.position;
         _itemsPosition.y += moveAmount;
         itemsHolder.transform.position = _itemsPosition;
     }
-    
-    void ShowEquipment(EquipmentData _equipmentData)
+
+    private void ShowEquipment(EquipmentData _equipmentData)
     {
         selectedEquipment = _equipmentData;
         itemBackground.sprite = backgrounds.Find(_element => _element.Rarity == selectedEquipment.Rarity).Background;
@@ -110,7 +110,7 @@ public class DisenchantUI : MonoBehaviour
 
     }
 
-    void Disenchant()
+    private void Disenchant()
     {
         HideRightUI();
         switch (selectedEquipment.Rarity)
@@ -144,7 +144,7 @@ public class DisenchantUI : MonoBehaviour
         selectedEquipment = null;
     }
 
-    void HideRightUI()
+    private void HideRightUI()
     {
         itemBackground.gameObject.SetActive(false);
         disenchantButton.gameObject.SetActive(false);
@@ -157,7 +157,7 @@ public class DisenchantUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void ClearShownItems()
+    private void ClearShownItems()
     {
         foreach (var _item in shownItems)
         {

@@ -45,7 +45,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
 
     public TurnTimerBehaviour Timer { get; set; }
 
-    void Start()
+    private void Start()
     {
         lastPlayerRound = 0;
         photonView = GetComponent<PhotonView>();
@@ -121,7 +121,7 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
             SetState(new OtherPlayerTurnState());
         }
 
-        if (PhotonNetwork.CurrentRoom==null || PhotonNetwork.CurrentRoom.PlayerCount==1)
+        if (PhotonNetwork.CurrentRoom==null || PhotonNetwork.CurrentRoom.PlayerCount==1&&!LuckyWheelWhoPlaysFirst.DoIPlayFirst)
         {
             SetState(new BotTurnState());
         }

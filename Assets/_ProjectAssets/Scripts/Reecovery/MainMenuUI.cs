@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
-    [SerializeField] Image levelProgressDisplay;
-    [SerializeField] TextMeshProUGUI levelDisplay;
+    [SerializeField] private Image levelProgressDisplay;
+    [SerializeField] private TextMeshProUGUI levelDisplay;
     [Space()]
-    [SerializeField] RecoveryHandler mainRecoveryHandler;
+    [SerializeField]
+    private RecoveryHandler mainRecoveryHandler;
 
     private void OnEnable()
     {
@@ -25,7 +26,7 @@ public class MainMenuUI : MonoBehaviour
         DataManager.Instance.PlayerData.UpdatedExp -= ShowLevelProgress;
     }
 
-    void CheckIfShouldStopRecovering()
+    private void CheckIfShouldStopRecovering()
     {
         if (GameState.selectedNFT.RecoveryEndDate <= DateTime.UtcNow)
         {
@@ -34,7 +35,7 @@ public class MainMenuUI : MonoBehaviour
     }
 
 
-    void ShowLevelProgress()
+    private void ShowLevelProgress()
     {
         levelProgressDisplay.fillAmount = (float)DataManager.Instance.PlayerData.ExperienceOnCurrentLevel / DataManager.Instance.PlayerData.ExperienceForNextLevel;
         levelDisplay.text = DataManager.Instance.PlayerData.Level.ToString();

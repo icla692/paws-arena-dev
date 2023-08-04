@@ -164,7 +164,7 @@ namespace UnityEngine.UI.Extensions {
             new Regex(@"<b>|</b>|<i>|</i>|<size=.*?>|</size>|<color=.*?>|</color>|<material=.*?>|</material>|<quad name=(.+?) size=(\d*\.?\d+%?) width=(\d*\.?\d+%?) />|<a href=([^>\n\s]+)>|</a>|\s", RegexOptions.Singleline);
 
 		// List of indexes that are compared against matches to remove quad tags
-		List<int> indexes = new List<int>();
+		private List<int> indexes = new List<int>();
 
 		// Characters to remove from string for finding the correct index for vertices for images
 		private int charactersRemoved = 0;
@@ -295,7 +295,7 @@ namespace UnityEngine.UI.Extensions {
         }
 
         // Reseting m_HrefInfos array if there is any change in text
-        void Reset_m_HrefInfos () {
+        private void Reset_m_HrefInfos () {
             previousText = text;
 
             m_HrefInfos.Clear();
@@ -697,12 +697,12 @@ namespace UnityEngine.UI.Extensions {
 			this.onHrefClick.RemoveListener(OnHrefClick);
 		}
 
-        new void Start() {
+		private new void Start() {
             button = GetComponent<Button>();
             ResetIconList();
         }
 
-        void LateUpdate() {
+		private void LateUpdate() {
 			// Reset the hrefs if text is changed
             if (previousText != text) {
                 Reset_m_HrefInfos();
