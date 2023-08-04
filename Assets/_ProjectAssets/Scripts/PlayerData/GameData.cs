@@ -12,7 +12,9 @@ public class GameData
     private int respinPrice;
     private int glassOfMilkPrice;
     private int jugOfMilkPrice;
-    private List<LevelReward> seasonRewards;
+    private List<LevelReward> seasonRewards = new ();
+    private int guildPrice;
+    private Dictionary<string, GuildData> guilds = new ();
 
     public bool HasSeasonEnded => DateTime.UtcNow > SeasonEnds;
 
@@ -105,4 +107,17 @@ public class GameData
         get => seasonRewards;
         set => seasonRewards = value;
     }
+
+    public int GuildPrice
+    {
+        get => guildPrice;
+        set => guildPrice = value;
+    }
+
+    public Dictionary<string, GuildData> Guilds
+    {
+        get => guilds;
+        set => guilds = value;
+    }
+    
 }

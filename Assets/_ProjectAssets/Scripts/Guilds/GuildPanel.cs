@@ -5,9 +5,10 @@ public class GuildPanel : GuildPanelBase
 {
     [SerializeField] private NoGuildPanel noGuildPanel;
     [SerializeField] private GuildBattlePanel guildBattlePanel;
-
-    [SerializeField] private GameObject noGuildMessage;
-
+    [SerializeField] private CreateGuildPanel createGuildPanel;
+    [SerializeField] private JoinGuildPanel joinGuildPanel;
+    [SerializeField] private HasGuildPanel hasGuildPanel;
+    
     public override void Setup()
     {
         gameObject.SetActive(true);
@@ -18,6 +19,9 @@ public class GuildPanel : GuildPanelBase
         GuildLeftPanel.OnShowMyGuild += ShowMyGuild;
         GuildLeftPanel.OnShowGuildBattle += ShowGuildBattle;
         GuildLeftPanel.OnClose += Close;
+        NoGuildPanel.OnShowCreateGuild += ShowCreateGuild;
+        NoGuildPanel.OnShowJoinGuild += ShowJoinGuild;
+        DataManager.Instance.PlayerData.UpdatedGuild += ShowMyGuild;
     }
 
     private void OnDisable()
@@ -25,6 +29,9 @@ public class GuildPanel : GuildPanelBase
         GuildLeftPanel.OnShowMyGuild -= ShowMyGuild;
         GuildLeftPanel.OnShowGuildBattle -= ShowGuildBattle;
         GuildLeftPanel.OnClose -= Close;
+        NoGuildPanel.OnShowCreateGuild -= ShowCreateGuild;
+        NoGuildPanel.OnShowJoinGuild -= ShowJoinGuild;
+        DataManager.Instance.PlayerData.UpdatedGuild -= ShowMyGuild;
     }
 
     private void ShowMyGuild()
@@ -32,29 +39,46 @@ public class GuildPanel : GuildPanelBase
         if (!DataManager.Instance.PlayerData.IsInGuild)
         {
             SwitchToPanel(noGuildPanel);
-            return;
         }
         else
         {
-            //todo show guild panel
+            SwitchToPanel(hasGuildPanel);
         }
     }
 
     private void ShowGuildBattle()
     {
-        if (!DataManager.Instance.PlayerData.IsInGuild)
+        SwitchToPanel(guildBattlePanel);
+    }
+
+    private void ShowCreateGuild()
+    {
+        if (DataManager.Instance.PlayerData.IsInGuild)
         {
-            noGuildMessage.SetActive(true);
             return;
         }
         
-        SwitchToPanel(guildBattlePanel);
+        SwitchToPanel(createGuildPanel);
+    }
+
+    private void ShowJoinGuild()
+    {
+        if (DataManager.Instance.PlayerData.IsInGuild)
+        {
+            return;
+        }
+        
+        SwitchToPanel(joinGuildPanel);
     }
 
     private void SwitchToPanel(GuildPanelBase _panel)
     {
         noGuildPanel.Close();
-        
+        guildBattlePanel.Close();
+        createGuildPanel.Close();
+        joinGuildPanel.Close();
+        hasGuildPanel.Close();
+
         _panel.Setup();
     }
 

@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class PlayerData
@@ -281,5 +282,16 @@ public class PlayerData
 
     [JsonIgnore] public string PlayerId => FirebaseManager.Instance.PlayerId;
     [JsonIgnore] public bool IsInGuild => !string.IsNullOrEmpty(GuildId);
-
+    
+    [JsonIgnore] public GuildData GuildData
+    {
+        get
+        {
+            if (!IsInGuild)
+            {
+                return null;
+            }
+            return DataManager.Instance.GameData.Guilds[guildId];
+        }
+    }
 }

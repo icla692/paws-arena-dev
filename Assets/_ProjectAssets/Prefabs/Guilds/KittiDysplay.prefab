@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2866366128434012102
 RectTransform:
   m_ObjectHideFlags: 0
@@ -164,6 +164,7 @@ GameObject:
   - component: {fileID: 1607414481673815823}
   - component: {fileID: 4922251813622721404}
   - component: {fileID: 2475586650644938476}
+  - component: {fileID: 2281684153002867482}
   m_Layer: 5
   m_Name: KittiDysplay
   m_TagString: Untagged
@@ -214,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -275,3 +276,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2281684153002867482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7229847876391404879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c39c7e62e1b8744aa4fde5754e273c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectGuild: {fileID: 2475586650644938476}
+  kittySelected: {fileID: 6887759412432614378}
+  kittyDisplay: {fileID: 4861004613139273022}

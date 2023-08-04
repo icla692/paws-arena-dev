@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
@@ -17,6 +19,7 @@ public class FirebaseManager : MonoBehaviour
     private string projectLink = "https://pawsarena-b8133-default-rtdb.firebaseio.com/";
     private string userDataLink => $"{projectLink}/users/{userLocalId}/";
     private string gameDataLink => $"{projectLink}/gameData/";
+    private string guildsLink => $"{projectLink}guilds/";
 
     public string PlayerId => userLocalId;
 
@@ -106,7 +109,7 @@ public class FirebaseManager : MonoBehaviour
 
     private void CollectGameData(Action<bool> _callBack)
     {
-        StartCoroutine(Get(gameDataLink + "/.json", (_result) =>
+        StartCoroutine(Get(gameDataLink + ".json", (_result) =>
         {
             DataManager.Instance.SetGameData(_result);
             CollectPlayerData(_callBack);
@@ -121,10 +124,74 @@ public class FirebaseManager : MonoBehaviour
         StartCoroutine(Get(userDataLink + "/.json", (_result) =>
         {
             DataManager.Instance.SetPlayerData(_result);
-            _callBack?.Invoke(true);
+            CollectGuildData(_callBack);
         }, (_result) =>
         {
             _callBack?.Invoke(false);
+        }));
+    }
+    
+    private void CollectGuildData(Action<bool> _callBack)
+    {
+        CollectGuilds(FinishLoading);
+
+        void FinishLoading(Dictionary<string, GuildData> _guilds)
+        {
+            DataManager.Instance.SetGuildsData(_guilds);
+            _callBack?.Invoke(true);
+        }
+    }
+
+    public void ValidateGuildName(string _name, Action _onValid, Action _onInvalid)
+    {
+        CollectGuilds(ValidateName);
+
+        void ValidateName(Dictionary<string, GuildData> _guilds)
+        {
+            if (_guilds==null)
+            {
+                _onValid?.Invoke();
+                return;
+            }
+            
+            foreach (var (_key,_guild) in _guilds)
+            {
+                if (_guild.Name==_name)
+                {
+                    _onInvalid?.Invoke();
+                    return;
+                }
+            }
+            
+            _onValid?.Invoke();
+        }
+    }
+    
+    private void CollectGuilds(Action<Dictionary<string, GuildData>> _callBack)
+    {
+        StartCoroutine(Get(guildsLink + ".json", (_result) =>
+        {
+            if (string.IsNullOrEmpty(_result))
+            {
+                _callBack?.Invoke(null);
+            }
+            _callBack?.Invoke(JsonConvert.DeserializeObject<Dictionary<string, GuildData>>(_result));
+        }, (_result) =>
+        {
+            throw new Exception("Failed to fetch guilds");
+        }));
+    }
+    public void CreateGuild(GuildData _data)
+    {
+        string _jsonData = "{\""+_data.Id+"\":"+JsonConvert.SerializeObject(_data)+"}";
+        StartCoroutine(Patch(guildsLink+"/.json", _jsonData, (_result) =>
+        {
+
+        }, (_result) =>
+        {
+            Debug.Log(_jsonData);
+            Debug.Log("Failed to update data, please try again later");
+            Debug.Log(_result);
         }));
     }
 
@@ -142,6 +209,33 @@ public class FirebaseManager : MonoBehaviour
         }));
     }
     
+    public void SaveString(string _path, string _value)
+    {
+        string _valueString = "{\"" + _path + "\":\"" + _value + "\"}";
+        StartCoroutine(Patch(userDataLink + ".json", _valueString, (_result) =>
+        {
+
+        }, (_result) =>
+        {
+            Debug.Log("Failed to update data, please try again later");
+            Debug.Log(_result);
+        }));
+    }
+
+    public void CheckIfPlayerIsStillInGuild(Action _callBack)
+    {
+        StartCoroutine(Get(userDataLink + "/.json", (_result) =>
+        {
+            PlayerData _playerData = JsonConvert.DeserializeObject<PlayerData>(_result);
+           DataManager.Instance.PlayerData.GuildId = _playerData.GuildId;
+           _callBack?.Invoke();
+        }, (_result) =>
+        {
+            Debug.Log("Failed to check if player is still in guild, please try again later");
+            Debug.Log(_result);
+        }));
+    }
+
     public void UpdateValue<T>(string _path, T _value)
     {
         string _valueString = "{\"" + _path + "\":" + _value + "}";
@@ -155,7 +249,6 @@ public class FirebaseManager : MonoBehaviour
             Debug.Log(_result);
         }));
     }
-
 
     private IEnumerator Get(string uri, Action<string> onSuccess, Action<string> onError)
     {

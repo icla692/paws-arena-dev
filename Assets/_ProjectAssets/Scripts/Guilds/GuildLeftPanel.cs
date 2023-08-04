@@ -17,7 +17,8 @@ public class GuildLeftPanel : MonoBehaviour
     [SerializeField] private Sprite selectedButton;
     [SerializeField] private Sprite notSelectedButton;
     
-    
+    [SerializeField] private GameObject noGuildMessage;
+
 
     private void OnEnable()
     {
@@ -28,7 +29,7 @@ public class GuildLeftPanel : MonoBehaviour
         guildBattleButton.onClick.AddListener(ShowGuildBattle);
         topGuilds.onClick.AddListener(ShowTopGuilds);
 
-        ShowMyGuild();
+        Invoke(nameof(ShowMyGuild),0.1f);
     }
 
     private void OnDisable()
@@ -53,6 +54,9 @@ public class GuildLeftPanel : MonoBehaviour
             flagImage.gameObject.SetActive(false);
             return;
         }
+
+        flagImage.sprite = GuildSO.Get(DataManager.Instance.PlayerData.GuildData.FlagId).Flag;
+        flagImage.gameObject.SetActive(true);
     }
 
     private void ShowMyGuild()
@@ -64,6 +68,11 @@ public class GuildLeftPanel : MonoBehaviour
 
     private void ShowGuildBattle()
     {
+        if (!DataManager.Instance.PlayerData.IsInGuild)
+        {
+            noGuildMessage.SetActive(true);
+            return;
+        }
         ShowButtonAsSelected(guildBattleButton);
         OnShowGuildBattle?.Invoke();
     }

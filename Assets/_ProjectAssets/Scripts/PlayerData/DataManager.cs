@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ public class DataManager : MonoBehaviour
     private const string CHALLENGES= "Challenges";
     private const string CHALLENGES_DATA= "Challenges/ChallengesData";
     private const string GOT_LUCKY_SPIN = "Challenges/ClaimedLuckySpin";
+    private const string GUILD = "GuildId";
 
     private bool hasSubscribed = false;
 
@@ -59,6 +61,15 @@ public class DataManager : MonoBehaviour
         
     }
 
+    public void SetGuildsData(Dictionary<string, GuildData> _guilds)
+    {
+        GameData.Guilds = _guilds;
+        if (GameData.Guilds==null)
+        {
+            GameData.Guilds = new();
+        }
+    }
+
     public void CreatePlayerDataEmpty()
     {
         PlayerData = new PlayerData();
@@ -90,6 +101,7 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedOwnedEmojis += SaveOwnedEmojis;
         ChallengeData.UpdatedProgress += SaveChallengeProgress;
         PlayerData.Challenges.UpdatedClaimedLuckySpin += SaveClaimedLuckySpin;
+        PlayerData.UpdatedGuild += SaveGuild;
     }
 
     private void OnDestroy()
@@ -116,6 +128,7 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedOwnedEmojis -= SaveOwnedEmojis;
         ChallengeData.UpdatedProgress -= SaveChallengeProgress;
         PlayerData.Challenges.UpdatedClaimedLuckySpin -= SaveClaimedLuckySpin;
+        PlayerData.UpdatedGuild -= SaveGuild;
     }
 
     private void SaveSnacks()
@@ -221,5 +234,10 @@ public class DataManager : MonoBehaviour
     private void SaveClaimedLuckySpin()
     {
         FirebaseManager.Instance.SaveValue(GOT_LUCKY_SPIN,JsonConvert.SerializeObject(PlayerData.Challenges.ClaimedLuckySpin));
+    }
+
+    private void SaveGuild()
+    {
+        FirebaseManager.Instance.SaveString(GUILD,PlayerData.GuildId);
     }
 }
