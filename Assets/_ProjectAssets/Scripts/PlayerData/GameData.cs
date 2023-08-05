@@ -14,6 +14,7 @@ public class GameData
     private int jugOfMilkPrice;
     private List<LevelReward> seasonRewards = new ();
     private int guildPrice;
+    private int guildMaxPlayers;
     private Dictionary<string, GuildData> guilds = new ();
 
     public bool HasSeasonEnded => DateTime.UtcNow > SeasonEnds;
@@ -118,6 +119,12 @@ public class GameData
     {
         get => guilds;
         set => guilds = value;
+    }
+
+    public int GuildMaxPlayers
+    {
+        get=> guildMaxPlayers;
+        set => guildMaxPlayers=value;
     }
     
 }

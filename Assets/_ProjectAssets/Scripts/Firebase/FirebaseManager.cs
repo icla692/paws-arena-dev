@@ -133,9 +133,9 @@ public class FirebaseManager : MonoBehaviour
     
     private void CollectGuildData(Action<bool> _callBack)
     {
-        CollectGuilds(FinishLoading);
+        CollectGuilds(SetGuildData);
 
-        void FinishLoading(Dictionary<string, GuildData> _guilds)
+        void SetGuildData(Dictionary<string, GuildData> _guilds)
         {
             DataManager.Instance.SetGuildsData(_guilds);
             _callBack?.Invoke(true);
@@ -148,6 +148,7 @@ public class FirebaseManager : MonoBehaviour
 
         void ValidateName(Dictionary<string, GuildData> _guilds)
         {
+            DataManager.Instance.SetGuildsData(_guilds);
             if (_guilds==null)
             {
                 _onValid?.Invoke();
@@ -227,7 +228,7 @@ public class FirebaseManager : MonoBehaviour
         StartCoroutine(Get(userDataLink + "/.json", (_result) =>
         {
             PlayerData _playerData = JsonConvert.DeserializeObject<PlayerData>(_result);
-           DataManager.Instance.PlayerData.GuildId = _playerData.GuildId;
+            DataManager.Instance.PlayerData.GuildId = _playerData.GuildId;
            _callBack?.Invoke();
         }, (_result) =>
         {

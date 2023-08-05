@@ -7,7 +7,7 @@ public class GuildData
     public string Id;
     public string Name;
     public int FlagId;
-    public List<string> Players;
+    public List<GuildPlayerData> Players;
     public int MinimumPoints;
-    public string LeaderId;
+    public int MatchesWon;
 }

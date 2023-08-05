@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 
 [Serializable]
 public class PlayerData
@@ -283,7 +283,7 @@ public class PlayerData
     [JsonIgnore] public string PlayerId => FirebaseManager.Instance.PlayerId;
     [JsonIgnore] public bool IsInGuild => !string.IsNullOrEmpty(GuildId);
     
-    [JsonIgnore] public GuildData GuildData
+    [JsonIgnore] public GuildData Guild
     {
         get
         {
@@ -291,7 +291,14 @@ public class PlayerData
             {
                 return null;
             }
-            return DataManager.Instance.GameData.Guilds[guildId];
+
+            GuildData _guild = DataManager.Instance.GameData.Guilds[guildId];
+            _guild.Players = _guild.Players.OrderBy(_element => _element.Points).ToList();
+            for (int i = 0; i < _guild.Players.Count; i++)
+            {
+                _guild.Players[i].Place = i + 1;
+            }
+            return _guild;
         }
     }
 }
