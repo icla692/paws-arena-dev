@@ -4,57 +4,59 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameplayEnemiesLevel : MonoBehaviour
+public class GameplayPVPLevelBar : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI levelDisplay;
     [SerializeField] private Image levelBar;
+    [SerializeField] private bool isForMasterClient;
 
     private PhotonView photonView;
+
+    private bool isMine => (PhotonNetwork.IsMasterClient&& isForMasterClient)||(!PhotonNetwork.IsMasterClient&&!isForMasterClient);
 
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
     }
+    
+    private void OnEnable()
+    {
+        if (isMine)
+        {
+            DataManager.Instance.PlayerData.UpdatedExp += TellOpponentThatIEarnedExp;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (isMine)
+        {
+            DataManager.Instance.PlayerData.UpdatedExp -= TellOpponentThatIEarnedExp;
+        }
+    }
 
     private void Start()
     {
-        if (photonView == null)
+        if (isMine)
         {
-            SetBotsLevel();
-        }
-        else
-        {
-            SetOpponentsLevel();
+            TellOpponentMyLevel();
+            ShowMy();
         }
     }
 
-    private void SetBotsLevel()
+    private void TellOpponentThatIEarnedExp()
     {
-        if (DataManager.Instance.GameData.SeasonEnds <= DateTime.Now)
-        {
-            levelDisplay.text = "1";
-            levelBar.fillAmount = 0;
-            return;
-        }
-
-        float _maxExp = 57000;
-
-        int _timePassed = (int)(DateTime.Now - DataManager.Instance.GameData.SeasonEnds.AddMonths(-1)).TotalSeconds;
-
-        if (_timePassed<=0)
-        {
-            levelDisplay.text = "0";
-            levelBar.fillAmount = 0;
-            return;
-        }
-
-        float _expPerSecond = _maxExp / (int)(DataManager.Instance.GameData.SeasonEnds-DataManager.Instance.GameData.SeasonEnds.AddMonths(-1)).TotalSeconds;
-
-        float _collectedExp = _timePassed * _expPerSecond;
-        ShowProgress((int)_collectedExp);
+        ShowMy();
+        TellOpponentMyLevel();
+    }
+    
+    private void ShowMy()
+    {
+        levelDisplay.text = DataManager.Instance.PlayerData.Level.ToString();
+        levelBar.fillAmount = (float)DataManager.Instance.PlayerData.ExperienceOnCurrentLevel / DataManager.Instance.PlayerData.ExperienceForNextLevel;
     }
 
-    private void SetOpponentsLevel()
+    private void TellOpponentMyLevel()
     {
         int _experience=0;
         if (DataManager.Instance.GameData.SeasonEnds > DateTime.Now)
@@ -81,5 +83,4 @@ public class GameplayEnemiesLevel : MonoBehaviour
     {
         ShowProgress(_experience);
     }
-
 }

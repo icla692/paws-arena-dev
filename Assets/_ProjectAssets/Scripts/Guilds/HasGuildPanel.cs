@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -16,6 +15,9 @@ public class HasGuildPanel : GuildPanelBase
     [SerializeField] private Transform playersHolder;
     [SerializeField] private Button upArrow;
     [SerializeField] private Button downArrow;
+    [SerializeField] private Button leaveGuild;
+    [SerializeField] private GameObject confirmationForLeaveing;
+    [SerializeField] private Button yesLeaveGuild;
 
     private List<GameObject> shownPlayers = new();
     private float moveAmount = 1;
@@ -32,12 +34,18 @@ public class HasGuildPanel : GuildPanelBase
     {
         upArrow.onClick.AddListener(MovePlayersUp);
         downArrow.onClick.AddListener(MovePlayersDown);
+        GuildPlayerDisplay.OnKickPlayer += KickPlayer;
+        leaveGuild.onClick.AddListener(AskForLeaveConfirmation);
+        yesLeaveGuild.onClick.AddListener(YesLeaveGuild);
     }
 
     private void OnDisable()
     {
         upArrow.onClick.RemoveListener(MovePlayersUp);
         downArrow.onClick.RemoveListener(MovePlayersDown);
+        GuildPlayerDisplay.OnKickPlayer -= KickPlayer;
+        leaveGuild.onClick.RemoveListener(AskForLeaveConfirmation);
+        yesLeaveGuild.onClick.RemoveListener(YesLeaveGuild);
     }
 
     private void ShowGuildData()
@@ -89,5 +97,60 @@ public class HasGuildPanel : GuildPanelBase
     public override void Close()
     {
         gameObject.SetActive(false);
+    }
+
+    private void KickPlayer(GuildPlayerData _player)
+    {
+        FirebaseManager.Instance.RemovePlayerFromGuild(_player.Id);
+        DataManager.Instance.PlayerData.Guild.Players.Remove(_player);
+        Setup();
+    }
+
+    private void AskForLeaveConfirmation()
+    {
+        confirmationForLeaveing.SetActive(true);
+    }
+
+    private void YesLeaveGuild()
+    {
+        DataManager.Instance.PlayerData.Guild.Players.Remove(
+            DataManager.Instance.PlayerData.Guild.Players.Find(_element =>
+                _element.Id == FirebaseManager.Instance.PlayerId));
+        bool _deleteGuild = DataManager.Instance.PlayerData.Guild.Players.Count == 0;
+        if (_deleteGuild)
+        {
+            FirebaseManager.Instance.DeleteGuild();
+        }
+        else
+        {
+            bool _amILeader = false;
+            foreach (var _player in DataManager.Instance.PlayerData.Guild.Players)
+            {
+                if (_player.IsLeader)
+                {
+                    if (_player.Id==FirebaseManager.Instance.PlayerId)
+                    {
+                        _amILeader = true;
+                    }
+                    break;
+                }
+            }
+
+            if (_amILeader)
+            {
+                foreach (var _player in DataManager.Instance.PlayerData.Guild.Players)
+                {
+                    if (!_player.IsLeader)
+                    {
+                        FirebaseManager.Instance.SetNewGuildLeader(_player.Id);
+                        break;
+                    }
+                }
+            }
+            
+            FirebaseManager.Instance.RemovePlayerFromGuild(FirebaseManager.Instance.PlayerId);
+        }
+        
+        DataManager.Instance.PlayerData.GuildId = string.Empty;
     }
 }

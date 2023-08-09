@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +7,7 @@ public class UserInfoDropDown : MonoBehaviour
     [SerializeField] private Button switchKittyButton;
     [SerializeField] private LobbyUIManager lobbyUI;
     [SerializeField] private LevelsPanel levelsPanel;
+    [SerializeField] private RecoveryDropDown recoveryDropDown;
 
     private float animationLength = 0.1f;
     private bool isOpen;
@@ -33,6 +33,7 @@ public class UserInfoDropDown : MonoBehaviour
         }
         else
         {
+            recoveryDropDown.Close();
             Show();
         }
     }

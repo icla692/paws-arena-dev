@@ -20,7 +20,7 @@ public class ChallengesPanel : MonoBehaviour
         {
             ChallengeData _challengeData = DataManager.Instance.PlayerData.Challenges.ChallengesData[i];
             challengeDisplays[i].Setup(_challengeData);
-            if (_challengeData.Completed)
+            if (_challengeData.Claimed)
             {
                 _completedChallenges++;
             }

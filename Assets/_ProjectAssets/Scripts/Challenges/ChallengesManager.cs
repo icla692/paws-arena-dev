@@ -32,6 +32,10 @@ public class ChallengesManager : MonoBehaviour
         switch (_challengeSO.RewardType)
         {
             case ChallengeRewardType.SeasonExperience:
+                if (DataManager.Instance.GameData.SeasonEnds<DateTime.Now)
+                {
+                    return;
+                }
                 DataManager.Instance.PlayerData.Experience += _challengeSO.RewardAmount;
                 break;
             case ChallengeRewardType.JugOfMilk:

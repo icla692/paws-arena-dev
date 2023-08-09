@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class PlayerData
@@ -94,10 +95,11 @@ public class PlayerData
         set
         {
             experience = value;
-            UpdatedExp?.Invoke();
             CalculateLevel(experience,out level,out experienceForNextLevel,out experienceOnCurrentLevel);
+            UpdatedExp?.Invoke();
         }
     }
+
 
     [JsonIgnore]
     public int Level
@@ -293,6 +295,27 @@ public class PlayerData
             }
 
             GuildData _guild = DataManager.Instance.GameData.Guilds[guildId];
+            if (_guild==null)
+            {
+                GuildId = string.Empty;
+                return null;
+            }
+
+            bool _isStillInGuild = false;
+            foreach (var _player in _guild.Players)
+            {
+                if (_player.Id==FirebaseManager.Instance.PlayerId)
+                {
+                    _isStillInGuild = true;
+                }
+            }
+
+            if (!_isStillInGuild)
+            {
+                GuildId = string.Empty;
+                return null;
+            }
+            
             _guild.Players = _guild.Players.OrderBy(_element => _element.Points).ToList();
             for (int i = 0; i < _guild.Players.Count; i++)
             {

@@ -26,6 +26,7 @@ public class CraftingUI : MonoBehaviour
     [SerializeField] private Button craftCrystalButton;
     [SerializeField] private TextMeshProUGUI craftButtonText;
     [SerializeField] private Image shardBackground;
+    [SerializeField] private GameObject messageDisplay;
 
     //bot frame
     [SerializeField] private Image botFrameImage;
@@ -97,9 +98,14 @@ public class CraftingUI : MonoBehaviour
 
         if (_ingridiant == ItemType.Common)
         {
+            messageDisplay.SetActive(true);
             ShowBotFrame(_ingridiant);
             topHolder.SetActive(false);
             return;
+        }
+        else
+        {
+            messageDisplay.SetActive(false);
         }
         
         topHolder.SetActive(true);

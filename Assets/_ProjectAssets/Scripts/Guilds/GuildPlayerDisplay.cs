@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GuildPlayerDisplay : MonoBehaviour
 {
-    public static Action<GuildPlayerDisplay> OnKickPlayer;
+    public static Action<GuildPlayerData> OnKickPlayer;
     [SerializeField] private TextMeshProUGUI placeDisplay;
     [SerializeField] private GameObject leaderIcon;
     [SerializeField] private TextMeshProUGUI levelDisplay;
@@ -43,6 +43,6 @@ public class GuildPlayerDisplay : MonoBehaviour
 
     private void KickPlayer()
     {
-        OnKickPlayer?.Invoke(this);
+        OnKickPlayer?.Invoke(playerData);
     }
 }

@@ -20,6 +20,8 @@ public class RecoveryDropDown : MonoBehaviour
 
     [SerializeField] private Button jugOfMilkButton;
     [SerializeField] private Button glassOfMilkButton;
+    [SerializeField] private UserInfoDropDown userInfoDropDown;
+    
     private RecoveryOption recoveryOption;
 
     private float animationLength = 0.1f;
@@ -86,6 +88,7 @@ public class RecoveryDropDown : MonoBehaviour
         }
         else
         {
+            userInfoDropDown.Close();
             Show();
         }
     }

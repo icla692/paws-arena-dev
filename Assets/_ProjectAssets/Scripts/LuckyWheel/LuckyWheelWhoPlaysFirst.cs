@@ -19,7 +19,7 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
     private LuckyWheelRewardSO choosenPlayer;
     private float speed;
     private PhotonView photonView;
-    private List<SyncPlayerPlatformBehaviour> playerPlatforms;
+    // private List<SyncPlayerPlatformBehaviour> playerPlatforms;
 
     private void Awake()
     {
@@ -29,34 +29,42 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
     private void OnEnable()
     {
         leaveButton.gameObject.SetActive(false);
-        ChooseStartingPlayer();
+        StartCoroutine(ChooseStartingPlayer());
     }
 
     private void Start()
     {
-        playerPlatforms = FindObjectsOfType<SyncPlayerPlatformBehaviour>().ToList();
-        foreach (var _playerPlatform in playerPlatforms)
-        {
-            _playerPlatform.gameObject.SetActive(false);
-        }
+        // playerPlatforms = FindObjectsOfType<SyncPlayerPlatformBehaviour>().ToList();
+        // foreach (var _playerPlatform in playerPlatforms)
+        // {
+        //     _playerPlatform.gameObject.SetActive(false);
+        // }
     }
 
-    private void ChooseStartingPlayer()
+    private IEnumerator ChooseStartingPlayer()
     {
+        yield return new WaitForSeconds(1);
+        
         if (!PhotonNetwork.IsMasterClient)
         {
-            return;
+            yield break;
         }
         
         DoIPlayFirst = Random.Range(0,2)==0;
-        float _targetZ = DoIPlayFirst ? Random.Range(20, 170) : Random.Range(190, 350);
+
+        if (PhotonNetwork.CurrentRoom==null|| PhotonNetwork.CurrentRoom.PlayerCount==1)
+        {
+            DoIPlayFirst = true;
+        }
         
-        Spin(_targetZ,DoIPlayFirst);
+        float _targetZ = DoIPlayFirst ? Random.Range(20, 170) : Random.Range(190, 350);
 
         if (!(PhotonNetwork.CurrentRoom==null|| PhotonNetwork.CurrentRoom.PlayerCount==2))
         {
             photonView.RPC(nameof(Spin),RpcTarget.Others,_targetZ,!DoIPlayFirst);
         }
+
+        Spin(_targetZ,DoIPlayFirst);
     }
 
     private IEnumerator SpinRoutine(float _targetRotationZ)
@@ -119,10 +127,10 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
     private IEnumerator EndSpin()
     {
         yield return new WaitForSeconds(1);
-        foreach (var _playerPlatform in playerPlatforms)
-        {
-            _playerPlatform.gameObject.SetActive(true);
-        }
+        // foreach (var _playerPlatform in playerPlatforms)
+        // {
+        //     _playerPlatform.gameObject.SetActive(true);
+        // }
         gameObject.SetActive(false);
     }
 

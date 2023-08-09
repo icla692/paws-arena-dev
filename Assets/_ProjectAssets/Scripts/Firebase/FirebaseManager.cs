@@ -182,6 +182,7 @@ public class FirebaseManager : MonoBehaviour
             throw new Exception("Failed to fetch guilds");
         }));
     }
+    
     public void CreateGuild(GuildData _data)
     {
         string _jsonData = "{\""+_data.Id+"\":"+JsonConvert.SerializeObject(_data)+"}";
@@ -237,6 +238,73 @@ public class FirebaseManager : MonoBehaviour
         }));
     }
 
+    public void RemovePlayerFromGuild(string _playerId)
+    {
+        CollectGuilds(KickPlayer);
+
+        void KickPlayer(Dictionary<string, GuildData> _guilds)
+        {
+            GuildData _guild = _guilds[DataManager.Instance.PlayerData.GuildId];
+            int _playerCounter = 0;
+            foreach (var _player in _guild.Players)
+            {
+                if (_player.Id==_playerId)
+                {
+                    break;
+                }
+
+                _playerCounter++;
+            }
+            
+            StartCoroutine(Patch(guildsLink+DataManager.Instance.PlayerData.GuildId+"/"+_playerCounter+"/.json", JsonConvert.SerializeObject(null), (_result) =>
+            {
+
+            }, (_result) =>
+            {
+                Debug.Log("Failed to update data, please try again later");
+                Debug.Log(_result);
+            }));
+        }
+    }
+
+    public void SetNewGuildLeader(string _playerId)
+    {
+        CollectGuilds(SetNewLeader);
+
+        void SetNewLeader(Dictionary<string, GuildData> _guilds)
+        {
+            GuildData _guild = _guilds[DataManager.Instance.PlayerData.GuildId];
+            int _playerCounter = 0;
+            GuildPlayerData _playerData=null;
+            foreach (var _player in _guild.Players)
+            {
+                if (_player.Id==_playerId)
+                {
+                    _playerData = _player;
+                    break;
+                }
+
+                _playerCounter++;
+            }
+
+            _playerData.IsLeader = true;
+            
+            StartCoroutine(Patch(guildsLink+DataManager.Instance.PlayerData.GuildId+"/"+_playerCounter+"/.json", JsonConvert.SerializeObject(_playerData), (_result) =>
+            {
+
+            }, (_result) =>
+            {
+                Debug.Log("Failed to update data, please try again later");
+                Debug.Log(_result);
+            }));
+        }
+    }
+    
+    public void DeleteGuild()
+    {
+        
+    }
+
     public void UpdateValue<T>(string _path, T _value)
     {
         string _valueString = "{\"" + _path + "\":" + _value + "}";
@@ -251,6 +319,7 @@ public class FirebaseManager : MonoBehaviour
         }));
     }
 
+    
     private IEnumerator Get(string uri, Action<string> onSuccess, Action<string> onError)
     {
         if (userIdToken != null)
