@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,6 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
     private LuckyWheelRewardSO choosenPlayer;
     private float speed;
     private PhotonView photonView;
-    // private List<SyncPlayerPlatformBehaviour> playerPlatforms;
 
     private void Awake()
     {
@@ -29,21 +29,16 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
     private void OnEnable()
     {
         leaveButton.gameObject.SetActive(false);
-        StartCoroutine(ChooseStartingPlayer());
     }
 
     private void Start()
     {
-        // playerPlatforms = FindObjectsOfType<SyncPlayerPlatformBehaviour>().ToList();
-        // foreach (var _playerPlatform in playerPlatforms)
-        // {
-        //     _playerPlatform.gameObject.SetActive(false);
-        // }
+        StartCoroutine(ChooseStartingPlayer());
     }
 
     private IEnumerator ChooseStartingPlayer()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         
         if (!PhotonNetwork.IsMasterClient)
         {
@@ -59,7 +54,7 @@ public class LuckyWheelWhoPlaysFirst : MonoBehaviour
         
         float _targetZ = DoIPlayFirst ? Random.Range(20, 170) : Random.Range(190, 350);
 
-        if (!(PhotonNetwork.CurrentRoom==null|| PhotonNetwork.CurrentRoom.PlayerCount==2))
+        if (PhotonNetwork.CurrentRoom!=null&&PhotonNetwork.CurrentRoom.PlayerCount==2)
         {
             photonView.RPC(nameof(Spin),RpcTarget.Others,_targetZ,!DoIPlayFirst);
         }

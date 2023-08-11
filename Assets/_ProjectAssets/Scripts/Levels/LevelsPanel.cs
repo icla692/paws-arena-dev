@@ -11,7 +11,6 @@ public class LevelsPanel : MonoBehaviour
     [SerializeField] private LevelRewardDisplay[] premiumLevelHolders;
     [SerializeField] private TextMeshProUGUI[] levelsDisplay;
     [SerializeField] private Image[] levelsBackgroundDisplay;
-    [SerializeField] private TextMeshProUGUI snackDisplay;
     [SerializeField] private TextMeshProUGUI levelDisplay;
     [SerializeField] private TextMeshProUGUI seasonNumberDisplay;
     [SerializeField] private TextMeshProUGUI seasonEndDisplay;
@@ -64,7 +63,6 @@ public class LevelsPanel : MonoBehaviour
 
     private void SetupDisplays()
     {
-        snackDisplay.text = DataManager.Instance.PlayerData.Snacks.ToString();
         levelDisplay.text = DataManager.Instance.PlayerData.Level.ToString();
         seasonNumberDisplay.text = "Season "+DataManager.Instance.GameData.SeasonNumber;
         ShowSeasonEndDiplay();

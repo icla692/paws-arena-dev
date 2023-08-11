@@ -29,7 +29,7 @@ public class Countdown : MonoBehaviour
     public void StartCountDown(Action callback)
     {
         _text = GetComponent<TextMeshProUGUI>();
-        StartCoroutine(CountdownAnimation(7, callback));   
+        StartCoroutine(CountdownAnimation(8, callback));   
     }
 
     private IEnumerator CountdownAnimation(int seconds, Action callback)
