@@ -17,7 +17,7 @@ public class DamageDealingDisplay : MonoBehaviour
     private void OnEnable()
     {
         isBotPlayer = GetComponentInParent<BotPlayerComponent>();
-        if (ConfigurationManager.Instance.Config.GetIsMultiplayer())
+        if (PhotonNetwork.CurrentRoom.PlayerCount==2)
         {
             photonView = GetComponent<PhotonView>();
         }

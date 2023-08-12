@@ -313,11 +313,11 @@ public class ChallengesManager : MonoBehaviour
             bool _skip = false;
             _counter++;
 
-            ChallengeSO _challenge = allChallenges[_counter];
+            ChallengeSO _challenge = _allChallenges[_counter];
 
             foreach (var _chData in DataManager.Instance.PlayerData.Challenges.ChallengesData)
             {
-                ChallengeSO _challengeSO = allChallenges.Find(_element => _element.Id == _chData.Id);
+                ChallengeSO _challengeSO = _allChallenges.Find(_element => _element.Id == _chData.Id);
                 if (_challenge.Category==_challengeSO.Category)
                 {
                     _skip = true;
@@ -347,6 +347,7 @@ public class ChallengesManager : MonoBehaviour
         DataManager.Instance.PlayerData.Challenges.NextReset =
             new DateTime(_nextReset.Year, _nextReset.Month, _nextReset.Day, 0, 0, 0);
         DataManager.Instance.SaveChallenges();
+        SubscribeEvents();
     }
 
 
