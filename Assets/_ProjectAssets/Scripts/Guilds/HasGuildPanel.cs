@@ -72,10 +72,12 @@ public class HasGuildPanel : GuildPanelBase
 
     private void ShowPlayers()
     {
+        GuildPlayerData _leader = DataManager.Instance.PlayerData.Guild.Players.Find(_player => _player.IsLeader);
+        bool _showKickOption = FirebaseManager.Instance.PlayerId == _leader.Id;
         foreach (var _player in DataManager.Instance.PlayerData.Guild.Players)
         {
             GuildPlayerDisplay _playerDisplay = Instantiate(guildPlayerPrefab, playersHolder);
-            _playerDisplay.Setup(_player);
+            _playerDisplay.Setup(_player,_showKickOption);
             shownPlayers.Add(_playerDisplay.gameObject);
         }
     }
@@ -101,7 +103,7 @@ public class HasGuildPanel : GuildPanelBase
 
     private void KickPlayer(GuildPlayerData _player)
     {
-        FirebaseManager.Instance.RemovePlayerFromGuild(_player.Id);
+        FirebaseManager.Instance.RemovePlayerFromGuild(_player.Id, DataManager.Instance.PlayerData.GuildId);
         DataManager.Instance.PlayerData.Guild.Players.Remove(_player);
         Setup();
     }
@@ -116,7 +118,7 @@ public class HasGuildPanel : GuildPanelBase
         DataManager.Instance.PlayerData.Guild.Players.Remove(
             DataManager.Instance.PlayerData.Guild.Players.Find(_element =>
                 _element.Id == FirebaseManager.Instance.PlayerId));
-        bool _deleteGuild = DataManager.Instance.PlayerData.Guild.Players.Count == 0;
+        bool _deleteGuild = DataManager.Instance.PlayerData.Guild.Players.Count == 1;
         if (_deleteGuild)
         {
             FirebaseManager.Instance.DeleteGuild();
@@ -148,9 +150,10 @@ public class HasGuildPanel : GuildPanelBase
                 }
             }
             
-            FirebaseManager.Instance.RemovePlayerFromGuild(FirebaseManager.Instance.PlayerId);
+            FirebaseManager.Instance.RemovePlayerFromGuild(FirebaseManager.Instance.PlayerId, DataManager.Instance.PlayerData.GuildId);
         }
         
         DataManager.Instance.PlayerData.GuildId = string.Empty;
+        confirmationForLeaveing.SetActive(false);
     }
 }

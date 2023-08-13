@@ -293,14 +293,13 @@ public class PlayerData
             {
                 return null;
             }
-
+            
             GuildData _guild = DataManager.Instance.GameData.Guilds[guildId];
             if (_guild==null)
             {
                 GuildId = string.Empty;
                 return null;
             }
-
             bool _isStillInGuild = false;
             foreach (var _player in _guild.Players)
             {
@@ -309,6 +308,7 @@ public class PlayerData
                     _isStillInGuild = true;
                 }
             }
+            
 
             if (!_isStillInGuild)
             {

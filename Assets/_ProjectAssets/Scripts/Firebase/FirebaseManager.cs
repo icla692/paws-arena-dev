@@ -238,25 +238,31 @@ public class FirebaseManager : MonoBehaviour
         }));
     }
 
-    public void RemovePlayerFromGuild(string _playerId)
+    public void RemovePlayerFromGuild(string _playerId, string _guildId)
     {
         CollectGuilds(KickPlayer);
 
         void KickPlayer(Dictionary<string, GuildData> _guilds)
         {
-            GuildData _guild = _guilds[DataManager.Instance.PlayerData.GuildId];
+            GuildData _guild = _guilds[_guildId];
             int _playerCounter = 0;
+            bool _foundPlayer=false;
             foreach (var _player in _guild.Players)
             {
                 if (_player.Id==_playerId)
                 {
+                    _foundPlayer = true;
                     break;
                 }
 
                 _playerCounter++;
             }
-            
-            StartCoroutine(Patch(guildsLink+DataManager.Instance.PlayerData.GuildId+"/"+_playerCounter+"/.json", JsonConvert.SerializeObject(null), (_result) =>
+
+            if (!_foundPlayer)
+            {
+                return;
+            }
+            StartCoroutine(Delete(guildsLink+_guildId+"/Players/"+_playerCounter+"/.json", (_result) =>
             {
 
             }, (_result) =>
@@ -302,7 +308,14 @@ public class FirebaseManager : MonoBehaviour
     
     public void DeleteGuild()
     {
-        
+        Debug.Log(guildsLink +DataManager.Instance.PlayerData.GuildId+ "/.json");
+        StartCoroutine(Delete(guildsLink +DataManager.Instance.PlayerData.GuildId+ "/.json", (_result) =>
+        {
+        }, (_result) =>
+        {
+            Debug.Log("Failed to delete guild");
+            Debug.Log(_result);
+        }));
     }
 
     public void UpdateValue<T>(string _path, T _value)
@@ -441,4 +454,32 @@ public class FirebaseManager : MonoBehaviour
             webRequest.Dispose();
         }
     }
+    
+    private IEnumerator Delete(string uri, Action<string> onSuccess, Action<string> onError)
+    {
+        if (userIdToken != null)
+        {
+            uri = $"{uri}?auth={userIdToken}";
+        }
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Delete(uri))
+        {
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                onSuccess?.Invoke(webRequest.downloadHandler.text);
+            }
+            else
+            {
+                onError?.Invoke(webRequest.error);
+            }
+
+            webRequest.downloadHandler.Dispose();
+            webRequest.Dispose();
+        }
+    }
+
 }

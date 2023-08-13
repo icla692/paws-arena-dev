@@ -54,7 +54,7 @@ public class GuildLeftPanel : MonoBehaviour
             flagImage.gameObject.SetActive(false);
             return;
         }
-
+        
         flagImage.sprite = GuildSO.Get(DataManager.Instance.PlayerData.Guild.FlagId).Flag;
         flagImage.gameObject.SetActive(true);
     }

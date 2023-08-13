@@ -17,18 +17,14 @@ public class GuildPlayerDisplay : MonoBehaviour
     public GuildPlayerData PlayerData => playerData;
     
     
-    public void Setup(GuildPlayerData _playerData)
+    public void Setup(GuildPlayerData _playerData, bool _showKickButton)
     {
         placeDisplay.text = _playerData.Place + ".";
         leaderIcon.SetActive(_playerData.IsLeader);
         levelDisplay.text = _playerData.Level.ToString();
         nameDisplay.text = _playerData.Name;
         pointsDisplay.text = _playerData.Points.ToString();
-        kickButton.gameObject.SetActive(_playerData.IsLeader);
-        if (_playerData.Id==DataManager.Instance.PlayerData.PlayerId)
-        {
-            kickButton.gameObject.SetActive(false);
-        }
+        kickButton.gameObject.SetActive(_showKickButton);
     }
 
     private void OnEnable()
