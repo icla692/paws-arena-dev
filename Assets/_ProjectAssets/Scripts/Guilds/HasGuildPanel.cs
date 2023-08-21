@@ -53,7 +53,7 @@ public class HasGuildPanel : GuildPanelBase
         GuildData _guild = DataManager.Instance.PlayerData.Guild;
         GuildSO _guildSO = GuildSO.Get(_guild.FlagId);
         nameDisplay.text = _guild.Name;
-        leaderNameDisplay.text = _guild.Players.Find(_element => _element.IsLeader).Name;
+        leaderNameDisplay.text = _guild.GetLeader().Name;
         guildBadgeDisplay.sprite = _guildSO.Badge;
         kittyIconDisplay.sprite = _guildSO.Kitty;
         winsDisplay.text = "Matches won:"+_guild.MatchesWon;
@@ -72,7 +72,7 @@ public class HasGuildPanel : GuildPanelBase
 
     private void ShowPlayers()
     {
-        GuildPlayerData _leader = DataManager.Instance.PlayerData.Guild.Players.Find(_player => _player.IsLeader);
+        GuildPlayerData _leader = DataManager.Instance.PlayerData.Guild.GetLeader();
         bool _showKickOption = FirebaseManager.Instance.PlayerId == _leader.Id;
         foreach (var _player in DataManager.Instance.PlayerData.Guild.Players)
         {
@@ -104,7 +104,7 @@ public class HasGuildPanel : GuildPanelBase
     private void KickPlayer(GuildPlayerData _player)
     {
         FirebaseManager.Instance.RemovePlayerFromGuild(_player.Id, DataManager.Instance.PlayerData.GuildId);
-        DataManager.Instance.PlayerData.Guild.Players.Remove(_player);
+        DataManager.Instance.PlayerData.Guild.KickPlayer(_player.Id);
         Setup();
     }
 
@@ -115,42 +115,40 @@ public class HasGuildPanel : GuildPanelBase
 
     private void YesLeaveGuild()
     {
-        DataManager.Instance.PlayerData.Guild.Players.Remove(
-            DataManager.Instance.PlayerData.Guild.Players.Find(_element =>
-                _element.Id == FirebaseManager.Instance.PlayerId));
-        bool _deleteGuild = DataManager.Instance.PlayerData.Guild.Players.Count == 1;
+        string _guildId = DataManager.Instance.PlayerData.GuildId;
+        bool _amILeader = false;
+        foreach (var _player in DataManager.Instance.GameData.Guilds[_guildId].Players)
+        {
+            if (_player.IsLeader)
+            {
+                if (_player.Id==FirebaseManager.Instance.PlayerId)
+                {
+                    _amILeader = true;
+                }
+                break;
+            }
+        }
+        DataManager.Instance.PlayerData.Guild.KickPlayer(FirebaseManager.Instance.PlayerId);
+        bool _deleteGuild = DataManager.Instance.GameData.Guilds[_guildId].Players.Count == 0;
         if (_deleteGuild)
         {
             FirebaseManager.Instance.DeleteGuild();
         }
         else
         {
-            bool _amILeader = false;
-            foreach (var _player in DataManager.Instance.PlayerData.Guild.Players)
-            {
-                if (_player.IsLeader)
-                {
-                    if (_player.Id==FirebaseManager.Instance.PlayerId)
-                    {
-                        _amILeader = true;
-                    }
-                    break;
-                }
-            }
-
             if (_amILeader)
             {
-                foreach (var _player in DataManager.Instance.PlayerData.Guild.Players)
+                foreach (var _player in DataManager.Instance.GameData.Guilds[_guildId].Players)
                 {
                     if (!_player.IsLeader)
                     {
-                        FirebaseManager.Instance.SetNewGuildLeader(_player.Id);
+                        FirebaseManager.Instance.SetNewGuildLeader(_player.Id,_guildId);
                         break;
                     }
                 }
             }
             
-            FirebaseManager.Instance.RemovePlayerFromGuild(FirebaseManager.Instance.PlayerId, DataManager.Instance.PlayerData.GuildId);
+            FirebaseManager.Instance.RemovePlayerFromGuild(FirebaseManager.Instance.PlayerId, _guildId);
         }
         
         DataManager.Instance.PlayerData.GuildId = string.Empty;

@@ -22,7 +22,7 @@ public class GuildLeftPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        DataManager.Instance.PlayerData.UpdatedGuild += ShowFlag;
+        DataManager.Instance.PlayerData.UpdatedGuild += UpdateFlag;
         
         closeButton.onClick.AddListener(Close);
         myGuildButton.onClick.AddListener(ShowMyGuild);
@@ -34,12 +34,17 @@ public class GuildLeftPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        DataManager.Instance.PlayerData.UpdatedGuild -= ShowFlag;
+        DataManager.Instance.PlayerData.UpdatedGuild -= UpdateFlag;
         
         closeButton.onClick.RemoveListener(Close);
         myGuildButton.onClick.RemoveListener(ShowMyGuild);
         guildBattleButton.onClick.RemoveListener(ShowGuildBattle);
         topGuilds.onClick.RemoveListener(ShowTopGuilds);
+    }
+
+    private void UpdateFlag()
+    {
+        Invoke(nameof(ShowFlag),1f);
     }
 
     private void Close()

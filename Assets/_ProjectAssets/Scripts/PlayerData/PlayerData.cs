@@ -24,6 +24,7 @@ public class PlayerData
     private List<int> ownedEmojis = new List<int>() { };
     private Challenges challenges = new Challenges();
     private string guildId = string.Empty;
+    private int points;
 
     [JsonIgnore] public Action UpdatedSnacks;
     [JsonIgnore] public Action UpdatedJugOfMilk;
@@ -37,6 +38,7 @@ public class PlayerData
     [JsonIgnore] public Action UpdatedSeasonNumber;
     [JsonIgnore] public Action UpdatedOwnedEmojis;
     [JsonIgnore] public Action UpdatedGuild;
+    [JsonIgnore] public Action UpdatedPoints;
 
     public PlayerData()
     {
@@ -293,8 +295,17 @@ public class PlayerData
             {
                 return null;
             }
-            
-            GuildData _guild = DataManager.Instance.GameData.Guilds[guildId];
+
+            GuildData _guild = null;
+            try
+            { 
+                _guild = DataManager.Instance.GameData.Guilds[guildId];
+            }
+            catch
+            {
+                GuildId = string.Empty;
+                return null;
+            }
             if (_guild==null)
             {
                 GuildId = string.Empty;
@@ -316,12 +327,18 @@ public class PlayerData
                 return null;
             }
             
-            _guild.Players = _guild.Players.OrderBy(_element => _element.Points).ToList();
-            for (int i = 0; i < _guild.Players.Count; i++)
-            {
-                _guild.Players[i].Place = i + 1;
-            }
+            _guild.ReorderPlayersByPoints();
             return _guild;
+        }
+    }
+
+    public int Points
+    {
+        get => points;
+        set
+        {
+            points = value;
+            UpdatedPoints?.Invoke();
         }
     }
 }

@@ -21,6 +21,7 @@ public class GuildPanel : GuildPanelBase
         NoGuildPanel.OnShowCreateGuild += ShowCreateGuild;
         NoGuildPanel.OnShowJoinGuild += ShowJoinGuild;
         DataManager.Instance.PlayerData.UpdatedGuild += ShowMyGuild;
+        JoinGuildPanel.OnJoinedGuild += ShowMyGuild;
     }
 
     private void OnDisable()
@@ -31,6 +32,7 @@ public class GuildPanel : GuildPanelBase
         NoGuildPanel.OnShowCreateGuild -= ShowCreateGuild;
         NoGuildPanel.OnShowJoinGuild -= ShowJoinGuild;
         DataManager.Instance.PlayerData.UpdatedGuild -= ShowMyGuild;
+        JoinGuildPanel.OnJoinedGuild -= ShowMyGuild;
     }
 
     private void ShowMyGuild()

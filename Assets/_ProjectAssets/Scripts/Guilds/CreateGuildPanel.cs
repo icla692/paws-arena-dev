@@ -139,17 +139,15 @@ public class CreateGuildPanel : GuildPanelBase
         GuildData _newGuild = new();
         _newGuild.Name = nameInput.text;
         _newGuild.Id = Guid.NewGuid().ToString();
-        _newGuild.Players = new()
+        _newGuild.Players = new();
+        _newGuild.Players.Add(new GuildPlayerData()
         {
-            new GuildPlayerData()
-            {
-               Id = DataManager.Instance.PlayerData.PlayerId,
-               Name = GameState.nickname,
-               IsLeader = true,
-               Level = DataManager.Instance.PlayerData.Level,
-               Points = 0
-            }
-        };
+            Id = DataManager.Instance.PlayerData.PlayerId,
+            Name = GameState.nickname,
+            IsLeader = true,
+            Level = DataManager.Instance.PlayerData.Level,
+            Points = 0
+        });
         _newGuild.FlagId = selectedGuild.Id;
         _newGuild.MinimumPoints = _minPoints;
         

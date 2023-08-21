@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
@@ -246,7 +245,8 @@ public class FirebaseManager : MonoBehaviour
         {
             GuildData _guild = _guilds[_guildId];
             int _playerCounter = 0;
-            bool _foundPlayer=false;
+            bool _foundPlayer= _guild.GetPlayer(_playerId)!=null;
+
             foreach (var _player in _guild.Players)
             {
                 if (_player.Id==_playerId)
@@ -272,30 +272,51 @@ public class FirebaseManager : MonoBehaviour
             }));
         }
     }
+    
+    public void JoinGuild(string _playerId, string _guildId, Action _callBack)
+    {
+        CollectGuilds(Join);
 
-    public void SetNewGuildLeader(string _playerId)
+        void Join(Dictionary<string, GuildData> _guilds)
+        {
+            DataManager.Instance.SetGuildsData(_guilds);
+            GuildData _guild = DataManager.Instance.GameData.Guilds[_guildId];
+            int _playerIndex = _guild.NextIndex;
+            GuildPlayerData _myData = new GuildPlayerData()
+            {
+                IsLeader = false,
+                Name = GameState.nickname,
+                Points = DataManager.Instance.PlayerData.Points,
+                Level = DataManager.Instance.PlayerData.Level,
+                Id = _playerId
+            };
+            string _jsonData = JsonConvert.SerializeObject(_myData);
+            StartCoroutine(Patch(guildsLink+_guildId+"/Players/"+_playerIndex+"/.json", _jsonData,(_result) =>
+            {
+                DataManager.Instance.GameData.Guilds[_guildId].Players.Add(_myData);
+                DataManager.Instance.PlayerData.GuildId = _guildId;
+                _callBack?.Invoke();
+            }, (_result) =>
+            {
+                Debug.Log(_result);
+                _callBack?.Invoke();
+            }));
+        }
+    }
+
+    public void SetNewGuildLeader(string _playerId,string _guildId)
     {
         CollectGuilds(SetNewLeader);
 
         void SetNewLeader(Dictionary<string, GuildData> _guilds)
         {
-            GuildData _guild = _guilds[DataManager.Instance.PlayerData.GuildId];
-            int _playerCounter = 0;
-            GuildPlayerData _playerData=null;
-            foreach (var _player in _guild.Players)
-            {
-                if (_player.Id==_playerId)
-                {
-                    _playerData = _player;
-                    break;
-                }
-
-                _playerCounter++;
-            }
+            GuildData _guild = _guilds[_guildId];
+            int _playerCounter = _guild.GetPlayerIndex(_playerId);
+            GuildPlayerData _playerData = _guild.GetPlayer(_playerId);
 
             _playerData.IsLeader = true;
             
-            StartCoroutine(Patch(guildsLink+DataManager.Instance.PlayerData.GuildId+"/"+_playerCounter+"/.json", JsonConvert.SerializeObject(_playerData), (_result) =>
+            StartCoroutine(Patch(guildsLink+_guildId+"/Players/"+_playerCounter+"/.json", JsonConvert.SerializeObject(_playerData), (_result) =>
             {
 
             }, (_result) =>
@@ -308,7 +329,6 @@ public class FirebaseManager : MonoBehaviour
     
     public void DeleteGuild()
     {
-        Debug.Log(guildsLink +DataManager.Instance.PlayerData.GuildId+ "/.json");
         StartCoroutine(Delete(guildsLink +DataManager.Instance.PlayerData.GuildId+ "/.json", (_result) =>
         {
         }, (_result) =>
