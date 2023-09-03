@@ -13,7 +13,7 @@ public class GuildData
     public int MinimumPoints;
     public int MatchesWon;
     public int NextIndex;
-    private Dictionary<GuildPlayerData> originalPlayers;
+    private List<GuildPlayerData> originalPlayers;
 
     public List<GuildPlayerData> Players
     {
