@@ -239,38 +239,16 @@ public class FirebaseManager : MonoBehaviour
 
     public void RemovePlayerFromGuild(string _playerId, string _guildId)
     {
-        CollectGuilds(KickPlayer);
+        GuildData _guild = DataManager.Instance.GameData.Guilds[_guildId];
+        GuildPlayerData _player= _guild.GetPlayer(_playerId);
 
-        void KickPlayer(Dictionary<string, GuildData> _guilds)
+        if (_player==null)
         {
-            GuildData _guild = _guilds[_guildId];
-            int _playerCounter = 0;
-            bool _foundPlayer= _guild.GetPlayer(_playerId)!=null;
-
-            foreach (var _player in _guild.Players)
-            {
-                if (_player.Id==_playerId)
-                {
-                    _foundPlayer = true;
-                    break;
-                }
-
-                _playerCounter++;
-            }
-
-            if (!_foundPlayer)
-            {
-                return;
-            }
-            StartCoroutine(Delete(guildsLink+_guildId+"/Players/"+_playerCounter+"/.json", (_result) =>
-            {
-
-            }, (_result) =>
-            {
-                Debug.Log("Failed to update data, please try again later");
-                Debug.Log(_result);
-            }));
+            return;
         }
+
+        _guild.KickPlayer(_playerId);
+        SaveGuild(_guildId,JsonConvert.SerializeObject(_guild),null);
     }
     
     public void JoinGuild(string _playerId, string _guildId, Action _callBack)
@@ -280,8 +258,6 @@ public class FirebaseManager : MonoBehaviour
         void Join(Dictionary<string, GuildData> _guilds)
         {
             DataManager.Instance.SetGuildsData(_guilds);
-            GuildData _guild = DataManager.Instance.GameData.Guilds[_guildId];
-            int _playerIndex = _guild.NextIndex;
             GuildPlayerData _myData = new GuildPlayerData()
             {
                 IsLeader = false,
@@ -290,41 +266,39 @@ public class FirebaseManager : MonoBehaviour
                 Level = DataManager.Instance.PlayerData.Level,
                 Id = _playerId
             };
-            string _jsonData = JsonConvert.SerializeObject(_myData);
-            StartCoroutine(Patch(guildsLink+_guildId+"/Players/"+_playerIndex+"/.json", _jsonData,(_result) =>
+            
+            DataManager.Instance.GameData.Guilds[_guildId].Players.Add(_myData);
+            DataManager.Instance.PlayerData.GuildId = _guildId;
+            string _jsonData = JsonConvert.SerializeObject(DataManager.Instance.PlayerData.Guild);
+            SaveGuild(_guildId, _jsonData, () =>
             {
-                DataManager.Instance.GameData.Guilds[_guildId].Players.Add(_myData);
-                DataManager.Instance.PlayerData.GuildId = _guildId;
                 _callBack?.Invoke();
-            }, (_result) =>
-            {
-                Debug.Log(_result);
-                _callBack?.Invoke();
-            }));
+            });
         }
     }
 
-    public void SetNewGuildLeader(string _playerId,string _guildId)
+    public void SaveGuild(string _guildId, string _guildData, Action _callBack)
     {
-        CollectGuilds(SetNewLeader);
-
-        void SetNewLeader(Dictionary<string, GuildData> _guilds)
+        StartCoroutine(Patch(guildsLink+_guildId+"/.json", _guildData,(_result) =>
         {
-            GuildData _guild = _guilds[_guildId];
-            int _playerCounter = _guild.GetPlayerIndex(_playerId);
-            GuildPlayerData _playerData = _guild.GetPlayer(_playerId);
+            _callBack?.Invoke();
+        }, (_result) =>
+        {
+            Debug.Log(_result);
+            _callBack?.Invoke();
+        }));
+    }
 
-            _playerData.IsLeader = true;
+    public void SetNewGuildLeader(string _playerId,string _guildId, Action _callBack)
+    {
+        GuildData _guild = DataManager.Instance.GameData.Guilds[_guildId];
+        GuildPlayerData _playerData = _guild.GetPlayer(_playerId);
+        _playerData.IsLeader = true;
             
-            StartCoroutine(Patch(guildsLink+_guildId+"/Players/"+_playerCounter+"/.json", JsonConvert.SerializeObject(_playerData), (_result) =>
-            {
-
-            }, (_result) =>
-            {
-                Debug.Log("Failed to update data, please try again later");
-                Debug.Log(_result);
-            }));
-        }
+        SaveGuild(_guildId, JsonConvert.SerializeObject(_guild), () =>
+        {
+            _callBack?.Invoke();
+        });
     }
     
     public void DeleteGuild()

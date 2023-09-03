@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 
 [Serializable]
@@ -99,7 +100,7 @@ public class GuildData
         throw new Exception("Cant find player");
     }
 
-    public int SumOfPoints
+    [JsonIgnore] public int SumOfPoints
     {
         get
         {
