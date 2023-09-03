@@ -13,7 +13,7 @@ public class GuildData
     public int MinimumPoints;
     public int MatchesWon;
     public int NextIndex;
-    private List<GuildPlayerData> originalPlayers;
+    private Dictionary<GuildPlayerData> originalPlayers;
 
     public List<GuildPlayerData> Players
     {
@@ -97,6 +97,20 @@ public class GuildData
         }
 
         throw new Exception("Cant find player");
+    }
+
+    public int SumOfPoints
+    {
+        get
+        {
+            int _sumOfPoints = 0;
+            foreach (var _player in Players)
+            {
+                _sumOfPoints += _player.Points;
+            }
+
+            return _sumOfPoints;
+        }
     }
 
 }

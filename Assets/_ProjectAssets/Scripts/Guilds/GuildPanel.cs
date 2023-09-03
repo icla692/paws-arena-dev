@@ -7,7 +7,8 @@ public class GuildPanel : GuildPanelBase
     [SerializeField] private CreateGuildPanel createGuildPanel;
     [SerializeField] private JoinGuildPanel joinGuildPanel;
     [SerializeField] private HasGuildPanel hasGuildPanel;
-    
+    [SerializeField] private GuildTopGuildsPanel topGuildPanel;
+
     public override void Setup()
     {
         gameObject.SetActive(true);
@@ -18,6 +19,7 @@ public class GuildPanel : GuildPanelBase
         GuildLeftPanel.OnShowMyGuild += ShowMyGuild;
         GuildLeftPanel.OnShowGuildBattle += ShowGuildBattle;
         GuildLeftPanel.OnClose += Close;
+        GuildLeftPanel.OnShowTopGuilds += ShowTopGuilds;
         NoGuildPanel.OnShowCreateGuild += ShowCreateGuild;
         NoGuildPanel.OnShowJoinGuild += ShowJoinGuild;
         DataManager.Instance.PlayerData.UpdatedGuild += ShowMyGuild;
@@ -29,6 +31,7 @@ public class GuildPanel : GuildPanelBase
         GuildLeftPanel.OnShowMyGuild -= ShowMyGuild;
         GuildLeftPanel.OnShowGuildBattle -= ShowGuildBattle;
         GuildLeftPanel.OnClose -= Close;
+        GuildLeftPanel.OnShowTopGuilds -= ShowTopGuilds;
         NoGuildPanel.OnShowCreateGuild -= ShowCreateGuild;
         NoGuildPanel.OnShowJoinGuild -= ShowJoinGuild;
         DataManager.Instance.PlayerData.UpdatedGuild -= ShowMyGuild;
@@ -47,6 +50,11 @@ public class GuildPanel : GuildPanelBase
         }
     }
 
+    private void ShowTopGuilds()
+    {
+        SwitchToPanel(topGuildPanel);
+    }
+
     private void ShowGuildBattle()
     {
         SwitchToPanel(guildBattlePanel);
@@ -58,7 +66,7 @@ public class GuildPanel : GuildPanelBase
         {
             return;
         }
-        
+
         SwitchToPanel(createGuildPanel);
     }
 
@@ -68,7 +76,7 @@ public class GuildPanel : GuildPanelBase
         {
             return;
         }
-        
+
         SwitchToPanel(joinGuildPanel);
     }
 
@@ -79,6 +87,7 @@ public class GuildPanel : GuildPanelBase
         createGuildPanel.Close();
         joinGuildPanel.Close();
         hasGuildPanel.Close();
+        topGuildPanel.Close();
 
         _panel.Setup();
     }

@@ -18,9 +18,12 @@ public class HasGuildPanel : GuildPanelBase
     [SerializeField] private Button leaveGuild;
     [SerializeField] private GameObject confirmationForLeaveing;
     [SerializeField] private Button yesLeaveGuild;
+    [SerializeField] private GameObject confirmationForKickingPlayer;
+    [SerializeField] private Button yesKickPlayer;
 
     private List<GameObject> shownPlayers = new();
     private float moveAmount = 1;
+    private GuildPlayerData kickingPlayer;
 
     public override void Setup()
     {
@@ -37,6 +40,7 @@ public class HasGuildPanel : GuildPanelBase
         GuildPlayerDisplay.OnKickPlayer += KickPlayer;
         leaveGuild.onClick.AddListener(AskForLeaveConfirmation);
         yesLeaveGuild.onClick.AddListener(YesLeaveGuild);
+        yesKickPlayer.onClick.AddListener(YesKickPlayer);
     }
 
     private void OnDisable()
@@ -46,6 +50,7 @@ public class HasGuildPanel : GuildPanelBase
         GuildPlayerDisplay.OnKickPlayer -= KickPlayer;
         leaveGuild.onClick.RemoveListener(AskForLeaveConfirmation);
         yesLeaveGuild.onClick.RemoveListener(YesLeaveGuild);
+        yesKickPlayer.onClick.RemoveListener(YesKickPlayer);
     }
 
     private void ShowGuildData()
@@ -103,8 +108,15 @@ public class HasGuildPanel : GuildPanelBase
 
     private void KickPlayer(GuildPlayerData _player)
     {
-        FirebaseManager.Instance.RemovePlayerFromGuild(_player.Id, DataManager.Instance.PlayerData.GuildId);
-        DataManager.Instance.PlayerData.Guild.KickPlayer(_player.Id);
+        kickingPlayer = _player;
+        confirmationForKickingPlayer.SetActive(true);
+    }
+    
+    private void YesKickPlayer()
+    {
+        confirmationForKickingPlayer.SetActive(false);
+        FirebaseManager.Instance.RemovePlayerFromGuild(kickingPlayer.Id, DataManager.Instance.PlayerData.GuildId);
+        DataManager.Instance.PlayerData.Guild.KickPlayer(kickingPlayer.Id);
         Setup();
     }
 

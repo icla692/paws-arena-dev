@@ -7,6 +7,7 @@ public class GuildLeftPanel : MonoBehaviour
     public static Action OnShowMyGuild;
     public static Action OnShowGuildBattle;
     public static Action OnClose;
+    public static Action OnShowTopGuilds;
     
     [SerializeField] private Image flagImage;
     [SerializeField] private Button myGuildButton;
@@ -86,12 +87,14 @@ public class GuildLeftPanel : MonoBehaviour
     {
         myGuildButton.image.sprite = notSelectedButton;
         guildBattleButton.image.sprite = notSelectedButton;
+        topGuilds.image.sprite = notSelectedButton;
 
         _button.image.sprite = selectedButton;
     }
 
     private void ShowTopGuilds()
     {
-        Debug.Log("Show top guilds");
+        ShowButtonAsSelected(topGuilds);
+        OnShowTopGuilds?.Invoke();
     }
 }

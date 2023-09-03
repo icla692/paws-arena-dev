@@ -126,5 +126,7 @@ public class GameData
         get=> guildMaxPlayers;
         set => guildMaxPlayers=value;
     }
-    
+
+    public GuildRankingBorders RankingBorders;
+
 }
