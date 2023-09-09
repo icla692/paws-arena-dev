@@ -44,7 +44,7 @@ public class DamageDealingDisplay : MonoBehaviour
         go.transform.localPosition += (amountOfShowingDamageTexts * damageOffset);
         go.transform.GetChild(0).position = new Vector2(UnityEngine.Random.Range(-2.0f, 2.0f), 0);
         go.transform.GetChild(0).GetComponent<DamageDealingText>().Init(damage);
-        //SpawnExperience(damage);
+        SpawnExperience(damage);
     }
 
     private void SpawnExperience(int _damageTaken)
