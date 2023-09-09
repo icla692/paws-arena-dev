@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class JoinGuildPanel : GuildPanelBase
+public class SearchGuilds : GuildPanelBase
 {
     public static Action OnJoinedGuild;
     [SerializeField] private TMP_InputField searchInput;
@@ -14,21 +14,19 @@ public class JoinGuildPanel : GuildPanelBase
     [SerializeField] private GameObject noGuildsMessage;
     [SerializeField] private GameObject searchWithNoResultsMessage;
     [SerializeField] private GameObject noEnaughtPointsMessage;
-    [SerializeField] private GameObject alreadyInGuild;
-
     [SerializeField] private Button showUp;
     [SerializeField] private Button showDown;
+    [SerializeField] private GameObject alreadyInGuild;
 
     [SerializeField] private GameObject joiningGuildPanel;
-
     private List<GameObject> shownObjects = new();
     private float moveAmount = 1;
-
+    
     private void OnEnable()
     {
         showUp.onClick.AddListener(ShowUp);
         showDown.onClick.AddListener(ShowDown);
-        searchInput.onEndEdit.AddListener(SearchGuilds);
+        searchInput.onEndEdit.AddListener(Search);
 
         GuildSearchResultDisplay.OnJoinGuild += JoinGuild;
     }
@@ -37,12 +35,12 @@ public class JoinGuildPanel : GuildPanelBase
     {
         showUp.onClick.RemoveListener(ShowUp);
         showDown.onClick.RemoveListener(ShowDown);
-        searchInput.onEndEdit.RemoveListener(SearchGuilds);
+        searchInput.onEndEdit.RemoveListener(Search);
         
         GuildSearchResultDisplay.OnJoinGuild -= JoinGuild;
     }
     
-    private void SearchGuilds(string _searchName)
+    private void Search(string _searchName)
     {
         ShowGuilds();
     }
@@ -86,7 +84,8 @@ public class JoinGuildPanel : GuildPanelBase
         noGuildsMessage.SetActive(false);
         string _searchKey = searchInput.text;
 
-        foreach (var (_key,_value) in DataManager.Instance.GameData.Guilds)
+        foreach (var (_key,_value) in DataManager.Instance.GameData.Guilds.ToList().OrderBy(_guild => _guild.Value
+        .Name))
         {
             if (!string.IsNullOrEmpty(_searchKey))
             {

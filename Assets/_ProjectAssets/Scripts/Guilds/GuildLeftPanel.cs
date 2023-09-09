@@ -6,6 +6,7 @@ public class GuildLeftPanel : MonoBehaviour
 {
     public static Action OnShowMyGuild;
     public static Action OnShowGuildBattle;
+    public static Action OnShowSearchGuilds;
     public static Action OnClose;
     public static Action OnShowTopGuilds;
     
@@ -14,6 +15,7 @@ public class GuildLeftPanel : MonoBehaviour
     [SerializeField] private Button guildBattleButton;
     [SerializeField] private Button topGuilds;
     [SerializeField] private Button closeButton;
+    [SerializeField] private Button searchGuilds;
     [Space]
     [SerializeField] private Sprite selectedButton;
     [SerializeField] private Sprite notSelectedButton;
@@ -29,6 +31,7 @@ public class GuildLeftPanel : MonoBehaviour
         myGuildButton.onClick.AddListener(ShowMyGuild);
         guildBattleButton.onClick.AddListener(ShowGuildBattle);
         topGuilds.onClick.AddListener(ShowTopGuilds);
+        searchGuilds.onClick.AddListener(ShowSearchGuilds);
 
         Invoke(nameof(ShowMyGuild),0.1f);
     }
@@ -41,6 +44,7 @@ public class GuildLeftPanel : MonoBehaviour
         myGuildButton.onClick.RemoveListener(ShowMyGuild);
         guildBattleButton.onClick.RemoveListener(ShowGuildBattle);
         topGuilds.onClick.RemoveListener(ShowTopGuilds);
+        searchGuilds.onClick.RemoveListener(ShowSearchGuilds);
     }
 
     private void UpdateFlag()
@@ -61,7 +65,6 @@ public class GuildLeftPanel : MonoBehaviour
             return;
         }
         
-        flagImage.sprite = GuildSO.Get(DataManager.Instance.PlayerData.Guild.FlagId).Flag;
         flagImage.gameObject.SetActive(true);
     }
 
@@ -88,6 +91,7 @@ public class GuildLeftPanel : MonoBehaviour
         myGuildButton.image.sprite = notSelectedButton;
         guildBattleButton.image.sprite = notSelectedButton;
         topGuilds.image.sprite = notSelectedButton;
+        searchGuilds.image.sprite = notSelectedButton;
 
         _button.image.sprite = selectedButton;
     }
@@ -96,5 +100,11 @@ public class GuildLeftPanel : MonoBehaviour
     {
         ShowButtonAsSelected(topGuilds);
         OnShowTopGuilds?.Invoke();
+    }
+    
+    private void ShowSearchGuilds()
+    {
+        ShowButtonAsSelected(searchGuilds);
+        OnShowSearchGuilds?.Invoke();
     }
 }

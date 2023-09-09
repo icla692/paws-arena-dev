@@ -182,6 +182,21 @@ public class FirebaseManager : MonoBehaviour
         }));
     }
     
+    private void CollectGuildData(string _guildId,Action<GuildData> _callBack)
+    {
+        StartCoroutine(Get(guildsLink +_guildId +"/.json", (_result) =>
+        {
+            if (string.IsNullOrEmpty(_result))
+            {
+                _callBack?.Invoke(null);
+            }
+            _callBack?.Invoke(JsonConvert.DeserializeObject<GuildData>(_result));
+        }, (_result) =>
+        {
+            throw new Exception("Failed to fetch guilds");
+        }));
+    }
+    
     public void CreateGuild(GuildData _data)
     {
         string _jsonData = "{\""+_data.Id+"\":"+JsonConvert.SerializeObject(_data)+"}";
@@ -225,16 +240,27 @@ public class FirebaseManager : MonoBehaviour
 
     public void CheckIfPlayerIsStillInGuild(Action _callBack)
     {
-        StartCoroutine(Get(userDataLink + "/.json", (_result) =>
+        if (string.IsNullOrEmpty(DataManager.Instance.PlayerData.GuildId))
         {
-            PlayerData _playerData = JsonConvert.DeserializeObject<PlayerData>(_result);
-            DataManager.Instance.PlayerData.GuildId = _playerData.GuildId;
-           _callBack?.Invoke();
-        }, (_result) =>
+            _callBack?.Invoke();
+            return;
+        }
+        CollectGuildData(DataManager.Instance.PlayerData.GuildId,Check);
+
+        void Check(GuildData _guildData)
         {
-            Debug.Log("Failed to check if player is still in guild, please try again later");
-            Debug.Log(_result);
-        }));
+            DataManager.Instance.GameData.Guilds[DataManager.Instance.PlayerData.GuildId] = _guildData;
+            StartCoroutine(Get(userDataLink + "/.json", (_result) =>
+            {
+                PlayerData _playerData = JsonConvert.DeserializeObject<PlayerData>(_result);
+                DataManager.Instance.PlayerData.GuildId = _playerData.GuildId;
+                _callBack?.Invoke();
+            }, (_result) =>
+            {
+                Debug.Log("Failed to check if player is still in guild, please try again later");
+                Debug.Log(_result);
+            }));
+        }
     }
 
     public void RemovePlayerFromGuild(string _playerId, string _guildId)
@@ -253,11 +279,19 @@ public class FirebaseManager : MonoBehaviour
     
     public void JoinGuild(string _playerId, string _guildId, Action _callBack)
     {
-        CollectGuilds(Join);
+        CollectGuildData(_guildId,Join);
 
-        void Join(Dictionary<string, GuildData> _guilds)
+        void Join(GuildData _guilds)
         {
-            DataManager.Instance.SetGuildsData(_guilds);
+            if (_guilds == null)
+            {
+                if (DataManager.Instance.GameData.Guilds.ContainsKey(_guildId))
+                {
+                    DataManager.Instance.GameData.Guilds.Remove(_guildId);
+                }
+                _callBack?.Invoke();
+                return;
+            }
             GuildPlayerData _myData = new GuildPlayerData()
             {
                 IsLeader = false,

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,7 +7,6 @@ public class GuildSO : ScriptableObject
 {
    [field: SerializeField] public int Id { get; private set; }
    [field: SerializeField] public Sprite Badge { get; private set; }
-   [field: SerializeField] public Sprite Flag { get; private set; }
    [field: SerializeField] public Sprite Kitty { get; private set; }
    [field: SerializeField] public Sprite SelectedKitty { get; private set; }
 

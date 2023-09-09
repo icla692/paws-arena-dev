@@ -8,6 +8,7 @@ public class GuildPanel : GuildPanelBase
     [SerializeField] private JoinGuildPanel joinGuildPanel;
     [SerializeField] private HasGuildPanel hasGuildPanel;
     [SerializeField] private GuildTopGuildsPanel topGuildPanel;
+    [SerializeField] private SearchGuilds searchGuilds;
 
     public override void Setup()
     {
@@ -20,10 +21,12 @@ public class GuildPanel : GuildPanelBase
         GuildLeftPanel.OnShowGuildBattle += ShowGuildBattle;
         GuildLeftPanel.OnClose += Close;
         GuildLeftPanel.OnShowTopGuilds += ShowTopGuilds;
+        GuildLeftPanel.OnShowSearchGuilds += OnShowSearchGuilds;
         NoGuildPanel.OnShowCreateGuild += ShowCreateGuild;
         NoGuildPanel.OnShowJoinGuild += ShowJoinGuild;
         DataManager.Instance.PlayerData.UpdatedGuild += ShowMyGuild;
         JoinGuildPanel.OnJoinedGuild += ShowMyGuild;
+        SearchGuilds.OnJoinedGuild += ShowMyGuild;
     }
 
     private void OnDisable()
@@ -32,10 +35,12 @@ public class GuildPanel : GuildPanelBase
         GuildLeftPanel.OnShowGuildBattle -= ShowGuildBattle;
         GuildLeftPanel.OnClose -= Close;
         GuildLeftPanel.OnShowTopGuilds -= ShowTopGuilds;
+        GuildLeftPanel.OnShowSearchGuilds -= OnShowSearchGuilds;
         NoGuildPanel.OnShowCreateGuild -= ShowCreateGuild;
         NoGuildPanel.OnShowJoinGuild -= ShowJoinGuild;
         DataManager.Instance.PlayerData.UpdatedGuild -= ShowMyGuild;
         JoinGuildPanel.OnJoinedGuild -= ShowMyGuild;
+        SearchGuilds.OnJoinedGuild += ShowMyGuild;
     }
 
     private void ShowMyGuild()
@@ -53,6 +58,11 @@ public class GuildPanel : GuildPanelBase
     private void ShowTopGuilds()
     {
         SwitchToPanel(topGuildPanel);
+    }
+
+    private void OnShowSearchGuilds()
+    {
+        SwitchToPanel(searchGuilds);
     }
 
     private void ShowGuildBattle()
@@ -88,6 +98,7 @@ public class GuildPanel : GuildPanelBase
         joinGuildPanel.Close();
         hasGuildPanel.Close();
         topGuildPanel.Close();
+        searchGuilds.Close();
 
         _panel.Setup();
     }
