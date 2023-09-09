@@ -12,17 +12,17 @@ public class EmojiInGame : MonoBehaviour
         transform.localPosition = Vector3.zero;
         display.sprite = _emoji.Sprite;
 
-        LeanTween.scale(gameObject, Vector3.one, 0.2f)
+        LeanTween.scale(gameObject, Vector3.one, 0.3f)
             .setEase(LeanTweenType.easeOutCubic) // Use a desired easing type
             .setOnComplete(() =>
             {
                 Vector3 _newPosition = transform.position;
                 _newPosition.y += upWordsMovementAmount;
-                LeanTween.move(gameObject, _newPosition, 0.5f)
+                LeanTween.move(gameObject, _newPosition, 1f)
                     .setEase(LeanTweenType.easeOutCubic)
                     .setOnComplete(() =>
                     {
-                        LeanTween.value(gameObject, 1f, 0f, 0.15f)
+                        LeanTween.value(gameObject, 1f, 0f, 0.3f)
                             .setEase(LeanTweenType.easeOutQuad) // Use a desired easing type
                             .setOnUpdate((float _alpha) =>
                             {

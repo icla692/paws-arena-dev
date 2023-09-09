@@ -32,6 +32,10 @@ public class ChallengesManager : MonoBehaviour
         switch (_challengeSO.RewardType)
         {
             case ChallengeRewardType.SeasonExperience:
+                if (DataManager.Instance.GameData.SeasonEnds<DateTime.Now)
+                {
+                    return;
+                }
                 DataManager.Instance.PlayerData.Experience += _challengeSO.RewardAmount;
                 break;
             case ChallengeRewardType.JugOfMilk:
@@ -72,7 +76,7 @@ public class ChallengesManager : MonoBehaviour
         StartCoroutine(CheckForReset());
     }
 
-    IEnumerator CheckForReset()
+    private IEnumerator CheckForReset()
     {
         if (DateTime.UtcNow>DataManager.Instance.PlayerData.Challenges.NextReset)
         {
@@ -86,7 +90,7 @@ public class ChallengesManager : MonoBehaviour
         yield return new WaitForSeconds(1);
     }
 
-    void SubscribeEvents()
+    private void SubscribeEvents()
     {
         if (isSubscribed)
         {
@@ -192,7 +196,7 @@ public class ChallengesManager : MonoBehaviour
         }
     }
 
-    void UnsubscribeEvents()
+    private void UnsubscribeEvents()
     {
         if (!isSubscribed)
         {
@@ -309,11 +313,11 @@ public class ChallengesManager : MonoBehaviour
             bool _skip = false;
             _counter++;
 
-            ChallengeSO _challenge = allChallenges[_counter];
+            ChallengeSO _challenge = _allChallenges[_counter];
 
             foreach (var _chData in DataManager.Instance.PlayerData.Challenges.ChallengesData)
             {
-                ChallengeSO _challengeSO = allChallenges.Find(_element => _element.Id == _chData.Id);
+                ChallengeSO _challengeSO = _allChallenges.Find(_element => _element.Id == _chData.Id);
                 if (_challenge.Category==_challengeSO.Category)
                 {
                     _skip = true;
@@ -343,6 +347,7 @@ public class ChallengesManager : MonoBehaviour
         DataManager.Instance.PlayerData.Challenges.NextReset =
             new DateTime(_nextReset.Year, _nextReset.Month, _nextReset.Day, 0, 0, 0);
         DataManager.Instance.SaveChallenges();
+        SubscribeEvents();
     }
 
 

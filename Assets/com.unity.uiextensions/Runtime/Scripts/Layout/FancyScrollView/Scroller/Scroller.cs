@@ -12,7 +12,7 @@ namespace UnityEngine.UI.Extensions
     /// </summary>
     public class Scroller : UIBehaviour, IPointerUpHandler, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IScrollHandler
     {
-        [SerializeField] RectTransform viewport = default;
+        [SerializeField] private RectTransform viewport = default;
 
         /// <summary>
         /// ビューポートのサイズ.
@@ -21,14 +21,14 @@ namespace UnityEngine.UI.Extensions
             ? viewport.rect.size.x
             : viewport.rect.size.y;
 
-        [SerializeField] ScrollDirection scrollDirection = ScrollDirection.Vertical;
+        [SerializeField] private ScrollDirection scrollDirection = ScrollDirection.Vertical;
 
         /// <summary>
         /// スクロール方向.
         /// </summary>
         public ScrollDirection ScrollDirection => scrollDirection;
 
-        [SerializeField] MovementType movementType = MovementType.Elastic;
+        [SerializeField] private MovementType movementType = MovementType.Elastic;
 
         /// <summary>
         /// コンテンツがスクロール範囲を越えて移動するときに使用する挙動.
@@ -39,7 +39,7 @@ namespace UnityEngine.UI.Extensions
             set => movementType = value;
         }
 
-        [SerializeField] float elasticity = 0.1f;
+        [SerializeField] private float elasticity = 0.1f;
 
         /// <summary>
         /// コンテンツがスクロール範囲を越えて移動するときに使用する弾力性の量.
@@ -50,7 +50,7 @@ namespace UnityEngine.UI.Extensions
             set => elasticity = value;
         }
 
-        [SerializeField] float scrollSensitivity = 1f;
+        [SerializeField] private float scrollSensitivity = 1f;
 
         /// <summary>
         /// <see cref="ViewportSize"/> の端から端まで Drag したときのスクロール位置の変化量.
@@ -61,7 +61,7 @@ namespace UnityEngine.UI.Extensions
             set => scrollSensitivity = value;
         }
 
-        [SerializeField] bool inertia = true;
+        [SerializeField] private bool inertia = true;
 
         /// <summary>
         /// 慣性を使用するかどうか. <c>true</c> を指定すると慣性が有効に, <c>false</c> を指定すると慣性が無効になります.
@@ -72,7 +72,7 @@ namespace UnityEngine.UI.Extensions
             set => inertia = value;
         }
 
-        [SerializeField] float decelerationRate = 0.03f;
+        [SerializeField] private float decelerationRate = 0.03f;
 
         /// <summary>
         /// スクロールの減速率. <see cref="Inertia"/> が <c>true</c> の場合のみ有効です.
@@ -83,7 +83,7 @@ namespace UnityEngine.UI.Extensions
             set => decelerationRate = value;
         }
 
-        [SerializeField] Snap snap = new Snap {
+        [SerializeField] private Snap snap = new Snap {
             Enable = true,
             VelocityThreshold = 0.5f,
             Duration = 0.3f,
@@ -102,7 +102,7 @@ namespace UnityEngine.UI.Extensions
             set => snap.Enable = value;
         }
 
-        [SerializeField] bool draggable = true;
+        [SerializeField] private bool draggable = true;
 
         /// <summary>
         /// Drag 入力を受付けるかどうか.
@@ -113,7 +113,7 @@ namespace UnityEngine.UI.Extensions
             set => draggable = value;
         }
 
-        [SerializeField] Scrollbar scrollbar = default;
+        [SerializeField] private Scrollbar scrollbar = default;
 
         /// <summary>
         /// スクロールバーのオブジェクト.
@@ -137,25 +137,25 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        readonly AutoScrollState autoScrollState = new AutoScrollState();
+        private readonly AutoScrollState autoScrollState = new AutoScrollState();
 
-        Action<float> onValueChanged;
-        Action<int> onSelectionChanged;
+        private Action<float> onValueChanged;
+        private Action<int> onSelectionChanged;
 
-        Vector2 beginDragPointerPosition;
-        float scrollStartPosition;
-        float prevPosition;
-        float currentPosition;
+        private Vector2 beginDragPointerPosition;
+        private float scrollStartPosition;
+        private float prevPosition;
+        private float currentPosition;
 
-        int totalCount;
+        private int totalCount;
 
-        bool hold;
-        bool scrolling;
-        bool dragging;
-        float velocity;
+        private bool hold;
+        private bool scrolling;
+        private bool dragging;
+        private float velocity;
 
         [Serializable]
-        class Snap
+        private class Snap
         {
             public bool Enable;
             public float VelocityThreshold;
@@ -163,9 +163,9 @@ namespace UnityEngine.UI.Extensions
             public Ease Easing;
         }
 
-        static readonly EasingFunction DefaultEasingFunction = Easing.Get(Ease.OutCubic);
+        private static readonly EasingFunction DefaultEasingFunction = Easing.Get(Ease.OutCubic);
 
-        class AutoScrollState
+        private class AutoScrollState
         {
             public bool Enable;
             public bool Elastic;
@@ -443,7 +443,7 @@ namespace UnityEngine.UI.Extensions
             dragging = false;
         }
 
-        float CalculateOffset(float position)
+        private float CalculateOffset(float position)
         {
             if (movementType == MovementType.Unrestricted)
             {
@@ -463,7 +463,7 @@ namespace UnityEngine.UI.Extensions
             return 0f;
         }
 
-        void UpdatePosition(float position, bool updateScrollbar = true)
+        private void UpdatePosition(float position, bool updateScrollbar = true)
         {
             onValueChanged?.Invoke(currentPosition = position);
 
@@ -473,12 +473,12 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void UpdateSelection(int index) => onSelectionChanged?.Invoke(index);
+        private void UpdateSelection(int index) => onSelectionChanged?.Invoke(index);
 
-        float RubberDelta(float overStretching, float viewSize) =>
+        private float RubberDelta(float overStretching, float viewSize) =>
             (1 - 1 / (Mathf.Abs(overStretching) * 0.55f / viewSize + 1)) * viewSize * Mathf.Sign(overStretching);
 
-        void Update()
+        private void Update()
         {
             var deltaTime = Time.unscaledDeltaTime;
             var offset = CalculateOffset(currentPosition);
@@ -575,7 +575,7 @@ namespace UnityEngine.UI.Extensions
             scrolling = false;
         }
 
-        float CalculateMovementAmount(float sourcePosition, float destPosition)
+        private float CalculateMovementAmount(float sourcePosition, float destPosition)
         {
             if (movementType != MovementType.Unrestricted)
             {
@@ -592,6 +592,6 @@ namespace UnityEngine.UI.Extensions
             return amount;
         }
 
-        float CircularPosition(float p, int size) => size < 1 ? 0 : p < 0 ? size - 1 + (p + 1) % size : p % size;
+        private float CircularPosition(float p, int size) => size < 1 ? 0 : p < 0 ? size - 1 + (p + 1) % size : p % size;
     }
 }

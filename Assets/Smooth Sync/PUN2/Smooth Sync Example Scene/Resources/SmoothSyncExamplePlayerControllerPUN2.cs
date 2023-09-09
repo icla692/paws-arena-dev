@@ -16,10 +16,10 @@ using Smooth;
 /// </remarks>
 public class SmoothSyncExamplePlayerControllerPUN2 : MonoBehaviourPunCallbacks
 {
-    Rigidbody rb;
-    Rigidbody2D rb2D;
-    SmoothSyncPUN2 smoothSync;
-    SmoothSyncPUN2 childSmoothSync;
+    private Rigidbody rb;
+    private Rigidbody2D rb2D;
+    private SmoothSyncPUN2 smoothSync;
+    private SmoothSyncPUN2 childSmoothSync;
 
     /// <summary>
     /// The speed to move per second when there is no rigidbody component on the player
@@ -36,7 +36,7 @@ public class SmoothSyncExamplePlayerControllerPUN2 : MonoBehaviourPunCallbacks
     /// <summary>
     /// Cache a reference to the rigidbody component and Smooth Sync scripts.
     /// </summary>
-	void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb2D = GetComponent<Rigidbody2D>();
@@ -60,7 +60,7 @@ public class SmoothSyncExamplePlayerControllerPUN2 : MonoBehaviourPunCallbacks
     /// Press '0' to stop instantly.
     /// </remarks>
     /// </summary>
-	void Update()
+    private void Update()
     {
         if (!photonView.IsMine) return;
 

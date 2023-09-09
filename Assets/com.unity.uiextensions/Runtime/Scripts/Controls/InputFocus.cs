@@ -18,12 +18,12 @@ namespace UnityEngine.UI.Extensions
 
         #endregion
 
-        void Start()
+        private void Start()
         {
             _inputField = GetComponent<InputField>();
         }
 
-        void Update()
+        private void Update()
         {
             // Check if the "Enter" key was just released with the chat input not focused
             if (UIExtensionsInputManager.GetKeyUp(KeyCode.Return) && !_inputField.isFocused)

@@ -31,7 +31,7 @@ public class SyncPlatformsBehaviour : MonoSingleton<SyncPlatformsBehaviour>
     public PlatformPose player1Pose;
     public PlatformPose player2Pose;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         var go = PhotonNetwork.Instantiate(syncPlayerPlatformPrefab.name, player1Pose.pos, Quaternion.identity);
         go.GetComponent<SyncPlayerPlatformBehaviour>().punRoomUtils = punRoomUtils;

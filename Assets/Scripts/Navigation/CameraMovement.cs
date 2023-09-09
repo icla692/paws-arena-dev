@@ -6,7 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     public float speed;
 
-    void Update()
+    private void Update()
 
     {
         transform.Translate(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0).normalized * speed * Time.deltaTime);

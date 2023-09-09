@@ -273,7 +273,7 @@ namespace UnityEngine.UI.Extensions
             return drawingPoints;
         }
 
-        List<Vector2> FindDrawingPoints(int curveIndex)
+        private List<Vector2> FindDrawingPoints(int curveIndex)
         {
             List<Vector2> pointList = new List<Vector2>();
 
@@ -292,7 +292,7 @@ namespace UnityEngine.UI.Extensions
         /**
             @returns the number of points added.
         */
-        int FindDrawingPoints(int curveIndex, float t0, float t1,
+        private int FindDrawingPoints(int curveIndex, float t0, float t1,
             List<Vector2> pointList, int insertionIndex)
         {
             Vector2 left = CalculateBezierPoint(curveIndex, t0);

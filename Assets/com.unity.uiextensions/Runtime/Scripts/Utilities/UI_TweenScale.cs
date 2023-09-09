@@ -52,7 +52,7 @@ namespace UnityEngine.UI.Extensions
         private Vector3 initScale;
         private Transform myTransform;
 
-        void Awake()
+        private void Awake()
         {
             myTransform = GetComponent<Transform>();
             initScale = myTransform.localScale;
@@ -67,9 +67,9 @@ namespace UnityEngine.UI.Extensions
             StartCoroutine("Tween");
         }
 
-        Vector3 newScale = Vector3.one;
+        private Vector3 newScale = Vector3.one;
 
-        IEnumerator Tween()
+        private IEnumerator Tween()
         {
             myTransform.localScale = initScale;
             float t = 0;

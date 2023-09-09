@@ -14,7 +14,7 @@ namespace UnityEngine.UI.Extensions
     public class UIPrimitiveBase : MaskableGraphic, ILayoutElement, ICanvasRaycastFilter
     {
         static protected Material s_ETC1DefaultUI = null;
-        List<Vector2> outputList = new List<Vector2>();
+        private List<Vector2> outputList = new List<Vector2>();
 
         [SerializeField] private Sprite m_Sprite;
         public Sprite sprite { get { return m_Sprite; } set { if (SetPropertyUtility.SetClass(ref m_Sprite, value)) GeneratedUVs(); SetAllDirty(); } }
@@ -331,7 +331,7 @@ namespace UnityEngine.UI.Extensions
             //return local;
         }
 
-        Vector4 GetAdjustedBorders(Vector4 border, Rect rect)
+        private Vector4 GetAdjustedBorders(Vector4 border, Rect rect)
         {
             for (int axis = 0; axis <= 1; axis++)
             {

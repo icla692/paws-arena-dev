@@ -5,40 +5,42 @@ using System;
 
 public class CraftingUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI limeAmountDisplay;
-    [SerializeField] TextMeshProUGUI greenAmountDisplay;
-    [SerializeField] TextMeshProUGUI blueAmountDisplay;
-    [SerializeField] TextMeshProUGUI purpleAmountDisplay;
-    [SerializeField] TextMeshProUGUI orangeAmountDisplay;
+    [SerializeField] private TextMeshProUGUI limeAmountDisplay;
+    [SerializeField] private TextMeshProUGUI greenAmountDisplay;
+    [SerializeField] private TextMeshProUGUI blueAmountDisplay;
+    [SerializeField] private TextMeshProUGUI purpleAmountDisplay;
+    [SerializeField] private TextMeshProUGUI orangeAmountDisplay;
 
-    [SerializeField] Button commonButton;
-    [SerializeField] Button uncommonButton;
-    [SerializeField] Button rareButton;
-    [SerializeField] Button epicButton;
-    [SerializeField] Button legendaryButton;
+    [SerializeField] private Button commonButton;
+    [SerializeField] private Button uncommonButton;
+    [SerializeField] private Button rareButton;
+    [SerializeField] private Button epicButton;
+    [SerializeField] private Button legendaryButton;
 
     //top frame
-    [SerializeField] GameObject topHolder;
-    [SerializeField] Image ingridiantImage;
-    [SerializeField] TextMeshProUGUI craftText;
-    [SerializeField] TextMeshProUGUI craftAmountDisplay;
-    [SerializeField] Image endResultImage;
-    [SerializeField] Button craftCrystalButton;
-    [SerializeField] TextMeshProUGUI craftButtonText;
-    [SerializeField] Image shardBackground;
+    [SerializeField] private GameObject topHolder;
+    [SerializeField] private Image ingridiantImage;
+    [SerializeField] private TextMeshProUGUI craftText;
+    [SerializeField] private TextMeshProUGUI craftAmountDisplay;
+    [SerializeField] private Image endResultImage;
+    [SerializeField] private Button craftCrystalButton;
+    [SerializeField] private TextMeshProUGUI craftButtonText;
+    [SerializeField] private Image shardBackground;
+    [SerializeField] private GameObject messageDisplay;
 
     //bot frame
-    [SerializeField] Image botFrameImage;
-    [SerializeField] TextMeshProUGUI botFrameText;
-    [SerializeField] TextMeshProUGUI botAmountDisplay;
-    [SerializeField] Button botCraftItemButton;
+    [SerializeField] private Image botFrameImage;
+    [SerializeField] private TextMeshProUGUI botFrameText;
+    [SerializeField] private TextMeshProUGUI botAmountDisplay;
+    [SerializeField] private Button botCraftItemButton;
 
     [Space]
     [Space]
-    [SerializeField] EquipmentsConfig equipments;
-    [SerializeField] CraftedItemDisplay itemDisplay;
+    [SerializeField]
+    private EquipmentsConfig equipments;
+    [SerializeField] private CraftedItemDisplay itemDisplay;
     [SerializeField] private CraftFinishedDisplay craftingFinished;
-    CraftingRecepieSO showingRecepie;
+    private CraftingRecepieSO showingRecepie;
     
     public void Setup()
     {
@@ -80,7 +82,7 @@ public class CraftingUI : MonoBehaviour
         botCraftItemButton.onClick.RemoveListener(CraftItem);
     }
 
-    void ShowCristals()
+    private void ShowCristals()
     {
         limeAmountDisplay.text = DataManager.Instance.PlayerData.Crystals.CommonCrystal.ToString();
         greenAmountDisplay.text = DataManager.Instance.PlayerData.Crystals.UncommonCrystal.ToString();
@@ -90,15 +92,20 @@ public class CraftingUI : MonoBehaviour
         ShowRecepie(showingRecepie.Inggrdiant);
     }
 
-    void ShowRecepie(ItemType _ingridiant)
+    private void ShowRecepie(ItemType _ingridiant)
     {
         showingRecepie = CraftingRecepieSO.Get(_ingridiant);
 
         if (_ingridiant == ItemType.Common)
         {
+            messageDisplay.SetActive(true);
             ShowBotFrame(_ingridiant);
             topHolder.SetActive(false);
             return;
+        }
+        else
+        {
+            messageDisplay.SetActive(false);
         }
         
         topHolder.SetActive(true);
@@ -152,7 +159,7 @@ public class CraftingUI : MonoBehaviour
         ShowBotFrame(_ingridiant);
     }
 
-    void ShowBotFrame(ItemType _ingridiant)
+    private void ShowBotFrame(ItemType _ingridiant)
     {
         CraftingRecepieSO _recepie = CraftingRecepieSO.Get(_ingridiant);
         botFrameText.text = $"Combine {_recepie.BotAmountNeeded} <color={_recepie.IngridiantColor}>{_recepie.Inggrdiant}</color> shards\nto get 1 <color={_recepie.IngridiantColor}>{_recepie.Inggrdiant}</color> item";
@@ -190,7 +197,7 @@ public class CraftingUI : MonoBehaviour
         botFrameImage.sprite = _recepie.BottomOfferBackground;
     }
 
-    void CraftCrystal()
+    private void CraftCrystal()
     {
         CraftingRecepieSO _topRecepie = CraftingRecepieSO.Get((ItemType)((int)showingRecepie.Inggrdiant-1));
 
@@ -229,7 +236,7 @@ public class CraftingUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void FinishedCrafting()
+    private void FinishedCrafting()
     {
         craftingFinished.Setup($"Congratulations, you just crafted a {showingRecepie.EndProduct} shard");
         ShowCristals();
@@ -238,7 +245,7 @@ public class CraftingUI : MonoBehaviour
         EventsManager.OnCraftedCrystal?.Invoke();
     }
 
-    void CraftItem()
+    private void CraftItem()
     {
         EquipmentData _equipmentData = equipments.CraftItem(showingRecepie);
         ShowItem(_equipmentData);
@@ -266,7 +273,7 @@ public class CraftingUI : MonoBehaviour
         EventsManager.OnCraftedItem?.Invoke();
     }
 
-    async void ShowItem(EquipmentData _equipmentData)
+    private async void ShowItem(EquipmentData _equipmentData)
     {
         itemDisplay.Setup(_equipmentData);
     }

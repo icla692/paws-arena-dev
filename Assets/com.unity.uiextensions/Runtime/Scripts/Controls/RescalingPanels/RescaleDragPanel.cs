@@ -14,7 +14,7 @@ namespace UnityEngine.UI.Extensions
 
         private Transform goTransform;
 
-        void Awake()
+        private void Awake()
         {
             Canvas canvas = GetComponentInParent<Canvas>();
             if (canvas != null)
@@ -47,7 +47,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        Vector2 ClampToWindow(PointerEventData data)
+        private Vector2 ClampToWindow(PointerEventData data)
         {
             Vector2 rawPointerPosition = data.position;
 

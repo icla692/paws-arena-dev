@@ -12,7 +12,7 @@ public class ConnectingToServer : MonoBehaviour
     public GameObject connectButton;
     public GameObject logText;
 
-    [SerializeField] GameObject loginFailed;
+    [SerializeField] private GameObject loginFailed;
 
     private void OnDisable()
     {
@@ -45,7 +45,7 @@ public class ConnectingToServer : MonoBehaviour
         FirebaseManager.Instance.TryLoginAndGetData(GameState.principalId,OnLoginFinished);
     }
 
-    void OnLoginFinished(bool _result)
+    private void OnLoginFinished(bool _result)
     {
         if (_result)
         {

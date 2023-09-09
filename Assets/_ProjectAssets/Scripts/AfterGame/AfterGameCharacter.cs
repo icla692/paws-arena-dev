@@ -9,7 +9,7 @@ namespace com.colorfulcoding.AfterGame
     {
         public Animator animator;
 
-        void Start()
+        private void Start()
         {
             StartCoroutine(CharacterAnimationCoroutine());
         }

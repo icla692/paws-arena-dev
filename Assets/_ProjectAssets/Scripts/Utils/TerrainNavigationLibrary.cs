@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-static class TerrainNavigationLibrary
+internal static class TerrainNavigationLibrary
 {
     public enum Direction
     {

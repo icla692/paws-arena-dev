@@ -8,7 +8,8 @@ namespace UnityEngine.UI.Extensions
     public class ExampleSelectable : MonoBehaviour, IBoxSelectable
     {
         #region Implemented members of IBoxSelectable
-        bool _selected = false;
+
+        private bool _selected = false;
         public bool selected
         {
             get
@@ -22,7 +23,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        bool _preSelected = false;
+        private bool _preSelected = false;
         public bool preSelected
         {
             get
@@ -38,18 +39,18 @@ namespace UnityEngine.UI.Extensions
         #endregion
 
         //We want the test object to be either a UI element, a 2D element or a 3D element, so we'll get the appropriate components
-        SpriteRenderer spriteRenderer;
-        Image image;
-        Text text;
+        private SpriteRenderer spriteRenderer;
+        private Image image;
+        private Text text;
 
-        void Start()
+        private void Start()
         {
             spriteRenderer = transform.GetComponent<SpriteRenderer>();
             image = transform.GetComponent<Image>();
             text = transform.GetComponent<Text>();
         }
 
-        void Update()
+        private void Update()
         {
 
             //What the game object does with the knowledge that it is selected is entirely up to it.

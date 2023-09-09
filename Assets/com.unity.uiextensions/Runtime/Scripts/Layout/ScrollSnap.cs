@@ -104,7 +104,7 @@ namespace UnityEngine.UI.Extensions
         public ScrollDirection direction = ScrollDirection.Horizontal;
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             _lerp = false;
 
@@ -339,7 +339,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             UpdateListItemsSize();
             UpdateListItemPositions();

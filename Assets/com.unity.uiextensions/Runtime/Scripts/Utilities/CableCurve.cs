@@ -10,20 +10,14 @@ namespace UnityEngine.UI.Extensions
     [System.Serializable]
     public class CableCurve
     {
-        [SerializeField]
-        Vector2 m_start;
-        [SerializeField]
-        Vector2 m_end;
-        [SerializeField]
-        float m_slack;
-        [SerializeField]
-        int m_steps;
-        [SerializeField]
-        bool m_regen;
+        [SerializeField] private Vector2 m_start;
+        [SerializeField] private Vector2 m_end;
+        [SerializeField] private float m_slack;
+        [SerializeField] private int m_steps;
+        [SerializeField] private bool m_regen;
 
-        static Vector2[] emptyCurve = new Vector2[] { new Vector2(0.0f, 0.0f), new Vector2(0.0f, 0.0f) };
-        [SerializeField]
-        Vector2[] points;
+        private static Vector2[] emptyCurve = new Vector2[] { new Vector2(0.0f, 0.0f), new Vector2(0.0f, 0.0f) };
+        [SerializeField] private Vector2[] points;
 
         public bool regenPoints
         {

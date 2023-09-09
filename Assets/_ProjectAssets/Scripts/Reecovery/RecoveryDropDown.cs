@@ -5,25 +5,27 @@ using TMPro;
 
 public class RecoveryDropDown : MonoBehaviour
 {
-    [SerializeField] GameObject healMessageHolder;
-    [SerializeField] BuyMilk buyMilkPanel;
-    [SerializeField] GameObject kittyIsFull;
+    [SerializeField] private GameObject healMessageHolder;
+    [SerializeField] private BuyMilk buyMilkPanel;
+    [SerializeField] private GameObject kittyIsFull;
 
-    [SerializeField] Button healButton;
-    [SerializeField] Button buyButton;
+    [SerializeField] private Button healButton;
+    [SerializeField] private Button buyButton;
 
-    [SerializeField] TextMeshProUGUI jugOfMilkDisplay;
-    [SerializeField] TextMeshProUGUI glassOfMilkDisplay;
+    [SerializeField] private TextMeshProUGUI jugOfMilkDisplay;
+    [SerializeField] private TextMeshProUGUI glassOfMilkDisplay;
 
-    [SerializeField] Color normalAmountColor;
-    [SerializeField] Color zeroAmountColor;
+    [SerializeField] private Color normalAmountColor;
+    [SerializeField] private Color zeroAmountColor;
 
-    [SerializeField] Button jugOfMilkButton;
-    [SerializeField] Button glassOfMilkButton;
-    RecoveryOption recoveryOption;
+    [SerializeField] private Button jugOfMilkButton;
+    [SerializeField] private Button glassOfMilkButton;
+    [SerializeField] private UserInfoDropDown userInfoDropDown;
+    
+    private RecoveryOption recoveryOption;
 
-    float animationLength = 0.1f;
-    bool isOpen;
+    private float animationLength = 0.1f;
+    private bool isOpen;
 
     private void OnEnable()
     {
@@ -39,19 +41,19 @@ public class RecoveryDropDown : MonoBehaviour
         glassOfMilkButton.onClick.RemoveListener(SelectGlassOfMilk);
     }
 
-    void SelectJugOfMilk()
+    private void SelectJugOfMilk()
     {
         recoveryOption = RecoveryOption.JugOfMilk;
         ShowSelecteRecoveryOption();
     }
 
-    void SelectGlassOfMilk()
+    private void SelectGlassOfMilk()
     {
         recoveryOption = RecoveryOption.GlassOfMilk;
         ShowSelecteRecoveryOption();
     }
 
-    void ShowSelecteRecoveryOption()
+    private void ShowSelecteRecoveryOption()
     {
         Image _jugOfMilkImage = jugOfMilkButton.GetComponent<Image>();
         Image _glassOfMilkImage = glassOfMilkButton.GetComponent<Image>();
@@ -86,6 +88,7 @@ public class RecoveryDropDown : MonoBehaviour
         }
         else
         {
+            userInfoDropDown.Close();
             Show();
         }
     }

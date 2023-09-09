@@ -6,6 +6,7 @@ using TMPro;
 
 public class ChallengesPanel : MonoBehaviour
 {
+    public static  Action OnClosed;
     [SerializeField] private ChallengeDisplay[] challengeDisplays;
     [SerializeField] private Button closeButton;
     [SerializeField] private TextMeshProUGUI progressDisplay;
@@ -19,7 +20,7 @@ public class ChallengesPanel : MonoBehaviour
         {
             ChallengeData _challengeData = DataManager.Instance.PlayerData.Challenges.ChallengesData[i];
             challengeDisplays[i].Setup(_challengeData);
-            if (_challengeData.Completed)
+            if (_challengeData.Claimed)
             {
                 _completedChallenges++;
             }
@@ -48,12 +49,13 @@ public class ChallengesPanel : MonoBehaviour
         closeButton.onClick.RemoveListener(Close);
     }
 
-    void Close()
+    private void Close()
     {
+        OnClosed?.Invoke();
         gameObject.SetActive(false);
     }
 
-    IEnumerator ShowTimer()
+    private IEnumerator ShowTimer()
     {
         while (gameObject.activeSelf)
         {

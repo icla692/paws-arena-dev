@@ -36,7 +36,7 @@ public class CraftingProcess
         return _finishText;
     }
 
-    void EndProduction()
+    private void EndProduction()
     {
         CraftingRecepieSO _recepie = CraftingRecepieSO.Get(Ingridiant);
         DataManager.Instance.PlayerData.CraftingProcess = null;

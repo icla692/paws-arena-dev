@@ -22,7 +22,7 @@ public class EmojiSO : ScriptableObject
         
     }
 
-    static void LoadAllEmojis()
+    private static void LoadAllEmojis()
     {
         allEmojis = Resources.LoadAll<EmojiSO>("Emojis/").ToList();
     }

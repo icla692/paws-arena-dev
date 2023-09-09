@@ -16,7 +16,7 @@ public class LeaderboardLineBehaviour : MonoBehaviour, IPointerEnterHandler, IPo
     public Sprite copySprite;
     public Sprite copiedSprite;
 
-    void Start()
+    private void Start()
     {
         principalIdTooltip.SetActive(false);
     }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -7,27 +9,28 @@ public class DataManager : MonoBehaviour
     public PlayerData PlayerData { get; private set; }
     public GameData GameData { get; private set; }
 
-    const string SNACKS = "Snacks";
-    const string JUG_OF_MILK = "JugOfMilk";
-    const string GLASS_OF_MILK = "GlassOfMilk";
-    const string COMMON_CRISTAL = "Crystals/CommonCrystal";
-    const string UNCOMMON_CRISTAL = "Crystals/UncommonCrystal";
-    const string RARE_CRISTAL = "Crystals/RareCrystal";
-    const string EPIC_CRISTAL = "Crystals/EpicCrystal";
-    const string LEGENDARY_CRISTAL = "Crystals/LegendaryCrystal";
-    const string CRAFTING_PROCESS = "CraftingProcess";
-    const string EXPERIENCE = "Experience";
-    const string CLAIMED_LEVELS = "ClaimedLevelRewards";
-    const string HAS_PASS = "HasPass";
-    const string RECOVERING_KITTIES = "RecoveringKitties";
+    private const string SNACKS = "Snacks";
+    private const string JUG_OF_MILK = "JugOfMilk";
+    private const string GLASS_OF_MILK = "GlassOfMilk";
+    private const string COMMON_CRISTAL = "Crystals/CommonCrystal";
+    private const string UNCOMMON_CRISTAL = "Crystals/UncommonCrystal";
+    private const string RARE_CRISTAL = "Crystals/RareCrystal";
+    private const string EPIC_CRISTAL = "Crystals/EpicCrystal";
+    private const string LEGENDARY_CRISTAL = "Crystals/LegendaryCrystal";
+    private const string CRAFTING_PROCESS = "CraftingProcess";
+    private const string EXPERIENCE = "Experience";
+    private const string CLAIMED_LEVELS = "ClaimedLevelRewards";
+    private const string HAS_PASS = "HasPass";
+    private const string RECOVERING_KITTIES = "RecoveringKitties";
     private const string OWNED_EQUIPTABLES = "OwnedEquiptables";
     private const string SEASON_NUMBER = "SeasonNumber";
     private const string OWNED_EMOJIS= "OwnedEmojis";
     private const string CHALLENGES= "Challenges";
     private const string CHALLENGES_DATA= "Challenges/ChallengesData";
     private const string GOT_LUCKY_SPIN = "Challenges/ClaimedLuckySpin";
+    private const string GUILD = "GuildId";
 
-    bool hasSubscribed = false;
+    private bool hasSubscribed = false;
 
     private void Awake()
     {
@@ -57,6 +60,15 @@ public class DataManager : MonoBehaviour
             SaveSeasonNumber();
         }
         
+    }
+
+    public void SetGuildsData(Dictionary<string, GuildData> _guilds)
+    {
+        GameData.Guilds = _guilds;
+        if (GameData.Guilds==null)
+        {
+            GameData.Guilds = new();
+        }
     }
 
     public void CreatePlayerDataEmpty()
@@ -90,6 +102,7 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedOwnedEmojis += SaveOwnedEmojis;
         ChallengeData.UpdatedProgress += SaveChallengeProgress;
         PlayerData.Challenges.UpdatedClaimedLuckySpin += SaveClaimedLuckySpin;
+        PlayerData.UpdatedGuild += SaveGuild;
     }
 
     private void OnDestroy()
@@ -116,84 +129,85 @@ public class DataManager : MonoBehaviour
         PlayerData.UpdatedOwnedEmojis -= SaveOwnedEmojis;
         ChallengeData.UpdatedProgress -= SaveChallengeProgress;
         PlayerData.Challenges.UpdatedClaimedLuckySpin -= SaveClaimedLuckySpin;
+        PlayerData.UpdatedGuild -= SaveGuild;
     }
 
-    void SaveSnacks()
+    private void SaveSnacks()
     {
         FirebaseManager.Instance.SaveValue(SNACKS,PlayerData.Snacks);
     }
 
-    void SaveJugOfMilk()
+    private void SaveJugOfMilk()
     {
         FirebaseManager.Instance.SaveValue(JUG_OF_MILK, PlayerData.JugOfMilk);
     }
 
-    void SaveGlassOfMilk()
+    private void SaveGlassOfMilk()
     {
         FirebaseManager.Instance.SaveValue(GLASS_OF_MILK, PlayerData.GlassOfMilk);
     }
 
-    void SaveCommonCristal()
+    private void SaveCommonCristal()
     {
         FirebaseManager.Instance.SaveValue(COMMON_CRISTAL, PlayerData.Crystals.CommonCrystal);
     }
 
-    void SaveUncommonCristal()
+    private void SaveUncommonCristal()
     {
         FirebaseManager.Instance.SaveValue(UNCOMMON_CRISTAL, PlayerData.Crystals.UncommonCrystal);
     }
 
-    void SaveRareCristal()
+    private void SaveRareCristal()
     {
         FirebaseManager.Instance.SaveValue(RARE_CRISTAL, PlayerData.Crystals.RareCrystal);
     }
 
-    void SaveEpicCristal()
+    private void SaveEpicCristal()
     {
         FirebaseManager.Instance.SaveValue(EPIC_CRISTAL, PlayerData.Crystals.EpicCrystal);
     }
 
-    void SaveLegendaryCristal()
+    private void SaveLegendaryCristal()
     {
         FirebaseManager.Instance.SaveValue(LEGENDARY_CRISTAL, PlayerData.Crystals.LegendaryCrystal);
     }
 
-    void SaveCraftingProcess()
+    private void SaveCraftingProcess()
     {
         FirebaseManager.Instance.SaveValue(CRAFTING_PROCESS, JsonConvert.SerializeObject(PlayerData.CraftingProcess));
     }
 
-    void SaveClaimedLevels()
+    private void SaveClaimedLevels()
     {
         FirebaseManager.Instance.SaveValue(CLAIMED_LEVELS, JsonConvert.SerializeObject(PlayerData.ClaimedLevelRewards));
     }
 
-    void SaveHasPass()
+    private void SaveHasPass()
     {
         FirebaseManager.Instance.SaveValue(HAS_PASS, JsonConvert.SerializeObject(PlayerData.HasPass));
     }
 
-    void SaveExp()
+    private void SaveExp()
     {
         FirebaseManager.Instance.SaveValue(EXPERIENCE,PlayerData.Experience);
     }
 
-    void SaveRecoveringKittes()
+    private void SaveRecoveringKittes()
     {
         FirebaseManager.Instance.SaveValue(RECOVERING_KITTIES, JsonConvert.SerializeObject(PlayerData.RecoveringKitties));
     }
 
-    void SaveEquiptables()
+    private void SaveEquiptables()
     {
         FirebaseManager.Instance.SaveValue(OWNED_EQUIPTABLES, JsonConvert.SerializeObject(PlayerData.OwnedEquiptables));
     }
 
-    void SaveSeasonNumber()
+    private void SaveSeasonNumber()
     {
         FirebaseManager.Instance.SaveValue(SEASON_NUMBER,PlayerData.SeasonNumber);
     }
 
-    void SaveOwnedEmojis()
+    private void SaveOwnedEmojis()
     {
         FirebaseManager.Instance.SaveValue(OWNED_EMOJIS, JsonConvert.SerializeObject(PlayerData.OwnedEmojis));
     }
@@ -221,5 +235,10 @@ public class DataManager : MonoBehaviour
     private void SaveClaimedLuckySpin()
     {
         FirebaseManager.Instance.SaveValue(GOT_LUCKY_SPIN,JsonConvert.SerializeObject(PlayerData.Challenges.ClaimedLuckySpin));
+    }
+
+    private void SaveGuild()
+    {
+        FirebaseManager.Instance.SaveString(GUILD,PlayerData.GuildId);
     }
 }

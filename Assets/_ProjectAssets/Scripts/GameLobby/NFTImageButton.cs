@@ -12,7 +12,7 @@ public class NFTImageButton : MonoBehaviour
     public Texture2D emptyTex;
     public Texture2D loadingTex;
 
-    void Start()
+    private void Start()
     {
         ResetState();
     }

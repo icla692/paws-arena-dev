@@ -726,35 +726,35 @@ namespace Smooth
         /// <summary>
         /// Hardcoded information to determine position syncing.
         /// </summary>
-        byte positionMask = 1;        // 0000_0001
+        private byte positionMask = 1;        // 0000_0001
         /// <summary>
         /// Hardcoded information to determine rotation syncing.
         /// </summary>
-        byte rotationMask = 2;        // 0000_0010
+        private byte rotationMask = 2;        // 0000_0010
         /// <summary>
         /// Hardcoded information to determine scale syncing.
         /// </summary>
-        byte scaleMask = 4;        // 0000_0100
+        private byte scaleMask = 4;        // 0000_0100
         /// <summary>
         /// Hardcoded information to determine velocity syncing.
         /// </summary>
-        byte velocityMask = 8;        // 0000_1000
+        private byte velocityMask = 8;        // 0000_1000
         /// <summary>
         /// Hardcoded information to determine angular velocity syncing.
         /// </summary>
-        byte angularVelocityMask = 16; // 0001_0000
+        private byte angularVelocityMask = 16; // 0001_0000
         /// <summary>
         /// Hardcoded information to determine whether the object is at rest and should stop extrapolating.
         /// </summary>
-        byte atPositionalRestMask = 64; // 0100_0000
+        private byte atPositionalRestMask = 64; // 0100_0000
         /// <summary>
         /// Hardcoded information to determine whether the object is at rest and should stop extrapolating.
         /// </summary>
-        byte atRotationalRestMask = 128; // 1000_0000
+        private byte atRotationalRestMask = 128; // 1000_0000
         /// <summary>
         /// Encode sync info based on what we want to send.
         /// </summary>
-        byte encodeSyncInformation(bool sendPosition, bool sendRotation, bool sendScale, bool sendVelocity, bool sendAngularVelocity, bool atPositionalRest, bool atRotationalRest)
+        private byte encodeSyncInformation(bool sendPosition, bool sendRotation, bool sendScale, bool sendVelocity, bool sendAngularVelocity, bool atPositionalRest, bool atRotationalRest)
         {
             byte encoded = 0;
 
@@ -791,7 +791,7 @@ namespace Smooth
         /// <summary>
         /// Decode sync info to see if we want to sync position.
         /// </summary>
-        bool shouldSyncPosition(byte syncInformation)
+        private bool shouldSyncPosition(byte syncInformation)
         {
             if ((syncInformation & positionMask) == positionMask)
             {
@@ -805,7 +805,7 @@ namespace Smooth
         /// <summary>
         /// Decode sync info to see if we want to sync rotation.
         /// </summary>
-        bool shouldSyncRotation(byte syncInformation)
+        private bool shouldSyncRotation(byte syncInformation)
         {
             if ((syncInformation & rotationMask) == rotationMask)
             {
@@ -819,7 +819,7 @@ namespace Smooth
         /// <summary>
         /// Decode sync info to see if we want to sync scale.
         /// </summary>
-        bool shouldSyncScale(byte syncInformation)
+        private bool shouldSyncScale(byte syncInformation)
         {
             if ((syncInformation & scaleMask) == scaleMask)
             {
@@ -833,7 +833,7 @@ namespace Smooth
         /// <summary>
         /// Decode sync info to see if we want to sync velocity.
         /// </summary>
-        bool shouldSyncVelocity(byte syncInformation)
+        private bool shouldSyncVelocity(byte syncInformation)
         {
             if ((syncInformation & velocityMask) == velocityMask)
             {
@@ -847,7 +847,7 @@ namespace Smooth
         /// <summary>
         /// Decode sync info to see if we want to sync angular velocity.
         /// </summary>
-        bool shouldSyncAngularVelocity(byte syncInformation)
+        private bool shouldSyncAngularVelocity(byte syncInformation)
         {
             if ((syncInformation & angularVelocityMask) == angularVelocityMask)
             {
@@ -861,7 +861,7 @@ namespace Smooth
         /// <summary>
         /// Decode sync info to see if we should be at positional rest. (Stop extrapolating)
         /// </summary>
-        bool shouldBeAtPositionalRest(byte syncInformation)
+        private bool shouldBeAtPositionalRest(byte syncInformation)
         {
             if ((syncInformation & atPositionalRestMask) == atPositionalRestMask)
             {
@@ -875,7 +875,7 @@ namespace Smooth
         /// <summary>
         /// Decode sync info to see if we should be at rotational rest. (Stop extrapolating)
         /// </summary>
-        bool shouldBeAtRotationalRest(byte syncInformation)
+        private bool shouldBeAtRotationalRest(byte syncInformation)
         {
             if ((syncInformation & atRotationalRestMask) == atRotationalRestMask)
             {

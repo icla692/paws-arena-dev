@@ -5,14 +5,17 @@ using System.Collections.Generic;
 [Serializable]
 public class GameData
 {
-    int seasonNumber;
-    DateTime seasonEnds;
-    int levelBaseExp;
-    int levelBaseScaler;
-    int respinPrice;
-    int glassOfMilkPrice;
-    int jugOfMilkPrice;
-    private List<LevelReward> seasonRewards;
+    private int seasonNumber;
+    private DateTime seasonEnds;
+    private int levelBaseExp;
+    private int levelBaseScaler;
+    private int respinPrice;
+    private int glassOfMilkPrice;
+    private int jugOfMilkPrice;
+    private List<LevelReward> seasonRewards = new ();
+    private int guildPrice;
+    private int guildMaxPlayers;
+    private Dictionary<string, GuildData> guilds = new ();
 
     public bool HasSeasonEnded => DateTime.UtcNow > SeasonEnds;
 
@@ -105,4 +108,25 @@ public class GameData
         get => seasonRewards;
         set => seasonRewards = value;
     }
+
+    public int GuildPrice
+    {
+        get => guildPrice;
+        set => guildPrice = value;
+    }
+
+    public Dictionary<string, GuildData> Guilds
+    {
+        get => guilds;
+        set => guilds = value;
+    }
+
+    public int GuildMaxPlayers
+    {
+        get=> guildMaxPlayers;
+        set => guildMaxPlayers=value;
+    }
+
+    public GuildRankingBorders RankingBorders;
+
 }

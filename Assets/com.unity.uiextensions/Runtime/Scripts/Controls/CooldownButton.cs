@@ -33,7 +33,7 @@ namespace UnityEngine.UI.Extensions
         [SerializeField][ReadOnly]
         private int cooldownPercentComplete;
 
-        PointerEventData buttonSource;
+        private PointerEventData buttonSource;
         #endregion
 
         #region Public Properties
@@ -96,7 +96,7 @@ namespace UnityEngine.UI.Extensions
         #region Update
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (CooldownActive)
             {

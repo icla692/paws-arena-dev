@@ -41,12 +41,12 @@ namespace UnityEngine.UI.Extensions
 			StopHover();
 		}
 
-		void StartHover(Vector3 position)
+		private void StartHover(Vector3 position)
 		{
 			BoundTooltipItem.Instance.ShowTooltip(text, position);
 		}
 
-		void StopHover()
+		private void StopHover()
 		{
 			BoundTooltipItem.Instance.HideTooltip();
 		}

@@ -10,7 +10,7 @@ namespace UnityEngine.UI.Extensions
     [AddComponentMenu("UI/Extensions/Primitives/Squircle")]
     public class UISquircle : UIPrimitiveBase
     {
-        const float C = 1.0f;
+        private const float C = 1.0f;
         public enum Type
         {
             Classic,

@@ -24,6 +24,7 @@ public class HealthUIBehaviour : MonoBehaviour
     {
         currentHealth = totalhealth;
     }
+
     public void OnHealthUpdated(int val)
     {
         currentHealth = val;
@@ -31,10 +32,8 @@ public class HealthUIBehaviour : MonoBehaviour
         if (!isInit) return;
 
         float startingX = healthBar.sizeDelta.x;
-        LeanTween.value(startingX, healthBarTotalWidth * (currentHealth * 1.0f / totalhealth), 1f).setEaseInOutCirc().setOnUpdate(val =>
-        {
-            healthBar.sizeDelta = new Vector2(val, healthBar.sizeDelta.y);
-        });
+        LeanTween.value(startingX, healthBarTotalWidth * (currentHealth * 1.0f / totalhealth), 1f).setEaseInOutCirc()
+            .setOnUpdate(val => { healthBar.sizeDelta = new Vector2(val, healthBar.sizeDelta.y); });
     }
 
     public void Init()
@@ -61,4 +60,10 @@ public class HealthUIBehaviour : MonoBehaviour
     {
         healthBarFilling.gameObject.tag = "MyExpBar";
     }
+
+    public void OverrideColor(Color _color)
+    {
+        healthBarFilling.GetComponent<Image>().color = _color;
+    }
+
 }

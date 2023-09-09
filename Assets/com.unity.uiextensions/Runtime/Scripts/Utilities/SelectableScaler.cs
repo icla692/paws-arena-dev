@@ -16,7 +16,7 @@ namespace UnityEngine.UI.Extensions
         private Vector3 initScale;
         public Transform target;
 
-        Selectable selectable;
+        private Selectable selectable;
         public Selectable Target
         {
             get
@@ -28,14 +28,15 @@ namespace UnityEngine.UI.Extensions
             }
         }
         // Use this for initialization
-        void Awake()
+        private void Awake()
         {
             if (target == null)
                 target = transform;
 
             initScale = target.localScale;
         }
-        void OnEnable()
+
+        private void OnEnable()
         {
             target.localScale = initScale;
         }
@@ -56,7 +57,7 @@ namespace UnityEngine.UI.Extensions
             StartCoroutine("ScaleOUT");
         }
 
-        IEnumerator ScaleIN()
+        private IEnumerator ScaleIN()
         {
             if (animCurve.keys.Length > 0)
             {
@@ -72,7 +73,8 @@ namespace UnityEngine.UI.Extensions
                 }
             }
         }
-        IEnumerator ScaleOUT()
+
+        private IEnumerator ScaleOUT()
         {
             if (animCurve.keys.Length > 0)
             {

@@ -8,14 +8,14 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 [System.Serializable]
-class NFTsPayload
+internal class NFTsPayload
 {
     [SerializeField]
     public List<NFTPayload> nfts;
 }
 
 [System.Serializable]
-class NFTPayload
+internal class NFTPayload
 {
     [SerializeField]
     public string url;

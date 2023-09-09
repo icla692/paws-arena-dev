@@ -26,6 +26,8 @@ public class GameMatchingScreen : MonoBehaviour
     public List<SeatGameobject> seats;
     public Countdown countdown;
 
+    [SerializeField] private GameObject wheelHolder;
+
     private void OnEnable()
     {
         Init();
@@ -93,7 +95,10 @@ public class GameMatchingScreen : MonoBehaviour
 
     private IEnumerator BringBotAfterSeconds(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(seconds-3);
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        yield return new WaitForSeconds(3);
         if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
             BringBot();
@@ -230,6 +235,7 @@ public class GameMatchingScreen : MonoBehaviour
 
     private void StartCountdown(string sceneName)
     {
+        wheelHolder.SetActive(true);
         countdown.StartCountDown(() =>
         {
             if (PhotonNetwork.LocalPlayer.IsMasterClient)

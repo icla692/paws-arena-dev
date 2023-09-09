@@ -474,7 +474,7 @@ namespace UnityEngine.UI.Extensions
         #endregion
 
 
-        void CancelDrag()
+        private void CancelDrag()
         {
             _isDragging = false;
             //If it's a clone, delete it

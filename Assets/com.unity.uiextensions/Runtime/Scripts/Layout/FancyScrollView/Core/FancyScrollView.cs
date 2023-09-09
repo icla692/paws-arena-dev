@@ -42,7 +42,7 @@ namespace UnityEngine.UI.Extensions
         /// </summary>
         [SerializeField] protected Transform cellContainer = default;
 
-        readonly IList<FancyCell<TItemData, TContext>> pool = new List<FancyCell<TItemData, TContext>>();
+        private readonly IList<FancyCell<TItemData, TContext>> pool = new List<FancyCell<TItemData, TContext>>();
 
         /// <summary>
         /// 初期化済みかどうか.
@@ -104,7 +104,7 @@ namespace UnityEngine.UI.Extensions
         /// <param name="position">スクロール位置.</param>
         protected virtual void UpdatePosition(float position) => UpdatePosition(position, false);
 
-        void UpdatePosition(float position, bool forceRefresh)
+        private void UpdatePosition(float position, bool forceRefresh)
         {
             if (!initialized)
             {
@@ -126,7 +126,7 @@ namespace UnityEngine.UI.Extensions
             UpdateCells(firstPosition, firstIndex, forceRefresh);
         }
 
-        void ResizePool(float firstPosition)
+        private void ResizePool(float firstPosition)
         {
             Debug.Assert(CellPrefab != null);
             Debug.Assert(cellContainer != null);
@@ -149,7 +149,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void UpdateCells(float firstPosition, int firstIndex, bool forceRefresh)
+        private void UpdateCells(float firstPosition, int firstIndex, bool forceRefresh)
         {
             for (var i = 0; i < pool.Count; i++)
             {
@@ -179,13 +179,13 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        int CircularIndex(int i, int size) => size < 1 ? 0 : i < 0 ? size - 1 + (i + 1) % size : i % size;
+        private int CircularIndex(int i, int size) => size < 1 ? 0 : i < 0 ? size - 1 + (i + 1) % size : i % size;
 
 #if UNITY_EDITOR
-        bool cachedLoop;
-        float cachedCellInterval, cachedScrollOffset;
+        private bool cachedLoop;
+        private float cachedCellInterval, cachedScrollOffset;
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (cachedLoop != loop ||
                 cachedCellInterval != cellInterval ||

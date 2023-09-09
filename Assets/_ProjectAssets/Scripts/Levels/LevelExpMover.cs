@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class LevelExpMover : MonoBehaviour
 {
-    Transform target;
-    Vector3 offsetRange = new Vector3(1f, 1f, 1f);
+    private Transform target;
+    private Vector3 offsetRange = new Vector3(1f, 1f, 1f);
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class LevelExpMover : MonoBehaviour
         LeanTween.move( gameObject,
                         Camera.main.ScreenToWorldPoint(target.position), 
                         Random.Range(3,5))
-            .setEase(LeanTweenType.easeOutQuad)
+            .setEase(LeanTweenType.linear)
             .setOnComplete(() => { Destroy(gameObject); })
             .setDelay(1f);
     }

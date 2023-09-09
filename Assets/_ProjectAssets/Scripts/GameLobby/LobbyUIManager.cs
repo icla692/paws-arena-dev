@@ -36,7 +36,7 @@ public class LobbyUIManager : MonoBehaviour
 
     [Header("Others")]
     public GameObject loadingScreen;
-    [SerializeField] CraftingSystemUI craftingSystem;
+    [SerializeField] private CraftingSystemUI craftingSystem;
     [SerializeField] private Image fightImage;
     [SerializeField] private Sprite normalFightSprite;
     [SerializeField] private Sprite injuredFightSprite;
@@ -182,7 +182,7 @@ public class LobbyUIManager : MonoBehaviour
         StartCoroutine(FightButtonGraphics());
     }
 
-    IEnumerator FightButtonGraphics()
+    private IEnumerator FightButtonGraphics()
     {
         while (gameObject.activeSelf)
         {

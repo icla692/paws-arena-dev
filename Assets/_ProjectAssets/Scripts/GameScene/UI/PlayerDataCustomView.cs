@@ -26,7 +26,7 @@ public class PlayerDataCustomView : MonoBehaviour
 
     private bool isMultiplayer;
 
-    void Start()
+    private void Start()
     {
         isMultiplayer = ConfigurationManager.Instance.Config.GetIsMultiplayer();
 
@@ -66,7 +66,9 @@ public class PlayerDataCustomView : MonoBehaviour
         {
             healthUIBehaviour.SetOrientationRight();
             nicknameText.alignment = TMPro.TextAlignmentOptions.Right;
-            GetComponent<RectTransform>().anchoredPosition = new Vector2(-220, GetComponent<RectTransform>().anchoredPosition.y); 
+            GetComponent<RectTransform>().anchoredPosition = new Vector2(-225, GetComponent<RectTransform>().anchoredPosition.y); 
+            healthUIBehaviour.OverrideColor(new Color(0.9254901960784314f,0.49411764705882355f,0.803921568627451f));
+            
         }
 
         if(isMyPlayer)

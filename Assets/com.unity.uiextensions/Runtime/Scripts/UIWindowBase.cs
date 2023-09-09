@@ -30,7 +30,7 @@ namespace UnityEngine.UI.Extensions
         public RectTransform RootTransform = null;
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             if (RootTransform == null)
             {
@@ -42,7 +42,7 @@ namespace UnityEngine.UI.Extensions
             m_canvasRectTransform = m_canvas.GetComponent<RectTransform>();
         }
 
-        void Update()
+        private void Update()
         {
             if (ResetCoords)
                 resetCoordinatePosition();
@@ -75,7 +75,7 @@ namespace UnityEngine.UI.Extensions
             _isDragging = false;
         }
 
-        void resetCoordinatePosition()
+        private void resetCoordinatePosition()
         {
             RootTransform.position = m_originalCoods;
             ResetCoords = false;

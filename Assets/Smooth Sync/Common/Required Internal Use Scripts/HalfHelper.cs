@@ -22,7 +22,7 @@ namespace System
         private static sbyte[] shiftTable = GenerateShiftTable();
 
         [StructLayout(LayoutKind.Explicit)]
-        struct UIntFloat
+        private struct UIntFloat
         {
             [FieldOffset(0)]
             public uint UIntValue;
@@ -31,15 +31,15 @@ namespace System
         }
 
         // Zeb stuff to get around unsafe code
-        static UIntFloat floatToIntConverter = new UIntFloat { FloatValue = 0 };
+        private static UIntFloat floatToIntConverter = new UIntFloat { FloatValue = 0 };
 
-        static uint FloatToUInt(float v)
+        private static uint FloatToUInt(float v)
         {
             floatToIntConverter.FloatValue = v;
             return floatToIntConverter.UIntValue;
         }
 
-        static float UIntToFloat(uint v)
+        private static float UIntToFloat(uint v)
         {
             floatToIntConverter.UIntValue = v;
             return floatToIntConverter.FloatValue;

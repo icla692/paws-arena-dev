@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerTestSceneSetup : MonoBehaviour
 {
-    IEnumerator Start()
+    private IEnumerator Start()
     {
         yield return new WaitForSeconds(2f);
         var playerActions = GameInputManager.Instance.GetPlayerActionMap().GetPlayerActions();

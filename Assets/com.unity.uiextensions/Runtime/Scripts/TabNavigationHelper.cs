@@ -25,7 +25,7 @@ namespace UnityEngine.UI.Extensions
         [Tooltip("If True, this will loop the tab order from last to first automatically")]
         public bool CircularNavigation;
 
-        void Start()
+        private void Start()
         {
             _system = GetComponent<EventSystem>();
             if (_system == null)

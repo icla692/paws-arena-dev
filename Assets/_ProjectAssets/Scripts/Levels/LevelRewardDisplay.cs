@@ -6,19 +6,19 @@ using System;
 public class LevelRewardDisplay : MonoBehaviour
 {
     public static Action<LevelReward, Sprite> OnClaimed;
-    [SerializeField] Image rewardDisplay;
-    [SerializeField] Image background;
-    [SerializeField] Sprite normalBackground;
-    [SerializeField] Sprite premiumBackground;
+    [SerializeField] private Image rewardDisplay;
+    [SerializeField] private Image background;
+    [SerializeField] private Sprite normalBackground;
+    [SerializeField] private Sprite premiumBackground;
 
-    [SerializeField] Button claimButton;
-    [SerializeField] Image claimImage;
-    [SerializeField] Sprite normalClaim;
-    [SerializeField] Sprite premiumClaim;
-    [SerializeField] GameObject lockedImage;
-    [SerializeField] GameObject claimedObject;
-    [SerializeField] GameObject shadowPanel;
-    [SerializeField] bool isPremium;
+    [SerializeField] private Button claimButton;
+    [SerializeField] private Image claimImage;
+    [SerializeField] private Sprite normalClaim;
+    [SerializeField] private Sprite premiumClaim;
+    [SerializeField] private GameObject lockedImage;
+    [SerializeField] private GameObject claimedObject;
+    [SerializeField] private GameObject shadowPanel;
+    [SerializeField] private bool isPremium;
 
     [SerializeField] private EquipmentsConfig equipments;
     [Space][Header("Sprites")]
@@ -26,11 +26,11 @@ public class LevelRewardDisplay : MonoBehaviour
     [SerializeField] private Sprite snacks;
     [SerializeField] private Sprite jugOfMilk;
     [SerializeField] private Sprite glassOfMilk;
-    
 
-    LevelReward reward;
-    int level;
-    bool canClaim;
+
+    private LevelReward reward;
+    private int level;
+    private bool canClaim;
 
     public bool CanClaim => canClaim;
 
@@ -78,7 +78,7 @@ public class LevelRewardDisplay : MonoBehaviour
         }
     }
 
-    Sprite GetSpriteForReward(LevelReward _reward)
+    private Sprite GetSpriteForReward(LevelReward _reward)
     {
         switch (_reward.Type)
         {

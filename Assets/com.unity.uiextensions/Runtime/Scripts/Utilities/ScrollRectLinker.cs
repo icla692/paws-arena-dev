@@ -10,18 +10,17 @@ namespace UnityEngine.UI.Extensions
 
         public bool clamp = true;
 
-        [SerializeField]
-        ScrollRect controllingScrollRect = null;
-        ScrollRect scrollRect = null;
+        [SerializeField] private ScrollRect controllingScrollRect = null;
+        private ScrollRect scrollRect = null;
 
-        void Awake()
+        private void Awake()
         {
             scrollRect = GetComponent<ScrollRect>();
             if (controllingScrollRect != null)
                 controllingScrollRect.onValueChanged.AddListener(MirrorPos);
         }
 
-        void MirrorPos(Vector2 scrollPos)
+        private void MirrorPos(Vector2 scrollPos)
         {
 
             if (clamp)

@@ -3,7 +3,7 @@ using TMPro;
 
 public class SnackDisplay : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI snackAmountDisplay;
+    [SerializeField] private TextMeshProUGUI snackAmountDisplay;
 
     private void OnEnable()
     {
@@ -16,7 +16,7 @@ public class SnackDisplay : MonoBehaviour
         DataManager.Instance.PlayerData.UpdatedSnacks -= ShowSnacks;
     }
 
-    void ShowSnacks()
+    private void ShowSnacks()
     {
         snackAmountDisplay.text = DataManager.Instance.PlayerData.Snacks.ToString();
     }

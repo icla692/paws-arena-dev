@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class LuckyWheelRewardDisplay : MonoBehaviour
 {
-    const string IDLE_ANIMATION_KEY = "Idle";
-    const string SHAKING_ANIMATION_KEY = "Shaking";
+    private const string IDLE_ANIMATION_KEY = "Idle";
+    private const string SHAKING_ANIMATION_KEY = "Shaking";
 
-    [SerializeField] Vector3 shakingScale;
-    [SerializeField] GameObject shadowHolder;
-    [SerializeField] Transform cristalHolder;
-    [SerializeField] ItemType rewardType;
+    [SerializeField] private Vector3 shakingScale;
+    [SerializeField] private GameObject shadowHolder;
+    [SerializeField] private Transform cristalHolder;
+    [SerializeField] private ItemType rewardType;
 
     public ItemType RewardType => rewardType;
 
-    IEnumerator shakingRoutine;
+    private IEnumerator shakingRoutine;
 
-    Vector3 defaultScale;
-    Vector3 defaultPostion;
+    private Vector3 defaultScale;
+    private Vector3 defaultPostion;
 
     private void OnEnable()
     {
@@ -48,7 +48,7 @@ public class LuckyWheelRewardDisplay : MonoBehaviour
         StartCoroutine(shakingRoutine);
     }
 
-    IEnumerator ShakingRoutine()
+    private IEnumerator ShakingRoutine()
     {
         Vector3 _originalPos = cristalHolder.position;
         float _shakeMagnitude = 10f;
@@ -59,7 +59,7 @@ public class LuckyWheelRewardDisplay : MonoBehaviour
         }
     }
 
-    IEnumerator ShakeInCircularShapeRoutine()
+    private IEnumerator ShakeInCircularShapeRoutine()
     {
         Vector3 _center = cristalHolder.position;
         float _radius = 0.1f;

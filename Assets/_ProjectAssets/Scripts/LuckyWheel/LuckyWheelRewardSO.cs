@@ -14,7 +14,7 @@ public class LuckyWheelRewardSO : ScriptableObject
     [field: SerializeField] public float MinRotation { get; private set; }
     [field: SerializeField] public float MaxRotation { get; private set; }
 
-    static List<LuckyWheelRewardSO> allRewards;
+    private static List<LuckyWheelRewardSO> allRewards;
 
     public static List<LuckyWheelRewardSO> GetAll()
     {
@@ -45,7 +45,7 @@ public class LuckyWheelRewardSO : ScriptableObject
         return allRewards.First(element => element.Id == _id);
     }
 
-    static void LoadAllRewards()
+    private static void LoadAllRewards()
     {
         if (allRewards != null)
         {

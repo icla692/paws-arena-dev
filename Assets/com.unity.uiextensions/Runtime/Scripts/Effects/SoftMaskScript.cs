@@ -8,12 +8,12 @@ namespace UnityEngine.UI.Extensions
     [AddComponentMenu("UI/Effects/Extensions/SoftMaskScript")]
     public class SoftMaskScript : MonoBehaviour
     {
-        Material mat;
+        private Material mat;
 
-        Canvas cachedCanvas = null;
-        Transform cachedCanvasTransform = null;
-        readonly Vector3[] m_WorldCorners = new Vector3[4];
-        readonly Vector3[] m_CanvasCorners = new Vector3[4];
+        private Canvas cachedCanvas = null;
+        private Transform cachedCanvasTransform = null;
+        private readonly Vector3[] m_WorldCorners = new Vector3[4];
+        private readonly Vector3[] m_CanvasCorners = new Vector3[4];
 
         [Tooltip("The area that is to be used as the container.")]
         public RectTransform MaskArea;
@@ -34,11 +34,11 @@ namespace UnityEngine.UI.Extensions
         [Tooltip("If a different Mask Scaling Rect is given, and this value is true, the area around the mask will not be clipped")]
         public bool DontClipMaskScalingRect = false;
 
-        Vector2 maskOffset = Vector2.zero;
-        Vector2 maskScale = Vector2.one;
+        private Vector2 maskOffset = Vector2.zero;
+        private Vector2 maskScale = Vector2.one;
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             if (MaskArea == null)
             {
@@ -71,7 +71,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void Update()
+        private void Update()
         {
             if (cachedCanvas != null)
             {
@@ -79,7 +79,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void SetMask()
+        private void SetMask()
         {
             var worldRect = GetCanvasRect();
             var size = worldRect.size;

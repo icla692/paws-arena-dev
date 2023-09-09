@@ -173,7 +173,7 @@ namespace UnityEngine.UI.Extensions
         private bool m_DelayedUpdateVisuals = false;
 
         // Size of each step.
-        float StepSize { get { return WholeNumbers ? 1 : (MaxValue - MinValue) * 0.1f; } }
+        private float StepSize { get { return WholeNumbers ? 1 : (MaxValue - MinValue) * 0.1f; } }
 
         protected RangeSlider()
         { }
@@ -279,7 +279,7 @@ namespace UnityEngine.UI.Extensions
             base.OnDidApplyAnimationProperties();
         }
 
-        void UpdateCachedReferences()
+        private void UpdateCachedReferences()
         {
             if (m_FillRect && m_FillRect != (RectTransform)transform)
             {
@@ -321,8 +321,8 @@ namespace UnityEngine.UI.Extensions
                 m_LowHandleContainerRect = null;
             }
         }
-        
-        void SetLow(float input)
+
+        private void SetLow(float input)
         {
             SetLow(input, true);
         }
@@ -349,7 +349,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void SetHigh(float input)
+        private void SetHigh(float input)
         {
             SetHigh(input, true);
         }
@@ -436,7 +436,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         // Update the slider's position based on the mouse.
-        void UpdateDrag(PointerEventData eventData, Camera cam)
+        private void UpdateDrag(PointerEventData eventData, Camera cam)
         {
             //this needs to differ from slider in that we have two handles, and need to move the right one. 
             //and if it was neither handle, we will have a separate case where both handles move uniformly 

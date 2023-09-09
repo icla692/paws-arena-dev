@@ -58,7 +58,7 @@ public class ChatManager : MonoSingleton<ChatManager>
     }
 
     [PunRPC]
-    void ChatMessage(string message, PhotonMessageInfo info)
+    private void ChatMessage(string message, PhotonMessageInfo info)
     {
         if (info.Sender.IsLocal)
         {

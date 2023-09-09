@@ -157,17 +157,17 @@ public class BotAI : MonoBehaviour
         List<bool> moveDirs = new List<bool> { true, true };
         int steps = Configuration.maxTravelSteps;
         float stepFactor = 1;
-
+        
         int attempt = 0;
 
         do
         {
             List<Location> potentialLocations = GetPotentialLocations(moveDirs[0], moveDirs[1], steps, stepFactor);
-
+            
             float startThinkingTime = Time.time;
             yield return StartCoroutine(ChooseLocation(potentialLocations));
             if (chosenLocation == null) break;
-
+            
             // DebugLocation(chosenLocation);
             if (chosenLocation.direction == -1) moveDirs[0] = false;
             if (chosenLocation.direction == 1) moveDirs[1] = false;
@@ -181,20 +181,22 @@ public class BotAI : MonoBehaviour
                     stepFactor = 0.5f;
                     moveDirs = new List<bool> { true, true };
                 }
+
                 attempt++;
             }
 
             // Respect minimum thinking time (humanity)
             float thinkingTime = Time.time - startThinkingTime;
             float requiredThinkingTime = GetRandomizedHumanityTime(Configuration.minThinkingTime);
-            if (requiredThinkingTime > Configuration.maxThinkingTime) requiredThinkingTime = Configuration.maxThinkingTime;
+            
+            if (requiredThinkingTime > Configuration.maxThinkingTime)
+                requiredThinkingTime = Configuration.maxThinkingTime;
             if (thinkingTime < requiredThinkingTime)
                 yield return new WaitForSeconds(requiredThinkingTime - thinkingTime);
 
             yield return StartCoroutine(Move());
-        }
-
-        while (repeatMoveTo && TimeLeft > Configuration.ActionTimeTotal);
+        } while (repeatMoveTo && TimeLeft > Configuration.ActionTimeTotal);
+        
 
         yield return StartCoroutine(Shoot());
 
@@ -435,7 +437,7 @@ public class BotAI : MonoBehaviour
         // Shooting
         yield return null;
         yield return new WaitForSeconds(GetRandomizedHumanityTime(Configuration.shootingTime));
-
+        
         api.Shoot();
 
         if (chosenWeapon == Weapon.Split)

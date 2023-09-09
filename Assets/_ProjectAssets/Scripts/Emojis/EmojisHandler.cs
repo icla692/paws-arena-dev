@@ -23,7 +23,7 @@ public class EmojisHandler : MonoBehaviour
         }
     }
 
-    void AddEmojis()
+    private void AddEmojis()
     {
         foreach (var _emojiId in DataManager.Instance.PlayerData.OwnedEmojis)
         {
@@ -48,7 +48,7 @@ public class EmojisHandler : MonoBehaviour
         EmojiPreviewDisplay.OnEmojiClicked -= ShowEmoji;
     }
 
-    void ShowEmojis()
+    private void ShowEmojis()
     {
         float _scaleDuration = 0.2f;
         LeanTween.scale(showEmojisButton.gameObject, new Vector3(1.2f,1.2f,1.2f), _scaleDuration/2f)
@@ -74,12 +74,12 @@ public class EmojisHandler : MonoBehaviour
             });
     }
 
-    void EnableCloseButton()
+    private void EnableCloseButton()
     {
         closeButton.gameObject.SetActive(true);
     }
 
-    void CloseEmojis()
+    private void CloseEmojis()
     {
         closeButton.gameObject.SetActive(false);
         float _emojiAnimationDuration = 0.1f;
@@ -100,7 +100,7 @@ public class EmojisHandler : MonoBehaviour
         }    
     }
 
-    void ShowEmoji(int _id)
+    private void ShowEmoji(int _id)
     {
         ShowEmoji(_id,true);
         CloseEmojis();
@@ -112,7 +112,7 @@ public class EmojisHandler : MonoBehaviour
 
 
     [PunRPC]
-    void ShowEmoji(int _emojiId, bool _showAboveMyHead)
+    private void ShowEmoji(int _emojiId, bool _showAboveMyHead)
     {
         Transform _emojiHolder = _showAboveMyHead ? PlayerManager.Instance.myPlayer.EmojiHolder : PlayerManager.Instance.OtherPlayerComponent.EmojiHolder;
         EmojiSO _emojiSo = EmojiSO.Get(_emojiId);

@@ -7,23 +7,22 @@ using System.Collections;
 
 public class LevelsPanel : MonoBehaviour
 {
-    [SerializeField] LevelRewardDisplay[] normalLevelHolders;
-    [SerializeField] LevelRewardDisplay[] premiumLevelHolders;
-    [SerializeField] TextMeshProUGUI[] levelsDisplay;
-    [SerializeField] Image[] levelsBackgroundDisplay;
-    [SerializeField] TextMeshProUGUI snackDisplay;
-    [SerializeField] TextMeshProUGUI levelDisplay;
-    [SerializeField] TextMeshProUGUI seasonNumberDisplay;
-    [SerializeField] TextMeshProUGUI seasonEndDisplay;
-    [SerializeField] Image progressDispaly;
-    [SerializeField] Button closeButton;
-    [SerializeField] Button showPrevious;
-    [SerializeField] Button showNext;
-    [SerializeField] Sprite reachedLevelBackground;
-    [SerializeField] Sprite notReachedLevelBackground;
-    [SerializeField] Button claimAllButton;
+    [SerializeField] private LevelRewardDisplay[] normalLevelHolders;
+    [SerializeField] private LevelRewardDisplay[] premiumLevelHolders;
+    [SerializeField] private TextMeshProUGUI[] levelsDisplay;
+    [SerializeField] private Image[] levelsBackgroundDisplay;
+    [SerializeField] private TextMeshProUGUI levelDisplay;
+    [SerializeField] private TextMeshProUGUI seasonNumberDisplay;
+    [SerializeField] private TextMeshProUGUI seasonEndDisplay;
+    [SerializeField] private Image progressDispaly;
+    [SerializeField] private Button closeButton;
+    [SerializeField] private Button showPrevious;
+    [SerializeField] private Button showNext;
+    [SerializeField] private Sprite reachedLevelBackground;
+    [SerializeField] private Sprite notReachedLevelBackground;
+    [SerializeField] private Button claimAllButton;
 
-    int firstRewardLevel = 1;
+    private int firstRewardLevel = 1;
     private int maxLevel;
 
     public void Setup()
@@ -62,20 +61,19 @@ public class LevelsPanel : MonoBehaviour
         DataManager.Instance.PlayerData.UpdatedSnacks -= SetupDisplays;
     }
 
-    void SetupDisplays()
+    private void SetupDisplays()
     {
-        snackDisplay.text = DataManager.Instance.PlayerData.Snacks.ToString();
         levelDisplay.text = DataManager.Instance.PlayerData.Level.ToString();
         seasonNumberDisplay.text = "Season "+DataManager.Instance.GameData.SeasonNumber;
         ShowSeasonEndDiplay();
     }
 
-    void Close()
+    private void Close()
     {
         gameObject.SetActive(false);
     }
 
-    void ShowPrevious()
+    private void ShowPrevious()
     {
         firstRewardLevel--;
         if (firstRewardLevel < 1)
@@ -85,7 +83,7 @@ public class LevelsPanel : MonoBehaviour
         ShowRewards();
     }
 
-    void ShowNext()
+    private void ShowNext()
     {
         firstRewardLevel++;
         if (firstRewardLevel >= maxLevel - 3)
@@ -96,7 +94,7 @@ public class LevelsPanel : MonoBehaviour
         ShowRewards();
     }
 
-    void ShowRewards()
+    private void ShowRewards()
     {
         for (int i = firstRewardLevel,j=0; j < 5; i++,j++)
         {
@@ -128,7 +126,7 @@ public class LevelsPanel : MonoBehaviour
         ShowLevelProgress();
     }
 
-    void ShowLevelProgress()
+    private void ShowLevelProgress()
     {
         int _progressLevel = DataManager.Instance.PlayerData.Level - firstRewardLevel;
         for (int i = 0; i < levelsBackgroundDisplay.Length; i++)
@@ -171,7 +169,7 @@ public class LevelsPanel : MonoBehaviour
         ShowSeasonEndDiplay();
     }
 
-    void ShowSeasonEndDiplay()
+    private void ShowSeasonEndDiplay()
     {
         if (DataManager.Instance.GameData.HasSeasonEnded)
         {
@@ -199,7 +197,7 @@ public class LevelsPanel : MonoBehaviour
         }
     }
 
-    void ClaimAll()
+    private void ClaimAll()
     {
         for (int i = 0; i < normalLevelHolders.Length; i++)
         {
@@ -222,7 +220,7 @@ public class LevelsPanel : MonoBehaviour
         }
     }
 
-    void ClaimNext()
+    private void ClaimNext()
     {
         StartCoroutine(ClaimNextRoutine());
         

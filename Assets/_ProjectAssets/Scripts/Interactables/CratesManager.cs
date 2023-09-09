@@ -16,7 +16,7 @@ public class CratesManager : MonoSingleton<CratesManager>
     private CratesConfig cratesConfig;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         cratesConfig = ConfigurationManager.Instance.Crates;
 

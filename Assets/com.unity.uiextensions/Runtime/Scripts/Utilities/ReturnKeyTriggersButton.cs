@@ -14,13 +14,13 @@ namespace UnityEngine.UI
         public Button button;
         private bool highlight = true;
         public float highlightDuration = 0.2f;
-        
-        void Start()
+
+        private void Start()
         {
             _system = EventSystem.current;
         }
 
-        void RemoveHighlight()
+        private void RemoveHighlight()
         {
             button.OnPointerExit(new PointerEventData(_system));
         }

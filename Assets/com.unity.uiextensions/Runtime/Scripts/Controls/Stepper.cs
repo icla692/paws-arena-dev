@@ -116,7 +116,7 @@ namespace UnityEngine.UI.Extensions
             StartCoroutine(DelayedInit());
         }
 
-        IEnumerator DelayedInit()
+        private IEnumerator DelayedInit()
         {
             yield return null;
 

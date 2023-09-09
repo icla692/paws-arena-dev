@@ -29,7 +29,7 @@ namespace UnityEngine.UI.Extensions
         //This tracks whether the other one should scroll horizontally or vertically.
         private bool scrollOtherHorizontally;
 
-        void Awake()
+        private void Awake()
         {
             if (ParentScrollRect)
             {
@@ -62,7 +62,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void Start()
+        private void Start()
         {
             if (ParentScrollRect)
             {

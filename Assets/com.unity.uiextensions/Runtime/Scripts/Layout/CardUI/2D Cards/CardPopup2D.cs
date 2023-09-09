@@ -26,14 +26,14 @@ public class CardPopup2D : MonoBehaviour
     private bool fallToZero;
     private float startZPos;
 
-    void Start()
+    private void Start()
     {
         rbody = GetComponent<Rigidbody>();
         rbody.useGravity = false;
         startZPos = transform.position.z;
     }
 
-    void Update()
+    private void Update()
     {
         if (isFalling)
         {

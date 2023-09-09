@@ -35,12 +35,12 @@ public class DisenchantmentItemDisplay : MonoBehaviour
         button.onClick.RemoveListener(ShowEquipment);
     }
 
-    void ShowEquipment()
+    private void ShowEquipment()
     {
         OnEquipmentClicked(equipmentData);
     }
 
-    void CheckIfThisIsSelected(EquipmentData _equipmentData)
+    private void CheckIfThisIsSelected(EquipmentData _equipmentData)
     {
         selectedDisplay.SetActive(_equipmentData == equipmentData);
     }

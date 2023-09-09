@@ -1,9 +1,11 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class CrystalsTotalDisplay : MonoBehaviour
+public class CrystalsTotalDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private TextMeshProUGUI display;
+    [SerializeField] private TextMeshProUGUI glowDisplay;
 
     private void OnEnable()
     {
@@ -25,8 +27,19 @@ public class CrystalsTotalDisplay : MonoBehaviour
         DataManager.Instance.PlayerData.Crystals.UpdatedEpicCrystal -= Show;
     }
 
-    void Show()
+    private void Show()
     {
         display.text = DataManager.Instance.PlayerData.Crystals.TotalCrystalsAmount.ToString();
+        glowDisplay.text = DataManager.Instance.PlayerData.Crystals.TotalCrystalsAmount.ToString();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        glowDisplay.gameObject.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        glowDisplay.gameObject.SetActive(false);
     }
 }

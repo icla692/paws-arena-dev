@@ -7,7 +7,7 @@ public class PlayerPlatformBehaviour : MonoBehaviour
     public PlayerCustomization playerCustomization;
     public bool isMyCat = true;
 
-    void OnEnable()
+    private void OnEnable()
     {
         if (isMyCat)
         {

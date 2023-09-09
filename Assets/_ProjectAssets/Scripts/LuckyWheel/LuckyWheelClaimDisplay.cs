@@ -5,9 +5,9 @@ using TMPro;
 
 public class LuckyWheelClaimDisplay : MonoBehaviour
 {
-    [SerializeField] Button closeButton;
-    [SerializeField] Image iconDisplay;
-    [SerializeField] TextMeshProUGUI nameDisplay;
+    [SerializeField] private Button closeButton;
+    [SerializeField] private Image iconDisplay;
+    [SerializeField] private TextMeshProUGUI nameDisplay;
     private Action callBack;
 
     public void Setup(LuckyWheelRewardSO _reward, Action _callBack)
@@ -34,7 +34,7 @@ public class LuckyWheelClaimDisplay : MonoBehaviour
         closeButton.onClick.RemoveListener(Close);
     }
 
-    void Close()
+    private void Close()
     {
         closeButton.interactable = false;
         PUNRoomUtils _roomUtilities= GameObject.FindObjectOfType<PUNRoomUtils>();

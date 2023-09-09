@@ -11,7 +11,7 @@ public class MainMenuScreen : MonoBehaviour
 
     private GameObject playerPlatform;
 
-    void OnEnable()
+    private void OnEnable()
     {
         playerPlatform = GameObject.Instantiate(playerPlatformPrefab, playerPlatformPosition);
         playerPlatform.transform.position = Vector3.zero;

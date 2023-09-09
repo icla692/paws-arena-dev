@@ -41,7 +41,7 @@ namespace UnityEngine.UI.Extensions
         private List<RectTransform> _items = new List<RectTransform>();
         private bool _reset = false;
 
-        void Awake()
+        private void Awake()
         {
             if (InitByUser)
                 return;
@@ -93,7 +93,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        void ToggleGridComponents(bool toggle)
+        private void ToggleGridComponents(bool toggle)
         {
             if (_isVertical)
                 _disableMarginY = _scrollRect.GetComponent<RectTransform>().rect.height / 2 + _items[0].sizeDelta.y;

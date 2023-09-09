@@ -93,8 +93,8 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        
-        void Reset() {
+
+        private void Reset() {
             canvas = GetComponentInParent<Canvas>();
             canvas = canvas.rootCanvas;
         }
@@ -152,7 +152,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (_inside)
             {

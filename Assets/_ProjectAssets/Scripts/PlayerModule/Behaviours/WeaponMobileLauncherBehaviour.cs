@@ -8,7 +8,7 @@ public class WeaponMobileLauncherBehaviour : MonoBehaviour
     //private Animator _animator;
     //public AudioClip sfx;
 
-    void Start()
+    private void Start()
     {
         //_animator = GetComponent<Animator>();
         PlayerThrowBehaviour.onLaunchPreparing += PrepareLaunch;

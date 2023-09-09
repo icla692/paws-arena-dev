@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class LevelRewardPanel : MonoBehaviour
 {
     public static Action OnClosePressed;
-    [SerializeField] Button closeButton;
-    [SerializeField] Image iconDisplay;
-    [SerializeField] TextMeshProUGUI nameDisplay;
-    [SerializeField] GameObject holder;
+    [SerializeField] private Button closeButton;
+    [SerializeField] private Image iconDisplay;
+    [SerializeField] private TextMeshProUGUI nameDisplay;
+    [SerializeField] private GameObject holder;
 
     private void OnEnable()
     {
@@ -32,7 +32,7 @@ public class LevelRewardPanel : MonoBehaviour
         holder.SetActive(true);
     }
 
-    void Close()
+    private void Close()
     {
         OnClosePressed?.Invoke();
         holder.SetActive(false);

@@ -11,7 +11,7 @@ public class NFT
     public List<string> ids;
     public Texture2D imageTex;
     private XmlDocument doc;
-    DateTime recoveryEndDate;
+    private DateTime recoveryEndDate;
 
     public bool CanFight => RecoveryEndDate < DateTime.UtcNow;
     public int MinutesUntilHealed => (int)(RecoveryEndDate - DateTime.UtcNow).TotalMinutes;
