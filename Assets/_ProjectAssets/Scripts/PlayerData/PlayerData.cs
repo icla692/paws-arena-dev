@@ -1,28 +1,26 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 [Serializable]
 public class PlayerData
 {
-    private float snacks = 0;
-    private float jugOfMilk = 0;
-    private float glassOfMilk = 0;
-    private CrystalsData crystals = new CrystalsData();
+    private float snacks;
+    private float jugOfMilk;
+    private float glassOfMilk;
+    private CrystalsData crystals = new ();
     private CraftingProcess craftingProcess;
     private bool hasPass;
     private int experience;
     private int level;
     private int experienceOnCurrentLevel;
     private int experienceForNextLevel;
-    private List<ClaimedReward> claimedLevelRewards = new List<ClaimedReward>();
-    private List<RecoveryEntrie> recoveringKitties = new List<RecoveryEntrie>();
-    private List<int> ownedEquiptables = new List<int>() { 0, 25, 60, 74, 95 };
+    private List<ClaimedReward> claimedLevelRewards = new ();
+    private List<RecoveryEntrie> recoveringKitties = new ();
+    private List<int> ownedEquiptables;
     private int seasonNumber;
-    private List<int> ownedEmojis = new List<int>() { };
-    private Challenges challenges = new Challenges();
+    private List<int> ownedEmojis;
+    private Challenges challenges = new ();
     private string guildId = string.Empty;
     private int points;
 
@@ -40,8 +38,10 @@ public class PlayerData
     [JsonIgnore] public Action UpdatedGuild;
     [JsonIgnore] public Action UpdatedPoints;
 
-    public PlayerData()
+    public void SetStartingValues()
     {
+        ownedEquiptables = new List<int>() { 0, 25, 60, 74, 95 };
+        ownedEmojis = new List<int>() {0,1,2,3};
     }
 
     public float Snacks

@@ -74,6 +74,7 @@ public class DataManager : MonoBehaviour
     public void CreatePlayerDataEmpty()
     {
         PlayerData = new PlayerData();
+        PlayerData.SetStartingValues();
     }
 
     public void SetGameData(string _data)

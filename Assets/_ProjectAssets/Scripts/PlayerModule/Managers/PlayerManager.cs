@@ -54,15 +54,15 @@ public class PlayerManager : MonoSingleton<PlayerManager>
     private void OnDestroy()
     {
         HealthAtEnd = myPlayerHealth;
-        float _minutesItWillTakeToRecover =((float)RecoveryHandler.RecoveryInMinutes / maxHP) * (maxHP - myPlayerHealth);
-        DateTime _recoveryEnds = DateTime.UtcNow.AddMinutes(_minutesItWillTakeToRecover);
-        GameState.selectedNFT.RecoveryEndDate = _recoveryEnds;
-        RecoveryEntrie _recoveryEntry = new RecoveryEntrie()
-        {
-            EndDate = _recoveryEnds,
-            KittyImageUrl = GameState.selectedNFT.imageUrl
-        };
-        DataManager.Instance.PlayerData.AddRecoveringKittie(_recoveryEntry);
+        // float _minutesItWillTakeToRecover =((float)RecoveryHandler.RecoveryInMinutes / maxHP) * (maxHP - myPlayerHealth);
+        // DateTime _recoveryEnds = DateTime.UtcNow.AddMinutes(_minutesItWillTakeToRecover);
+        // GameState.selectedNFT.RecoveryEndDate = _recoveryEnds;
+        // RecoveryEntrie _recoveryEntry = new RecoveryEntrie()
+        // {
+        //     EndDate = _recoveryEnds,
+        //     KittyImageUrl = GameState.selectedNFT.imageUrl
+        // };
+        // DataManager.Instance.PlayerData.AddRecoveringKittie(_recoveryEntry);
     }
 
     [ContextMenu("Test_Take50Damage")]

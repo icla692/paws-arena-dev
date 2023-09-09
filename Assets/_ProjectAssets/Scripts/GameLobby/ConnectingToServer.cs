@@ -51,7 +51,7 @@ public class ConnectingToServer : MonoBehaviour
         {
             DataManager.Instance.SubscribeHandlers();
             lobbyUIManager.OpenNFTSelectionScreen();
-            ChallengesManager.Instance.Init();
+            // ChallengesManager.Instance.Init();
         }
         else
         {
