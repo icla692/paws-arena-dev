@@ -19,9 +19,9 @@ public class PlayerData
     private int experienceForNextLevel;
     private List<ClaimedReward> claimedLevelRewards = new List<ClaimedReward>();
     private List<RecoveryEntrie> recoveringKitties = new List<RecoveryEntrie>();
-    private List<int> ownedEquiptables = new List<int>() { 0, 25, 60, 74, 95 };
+    private List<int> ownedEquiptables;
     private int seasonNumber;
-    private List<int> ownedEmojis = new List<int>() { };
+    private List<int> ownedEmojis;
     private Challenges challenges = new Challenges();
     private string guildId = string.Empty;
     private int points;
@@ -40,8 +40,10 @@ public class PlayerData
     [JsonIgnore] public Action UpdatedGuild;
     [JsonIgnore] public Action UpdatedPoints;
 
-    public PlayerData()
+    public void SetStartingData()
     {
+        ownedEquiptables = new List<int>() { 0, 25, 60, 74, 95 };
+        ownedEmojis = new List<int>() { 0, 1, 2, 3 };
     }
 
     public float Snacks
