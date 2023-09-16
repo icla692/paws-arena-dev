@@ -41,7 +41,7 @@ public class PlayerData
     public void SetStartingValues()
     {
         ownedEquiptables = new List<int>() { 0, 25, 60, 74, 95 };
-        ownedEmojis = new List<int>() {0,1,2,3};
+        ownedEmojis = new List<int>() {0,1,2,3,4};
     }
 
     public float Snacks
