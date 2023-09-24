@@ -10,7 +10,6 @@ public class GuildLeftPanel : MonoBehaviour
     public static Action OnClose;
     public static Action OnShowTopGuilds;
     
-    [SerializeField] private Image flagImage;
     [SerializeField] private Button myGuildButton;
     [SerializeField] private Button guildBattleButton;
     [SerializeField] private Button topGuilds;
@@ -25,8 +24,6 @@ public class GuildLeftPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        DataManager.Instance.PlayerData.UpdatedGuild += UpdateFlag;
-        
         closeButton.onClick.AddListener(Close);
         myGuildButton.onClick.AddListener(ShowMyGuild);
         guildBattleButton.onClick.AddListener(ShowGuildBattle);
@@ -38,8 +35,6 @@ public class GuildLeftPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        DataManager.Instance.PlayerData.UpdatedGuild -= UpdateFlag;
-        
         closeButton.onClick.RemoveListener(Close);
         myGuildButton.onClick.RemoveListener(ShowMyGuild);
         guildBattleButton.onClick.RemoveListener(ShowGuildBattle);
@@ -47,31 +42,14 @@ public class GuildLeftPanel : MonoBehaviour
         searchGuilds.onClick.RemoveListener(ShowSearchGuilds);
     }
 
-    private void UpdateFlag()
-    {
-        Invoke(nameof(ShowFlag),1f);
-    }
-
     private void Close()
     {
         OnClose?.Invoke();
     }
 
-    private void ShowFlag()
-    {
-        if (!DataManager.Instance.PlayerData.IsInGuild)
-        {
-            flagImage.gameObject.SetActive(false);
-            return;
-        }
-        
-        flagImage.gameObject.SetActive(true);
-    }
-
     private void ShowMyGuild()
     {
         ShowButtonAsSelected(myGuildButton);
-        ShowFlag();
         OnShowMyGuild?.Invoke();
     }
 

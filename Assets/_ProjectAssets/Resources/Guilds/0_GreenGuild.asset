@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: 0_GreenGuild
   m_EditorClassIdentifier: 
   <Id>k__BackingField: 0
-  <Badge>k__BackingField: {fileID: 21300000, guid: c9deec7e02ebbba47b167a40eddbbca6, type: 3}
-  <Flag>k__BackingField: {fileID: 21300000, guid: c6be067e2fa744347b922abf948ef963, type: 3}
+  <Badges>k__BackingField:
+  - {fileID: 21300000, guid: 7048e200c7b8f5849a8121e44318a626, type: 3}
+  - {fileID: 21300000, guid: a3781f0fdfd6c2f4eafdea4dd4e01973, type: 3}
+  - {fileID: 21300000, guid: e4ac74a430fe9784fb9e454cea849f0f, type: 3}
   <Kitty>k__BackingField: {fileID: 21300000, guid: 258d015cf7d95f743ac7c69c43b4e6bd, type: 3}
   <SelectedKitty>k__BackingField: {fileID: 21300000, guid: 2fd641443ed7fc84fb70ac5169bc4269, type: 3}
+  <KittyColor>k__BackingField: {r: 0.5686275, g: 0.93725497, b: 0.30588236, a: 1}

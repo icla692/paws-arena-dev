@@ -56,10 +56,10 @@ public class HasGuildPanel : GuildPanelBase
     private void ShowGuildData()
     {
         GuildData _guild = DataManager.Instance.PlayerData.Guild;
-        GuildSO _guildSO = GuildSO.Get(_guild.FlagId);
+        GuildSO _guildSO = GuildSO.Get(_guild.KittyId);
         nameDisplay.text = _guild.Name;
         leaderNameDisplay.text = _guild.GetLeader().Name;
-        guildBadgeDisplay.sprite = _guildSO.Badge;
+        guildBadgeDisplay.sprite = _guildSO.Badges[_guild.FlagIndex];
         kittyIconDisplay.sprite = _guildSO.Kitty;
         winsDisplay.text = "Matches won:"+_guild.MatchesWon;
         membersDisplay.text = $"Members: {_guild.Players.Count}/{DataManager.Instance.GameData.GuildMaxPlayers}";

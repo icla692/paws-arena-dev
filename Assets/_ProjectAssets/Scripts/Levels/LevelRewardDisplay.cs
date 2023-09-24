@@ -102,7 +102,6 @@ public class LevelRewardDisplay : MonoBehaviour
                 return equipments.GetEquipmentData(_reward.Parameter1).Thumbnail;
             case LevelRewardType.Emote:
                 return EmojiSO.Get(_reward.Parameter1).Sprite;
-                break;
             case LevelRewardType.WeaponSkin:
                 break;
             default:

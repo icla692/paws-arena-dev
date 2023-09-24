@@ -25,6 +25,7 @@ public class PlayerData
     private Challenges challenges = new Challenges();
     private string guildId = string.Empty;
     private int points;
+    private List<GuildBattleReward> guildBattleReward = new ();
 
     [JsonIgnore] public Action UpdatedSnacks;
     [JsonIgnore] public Action UpdatedJugOfMilk;
@@ -38,12 +39,27 @@ public class PlayerData
     [JsonIgnore] public Action UpdatedSeasonNumber;
     [JsonIgnore] public Action UpdatedOwnedEmojis;
     [JsonIgnore] public Action UpdatedGuild;
+    [JsonIgnore] public Action UpdatedBattleRewards;
     [JsonIgnore] public Action UpdatedPoints;
 
     public void SetStartingData()
     {
-        ownedEquiptables = new List<int>() { 0, 25, 60, 74, 95 };
-        ownedEmojis = new List<int>() { 0, 1, 2, 3 };
+        ownedEquiptables = new List<int>()
+        {
+            0,
+            25,
+            60,
+            74,
+            95
+        };
+        ownedEmojis = new List<int>()
+        {
+            0,
+            1,
+            2,
+            3,
+            4
+        };
     }
 
     public float Snacks
@@ -99,7 +115,7 @@ public class PlayerData
         set
         {
             experience = value;
-            CalculateLevel(experience,out level,out experienceForNextLevel,out experienceOnCurrentLevel);
+            CalculateLevel(experience, out level, out experienceForNextLevel, out experienceOnCurrentLevel);
             UpdatedExp?.Invoke();
         }
     }
@@ -249,7 +265,8 @@ public class PlayerData
     }
 
 
-    public static void CalculateLevel(int _exp, out int level, out int expForNextLevel, out int experienceOnCurrentLevel)
+    public static void CalculateLevel(int _exp, out int level, out int expForNextLevel,
+        out int experienceOnCurrentLevel)
     {
         float _experience = _exp;
         int _level = 1;
@@ -288,8 +305,9 @@ public class PlayerData
 
     [JsonIgnore] public string PlayerId => FirebaseManager.Instance.PlayerId;
     [JsonIgnore] public bool IsInGuild => !string.IsNullOrEmpty(GuildId);
-    
-    [JsonIgnore] public GuildData Guild
+
+    [JsonIgnore]
+    public GuildData Guild
     {
         get
         {
@@ -299,8 +317,9 @@ public class PlayerData
             }
 
             GuildData _guild = null;
+
             try
-            { 
+            {
                 _guild = DataManager.Instance.GameData.Guilds[guildId];
             }
             catch
@@ -308,27 +327,29 @@ public class PlayerData
                 GuildId = string.Empty;
                 return null;
             }
-            if (_guild==null)
+
+            if (_guild == null)
             {
                 GuildId = string.Empty;
                 return null;
             }
+
             bool _isStillInGuild = false;
             foreach (var _player in _guild.Players)
             {
-                if (_player.Id==FirebaseManager.Instance.PlayerId)
+                if (_player.Id == FirebaseManager.Instance.PlayerId)
                 {
                     _isStillInGuild = true;
                 }
             }
-            
+
 
             if (!_isStillInGuild)
             {
                 GuildId = string.Empty;
                 return null;
             }
-            
+
             _guild.ReorderPlayersByPoints();
             return _guild;
         }
@@ -343,4 +364,21 @@ public class PlayerData
             UpdatedPoints?.Invoke();
         }
     }
+
+    public List<GuildBattleReward> GuildBattleReward
+    {
+        get => guildBattleReward;
+        set
+        {
+            guildBattleReward = value;
+            UpdatedBattleRewards?.Invoke();
+        }
+    }
+
+    public void ClearBattleRewards()
+    {
+        guildBattleReward.Clear();
+        UpdatedBattleRewards?.Invoke();
+    }
+
 }

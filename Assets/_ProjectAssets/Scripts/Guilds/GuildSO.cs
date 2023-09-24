@@ -6,9 +6,10 @@ using UnityEngine;
 public class GuildSO : ScriptableObject
 {
    [field: SerializeField] public int Id { get; private set; }
-   [field: SerializeField] public Sprite Badge { get; private set; }
+   [field: SerializeField] public Sprite[] Badges { get; private set; }
    [field: SerializeField] public Sprite Kitty { get; private set; }
    [field: SerializeField] public Sprite SelectedKitty { get; private set; }
+   [field: SerializeField] public Color KittyColor { get; private set; }
 
    private static List<GuildSO> allGuilds;
 

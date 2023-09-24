@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: 5_PurpleGuild
   m_EditorClassIdentifier: 
   <Id>k__BackingField: 5
-  <Badge>k__BackingField: {fileID: 21300000, guid: 2ea1f7b0ef0c3634f8697a8082c578c6, type: 3}
-  <Flag>k__BackingField: {fileID: 21300000, guid: 87537829b7c947646bd79b01ce242a71, type: 3}
+  <Badges>k__BackingField:
+  - {fileID: 21300000, guid: 625ab9f9ea42cb5479d000ca350aaffa, type: 3}
+  - {fileID: 21300000, guid: d252d52ca520a174ba4cc83f6059c786, type: 3}
+  - {fileID: 21300000, guid: df5046730effde448b31462193975456, type: 3}
   <Kitty>k__BackingField: {fileID: 21300000, guid: 3260a78162d950647b57f7dc45069f15, type: 3}
   <SelectedKitty>k__BackingField: {fileID: 21300000, guid: 667ecbb1166e49d41956388d5a4026d3, type: 3}
+  <KittyColor>k__BackingField: {r: 0.7137255, g: 0.32941177, b: 0.9058824, a: 1}

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -25,11 +24,13 @@ public class CreateGuildPanel : GuildPanelBase
 
     private List<GameObject> shownKitties = new();
     private GuildSO selectedGuild;
+    private int flagIndex;
 
     public override void Setup()
     {
         ClearKitties();
         ShowKitties();
+        flagIndex = 0;
         minPointsInput.text = 0.ToString();
         gameObject.SetActive(true);
     }
@@ -65,7 +66,7 @@ public class CreateGuildPanel : GuildPanelBase
         nextButton.onClick.AddListener(ShowNext);
         createButton.onClick.AddListener(ValidateGuild);
 
-        GuildKittyDisplay.OnGuildSelected += SelectGuild;
+        GuildKittyDisplay.OnGuildSelected += SelectKingdom;
     }
 
     private void OnDisable()
@@ -74,36 +75,42 @@ public class CreateGuildPanel : GuildPanelBase
         nextButton.onClick.RemoveListener(ShowNext);
         createButton.onClick.RemoveListener(ValidateGuild);
         
-        GuildKittyDisplay.OnGuildSelected -= SelectGuild;
+        GuildKittyDisplay.OnGuildSelected -= SelectKingdom;
+    }
+
+    private void SelectKingdom(GuildSO _guildKitty)
+    {
+        flagIndex = 0;
+        SelectGuild(_guildKitty);
     }
 
     private void ShowPrevious()
     {
-        GuildSO _guild = GuildSO.Get(selectedGuild.Id-1);
-        if (_guild==null)
+        flagIndex--;
+        if (flagIndex<0)
         {
-            return;
+            flagIndex = 0;
         }
-        
-        SelectGuild(_guild);
+
+        SelectGuild(selectedGuild);
     }
     
 
     private void ShowNext()
     {
-        GuildSO _guild = GuildSO.Get(selectedGuild.Id+1);
-        if (_guild==null)
+        flagIndex++;
+        if (flagIndex>=selectedGuild.Badges.Length)
         {
-            return;
+            flagIndex = selectedGuild.Badges.Length-1;
         }
-        
-        SelectGuild(_guild);
+
+        SelectGuild(selectedGuild);
     }
 
     private void SelectGuild(GuildSO _guildKitty)
     {
         selectedGuild = _guildKitty;
-        badgeDisplay.sprite = selectedGuild.Badge;
+        badgeDisplay.sprite = selectedGuild.Badges[flagIndex];
         OnGuildSelected?.Invoke(_guildKitty);
     }
 
@@ -148,8 +155,9 @@ public class CreateGuildPanel : GuildPanelBase
             Level = DataManager.Instance.PlayerData.Level,
             Points = 0
         });
-        _newGuild.FlagId = selectedGuild.Id;
+        _newGuild.KittyId = selectedGuild.Id;
         _newGuild.MinimumPoints = _minPoints;
+        _newGuild.FlagIndex = flagIndex;
         
         DataManager.Instance.GameData.Guilds.Add(_newGuild.Id,_newGuild);
         FirebaseManager.Instance.CreateGuild(_newGuild);

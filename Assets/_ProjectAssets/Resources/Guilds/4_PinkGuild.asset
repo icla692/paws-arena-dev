@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: 4_PinkGuild
   m_EditorClassIdentifier: 
   <Id>k__BackingField: 4
-  <Badge>k__BackingField: {fileID: 21300000, guid: 4622a59cc5f4f61418a6dc38914f0016, type: 3}
-  <Flag>k__BackingField: {fileID: 21300000, guid: 5e973b90c61d0314b9bb9071374a9659, type: 3}
+  <Badges>k__BackingField:
+  - {fileID: 21300000, guid: a10f51ab23f82c743b4263e08a6746f4, type: 3}
+  - {fileID: 21300000, guid: 35dcc47c40a61ca47bc6d20fbc08614a, type: 3}
+  - {fileID: 21300000, guid: 29ea322ff85ae9d409350d101651777c, type: 3}
   <Kitty>k__BackingField: {fileID: 21300000, guid: e884967dd200ff5468b1a7f98b5c2627, type: 3}
   <SelectedKitty>k__BackingField: {fileID: 21300000, guid: 89c142b953879bc4c92e27465f8ba819, type: 3}
+  <KittyColor>k__BackingField: {r: 1, g: 0.4431373, b: 0.5803922, a: 1}

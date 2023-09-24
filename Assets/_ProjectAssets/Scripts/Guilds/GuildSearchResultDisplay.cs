@@ -18,9 +18,9 @@ public class GuildSearchResultDisplay : MonoBehaviour
     
     public void Setup(GuildData _guildData)
     {
-        GuildSO _guildSO = GuildSO.Get(_guildData.FlagId);
+        GuildSO _guildSO = GuildSO.Get(_guildData.KittyId);
         guildData = _guildData;
-        badgeDisplay.sprite = _guildSO.Badge;
+        badgeDisplay.sprite = _guildSO.Badges[_guildData.FlagIndex];
         nameDisplay.text = guildData.Name;
         kittyDisplay.sprite = _guildSO.Kitty;
         amountOfMembersDisplay.text = guildData.Players.Count.ToString();

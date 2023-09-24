@@ -104,6 +104,7 @@ public class DataManager : MonoBehaviour
         ChallengeData.UpdatedProgress += SaveChallengeProgress;
         PlayerData.Challenges.UpdatedClaimedLuckySpin += SaveClaimedLuckySpin;
         PlayerData.UpdatedGuild += SaveGuild;
+        PlayerData.UpdatedBattleRewards += SaveBattleRewards;
     }
 
     private void OnDestroy()
@@ -131,6 +132,14 @@ public class DataManager : MonoBehaviour
         ChallengeData.UpdatedProgress -= SaveChallengeProgress;
         PlayerData.Challenges.UpdatedClaimedLuckySpin -= SaveClaimedLuckySpin;
         PlayerData.UpdatedGuild -= SaveGuild;
+        PlayerData.UpdatedBattleRewards -= SaveBattleRewards;
+    }
+
+    private void SaveBattleRewards()
+    {
+        FirebaseManager.Instance.SaveValue(nameof(PlayerData.GuildBattleReward),
+            JsonConvert.SerializeObject(PlayerData.GuildBattleReward));
+
     }
 
     private void SaveSnacks()

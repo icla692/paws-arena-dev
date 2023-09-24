@@ -8,13 +8,14 @@ public class GuildKittyDisplay : MonoBehaviour
     [SerializeField] private Button selectGuild;
     [SerializeField] private Image kittySelected;
     [SerializeField] private Image kittyDisplay;
+    [SerializeField] private Outline outline;
 
     private GuildSO guild;
     
     public void Setup(GuildSO _guild)
     {
         guild = _guild;
-
+        outline.effectColor = _guild.KittyColor;
         kittyDisplay.sprite = _guild.Kitty;
         kittySelected.sprite = _guild.SelectedKitty;
     }

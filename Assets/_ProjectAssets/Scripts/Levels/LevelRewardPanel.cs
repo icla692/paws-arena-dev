@@ -32,6 +32,14 @@ public class LevelRewardPanel : MonoBehaviour
         holder.SetActive(true);
     }
 
+    public void Setup(GuildRewardSO _guildReward, Sprite _sprite)
+    {
+        nameDisplay.text = _guildReward.Name;
+        iconDisplay.sprite = _sprite;
+        iconDisplay.SetNativeSize();
+        holder.SetActive(true);
+    }
+
     private void Close()
     {
         OnClosePressed?.Invoke();

@@ -9,5 +9,8 @@ public enum ItemType
     Rare = 3,
     Epic = 4,
     Legendary = 5,
-    Item
+    Item = 6,
+    GlassOfMilk = 7,
+    JugOfMilk = 8,
+    Cookie = 9
 }

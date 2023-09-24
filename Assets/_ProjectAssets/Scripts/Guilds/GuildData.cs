@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using UnityEngine;
 
 [Serializable]
 public class GuildData
@@ -10,11 +9,16 @@ public class GuildData
     private List<GuildPlayerData> players;
     public string Id;
     public string Name;
-    public int FlagId;
+    public int KittyId;
+    public int FlagIndex;
     public int MinimumPoints;
+    public List<int> BattlesHistory = new();
+    [JsonIgnore]public int NextIndex;
+    private List<GuildPlayerData> originalPlayers = new () ;
+    public string BattleId;
     public int MatchesWon;
-    public int NextIndex;
-    private List<GuildPlayerData> originalPlayers;
+    
+    [JsonIgnore]public GuildBattle Battle;
 
     public List<GuildPlayerData> Players
     {

@@ -19,6 +19,7 @@ public class FirebaseManager : MonoBehaviour
     private string userDataLink => $"{projectLink}/users/{userLocalId}/";
     private string gameDataLink => $"{projectLink}/gameData/";
     private string guildsLink => $"{projectLink}guilds/";
+    private string guildBattlesLink => $"{projectLink}guildBattles/";
 
     public string PlayerId => userLocalId;
 
@@ -137,17 +138,41 @@ public class FirebaseManager : MonoBehaviour
         void SetGuildData(Dictionary<string, GuildData> _guilds)
         {
             DataManager.Instance.SetGuildsData(_guilds);
+            if (string.IsNullOrEmpty(DataManager.Instance.PlayerData.GuildId) || string.IsNullOrEmpty(DataManager.Instance.PlayerData.Guild.BattleId))
+            {
+                Finish();
+                return;
+            }
+
+            CollectGuildBattleData(Finish);
+        }
+
+        void Finish()
+        {
             _callBack?.Invoke(true);
         }
     }
 
+    private void CollectGuildBattleData(Action _callBack)
+    {
+        StartCoroutine(Get(guildBattlesLink+DataManager.Instance.PlayerData.Guild.BattleId+"/.json", 
+            (_result) =>
+            {
+                DataManager.Instance.PlayerData.Guild.Battle = JsonConvert.DeserializeObject<GuildBattle>(_result);
+                _callBack?.Invoke();
+            }, (_result) =>
+            {
+                _callBack?.Invoke();
+            }));
+    }
+
     public void ValidateGuildName(string _name, Action _onValid, Action _onInvalid)
     {
-        CollectGuilds(ValidateName);
+        CollectGuildData(ValidateName);
 
-        void ValidateName(Dictionary<string, GuildData> _guilds)
+        void ValidateName(bool _result)
         {
-            DataManager.Instance.SetGuildsData(_guilds);
+            Dictionary<string, GuildData> _guilds = DataManager.Instance.GameData.Guilds;
             if (_guilds==null)
             {
                 _onValid?.Invoke();
@@ -250,16 +275,22 @@ public class FirebaseManager : MonoBehaviour
         void Check(GuildData _guildData)
         {
             DataManager.Instance.GameData.Guilds[DataManager.Instance.PlayerData.GuildId] = _guildData;
+            
             StartCoroutine(Get(userDataLink + "/.json", (_result) =>
             {
                 PlayerData _playerData = JsonConvert.DeserializeObject<PlayerData>(_result);
                 DataManager.Instance.PlayerData.GuildId = _playerData.GuildId;
-                _callBack?.Invoke();
+                CollectGuildBattleData(Finish);
             }, (_result) =>
             {
                 Debug.Log("Failed to check if player is still in guild, please try again later");
                 Debug.Log(_result);
             }));
+        }
+
+        void Finish()
+        {
+            _callBack?.Invoke();
         }
     }
 
