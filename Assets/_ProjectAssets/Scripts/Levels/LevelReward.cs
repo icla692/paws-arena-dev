@@ -44,6 +44,9 @@ public class LevelReward
             case LevelRewardType.Emote:
                 DataManager.Instance.PlayerData.AddOwnedEmoji(Parameter1);
                 break;
+            case LevelRewardType.WeaponSkin:
+                DataManager.Instance.PlayerData.AddOwnedSkin(Parameter1);
+                break;
             default:
                 throw new Exception("Dont know how to claim level reward of type: " + Type);
         }

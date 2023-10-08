@@ -103,7 +103,7 @@ public class LevelRewardDisplay : MonoBehaviour
             case LevelRewardType.Emote:
                 return EmojiSO.Get(_reward.Parameter1).Sprite;
             case LevelRewardType.WeaponSkin:
-                break;
+                return WeaponSkinSO.Get(_reward.Parameter1).Preview;
             default:
                 throw new Exception("Cant find sprite for reward type: " + _reward.Type);
         }

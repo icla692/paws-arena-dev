@@ -34,7 +34,7 @@ public class WeaponBehaviour : MonoBehaviour
         }
     }
 
-    public void Init(int weaponIdx)
+    public void Init(int weaponIdx, int _weaponSkin)
     {
         if (weaponIdx < 0)
         {
@@ -52,6 +52,15 @@ public class WeaponBehaviour : MonoBehaviour
         }
 
         instantiatedWeapon = GameObject.Instantiate(weapon.launcherPrefab, weaponDirectParent);
+        
+        ApplySkin(instantiatedWeapon, _weaponSkin);
+    }
+
+    private void ApplySkin(GameObject _weapon, int _skinId)
+    {
+        WeaponSkinIdentificator _weaponSkinIdentificator = _weapon.GetComponent<WeaponSkinIdentificator>();
+        WeaponSkinSO _skinSO = WeaponSkinSO.Get(_skinId);
+        _weaponSkinIdentificator.ApplySkin(_skinSO.Sprites);
     }
 
 }

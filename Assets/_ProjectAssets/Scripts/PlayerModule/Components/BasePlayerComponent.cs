@@ -110,8 +110,16 @@ public class BasePlayerComponent : MonoBehaviour
     private void OnWeaponOutChanged(int val)
     {
         playerMotionBehaviour.SetIsPaused(val >= 0);
-
-        SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "NetworkedChangeWeaponState", RpcTarget.All, val);
+        int _weaponSkin = -1;
+        foreach (var _selectedWeaponSkin in DataManager.Instance.PlayerData.SelectedWeaponSkins)
+        {
+            WeaponSkinSO _weaponSkinSO = WeaponSkinSO.Get(_selectedWeaponSkin);
+            if ((int)_weaponSkinSO.Type == val)
+            {
+                _weaponSkin = _selectedWeaponSkin;
+            }
+        }
+        SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "NetworkedChangeWeaponState", RpcTarget.All, val,_weaponSkin);
     }
 
     public bool IsMine()
@@ -134,9 +142,9 @@ public class BasePlayerComponent : MonoBehaviour
     }
 
     [PunRPC]
-    public void NetworkedChangeWeaponState(int val)
+    public void NetworkedChangeWeaponState(int val, int _skinId)
     {
         weaponWrapper.SetActive(val >= 0);
-        weaponWrapper.GetComponent<WeaponBehaviour>().Init(val);
+        weaponWrapper.GetComponent<WeaponBehaviour>().Init(val,_skinId);
     }
 }

@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -25,7 +24,9 @@ public class PlayerData
     private Challenges challenges = new Challenges();
     private string guildId = string.Empty;
     private int points;
-    private List<GuildBattleReward> guildBattleReward = new ();
+    private List<GuildBattleReward> guildBattleReward = new();
+    private List<int> weaponSkins;
+    private List<int> selectedWeaponSkins = new ();
 
     [JsonIgnore] public Action UpdatedSnacks;
     [JsonIgnore] public Action UpdatedJugOfMilk;
@@ -41,6 +42,8 @@ public class PlayerData
     [JsonIgnore] public Action UpdatedGuild;
     [JsonIgnore] public Action UpdatedBattleRewards;
     [JsonIgnore] public Action UpdatedPoints;
+    [JsonIgnore] public Action UpdatedOwnedWeaponSkins;
+    [JsonIgnore] public Action UpdatedSelectedWeaponSkins;
 
     public void SetStartingData()
     {
@@ -60,6 +63,41 @@ public class PlayerData
             3,
             4
         };
+
+        SetStartingWeaponSkins();
+    }
+
+    public void SetStartingWeaponSkins()
+    {
+        WeaponSkins = new List<int>()
+        {
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+        };
+
+        SelectStartingWeaponSkins();
+    }
+
+    public void SelectStartingWeaponSkins(bool _update=false)
+    {
+        SelectedWeaponSkins = new List<int>()
+        {
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+        };
+
+        if (_update)
+        {
+            UpdatedSelectedWeaponSkins?.Invoke();
+        }
     }
 
     public float Snacks
@@ -381,4 +419,64 @@ public class PlayerData
         UpdatedBattleRewards?.Invoke();
     }
 
+    public List<int> WeaponSkins
+    {
+        get => weaponSkins;
+        set
+        {
+            weaponSkins = value;
+            UpdatedOwnedWeaponSkins?.Invoke();
+        }
+    }
+
+    public List<int> SelectedWeaponSkins
+    {
+        get => selectedWeaponSkins;
+        set
+        {
+            selectedWeaponSkins = value;
+            UpdatedSelectedWeaponSkins?.Invoke();
+        }
+    }
+    
+    public void SelectSkin(WeaponSkinSO _weaponData, bool _riseEvent)
+    {
+        if (SelectedWeaponSkins.Contains(_weaponData.Id))
+        {
+            return;
+        }
+
+        int _indexOfWeaponType = -1;
+        foreach (var _weaponSkinId in SelectedWeaponSkins)
+        {
+            WeaponSkinSO _weaponSkinSo = WeaponSkinSO.Get(_weaponSkinId);
+            if (_weaponSkinSo.Type==_weaponData.Type)
+            {
+                _indexOfWeaponType = selectedWeaponSkins.IndexOf(_weaponSkinId);
+                break;
+            }
+        }
+        SelectedWeaponSkins.RemoveAt(_indexOfWeaponType);
+        SelectedWeaponSkins.Add(_weaponData.Id);
+        if (_riseEvent)
+        {
+            TriggerSaveSelectedWeaponSkins();
+        }
+    }
+
+    public void TriggerSaveSelectedWeaponSkins()
+    {
+        UpdatedSelectedWeaponSkins?.Invoke();
+    }
+
+    public void AddOwnedSkin(int _skinId)
+    {
+        if (weaponSkins.Contains(_skinId))
+        {
+            return;
+        }
+        
+        weaponSkins.Add(_skinId);
+        UpdatedOwnedWeaponSkins?.Invoke();
+    }
 }

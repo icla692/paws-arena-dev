@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +9,7 @@ public class EquipScreen : MonoBehaviour
     public LobbyUIManager lobbyUIManager;
     public Transform playerPlatformParent;
     public GameObject playerPlatformPrefab;
+    [SerializeField] private WeaponSkinsPanel weaponSkinsPanel;
 
     public EquipmentsConfig equipmentsConfig;
 
@@ -22,6 +22,7 @@ public class EquipScreen : MonoBehaviour
     public ButtonHoverable mouthBtn;
     public ButtonHoverable bodyBtn;
     public ButtonHoverable tailBtn;
+    [SerializeField] private Button showWeaponSkins;
 
     private GameObject playerPlatform;
     private ButtonHoverable selectedBtn;
@@ -40,6 +41,7 @@ public class EquipScreen : MonoBehaviour
 
         equipments = new List<NFTImageSprite>();
         StartCoroutine(InitCoroutine());
+        showWeaponSkins.onClick.AddListener(ShowWeaponSkins);
     }
 
     private IEnumerator InitCoroutine()
@@ -56,8 +58,13 @@ public class EquipScreen : MonoBehaviour
             playerPlatform = null;
         }
         DePopulate();
+        showWeaponSkins.onClick.RemoveListener(ShowWeaponSkins);
     }
 
+    private void ShowWeaponSkins()
+    {
+        weaponSkinsPanel.Show();
+    }
     public void PopulateEyes()
     {
         Populate(EquipmentType.EYEWEAR, equipmentsConfig.Eyes, eyeBtn);

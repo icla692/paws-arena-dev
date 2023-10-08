@@ -29,6 +29,8 @@ public class DataManager : MonoBehaviour
     private const string CHALLENGES_DATA= "Challenges/ChallengesData";
     private const string GOT_LUCKY_SPIN = "Challenges/ClaimedLuckySpin";
     private const string GUILD = "GuildId";
+    private const string WEAPON_SKINS = "WeaponSkins";
+    private const string SELECTED_WEAPON_SKINS = "SelectedWeaponSkins";
 
     private bool hasSubscribed = false;
 
@@ -59,7 +61,16 @@ public class DataManager : MonoBehaviour
             SaveHasPass();
             SaveSeasonNumber();
         }
-        
+
+        if (PlayerData.WeaponSkins==null|| PlayerData.WeaponSkins.Count==0)
+        {
+            PlayerData.SetStartingWeaponSkins();
+        }
+
+        if (PlayerData.SelectedWeaponSkins.Count==0)
+        {
+            PlayerData.SelectStartingWeaponSkins(true);
+        }
     }
 
     public void SetGuildsData(Dictionary<string, GuildData> _guilds)
@@ -105,6 +116,8 @@ public class DataManager : MonoBehaviour
         PlayerData.Challenges.UpdatedClaimedLuckySpin += SaveClaimedLuckySpin;
         PlayerData.UpdatedGuild += SaveGuild;
         PlayerData.UpdatedBattleRewards += SaveBattleRewards;
+        PlayerData.UpdatedOwnedWeaponSkins += SaveOwnedWeaponSkins;
+        PlayerData.UpdatedSelectedWeaponSkins += SaveSelectedWeaponSkins;
     }
 
     private void OnDestroy()
@@ -133,6 +146,8 @@ public class DataManager : MonoBehaviour
         PlayerData.Challenges.UpdatedClaimedLuckySpin -= SaveClaimedLuckySpin;
         PlayerData.UpdatedGuild -= SaveGuild;
         PlayerData.UpdatedBattleRewards -= SaveBattleRewards;
+        PlayerData.UpdatedOwnedWeaponSkins -= SaveOwnedWeaponSkins;
+        PlayerData.UpdatedSelectedWeaponSkins -= SaveSelectedWeaponSkins;
     }
 
     private void SaveBattleRewards()
@@ -250,5 +265,15 @@ public class DataManager : MonoBehaviour
     private void SaveGuild()
     {
         FirebaseManager.Instance.SaveString(GUILD,PlayerData.GuildId);
+    }
+
+    private void SaveOwnedWeaponSkins()
+    {
+        FirebaseManager.Instance.SaveValue(WEAPON_SKINS, JsonConvert.SerializeObject(PlayerData.WeaponSkins));
+    }
+    
+    private void SaveSelectedWeaponSkins()
+    {
+        FirebaseManager.Instance.SaveValue(SELECTED_WEAPON_SKINS, JsonConvert.SerializeObject(PlayerData.SelectedWeaponSkins));
     }
 }
