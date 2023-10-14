@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbf7172007d44cb4e97f84c93cbbd9e4, type: 3}
-  m_Name: 9_Airplane
+  m_Name: 15_Airplane_Silver
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 9
+  <Id>k__BackingField: 15
   <Type>k__BackingField: 3
   <Sprites>k__BackingField:
-  - {fileID: 21300000, guid: 66bdabed87e9f5b4ab1e136c1767dd48, type: 3}
-  <Preview>k__BackingField: {fileID: 21300000, guid: 66bdabed87e9f5b4ab1e136c1767dd48, type: 3}
+  - {fileID: 21300000, guid: b8f202b01aa5589469b9506fc0b457e9, type: 3}
+  <ProjectileSprite>k__BackingField: []
+  <Preview>k__BackingField: {fileID: 21300000, guid: b8f202b01aa5589469b9506fc0b457e9, type: 3}

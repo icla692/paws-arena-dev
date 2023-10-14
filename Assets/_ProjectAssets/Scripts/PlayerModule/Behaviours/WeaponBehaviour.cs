@@ -13,6 +13,7 @@ public class WeaponBehaviour : MonoBehaviour
     public Transform weaponDirectParent;
 
     private GameObject instantiatedWeapon;
+    public static GameObject InstantiatedWeapon;
 
     private void OnEnable()
     {
@@ -52,6 +53,7 @@ public class WeaponBehaviour : MonoBehaviour
         }
 
         instantiatedWeapon = GameObject.Instantiate(weapon.launcherPrefab, weaponDirectParent);
+        InstantiatedWeapon = instantiatedWeapon;
         
         ApplySkin(instantiatedWeapon, _weaponSkin);
     }
@@ -60,7 +62,7 @@ public class WeaponBehaviour : MonoBehaviour
     {
         WeaponSkinIdentificator _weaponSkinIdentificator = _weapon.GetComponent<WeaponSkinIdentificator>();
         WeaponSkinSO _skinSO = WeaponSkinSO.Get(_skinId);
-        _weaponSkinIdentificator.ApplySkin(_skinSO.Sprites);
+        _weaponSkinIdentificator.ApplySkin(_skinSO.Sprites,_skinId);
     }
 
 }

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbf7172007d44cb4e97f84c93cbbd9e4, type: 3}
-  m_Name: 11_CrossBow
+  m_Name: 7_Cannon_Gold
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 11
-  <Type>k__BackingField: 5
+  <Id>k__BackingField: 7
+  <Type>k__BackingField: 1
   <Sprites>k__BackingField:
-  - {fileID: 21300000, guid: fd477095f659bd14aac8e06c28b0d465, type: 3}
-  <Preview>k__BackingField: {fileID: 21300000, guid: fd477095f659bd14aac8e06c28b0d465, type: 3}
+  - {fileID: 21300000, guid: 66b2cfd7ae1d103429f7bb1a4eeeb8bd, type: 3}
+  <Preview>k__BackingField: {fileID: 21300000, guid: 66b2cfd7ae1d103429f7bb1a4eeeb8bd, type: 3}

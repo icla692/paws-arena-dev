@@ -98,9 +98,18 @@ public class PlayerThrowBehaviour : MonoBehaviour
         currentWeapon = ConfigurationManager.Instance.Weapons.GetWeapon(weaponIdx);
 
         projectiles = new List<GameObject>();
+        WeaponSkinIdentificator _weaponSkin =
+            WeaponBehaviour.InstantiatedWeapon.GetComponent<WeaponSkinIdentificator>();
+        WeaponSkinSO _weaponSkinSo = WeaponSkinSO.Get(_weaponSkin.SkinId);
 
         for (int i = 0; i < currentWeapon.numberOfProjectiles; i++) {
             GameObject obj = SingleAndMultiplayerUtils.Instantiate("Bullets/" + currentWeapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
+
+            WeaponSkinIdentificator _bulletSkin = obj.GetComponent<WeaponSkinIdentificator>();
+            if (_bulletSkin!=null)
+            {
+                _bulletSkin.ApplySkin(_weaponSkinSo.ProjectileSprite, _weaponSkinSo.Id);
+            }
             
             projectiles.Add(obj);
 

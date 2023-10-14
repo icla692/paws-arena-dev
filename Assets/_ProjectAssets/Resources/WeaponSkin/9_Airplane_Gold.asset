@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbf7172007d44cb4e97f84c93cbbd9e4, type: 3}
-  m_Name: 10_Mouse
+  m_Name: 9_Airplane_Gold
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 10
-  <Type>k__BackingField: 4
+  <Id>k__BackingField: 9
+  <Type>k__BackingField: 3
   <Sprites>k__BackingField:
-  - {fileID: 21300000, guid: 4b1680579bb67234699930e81ec86e0b, type: 3}
-  - {fileID: 21300000, guid: d86d69993b91a48449ddd17a96042f35, type: 3}
-  <Preview>k__BackingField: {fileID: 21300000, guid: 4b1680579bb67234699930e81ec86e0b, type: 3}
+  - {fileID: 21300000, guid: e8674dfd47294f24aa3ce0583bb4cd1c, type: 3}
+  <ProjectileSprite>k__BackingField: []
+  <Preview>k__BackingField: {fileID: 21300000, guid: e8674dfd47294f24aa3ce0583bb4cd1c, type: 3}

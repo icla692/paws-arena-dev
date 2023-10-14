@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf7172007d44cb4e97f84c93cbbd9e4, type: 3}
+  m_Name: 16_Mouse_Silver
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: 16
+  <Type>k__BackingField: 4
+  <Sprites>k__BackingField:
+  - {fileID: 218547452, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -1580197620, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 1112606035, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -1030347861, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 2070740529, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -267375191, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -400887551, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -1639379009, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 130864023, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 21300000, guid: e7f9e19bea1874446bd67d40d1442cb0, type: 3}
+  - {fileID: 21300000, guid: 18cbe606a2d67064196435aeaaaf21f9, type: 3}
+  <ProjectileSprite>k__BackingField:
+  - {fileID: 218547452, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -1580197620, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 1112606035, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -1030347861, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 2070740529, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -267375191, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -400887551, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -1639379009, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 130864023, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 21300000, guid: e7f9e19bea1874446bd67d40d1442cb0, type: 3}
+  - {fileID: 21300000, guid: 18cbe606a2d67064196435aeaaaf21f9, type: 3}
+  - {fileID: -1030347861, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -1323762222, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -1412143876, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 415894752, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: 1821389202, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  - {fileID: -714309184, guid: 2e9b4cfe2ea466840ae4185bb7426a48, type: 3}
+  <Preview>k__BackingField: {fileID: 21300000, guid: 18cbe606a2d67064196435aeaaaf21f9, type: 3}

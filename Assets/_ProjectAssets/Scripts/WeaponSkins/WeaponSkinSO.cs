@@ -9,6 +9,7 @@ public class WeaponSkinSO : ScriptableObject
     [field: SerializeField] public int Id { get; private set; }
     [field: SerializeField] public WeaponSkinType Type { get; private set; }
     [field: SerializeField] public Sprite[] Sprites { get; private set; }
+    [field: SerializeField] public Sprite[] ProjectileSprite { get; private set; }
     [field: SerializeField] public Sprite Preview { get; private set; }
     private static List<WeaponSkinSO> allRewards;
     
