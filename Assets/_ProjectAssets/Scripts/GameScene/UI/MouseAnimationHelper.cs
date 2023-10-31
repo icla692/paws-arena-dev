@@ -14,9 +14,4 @@ public class MouseAnimationHelper : MonoBehaviour
         }
         keyRenderer.sprite = sprites[11 + _index];
     }
-
-    public void ApplySkin()
-    {
-        
-    }
 }

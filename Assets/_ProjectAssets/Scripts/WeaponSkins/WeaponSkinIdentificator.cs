@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class WeaponSkinIdentificator : MonoBehaviour
@@ -7,7 +6,19 @@ public class WeaponSkinIdentificator : MonoBehaviour
     [field: SerializeField] private SpriteRenderer[] sprites;
 
     private int skinId;
-    public int SkinId => skinId;
+
+    public int SkinId
+    {
+        get
+        {
+            Debug.Log(skinId,gameObject);
+            return skinId;
+        }
+        set
+        {
+            skinId = value;
+        }
+    }
 
     public void ApplySkin(Sprite[] _sprites, int _skinId)
     {

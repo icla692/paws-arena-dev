@@ -100,16 +100,9 @@ public class PlayerThrowBehaviour : MonoBehaviour
         projectiles = new List<GameObject>();
         WeaponSkinIdentificator _weaponSkin =
             WeaponBehaviour.InstantiatedWeapon.GetComponent<WeaponSkinIdentificator>();
-        WeaponSkinSO _weaponSkinSo = WeaponSkinSO.Get(_weaponSkin.SkinId);
 
         for (int i = 0; i < currentWeapon.numberOfProjectiles; i++) {
             GameObject obj = SingleAndMultiplayerUtils.Instantiate("Bullets/" + currentWeapon.bulletPrefab.name, launchPoint.position, Quaternion.Euler(transform.rotation.eulerAngles));
-
-            WeaponSkinIdentificator _bulletSkin = obj.GetComponent<WeaponSkinIdentificator>();
-            if (_bulletSkin!=null)
-            {
-                _bulletSkin.ApplySkin(_weaponSkinSo.ProjectileSprite, _weaponSkinSo.Id);
-            }
             
             projectiles.Add(obj);
 
@@ -124,6 +117,28 @@ public class PlayerThrowBehaviour : MonoBehaviour
 
         //So that animation etc plays on all clients
         SingleAndMultiplayerUtils.RpcOrLocal(this, photonView, false, "OnLaunchPreparing", RpcTarget.All);
+        if (ConfigurationManager.Instance.Config.GetIsMultiplayer())
+        {
+           photonView.RPC(nameof(ApplySkinToProjectiles),RpcTarget.All,_weaponSkin.SkinId);
+        }
+        else
+        {
+            ApplySkinToProjectiles(_weaponSkin.SkinId);
+        }
+    }
+
+    [PunRPC]
+    private void ApplySkinToProjectiles(int _skinId)
+    {
+        WeaponSkinSO _weaponSkinSo = WeaponSkinSO.Get(_skinId);
+        foreach (var _bullet in FindObjectsOfType<BulletComponent>())
+        {
+            WeaponSkinIdentificator _bulletSkin = _bullet.GetComponent<WeaponSkinIdentificator>();
+            if (_bulletSkin != null)
+            {
+                _bulletSkin.ApplySkin(_weaponSkinSo.ProjectileSprite, _weaponSkinSo.Id);
+            }
+        }
     }
 
     [PunRPC]

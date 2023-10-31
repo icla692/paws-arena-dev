@@ -56,12 +56,14 @@ public class WeaponBehaviour : MonoBehaviour
         InstantiatedWeapon = instantiatedWeapon;
         
         ApplySkin(instantiatedWeapon, _weaponSkin);
+        Debug.Log($"Got to this part, {_weaponSkin}",gameObject);
     }
 
     private void ApplySkin(GameObject _weapon, int _skinId)
     {
         WeaponSkinIdentificator _weaponSkinIdentificator = _weapon.GetComponent<WeaponSkinIdentificator>();
         WeaponSkinSO _skinSO = WeaponSkinSO.Get(_skinId);
+        Debug.Log("Applying skin "+_skinId,gameObject);
         _weaponSkinIdentificator.ApplySkin(_skinSO.Sprites,_skinId);
     }
 
