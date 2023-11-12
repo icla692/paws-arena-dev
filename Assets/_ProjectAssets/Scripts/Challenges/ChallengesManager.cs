@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChallengesManager : MonoBehaviour
@@ -14,7 +13,7 @@ public class ChallengesManager : MonoBehaviour
     private bool isInit;
     private bool isSubscribed;
     private List<ChallengeSO> allChallenges = new List<ChallengeSO>();
-
+    
     private void OnEnable()
     {
         ChallengeDisplay.OnClaimPressed += ClaimedChallenge;

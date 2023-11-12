@@ -444,77 +444,106 @@ public class PlayerCustomization : MonoBehaviour
         switch (equipmentType)
         {
             case EquipmentType.EYEWEAR:
+            {
+                //Empty case
+                if (equipmentSprite == null)
                 {
-                    //Empty case
-                    if(equipmentSprite == null)
-                    {
-                        SetEyewear("none");
-                        break;
-                    }
-
-                    bool found = FindBySprite(equipmentSprite, eyewearEquipment, id => SetEyewear(id));
-
-                    if (found) { break; }
-
-                    FindBySprite(equipmentSprite, closeableEyewearEquipment, id => SetEyewear(id));
+                    SetEyewear("none");
                     break;
                 }
+
+                bool found = FindBySprite(equipmentSprite, eyewearEquipment, id => SetEyewear(id));
+
+                if (found)
+                {
+                    break;
+                }
+
+                FindBySprite(equipmentSprite, closeableEyewearEquipment, id => SetEyewear(id));
+                break;
+            }
             case EquipmentType.HAT:
+            {
+                //Empty case
+                if (equipmentSprite == null)
                 {
-                    //Empty case
-                    if (equipmentSprite == null)
-                    {
-                        SetHat("none");
-                        break;
-                    }
-
-                    bool found = FindBySprite(equipmentSprite, hatsEquipment, id => SetHat(id));
-                    if (found) { break; }
-
-                    found = FindBySprite(equipmentSprite, hatsNoEarsEquipment, id => SetHat(id));
-                    if (found) { break; }
-
-                    FindBySprite(equipmentSprite, hatsBetweenEarsEquipment, id => SetHat(id));
+                    SetHat("none");
                     break;
                 }
+
+                bool found = FindBySprite(equipmentSprite, hatsEquipment, id => SetHat(id));
+                if (found)
+                {
+                    break;
+                }
+
+                found = FindBySprite(equipmentSprite, hatsNoEarsEquipment, id => SetHat(id));
+                if (found)
+                {
+                    break;
+                }
+
+                FindBySprite(equipmentSprite, hatsBetweenEarsEquipment, id => SetHat(id));
+                break;
+            }
             case EquipmentType.MOUTH:
+            {
+                //Empty case
+                if (equipmentSprite == null)
                 {
-                    //Empty case
-                    if (equipmentSprite == null)
-                    {
-                        SetMouth("none");
-                        break;
-                    }
-                    FindBySprite(equipmentSprite, mouthEquipment, id => SetMouth(id));
+                    SetMouth("none");
                     break;
                 }
+
+                FindBySprite(equipmentSprite, mouthEquipment, id => SetMouth(id));
+                break;
+            }
             case EquipmentType.BODY:
+            {
+                //Empty case
+                if (equipmentSprite == null)
                 {
-                    //Empty case
-                    if (equipmentSprite == null)
-                    {
-                        SetBody("none");
-                        break;
-                    }
-                    FindBySprite(equipmentSprite, bodyEquipment, id => SetBody(id));
+                    SetBody("none");
                     break;
                 }
+
+                FindBySprite(equipmentSprite, bodyEquipment, id => SetBody(id));
+                break;
+            }
             case EquipmentType.TAIL:
+            {
+                if (equipmentSprite == null)
                 {
-                    if (equipmentSprite == null)
-                    {
-                        SetTail("none");
-                        break;
-                    }
-                    
-                    FindBySprite(equipmentSprite, overlayTailEquipment, id => SetTail(id));
-                    FindBySprite(equipmentSprite, tailStaticObjectsEquipment, id => SetTail(id));
+                    SetTail("none");
                     break;
                 }
+                
+                
+                bool found = FindBySprite(equipmentSprite, overlayTailEquipment, id => SetTail(id));
+                if (found)
+                {
+                    break;
+                }
+                
+                found = FindBySprite(equipmentSprite, tailStaticObjectsEquipment, id => SetTail(id));
+
+                if (found)
+                {
+                    break;
+                }
+                
+                int idx = tailAnimatedObjectsEquipment.FindIndex(el => el.target.name == equipmentSprite.name);
+                if (idx != -1)
+                {
+                    SetTail(tailAnimatedObjectsEquipment[idx].id);
+                }
+
+                break;
+            }
             case EquipmentType.LEGS:
-                {
-                    break;
-                }
+            {
+                break;
+            }
         }
     }
 
@@ -539,6 +568,7 @@ public class PlayerCustomization : MonoBehaviour
 
         return false;
     }
+ 
 
     public void SetKittyColor(string colorId, bool updateConfig = true)
     {

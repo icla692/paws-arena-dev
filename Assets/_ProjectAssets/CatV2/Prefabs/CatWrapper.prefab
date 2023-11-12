@@ -138,8 +138,8 @@ MonoBehaviour:
   - {fileID: 7999842701475964785}
   - {fileID: 5857621034774516860}
   m_Bounds:
-    m_Center: {x: -0.29362392, y: 1.005643, z: 0}
-    m_Extent: {x: 0.610209, y: 1.1966451, z: 0}
+    m_Center: {x: -0.29362297, y: 1.0056429, z: 0}
+    m_Extent: {x: 0.610209, y: 1.196645, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -931,8 +931,6 @@ MonoBehaviour:
     sprite: {fileID: -1956461573, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat28
     sprite: {fileID: -1600146629, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
-  - id: hat22
-    sprite: {fileID: -77595547, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat16
     sprite: {fileID: -863799681, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat14
@@ -943,6 +941,8 @@ MonoBehaviour:
     sprite: {fileID: 1600589697, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   - id: hat33
     sprite: {fileID: 267407761, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
+  - id: hatSanta
+    sprite: {fileID: -1842338692, guid: 90c1bafc70c9e484481f076757caf058, type: 3}
   hatsBetweenEarsEquipment:
   - id: hat2
     sprite: {fileID: -1347619341, guid: 6857fe23dba87c54a9ab0c8bf431ca4c, type: 3}
@@ -1064,13 +1064,13 @@ MonoBehaviour:
   - id: none
     sprite: {fileID: 0}
   tailAnimatedObjectsEquipment:
-  - id: tail13
+  - id: tail_fire_01_3
     target: {fileID: 0}
-  - id: tail12
+  - id: tail_ghost_01_0
     target: {fileID: 0}
-  - id: tail9
+  - id: tail_parrot_01_0
     target: {fileID: 0}
-  - id: tail11
+  - id: tail_penguin_01_0
     target: {fileID: 0}
   staticTailObjectRenderer: {fileID: 0}
   tailStaticObjectsEquipment:
@@ -2379,7 +2379,7 @@ MonoBehaviour:
   - {fileID: 4746047892390765509}
   - {fileID: 4746047892950087352}
   m_Bounds:
-    m_Center: {x: -0.641381, y: 1.2794862, z: 0.18}
+    m_Center: {x: -0.6413801, y: 1.2794862, z: 0.18}
     m_Extent: {x: 0.8745016, y: 1.4301119, z: 0.000000007450581}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -2665,7 +2665,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4746047892521903393}
-  m_LocalRotation: {x: 4.0577774e-10, y: -0.0000000037056191, z: 0.09593832, w: 0.9953873}
+  m_LocalRotation: {x: 4.057915e-10, y: -0.0000000037057448, z: 0.09594081, w: 0.995387}
   m_LocalPosition: {x: 0.2953624, y: 0.014666447, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3287,7 +3287,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4746047893174013441}
-  m_LocalRotation: {x: 0.000000025913, y: 6.429428e-10, z: -0.024802348, w: 0.9996924}
+  m_LocalRotation: {x: 0.000000025912989, y: 6.429442e-10, z: -0.024804356, w: 0.9996923}
   m_LocalPosition: {x: 0.064, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3402,7 +3402,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4746047893226113810}
-  m_LocalRotation: {x: -0.0000000117437375, y: 0.000000039124973, z: 0.25271586, w: 0.96754056}
+  m_LocalRotation: {x: -0.000000011743765, y: 0.000000039125066, z: 0.25271633, w: 0.96754044}
   m_LocalPosition: {x: 0.30515254, y: 0.0013521906, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3749,7 +3749,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4746047893347027567}
-  m_LocalRotation: {x: 0.000000041118064, y: -0.000000026366951, z: 0.85234636, w: 0.5229778}
+  m_LocalRotation: {x: 0.00000004111811, y: -0.00000002636698, z: 0.8523458, w: 0.52297866}
   m_LocalPosition: {x: 0.069826275, y: 0.000020249041, z: 0.000000029802322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3864,8 +3864,8 @@ MonoBehaviour:
   - {fileID: 4746047893226113811}
   - {fileID: 4746047892521903394}
   m_Bounds:
-    m_Center: {x: -0.15795314, y: 0.2068441, z: 0.00000007907302}
-    m_Extent: {x: 0.3467232, y: 0.33084136, z: 0.000000028838294}
+    m_Center: {x: -0.1579513, y: 0.20684467, z: 0.000000079073004}
+    m_Extent: {x: 0.34672308, y: 0.33084154, z: 0.000000028838274}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0

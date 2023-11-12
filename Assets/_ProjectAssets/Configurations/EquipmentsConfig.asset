@@ -113,12 +113,6 @@ MonoBehaviour:
   - Id: 33
     Thumbnail: {fileID: -1326742173, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
     Rarity: 0
-  - Id: 34
-    Thumbnail: {fileID: -1889102223, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
-    Rarity: 2
-  - Id: 35
-    Thumbnail: {fileID: 2100136905, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
-    Rarity: 3
   - Id: 36
     Thumbnail: {fileID: 2117340155, guid: 7bc29833b0ee49244a4e5916d169c3af, type: 3}
     Rarity: 3
@@ -341,7 +335,7 @@ MonoBehaviour:
     Rarity: 1
   TailsAnimated:
   - Id: 108
-    Thumbnail: {fileID: -967413241, guid: 4bbe467c49b01df4597ec66b9ef05323, type: 3}
+    Thumbnail: {fileID: 449705447, guid: 4bbe467c49b01df4597ec66b9ef05323, type: 3}
     Rarity: 2
   - Id: 109
     Thumbnail: {fileID: -734492980, guid: 550d8ed27675b2845ab6d64ebff32a24, type: 3}
