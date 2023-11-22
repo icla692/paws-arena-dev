@@ -3,6 +3,7 @@ using Anura.Templates.MonoSingleton;
 using com.colorfulcoding.GameScene;
 using Photon.Pun;
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -296,6 +297,13 @@ public class RoomStateManager : MonoSingleton<RoomStateManager>
     public void StartNextRound(int playerNumber, int roundNumber)
     {
         this.roundNumber = roundNumber;
+        
+        
+        Debug.Log(FindObjectsOfType<PlayerMotionBehaviour>().ToList().Count);
+        foreach (var _playerMotion in FindObjectsOfType<PlayerMotionBehaviour>().ToList())
+        {
+            _playerMotion.ResetMovementForNewTurn(ConfigurationManager.Instance.MovingDistance);
+        }
 
         if (
             ConfigurationManager.Instance.Config.GetGameType()

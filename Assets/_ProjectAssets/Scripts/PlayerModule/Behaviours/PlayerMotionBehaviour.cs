@@ -1,6 +1,5 @@
-using Anura;
-using Anura.ConfigurationModule.Managers;
 using System;
+using Anura.ConfigurationModule.Managers;
 using UnityEngine;
 
 public class PlayerMotionBehaviour : MonoBehaviour
@@ -17,17 +16,25 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
 
     private float lastJumpTime = 0;
+    private float movementLeftThisTurn;
+    private StaminaDisplay staminaDisplay;
 
 
     private void Awake()
     {
         _transform = transform;
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        staminaDisplay = GetComponentInChildren<StaminaDisplay>();
     }
 
     public void RegisterPlayerState(PlayerState state)
     {
         playerState = state;
+    }
+
+    private void Start()
+    {
+        movementLeftThisTurn = ConfigurationManager.Instance.MovingDistance;
     }
 
     public void RegisterMovementCallbacks(GameInputActions.PlayerActions playerActions)
@@ -113,20 +120,46 @@ public class PlayerMotionBehaviour : MonoBehaviour
 
     public void Move(float move, bool jumpQueued)
     {
+        if (movementLeftThisTurn <= 0)
+        {
+            staminaDisplay.UpdateMovementBar(movementLeftThisTurn);
+            return; // No movement left, exit the function
+        }
+
         if (CheckIfIsGrounded() || GetAirControl())
         {
-            var targetVelocity = new Vector2(move * 10f, _rigidbody2D.velocity.y);
+            var moveSpeed = move * 10f; // This is your original move speed
+            var moveAmount = moveSpeed * Time.deltaTime; // Calculate the amount of movement
+
+            if (moveAmount > movementLeftThisTurn)
+            {
+                moveAmount = movementLeftThisTurn; // Limit the move amount to what's left
+            }
+        
+            var targetVelocity = new Vector2(moveSpeed, _rigidbody2D.velocity.y);
             _rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, targetVelocity, ref velocity, GetMovementSmoothing());
+
+            movementLeftThisTurn -= Mathf.Abs(moveAmount); // Reduce the movement left
         }
 
         if (CheckIfIsGrounded() && jumpQueued)
         {
             _rigidbody2D.AddForce(Vector2.up * GetJumpForce(), ForceMode2D.Impulse);
             playerState.SetQueueJumpImpulse(false);
-        }else if(jumpQueued) //Jumped in-air. Wasted.
+        }
+        
+        else if (jumpQueued) //Jumped in-air. Wasted.
         {
             playerState.SetQueueJumpImpulse(false);
         }
+        
+        staminaDisplay.UpdateMovementBar(movementLeftThisTurn);
+
+    }
+    
+    public void ResetMovementForNewTurn(float movementAmount)
+    {
+        movementLeftThisTurn = movementAmount;
     }
 
     private void SetMovementDirection(float value)

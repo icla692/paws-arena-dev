@@ -7,6 +7,7 @@ namespace Anura.ConfigurationModule.Managers
 {
     public class ConfigurationManager : MonoSingleton<ConfigurationManager>
     {
+        public float MovingDistance = 5;
         [SerializeField, Expandable] private GameConfig gameConfig;
         [SerializeField, Expandable] private Config config;
         [SerializeField, Expandable] private SFXConfig sfx;

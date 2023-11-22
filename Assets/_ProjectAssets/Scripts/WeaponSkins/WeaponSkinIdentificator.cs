@@ -11,7 +11,6 @@ public class WeaponSkinIdentificator : MonoBehaviour
     {
         get
         {
-            Debug.Log(skinId,gameObject);
             return skinId;
         }
         set
