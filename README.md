@@ -21,9 +21,7 @@ Although anyone can play Paws Arena for free, owning an icKitty NFT unlocks excl
 
 The `README.md` serves as the public resume of your project. It should at least provide a high-level overview, goals, and usage instructions. Here's what to include for Paws Arena:
 
-#### :triangular_ruler: Provide an overview of the architecture and tech stack
-
-Include a brief description and architecture diagram of Paws Arena:
+#### :triangular_ruler Architecture and tech stack
 
 - **Core Tech Stack**:
   - **Languages**: Motoko for backend canisters.
@@ -37,7 +35,7 @@ Include a brief description and architecture diagram of Paws Arena:
 - [Excalidraw](https://excalidraw.com/) for a hand-drawn look.
 - [Mermaid](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/) for embedding diagrams in Markdown.
 
-#### :construction: Provide an update on your milestones and progress
+#### :construction: Progress
 
 Include a checklist or status update on your features and milestones:
 - [x] Launch of core PvP gameplay.
@@ -46,22 +44,13 @@ Include a checklist or status update on your features and milestones:
 - [ ] Expansion of marketplace functionality.
 - [ ] SNS-based governance model exploration.
 
-#### :bulb: Provide a description of how to use your project
+#### :bulb: How to use your project
 
-Explain how players can access and play Paws Arena:
 - Visit [Paws Arena's game page](https://knbkj-fiaaa-aaaan-qaadq-cai.ic0.app/).
 - Connect your wallet with NFID.
 - Choose a kitty (standard black kitty for non-NFT users, or icKitty for NFT owners).
 - Engage in PvP matches and earn rewards.
 
-Include contribution guidelines for developers interested in contributing to the open-source project.
-
-#### :art: Add some visuals
-
-Visuals can enhance the README, such as:
-- **Gameplay GIFs** showing battles or crafting.
-- **Screenshots** of the interface and leaderboard.
-- **NFT showcase** for icKitty benefits.
 
 **Helpful tools**:
 - [Kap](https://getkap.co/) for screen recordings (Mac only).
