@@ -7,13 +7,11 @@
 - [ ] [Create an informative README](#Create-an-informative-README)
 - [ ] [Add a license](#Add-a-license)
 
-### :tada: Choose a good name for your project
+### :tada: Paws Arena
 
-Naming is important. A good name makes your project attractive and can help people discover it. For Paws Arena, the name emphasizes the unique blend of fun (paws) and competitive gameplay (arena), resonating well with both gaming and blockchain communities.
+Paws Arena is not just another NFT collection—it was one of the pioneering projects on the Internet Computer Blockchain (ICP), launching in December 2021. Our mission goes beyond simply offering unique digital assets. We are building a dynamic gaming ecosystem where players can engage in multiple games, participate in challenges, and earn rewards through our innovative integration with BoomDao. The Paws Arena platform is designed to foster competitive gameplay and collaboration, where players can complete challenges across BoomDao’s GameFi environment and be rewarded based on their achievements.
 
-### :dart: Provide metadata
-
-GitHub allows you to associate a description, URLs, and tags with your project. Make sure to include:
+Although anyone can play Paws Arena for free, owning an icKitty NFT unlocks exclusive advantages that enhance gameplay. We are committed to delivering value to our community, consistently meeting our promises, and creating an engaging experience where every player feels valued. Our approach is centered on trust, respect, and a shared vision for the future of blockchain gaming.
 
 - **Short Description**: "Paws Arena: A blockchain-based PvP game on the Internet Computer, integrating NFTs and cross-game play with BoomDao."
 - **Tags**: `internet-computer`, `blockchain-gaming`, `NFT`, `GameFi`, `open-source`.
