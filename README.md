@@ -59,7 +59,7 @@ Include a checklist or status update on your features and milestones:
 
 ### :page_with_curl: Add a license
 
-Paws Arena is open-source and uses the **Apache 2.0 License**, allowing developers to use, modify, and distribute the code with proper attribution. Here’s a [guide on adding a license](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository).
+Paws Arena is open-source and uses the **Apache 2.0 License**, allowing developers to use, modify, and distribute the code with proper attribution.
 
 ### :page_facing_up: Additional Tips
 
