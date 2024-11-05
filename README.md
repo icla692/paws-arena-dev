@@ -17,11 +17,11 @@ Although anyone can play Paws Arena for free, owning an icKitty NFT unlocks excl
 - **Tags**: `internet-computer`, `blockchain-gaming`, `NFT`, `GameFi`, `open-source`.
 - **Website Link**: Include the link to [Paws Arena's game page](https://knbkj-fiaaa-aaaan-qaadq-cai.ic0.app/) and any related documentation or resources.
 
-### :blue_book: Create an informative README
+### :blue_book: README
 
-The `README.md` serves as the public resume of your project. It should at least provide a high-level overview, goals, and usage instructions. Here's what to include for Paws Arena:
+Here's what to include for Paws Arena:
 
-#### :triangular_ruler Architecture and tech stack
+#### :triangular_ruler: Architecture and tech stack
 
 - **Core Tech Stack**:
   - **Languages**: Motoko for backend canisters.
